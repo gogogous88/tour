@@ -1,4 +1,7 @@
-@value borderColor, backShade, secondaryFontColor, primaryFontColor from 'SharedStyles/globalStyles.css';
+@value borderColor,
+  backShade,
+  secondaryFontColor,
+  primaryFontColor from "SharedStyles/globalStyles.css";
 
 /**
  * FeedBox styles
@@ -7,7 +10,9 @@
   margin-top: 20px;
   border: 1px solid borderColor;
 
-  &:first-child { margin-top: 0px; }
+  &:first-child {
+    margin-top: 0px;
+  }
 }
 
 .header {
@@ -42,7 +47,9 @@
     cursor: pointer;
     user-select: none;
 
-    &.sortActive { color: primaryFontColor; }
+    &.sortActive {
+      color: primaryFontColor;
+    }
   }
 }
 

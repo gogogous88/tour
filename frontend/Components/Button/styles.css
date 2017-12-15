@@ -1,4 +1,6 @@
-@value borderColor, secondaryFontColor, primaryFontColor from 'SharedStyles/globalStyles.css';
+@value borderColor,
+  secondaryFontColor,
+  primaryFontColor from "SharedStyles/globalStyles.css";
 
 /**
  * Button styles
@@ -29,7 +31,9 @@ button {
 .default {
   color: secondaryFontColor;
   transition: color 0.3s;
-  &:hover { color: primaryFontColor; }
+  &:hover {
+    color: primaryFontColor;
+  }
 }
 
 .outline {
@@ -42,8 +46,12 @@ button {
   }
 }
 
-.fullWidth { width: 100%; }
-.noUppercase { text-transform: none; }
+.fullWidth {
+  width: 100%;
+}
+.noUppercase {
+  text-transform: none;
+}
 .alwaysActive {
   color: primaryFontColor;
   border-color: primaryFontColor;

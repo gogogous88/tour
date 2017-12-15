@@ -2,13 +2,10 @@
   borderColor,
   secondaryFontColor from "SharedStyles/globalStyles";
 
-.search-container {
-  padding: 30px 0;
-  background: url("http://yale.demo5.cn/static/images/bg_search-80e1140895.jpg")
-    center no-repeat;
-  background-size: cover;
-  color: rgb(158, 34, 34);
+.container {
+  background-color: #fff;
 }
+
 .content {
   margin-top: 10px;
   position: relative;
@@ -20,7 +17,7 @@
 
 .errorMsg {
   margin-top: 5px;
-  color: rgba(231, 76, 60, 1);
+  color: rgba(231, 74, 60, 0.315);
   font-size: 12px;
   font-weight: bold;
   line-height: 14px;
@@ -38,19 +35,7 @@
   border: none;
   outline: none;
   background-color: none;
-  font-size: 20px;
-  font-weight: 300;
-  /*border-bottom: 1px solid borderColor;*/
-}
-
-.dateInput {
-  margin: 6px 0px 0px 0px;
-  padding: 10px 10px;
-  width: 100%;
-  border: none;
-  outline: none;
-  background-color: none;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 300;
   /*border-bottom: 1px solid borderColor;*/
 }

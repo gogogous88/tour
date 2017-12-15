@@ -1,9 +1,9 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
-import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
-import classnames from 'classnames';
+import _ from "lodash";
+import React, { Component } from "react";
+import { browserHistory } from "react-router";
+import { connect } from "react-redux";
+import { Helmet } from "react-helmet";
+import classnames from "classnames";
 
 import {
   getDiscussion,
@@ -12,43 +12,39 @@ import {
   postOpinion,
   deletePost,
   deletedDiscussionRedirect,
-  deleteOpinion,
-} from './actions';
+  deleteOpinion
+} from "./actions";
 
-import Discussion from 'Components/SingleDiscussion/Discussion';
-import ReplyBox from 'Components/SingleDiscussion/ReplyBox';
-import Opinion from 'Components/SingleDiscussion/Opinion';
+import Discussion from "Components/SingleDiscussion/Discussion";
+import ReplyBox from "Components/SingleDiscussion/ReplyBox";
+import Opinion from "Components/SingleDiscussion/Opinion";
 
-import styles from './styles.css';
-import appLayout from 'SharedStyles/appLayout.css';
+import styles from "./styles.css";
+import appLayout from "SharedStyles/appLayout.css";
 
 class SingleDiscussion extends Component {
   constructor(props) {
     super(props);
-    this.state = { opinionContent: '' };
+    this.state = { opinionContent: "" };
   }
 
   componentDidMount() {
-    const {
-      forum,
-      discussion,
-    } = this.props.params;
+    const { forum, discussion } = this.props.params;
 
     this.props.getDiscussion(discussion);
   }
 
   componentDidUpdate() {
-    const {
-      deletedDiscussion,
-      deletedDiscussionRedirect,
-    } = this.props;
+    const { deletedDiscussion, deletedDiscussionRedirect } = this.props;
 
     const { forum } = this.props.params;
 
     // check if the discussion is deleted and redirect the user
     if (deletedDiscussion) {
       browserHistory.push(`/${forum}`);
-      setTimeout(() => { deletedDiscussionRedirect(); }, 100);
+      setTimeout(() => {
+        deletedDiscussionRedirect();
+      }, 100);
     }
   }
 
@@ -59,7 +55,7 @@ class SingleDiscussion extends Component {
 
   userFavoritedDiscussion(userId, favorites) {
     let favorited = false;
-    for(let i = 0; i < favorites.length; i++) {
+    for (let i = 0; i < favorites.length; i++) {
       if (favorites[i] === userId) favorited = true;
     }
     return favorited;
@@ -71,7 +67,7 @@ class SingleDiscussion extends Component {
       postOpinion,
       discussion,
       opinionContent,
-      userId,
+      userId
     } = this.props;
 
     const discussion_slug = this.props.params.discussion;
@@ -83,7 +79,7 @@ class SingleDiscussion extends Component {
         forum_id: forumId,
         discussion_id: discussion._id,
         user_id: userId,
-        content: opinionContent,
+        content: opinionContent
       },
       discussion_slug
     );
@@ -113,16 +109,18 @@ class SingleDiscussion extends Component {
       opinionError,
       deletingOpinion,
       deletingDiscussion,
-      error,
+      error
     } = this.props;
 
     if (error) {
-      return (<div className={styles.errorMsg}>{error}</div>);
+      return <div className={styles.errorMsg}>{error}</div>;
     }
 
     // return loading status if discussion is not fetched yet
     if (fetchingDiscussion) {
-      return <div className={styles.loadingWrapper}>Loading discussion ...</div>;
+      return (
+        <div className={styles.loadingWrapper}>Loading discussion ...</div>
+      );
     }
 
     const {
@@ -133,27 +131,30 @@ class SingleDiscussion extends Component {
       title,
       tags,
       opinions,
+      rloc
     } = discussion;
 
-    const {
-      avatarUrl,
-      name,
-      username,
-    } = discussion.user;
+    const { avatarUrl, name, username } = discussion.user;
 
     // check if logged in user is owner of the discussion
     let allowDelete = false;
     if (
-      (discussion.user._id === this.props.userId) ||
-      this.props.userRole === 'admin'
-    ) allowDelete = true;
+      discussion.user._id === this.props.userId ||
+      this.props.userRole === "admin"
+    )
+      allowDelete = true;
 
     // check if user favorated the discussion
-    const userFavorited = this.userFavoritedDiscussion(this.props.userId, favorites);
+    const userFavorited = this.userFavoritedDiscussion(
+      this.props.userId,
+      favorites
+    );
 
     return (
       <div className={appLayout.constraintWidth}>
-        <Helmet><title>{`${title} | ReForum`}</title></Helmet>
+        <Helmet>
+          <title>{`${title} | ReForum`}</title>
+        </Helmet>
 
         <Discussion
           id={_id}
@@ -164,6 +165,7 @@ class SingleDiscussion extends Component {
           discDate={date}
           discContent={content}
           tags={tags}
+          rloc={rloc}
           favoriteCount={favorites.length}
           favoriteAction={toggleFavorite}
           userFavorited={userFavorited}
@@ -173,62 +175,89 @@ class SingleDiscussion extends Component {
           deleteAction={this.deleteDiscussion.bind(this)}
         />
 
-        { opinionError && <div className={styles.errorMsg}>{opinionError}</div> }
+        {opinionError && <div className={styles.errorMsg}>{opinionError}</div>}
 
-        { !userAuthenticated && <div className={styles.signInMsg}>Please sign in to post a reply.</div> }
-        { userAuthenticated && <ReplyBox
-          posting={postingOpinion}
-          onSubmit={this.handleReplySubmit.bind(this)}
-          onChange={(content) => { updateOpinionContent(content); }}
-        /> }
+        {!userAuthenticated && (
+          <div className={styles.signInMsg}>
+            Please sign in to post a reply.
+          </div>
+        )}
+        {userAuthenticated && (
+          <ReplyBox
+            posting={postingOpinion}
+            onSubmit={this.handleReplySubmit.bind(this)}
+            onChange={content => {
+              updateOpinionContent(content);
+            }}
+          />
+        )}
 
-        { opinions && opinions.map((opinion) => {
-          return (
-            <Opinion
-              key={opinion._id}
-              opinionId={opinion._id}
-              userAvatar={opinion.user.avatarUrl}
-              userName={opinion.user.name}
-              userGitHandler={opinion.user.username}
-              opDate={opinion.date}
-              opContent={opinion.content}
-              userId={opinion.user_id}
-              currentUserId={this.props.userId}
-              currentUserRole={this.props.userRole}
-              deleteAction={this.deleteOpinion.bind(this)}
-              deletingOpinion={deletingOpinion}
-            />
-          );
-        }) }
+        {opinions &&
+          opinions.map(opinion => {
+            return (
+              <Opinion
+                key={opinion._id}
+                opinionId={opinion._id}
+                userAvatar={opinion.user.avatarUrl}
+                userName={opinion.user.name}
+                userGitHandler={opinion.user.username}
+                opDate={opinion.date}
+                opContent={opinion.content}
+                userId={opinion.user_id}
+                currentUserId={this.props.userId}
+                currentUserRole={this.props.userRole}
+                deleteAction={this.deleteOpinion.bind(this)}
+                deletingOpinion={deletingOpinion}
+              />
+            );
+          })}
       </div>
     );
   }
 }
 
 export default connect(
-  (state) => { return {
-    forums: state.app.forums,
-    userAuthenticated: state.user.authenticated,
-    userId: state.user._id,
-    userRole: state.user.role,
-    fetchingDiscussion: state.discussion.fetchingDiscussion,
-    toggleingFavorite: state.discussion.toggleingFavorite,
-    deletingDiscussion: state.discussion.deletingDiscussion,
-    deletedDiscussion: state.discussion.deletedDiscussion,
-    opinionContent: state.discussion.opinionContent,
-    postingOpinion: state.discussion.postingOpinion,
-    opinionError: state.discussion.opinionError,
-    deletingOpinion: state.discussion.deletingOpinion,
-    discussion: state.discussion.discussion,
-    error: state.discussion.error,
-  }; },
-  (dispatch) => { return {
-    getDiscussion: (discussionSlug) => { dispatch(getDiscussion(discussionSlug)); },
-    toggleFavorite: (discussionId) => { dispatch(toggleFavorite(discussionId)); },
-    updateOpinionContent: (content) => { dispatch(updateOpinionContent(content)); },
-    postOpinion: (opinion, discussionSlug) => { dispatch(postOpinion(opinion, discussionSlug)); },
-    deletePost: (discussionSlug) => { dispatch(deletePost(discussionSlug)); },
-    deletedDiscussionRedirect: () => { dispatch(deletedDiscussionRedirect()); },
-    deleteOpinion: (opinionId, discussionSlug) => { dispatch(deleteOpinion(opinionId, discussionSlug)); },
-  }; }
+  state => {
+    return {
+      forums: state.app.forums,
+      userAuthenticated: state.user.authenticated,
+      userId: state.user._id,
+      userRole: state.user.role,
+      fetchingDiscussion: state.discussion.fetchingDiscussion,
+      toggleingFavorite: state.discussion.toggleingFavorite,
+      deletingDiscussion: state.discussion.deletingDiscussion,
+      deletedDiscussion: state.discussion.deletedDiscussion,
+      opinionContent: state.discussion.opinionContent,
+      postingOpinion: state.discussion.postingOpinion,
+      opinionError: state.discussion.opinionError,
+      deletingOpinion: state.discussion.deletingOpinion,
+      discussion: state.discussion.discussion,
+      error: state.discussion.error
+    };
+  },
+  dispatch => {
+    return {
+      getDiscussion: discussionSlug => {
+        dispatch(getDiscussion(discussionSlug));
+      },
+      toggleFavorite: discussionId => {
+        dispatch(toggleFavorite(discussionId));
+      },
+      updateOpinionContent: content => {
+        dispatch(updateOpinionContent(content));
+      },
+      postOpinion: (opinion, discussionSlug) => {
+        dispatch(postOpinion(opinion, discussionSlug));
+      },
+      deletePost: discussionSlug => {
+        dispatch(deletePost(discussionSlug));
+      },
+      deletedDiscussionRedirect: () => {
+        dispatch(deletedDiscussionRedirect());
+      },
+      deleteOpinion: (opinionId, discussionSlug) => {
+        dispatch(deleteOpinion(opinionId, discussionSlug));
+      }
+    };
+  }
 )(SingleDiscussion);

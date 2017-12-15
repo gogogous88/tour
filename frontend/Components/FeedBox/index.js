@@ -1,29 +1,32 @@
-import React, { Component } from 'react';
-import classnames from 'classnames';
-import Moment from 'moment';
-import styles from './styles';
+import React, { Component } from "react";
+import classnames from "classnames";
+import Moment from "moment";
+import styles from "./styles";
 
-import DiscussionBox from './DiscussionBox';
+import DiscussionBox from "./DiscussionBox";
 
 class FeedBox extends Component {
   renderSort() {
-    const {
-      activeSortingMethod,
-      onChangeSortingMethod,
-    } = this.props;
+    const { activeSortingMethod, onChangeSortingMethod } = this.props;
 
-    if (this.props.type === 'general') {
+    if (this.props.type === "general") {
       return (
         <div className={styles.sortList}>
           <span
-            className={classnames(styles.sort, (activeSortingMethod === 'date') && styles.sortActive)}
-            onClick={() => onChangeSortingMethod('date')}
+            className={classnames(
+              styles.sort,
+              activeSortingMethod === "date" && styles.sortActive
+            )}
+            onClick={() => onChangeSortingMethod("date")}
           >
             Latest
           </span>
           <span
-            className={classnames(styles.sort, (activeSortingMethod === 'popularity') && styles.sortActive)}
-            onClick={() => onChangeSortingMethod('popularity')}
+            className={classnames(
+              styles.sort,
+              activeSortingMethod === "popularity" && styles.sortActive
+            )}
+            onClick={() => onChangeSortingMethod("popularity")}
           >
             Popular
           </span>
@@ -47,62 +50,70 @@ class FeedBox extends Component {
       loading,
       discussions,
       currentForum,
-      userProfile,
+      userProfile
     } = this.props;
 
-    let discussionBoxTitle = '';
-    if (type === 'general') discussionBoxTitle = 'Discussions';
-    if (type === 'pinned') discussionBoxTitle = 'Pinned';
+    let discussionBoxTitle = "";
+    if (type === "general") discussionBoxTitle = "Discussions";
+    if (type === "pinned") discussionBoxTitle = "Pinned";
 
     return (
       <div className={styles.container}>
         <div className={styles.header}>
           <span className={styles.title}>{discussionBoxTitle}</span>
-          { !userProfile && this.renderSort() }
+          {!userProfile && this.renderSort()}
         </div>
-        { loading && <div className={styles.loading}>Loading...</div> }
-        { this.renderEmptyDiscussionLine(loading, discussions) }
-        { !loading &&
+        {loading && <div className={styles.loading}>Loading...</div>}
+        {this.renderEmptyDiscussionLine(loading, discussions)}
+        {!loading && (
           <div className={styles.discussions}>
-            { discussions && discussions.map((discussion) =>
-              <DiscussionBox
-                userProfile={userProfile}
-                key={discussion._id}
-                userName={discussion.user.name || discussion.user.username}
-                userGitHandler={discussion.user.username}
-                discussionTitle={discussion.title}
-                time={discussion.date}
-                tags={discussion.tags}
-                opinionCount={discussion.opinion_count}
-                voteCount={discussion.favorites.length}
-                link={`/${userProfile ? discussion.forum.forum_slug : currentForum}/discussion/${discussion.discussion_slug}`}
-              />
-            ) }
+            {discussions &&
+              discussions.map(discussion => {
+                const discussionTitle = `从${discussion.user.username}到${
+                  discussion.tags
+                }`;
+                return (
+                  <DiscussionBox
+                    userProfile={userProfile}
+                    key={discussion._id}
+                    userName={discussion.user.name || discussion.user.username}
+                    userGitHandler={discussion.user.username}
+                    discussionTitle={discussionTitle}
+                    time={discussion.date}
+                    tags={discussion.tags}
+                    opinionCount={discussion.opinion_count}
+                    voteCount={discussion.favorites.length}
+                    link={`/${
+                      userProfile ? discussion.forum.forum_slug : currentForum
+                    }/discussion/${discussion.discussion_slug}`}
+                  />
+                );
+              })}
           </div>
-        }
+        )}
       </div>
     );
   }
 }
 
 FeedBox.defaultProps = {
-  type: 'general',
+  type: "general",
   loading: false,
   discussions: [],
-  currentForum: 'general',
-  activeSortingMethod: 'date',
-  onChangeSortingMethod: (val) => { },
-  userProfile: false,
+  currentForum: "general",
+  activeSortingMethod: "date",
+  onChangeSortingMethod: val => {},
+  userProfile: false
 };
 
 FeedBox.propTypes = {
-  type: React.PropTypes.oneOf(['general', 'pinned']),
+  type: React.PropTypes.oneOf(["general", "pinned"]),
   loading: React.PropTypes.bool,
   discussions: React.PropTypes.array,
   currentForum: React.PropTypes.string,
   activeSortingMethod: React.PropTypes.string,
   onChangeSortingMethod: React.PropTypes.func,
-  userProfile: React.PropTypes.bool,
+  userProfile: React.PropTypes.bool
 };
 
 export default FeedBox;

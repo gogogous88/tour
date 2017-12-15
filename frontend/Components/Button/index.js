@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import classnames from 'classnames';
-import styles from './styles';
+import React, { Component } from "react";
+import classnames from "classnames";
+import styles from "./styles";
 
 class Button extends Component {
   render() {
@@ -11,7 +11,7 @@ class Button extends Component {
       className,
       style,
       onClick,
-      alwaysActive,
+      alwaysActive
     } = this.props;
 
     return (
@@ -35,23 +35,23 @@ class Button extends Component {
 }
 
 Button.defaultProps = {
-  type: 'default',
+  type: "default",
   fullWidth: false,
   noUppercase: false,
   alwaysActive: false,
-  className: '',
+  className: "",
   style: {},
-  onClick: () => { },
+  onClick: () => {}
 };
 
 Button.propTypes = {
-  type: React.PropTypes.oneOf(['default', 'outline']),
+  type: React.PropTypes.oneOf(["default", "outline"]),
   fullWidth: React.PropTypes.bool,
   noUppercase: React.PropTypes.bool,
   alwaysActive: React.PropTypes.bool,
   className: React.PropTypes.string,
   style: React.PropTypes.object,
-  onClick: React.PropTypes.func,
+  onClick: React.PropTypes.func
 };
 
 export default Button;

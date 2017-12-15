@@ -10,3 +10,5 @@ export const fetchDiscussions = (forum_id, sortingMethod) => {
 export const fetchPinnedDiscussions = (forum_id) => {
   return axios.get(`/api/forum/${forum_id}/pinned_discussions`);
 };
+
+//5a2f313e0a0b184f99ab4b54

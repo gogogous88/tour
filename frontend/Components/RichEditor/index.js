@@ -1,24 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Editor,
   EditorState,
   ContentState,
   RichUtils,
   convertToRaw,
-  convertFromRaw,
-} from 'draft-js';
-import classnames from 'classnames';
-import styles from './styles';
+  convertFromRaw
+} from "draft-js";
+import classnames from "classnames";
+import styles from "./styles";
 
-import Button from 'Components/Button';
-import BlockStyleControls from './BlockStyleControls';
-import InlineStyleControls from './InlineStyleControls';
+import Button from "Components/Button";
+import BlockStyleControls from "./BlockStyleControls";
+import InlineStyleControls from "./InlineStyleControls";
 
 class RichEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: EditorState.createEmpty(),
+      editorState: EditorState.createEmpty()
     };
 
     this.focus = () => this.refs.editor.focus();
@@ -47,7 +47,10 @@ class RichEditor extends Component {
   }
 
   handleKeyCommand(command) {
-    const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
+    const newState = RichUtils.handleKeyCommand(
+      this.state.editorState,
+      command
+    );
     if (newState) {
       this.onEditorStateChange(newState);
       return true;
@@ -57,77 +60,76 @@ class RichEditor extends Component {
 
   onTab(event) {
     const maxDepth = 4;
-    this.onEditorStateChange(RichUtils.onTab(event, this.state.editorState, maxDepth));
+    this.onEditorStateChange(
+      RichUtils.onTab(event, this.state.editorState, maxDepth)
+    );
   }
 
   toggleBlockType(blockType) {
     this.onEditorStateChange(
-      RichUtils.toggleBlockType(
-        this.state.editorState,
-        blockType
-      )
+      RichUtils.toggleBlockType(this.state.editorState, blockType)
     );
   }
 
   toggleInlineStyle(inlineStyle) {
     this.onEditorStateChange(
-      RichUtils.toggleInlineStyle(
-        this.state.editorState,
-        inlineStyle
-      )
+      RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
     );
   }
 
   customBlockStyles(contentBlock) {
     const type = contentBlock.getType();
-    if (type === 'blockquote') return styles.editorBlockquoteStyle;
-    if (type === 'code-block') return styles.editorCodeStyle;
-    if (type === 'header-one') return styles.editorH1Style;
-    if (type === 'header-two') return styles.editorH2Style;
-    if (type === 'header-three') return styles.editorH3Style;
+    if (type === "blockquote") return styles.editorBlockquoteStyle;
+    if (type === "code-block") return styles.editorCodeStyle;
+    if (type === "header-one") return styles.editorH1Style;
+    if (type === "header-two") return styles.editorH2Style;
+    if (type === "header-three") return styles.editorH3Style;
   }
 
   render() {
-    const {
-      type,
-      onSave,
-      readOnly,
-    } = this.props;
+    const { type, onSave, readOnly } = this.props;
 
     // styling for inline styles
     const inlineStyleMap = {
-      'CODE': {
-        color: '#e74c3c',
-        backgroundColor: '#f9f9f9',
-        border: '1px solid #e8e8e8',
-        fontFamily: 'monospace',
-        padding: '2px 5px',
-        margin: '0px 5px',
-      },
+      CODE: {
+        color: "#e74c3c",
+        backgroundColor: "#f9f9f9",
+        border: "1px solid #e8e8e8",
+        fontFamily: "monospace",
+        padding: "2px 5px",
+        margin: "0px 5px"
+      }
     };
 
-    let saveButtonLabel = '';
-    if (type === 'newOpinion') saveButtonLabel = 'Reply';
-    if (type === 'newDiscussion') saveButtonLabel = 'Post Discussion';
+    let saveButtonLabel = "";
+    if (type === "newOpinion") saveButtonLabel = "Reply";
+    if (type === "newDiscussion") saveButtonLabel = "点击发布";
 
-    let placeholder = '';
-    if (type === 'newOpinion') placeholder = 'Your opinion...';
-    if (type === 'newDiscussion') placeholder = 'Discussion summary...';
+    let placeholder = "";
+    if (type === "newOpinion") placeholder = "Your opinion...";
+    if (type === "newDiscussion") placeholder = "其他信息(如联系方式等)";
 
     return (
-      <div className={classnames(styles.container, readOnly && styles.readOnlyContainer)}>
-        { !readOnly && <div className={styles.controlsContainer}>
-          <InlineStyleControls
-            type={type}
-            editorState={this.state.editorState}
-            onToggle={this.toggleInlineStyle}
-          />
-          <BlockStyleControls
-            type={type}
-            editorState={this.state.editorState}
-            onToggle={this.toggleBlockType}
-          />
-        </div> }
+      <div
+        className={classnames(
+          styles.container,
+          readOnly && styles.readOnlyContainer
+        )}
+      >
+        {!readOnly && (
+          <div className={styles.controlsContainer}>
+            <InlineStyleControls
+              type={type}
+              editorState={this.state.editorState}
+              onToggle={this.toggleInlineStyle}
+            />
+            <BlockStyleControls
+              type={type}
+              editorState={this.state.editorState}
+              onToggle={this.toggleBlockType}
+            />
+          </div>
+        )}
 
         <div
           className={classnames(
@@ -146,13 +148,22 @@ class RichEditor extends Component {
             placeholder={placeholder}
             handleKeyCommand={this.handleKeyCommand}
             onTab={this.onTab}
-            ref='editor'
+            ref="editor"
           />
         </div>
-
-        { !readOnly && <Button noUppercase style={{ alignSelf: 'center' }} onClick={onSave}>
-          {saveButtonLabel}
-        </Button> }
+        {!readOnly && (
+          <Button
+            noUppercase
+            style={{
+              alignSelf: "stretch",
+              backgroundColor: "#e44646d4",
+              color: "#fff"
+            }}
+            onClick={onSave}
+          >
+            {saveButtonLabel}
+          </Button>
+        )}
       </div>
     );
   }
@@ -161,17 +172,17 @@ class RichEditor extends Component {
 RichEditor.defaultProps = {
   readOnly: false,
   value: null,
-  type: 'newDiscussion',
-  onChange: () => { },
-  onSave: () => { },
+  type: "newDiscussion",
+  onChange: () => {},
+  onSave: () => {}
 };
 
 RichEditor.propTypes = {
   readOnly: React.PropTypes.bool,
   value: React.PropTypes.any,
-  type: React.PropTypes.oneOf(['newDiscussion', 'newOpinion']),
+  type: React.PropTypes.oneOf(["newDiscussion", "newOpinion"]),
   onChange: React.PropTypes.func,
-  onSave: React.PropTypes.func,
+  onSave: React.PropTypes.func
 };
 
 export default RichEditor;
