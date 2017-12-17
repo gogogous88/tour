@@ -15,14 +15,16 @@ const discussionSchema = mongoose.Schema({
   ploc: String,
   ph_no: String,
   sup_or_req: String,
-  pname: Date,
-  pdate: String,
+  pname: String,
+  pdate: Date,
   rdate: Array,
   vehicleType: String,
   content: Object,
   favorites: Array,
   tags: Array,
-  pinned: Boolean
+  pinned: Boolean,
+  image: Array,
+  rate: String
 });
 
 module.exports = mongoose.model("discussion", discussionSchema);

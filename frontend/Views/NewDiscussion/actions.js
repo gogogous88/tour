@@ -12,9 +12,11 @@ import {
   UPDATE_DISCUSSION_PLOC,
   UPDATE_DISCUSSION_SUP_OR_REQ,
   UPDATE_DISCUSSION_PNAME,
+  UPDATE_DISCUSSION_IMAGE,
   UPDATE_DISCUSSION_PDATE,
   UPDATE_DISCUSSION_RDATE,
   UPDATE_DISCUSSION_PH_NO,
+  UPDATE_DISCUSSION_RATE,
   CLEAR_SUCCESS_MESSAGE,
   UPDATE_DISCUSSION_VEHICLE_TYPE
 } from "./constants";
@@ -43,8 +45,10 @@ export const postDiscussion = (userId, forumId, currentForum) => {
       ploc,
       sup_or_req,
       pname,
+      image,
       rdate,
       ph_no,
+      rate,
       pdate
     } = getState().newDiscussion;
 
@@ -106,11 +110,26 @@ export const postDiscussion = (userId, forumId, currentForum) => {
     //   });
     // }
 
+    // if (image === null || image.length === 0) {
+    //   validated = false;
+    //   return dispatch({
+    //     type: POSTING_DISCUSSION_FAILURE,
+    //     payload: "请填写联系人名字"
+    //   });
+    // }
+
     // if (ph_no === null || ph_no.length === 0) {
     //   validated = false;
     //   return dispatch({
     //     type: POSTING_DISCUSSION_FAILURE,
     //     payload: "联系人电话格式不正确美国10位或11位，中国11位"
+    //   });
+    // }
+    // if (rate === null || rate.length === 0) {
+    //   validated = false;
+    //   return dispatch({
+    //     type: POSTING_DISCUSSION_FAILURE,
+    //     payload: "价格不能为空"
     //   });
     // }
 
@@ -158,7 +177,9 @@ export const postDiscussion = (userId, forumId, currentForum) => {
 
         sup_or_req,
         pname,
+        image,
         ph_no,
+        rate,
         rdate,
         pdate,
         tags,
@@ -278,9 +299,23 @@ export const updateDiscussionPname = value => {
   };
 };
 
+export const updateDiscussionImage = value => {
+  return {
+    type: UPDATE_DISCUSSION_IMAGE,
+    payload: value
+  };
+};
+
 export const updateDiscussionPh_no = value => {
   return {
     type: UPDATE_DISCUSSION_PH_NO,
+    payload: value
+  };
+};
+
+export const updateDiscussionRate = value => {
+  return {
+    type: UPDATE_DISCUSSION_RATE,
     payload: value
   };
 };

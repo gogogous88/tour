@@ -9,6 +9,7 @@ import Rdate from "../../Components/FormCommon/Rdate";
 import RichEditor from "Components/RichEditor";
 import PinButton from "Components/NewDiscussion/PinButton";
 import TagsInput from "Components/NewDiscussion/TagsInput";
+import ImgUL from "../../Components/FormCommon/ImgUL";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import "bootstrap/dist/js/bootstrap.min";
 
@@ -22,15 +23,19 @@ import {
   updateDiscussionSup_or_req,
   updateDiscussionPloc,
   updateDiscussionPname,
+  updateDiscussionImage,
   updateDiscussionVehicleType,
   updateDiscussionPh_no,
   updateDiscussionPdate,
-  updateDiscussionRdate
+  updateDiscussionRdate,
+  updateDiscussionRate
 } from "./actions";
 
 import styles from "./styles.css";
 import appLayout from "SharedStyles/appLayout.css";
 import Sup_or_req from "../../Components/FormCommon/Sup_or_req";
+
+import "react-dates/lib/css/_datepicker.css";
 
 class NewDiscussion extends Component {
   constructor(props) {
@@ -83,7 +88,9 @@ class NewDiscussion extends Component {
       updateDiscussionPloc,
       updateDiscussionVehicleType,
       updateDiscussionPname,
+      updateDiscussionImage,
       updateDiscussionPh_no,
+      updateDiscussionRate,
       updateDiscussionRdate,
       updateDiscussionPdate,
       postDiscussion,
@@ -98,8 +105,10 @@ class NewDiscussion extends Component {
       ploc,
       rdate,
       pname,
+      image,
       vehicleType,
       ph_no,
+      rate,
       pdate,
       tags,
       pinned
@@ -127,14 +136,22 @@ class NewDiscussion extends Component {
               key={"ploc"}
               type="text"
               className={styles.titleInput}
-              placeholder={"请填写起点及终点城市......"}
+              placeholder={"请填写起点城市......"}
               value={ploc}
               onChange={event => updateDiscussionPloc(event.target.value)}
             />,
 
+            <input
+              key={"rloc"}
+              type="text"
+              className={styles.titleInput}
+              placeholder={"请填写终点城市......"}
+              value={rloc}
+              onChange={event => updateDiscussionRloc(event.target.value)}
+            />,
+
             <Pdate
               key={"pdate"}
-              placeholder={"请输入抵达日期"}
               value={pdate}
               onChange={value => updateDiscussionPdate(value)}
             />,
@@ -186,8 +203,6 @@ class NewDiscussion extends Component {
 
             <Rdate
               key={"rdate"}
-              className={styles.dateInput}
-              placeholder={"请选择日期区间......"}
               value={rdate}
               onChange={value => updateDiscussionRdate(value)}
             />,
@@ -237,13 +252,12 @@ class NewDiscussion extends Component {
               onChange={event => updateDiscussionRloc(event.target.value)}
             />,
 
-            <input
+            <Rdate
               key={"rdate"}
-              type="text"
               className={styles.dateInput}
-              placeholder={"请选择日期区间......"}
+              placeholder={"请选择接团日期区间......"}
               value={rdate}
-              onChange={event => updateDiscussionRdate(event.target.value)}
+              onChange={value => updateDiscussionRdate(value)}
             />,
 
             <Sup_or_req
@@ -252,6 +266,14 @@ class NewDiscussion extends Component {
               title="您是求活儿还是提供团"
               onChange={value => {
                 updateDiscussionSup_or_req(value);
+              }}
+            />,
+
+            <ImgUL
+              key={"image"}
+              value={image}
+              onChange={value => {
+                updateDiscussionImage(value);
               }}
             />,
 
@@ -269,8 +291,83 @@ class NewDiscussion extends Component {
           ];
           {
             /* //以上接活
+        //以下二手市场 */
+          }
+        case "5a319aaa10cea7360a062880":
+          return [
+            role === "admin" && (
+              <PinButton
+                key={"pinned"}
+                value={pinned}
+                onChange={value => {
+                  updateDiscussionPinStatus(value);
+                }}
+              />
+            ),
+            <input
+              key={"ploc"}
+              type="text"
+              className={styles.titleInput}
+              placeholder={"商品所在地......"}
+              value={ploc}
+              onChange={event => updateDiscussionPloc(event.target.value)}
+            />,
+
+            <input
+              key={"title"}
+              type="text"
+              className={styles.titleInput}
+              placeholder={"商品名"}
+              value={title}
+              onChange={event => {
+                updateDiscussionTitle(event.target.value);
+              }}
+            />,
+
+            <input
+              key={"rate"}
+              type="text"
+              className={styles.titleInput}
+              placeholder={"价格"}
+              value={rate}
+              onChange={event => updateDiscussionRate(event.target.value)}
+            />,
+
+            <Sup_or_req
+              key={"sup_or_req"}
+              value={sup_or_req}
+              title="出售还是求购？"
+              onChange={value => {
+                updateDiscussionSup_or_req(value);
+              }}
+            />,
+
+            <ImgUL
+              key={"image"}
+              value={image}
+              onChange={value => {
+                updateDiscussionImage(value);
+              }}
+            />,
+
+            <RichEditor
+              key={"content"}
+              type="newDiscussion"
+              value={content}
+              onChange={value => {
+                updateDiscussionContent(value);
+              }}
+              onSave={() => {
+                postDiscussion(userId, forumId, currentForum);
+              }}
+            />
+          ];
+
+          {
+            /* //以上二手市场
         //以下默认 */
           }
+
         default:
           return [
             <input
@@ -314,6 +411,14 @@ class NewDiscussion extends Component {
               placeholder={"联系人"}
               value={pname}
               onChange={event => updateDiscussionPname(event.target.value)}
+            />,
+
+            <ImgUL
+              key={"image"}
+              value={image}
+              onChange={value => {
+                updateDiscussionImage(value);
+              }}
             />,
             <input
               key={"ph_no"}
@@ -470,11 +575,17 @@ export default connect(
       updateDiscussionPname: value => {
         dispatch(updateDiscussionPname(value));
       },
+      updateDiscussionImage: value => {
+        dispatch(updateDiscussionImage(value));
+      },
       updateDiscussionVehicleType: value => {
         dispatch(updateDiscussionVehicleType(value));
       },
       updateDiscussionPh_no: value => {
         dispatch(updateDiscussionPh_no(value));
+      },
+      updateDiscussionRate: value => {
+        dispatch(updateDiscussionRate(value));
       },
       updateDiscussionRdate: value => {
         dispatch(updateDiscussionRdate(value));

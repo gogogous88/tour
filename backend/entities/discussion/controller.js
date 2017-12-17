@@ -68,8 +68,10 @@ const createDiscussion = discussion => {
       rloc: discussion.rloc,
       ploc: discussion.ploc,
       ph_no: discussion.ph_no,
+      rate: discussion.rate,
       sup_or_req: discussion.sup_or_req,
       pname: discussion.pname,
+      image: discussion.image,
       rdate: discussion.rdate,
       pdate: discussion.pdate,
       vehicleType: discussion.vehicleType

@@ -26,8 +26,8 @@ class Sup_or_req extends Component {
     const { value } = this.state;
 
     return (
-      <div className={styles.container}>
-        <div className={styles.label}>{this.props.title}</div>
+      <div>
+        <div className={styles.titleInput}>{this.props.title}</div>
 
         <div className={styles.btnContainer}>
           <select value={value} onChange={this.onInputChange}>

@@ -3,7 +3,7 @@ import classnames from "classnames";
 import styles from "./styles.css";
 import moment from "moment";
 import $ from "jquery";
-import "moment/locale/zh-cn";
+
 import { DateRangePicker } from "react-dates";
 import {
   HORIZONTAL_ORIENTATION,
@@ -11,7 +11,6 @@ import {
 } from "react-dates/constants";
 import "react-dates/initialize";
 
-import DateTimeDropdown from "./DateTimeDropdown";
 import "react-dates/lib/css/_datepicker.css";
 
 const DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET = 1 + 7; // default pickup/return date is next Friday/Sunday

@@ -9,10 +9,12 @@ import {
   UPDATE_DISCUSSION_RLOC,
   UPDATE_DISCUSSION_PLOC,
   UPDATE_DISCUSSION_PNAME,
+  UPDATE_DISCUSSION_IMAGE,
   UPDATE_DISCUSSION_PDATE,
   CLEAR_SUCCESS_MESSAGE,
   UPDATE_DISCUSSION_SUP_OR_REQ,
   UPDATE_DISCUSSION_PH_NO,
+  UPDATE_DISCUSSION_RATE,
   UPDATE_DISCUSSION_RDATE,
   UPDATE_DISCUSSION_VEHICLE_TYPE
 } from "./constants";
@@ -25,10 +27,12 @@ const initialState = {
   rloc: "",
   ploc: "",
   ph_no: "",
+  rate: "",
   rdate: "",
   vehicleType: "",
   sup_or_req: "",
   pname: "",
+  image: [],
   pdate: "",
   content: null,
   tags: [],
@@ -93,6 +97,12 @@ export const newDiscussionReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         ph_no: action.payload
       });
+
+    case UPDATE_DISCUSSION_RATE:
+      return Object.assign({}, state, {
+        rate: action.payload
+      });
+
     case UPDATE_DISCUSSION_RDATE:
       return Object.assign({}, state, {
         rdate: action.payload
@@ -114,6 +124,11 @@ export const newDiscussionReducer = (state = initialState, action) => {
     case UPDATE_DISCUSSION_SUP_OR_REQ:
       return Object.assign({}, state, {
         sup_or_req: action.payload
+      });
+
+    case UPDATE_DISCUSSION_IMAGE:
+      return Object.assign({}, state, {
+        image: action.payload
       });
 
     default:

@@ -1,14 +1,14 @@
 /**
  * user model
  */
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
   name: String,
   username: String,
   avatarUrl: String,
   email: String,
-  role: { type: String, default: 'user' }, // ['admin', 'moderator', 'user']
+  role: { type: String, default: "user" }, // ['admin', 'moderator', 'user']
   github: {
     id: Number,
     url: String,
@@ -17,8 +17,9 @@ const userSchema = mongoose.Schema({
     bio: String,
     hireable: Boolean,
     followers: Number,
-    following: Number,
+    following: Number
   },
+  googleId: String
 });
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model("user", userSchema);

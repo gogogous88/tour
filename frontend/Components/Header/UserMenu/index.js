@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
-import classnames from 'classnames';
-import onClickOutside from 'react-onclickoutside';
-import styles from './styles';
+import React, { Component } from "react";
+import { Link } from "react-router";
+import classnames from "classnames";
+import onClickOutside from "react-onclickoutside";
+import styles from "./styles";
 
-import Button from 'Components/Button';
+import Button from "Components/Button";
 
 class UserMenu extends Component {
   constructor(props) {
@@ -18,35 +18,75 @@ class UserMenu extends Component {
   }
 
   toggleSubMenu() {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return { activeSubMenu: !prevState.activeSubMenu };
     });
   }
 
   renderSubMenu() {
     const { activeSubMenu } = this.state;
-    const {
-      signedIn,
-      gitHandler,
-    } = this.props;
+    const { signedIn, gitHandler } = this.props;
 
     if (activeSubMenu) {
       return (
         <div className={styles.subMenu}>
-          <Button className={styles.subMenuClose} onClick={this.toggleSubMenu} alwaysActive>
-            <i className={classnames('fa fa-close')}></i>
+          <Button
+            className={styles.subMenuClose}
+            onClick={this.toggleSubMenu}
+            alwaysActive
+          >
+            <i className={classnames("fa fa-close")} />
           </Button>
 
-          { !signedIn && <a className={styles.signInLink} href={'/api/user/authViaGitHub'}>
-            <Button className={styles.gitLoginBtn} alwaysActive>
-              <i className={classnames('fa fa-github-alt', styles.subMenuOcto)}></i>
-              <span className={styles.btnLabel}>With GitHub</span>
-            </Button>
-          </a> }
+          {!signedIn && (
+            <a className={styles.signInLink} href={"/api/user/authViaGitHub"}>
+              <Button className={styles.gitLoginBtn} alwaysActive>
+                <i
+                  className={classnames("fa fa-github-alt", styles.subMenuOcto)}
+                />
+                <span className={styles.btnLabel}>Github登录</span>
+              </Button>
+            </a>
+          )}
 
-          { signedIn && <span onClick={this.toggleSubMenu}><Link className={styles.subMenuItem} to={`/user/${gitHandler}`}>My Profile</Link></span> }
+          {!signedIn && (
+            <a className={styles.signInLink} href={"/auth/google"}>
+              <Button className={styles.gitLoginBtn} alwaysActive>
+                <i
+                  className={classnames(
+                    "fa fa-google-plus-official",
+                    styles.subMenuOcto
+                  )}
+                />
+                <span className={styles.btnLabel}>Google登录</span>
+              </Button>
+            </a>
+          )}
+
+          {!signedIn && (
+            <a className={styles.signInLink} href={"/auth/google"}>
+              <Button className={styles.gitLoginBtn} alwaysActive>
+                <i
+                  className={classnames("fa fa fa-weixin", styles.subMenuOcto)}
+                />
+                <span className={styles.btnLabel}>WX微信登录</span>
+              </Button>
+            </a>
+          )}
+
+          {signedIn && (
+            <span onClick={this.toggleSubMenu}>
+              <Link className={styles.subMenuItem} to={`/user/${gitHandler}`}>
+                My Profile
+              </Link>
+            </span>
+          )}
           {/* { signedIn && <a className={styles.subMenuItem} href={'#'}>Settings</a> } */}
-          { signedIn && <a className={styles.subMenuItem} href={'/api/user/signout'}>Sign Out</a> }
+          {signedIn && (
+            <a className={styles.subMenuItem} href={"/api/user/signout"}>
+              Sign Out
+            </a>
+          )}
         </div>
       );
     }
@@ -55,18 +95,17 @@ class UserMenu extends Component {
   }
 
   render() {
-    const {
-      signedIn,
-      userName,
-      avatar,
-      signOutAction,
-    } = this.props;
+    const { signedIn, userName, avatar, signOutAction } = this.props;
 
     if (signedIn) {
       return (
-        <div style={{ position: 'relative' }}>
+        <div style={{ position: "relative" }}>
           <div className={styles.container} onClick={this.toggleSubMenu}>
-            <img className={styles.userAvatar} src={avatar} alt={`${userName} Avatar`} />
+            <img
+              className={styles.userAvatar}
+              src={avatar}
+              alt={`${userName} Avatar`}
+            />
             <span className={styles.title}>{userName}</span>
           </div>
           {this.renderSubMenu()}
@@ -92,16 +131,16 @@ class UserMenu extends Component {
 
 UserMenu.defaultProps = {
   signedIn: false,
-  userName: '',
-  gitHandler: '',
-  avatar: '',
+  userName: "",
+  gitHandler: "",
+  avatar: ""
 };
 
 UserMenu.propTypes = {
   signedIn: React.PropTypes.bool.isRequired,
   userName: React.PropTypes.string,
   gitHandler: React.PropTypes.string,
-  avatar: React.PropTypes.string,
+  avatar: React.PropTypes.string
 };
 
 export default onClickOutside(UserMenu);

@@ -4,6 +4,7 @@ import { browserHistory } from "react-router";
 import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 import classnames from "classnames";
+import moment from "moment";
 
 import {
   getDiscussion,
@@ -97,6 +98,58 @@ class SingleDiscussion extends Component {
     deleteOpinion(opinionId, discussion);
   }
 
+  renderImageURL(discussion) {
+    switch (discussion.forum.forum_slug) {
+      case "shun_feng_che":
+        const shunFengURL =
+          "http://res.cloudinary.com/markmoo/image/upload/v1513478000/shun_feng_vnphax.png";
+        return shunFengURL;
+
+      case "pin_fang":
+        const pinFangURL =
+          "http://res.cloudinary.com/markmoo/image/upload/v1513478000/pin_fang_k8ipou.png";
+        return pinFangURL;
+
+      case "market":
+        const marketURL =
+          "http://res.cloudinary.com/markmoo/image/upload/v1513478000/mai_mai_kqhwmx.png";
+        return marketURL;
+
+      default:
+        return discussion.title;
+    }
+  }
+
+  renderTitle(discussion) {
+    switch (discussion.forum.forum_slug) {
+      case "shun_feng_che":
+        const shunFengTitle = `${discussion.sup_or_req}顺风车-:「${moment(
+          discussion.pdate
+        ).format("MM/DD")}」-【${discussion.ploc}至${discussion.rloc}】
+        `;
+        return shunFengTitle;
+
+      case "pin_fang":
+        const pinFangTitle = `${discussion.sup_or_req}拼房:从${moment(
+          discussion.rdate[0]
+        ).format("MM/DD")}日-到-${moment(discussion.rdate[1]).format(
+          "MM/DD"
+        )}日--${discussion.ploc}
+        `;
+        return pinFangTitle;
+
+      case "market":
+        const marketTitle = `「${discussion.ploc}」${
+          discussion.sup_or_req
+        }商品：${discussion.title},价格${discussion.rate}
+        `;
+        return marketTitle;
+
+      default:
+        return discussion.title;
+    }
+  }
+
   render() {
     const {
       userAuthenticated,
@@ -131,7 +184,9 @@ class SingleDiscussion extends Component {
       title,
       tags,
       opinions,
-      rloc
+      rloc,
+      ploc,
+      forum
     } = discussion;
 
     const { avatarUrl, name, username } = discussion.user;
@@ -150,6 +205,8 @@ class SingleDiscussion extends Component {
       favorites
     );
 
+    console.log(forum.forum_slug);
+
     return (
       <div className={appLayout.constraintWidth}>
         <Helmet>
@@ -161,11 +218,12 @@ class SingleDiscussion extends Component {
           userAvatar={avatarUrl}
           userName={name}
           userGitHandler={username}
-          discTitle={title}
+          discTitle={this.renderTitle(discussion)}
           discDate={date}
           discContent={content}
           tags={tags}
           rloc={rloc}
+          imageURL={this.renderImageURL(discussion)}
           favoriteCount={favorites.length}
           favoriteAction={toggleFavorite}
           userFavorited={userFavorited}

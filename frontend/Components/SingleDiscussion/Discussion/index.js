@@ -28,7 +28,8 @@ class Discussion extends Component {
       toggleingFavorite,
       allowDelete,
       deletingDiscussion,
-      deleteAction
+      deleteAction,
+      imageURL
     } = this.props;
 
     let dateDisplay = moment(discDate);
@@ -63,7 +64,12 @@ class Discussion extends Component {
           </div>
         </div>
 
-        <div className={styles.discTitle}>{discTitle}</div>
+        <div style={{ justifyContent: "start", flexDirection: "row" }}>
+          <div>
+            <img src={imageURL} style={{ width: 45 }} />
+          </div>
+          <div className={styles.discTitle}>{discTitle}</div>
+        </div>
         <div className={styles.discContent}>
           <RichEditor readOnly={true} value={discContent} />
         </div>

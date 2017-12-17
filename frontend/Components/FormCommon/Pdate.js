@@ -3,7 +3,7 @@ import classnames from "classnames";
 import styles from "./styles.css";
 import moment from "moment";
 import $ from "jquery";
-import "moment/locale/zh-cn";
+
 import { SingleDatePicker } from "react-dates";
 import {
   HORIZONTAL_ORIENTATION,
@@ -11,7 +11,6 @@ import {
 } from "react-dates/constants";
 import "react-dates/initialize";
 
-import DateTimeDropdown from "./DateTimeDropdown";
 import "react-dates/lib/css/_datepicker.css";
 
 const DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET = 1 + 7; // default pickup/return date is next Friday/Sunday
@@ -23,17 +22,17 @@ class Pdate extends Component {
     super(props);
     this.state = {
       pickDate: moment().day(DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET),
-      overlayDate: moment().day(DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET),
+
       overlayVisible: false,
       currentDateKey: ""
     };
 
-    this.props.onChange(this.state.overlayDate);
+    this.props.onChange(this.state.pickDate);
   }
 
   onDateSeclectChange = date => {
     this.setState({
-      overlayDate: date,
+      pickDate: date,
       overlayVisible: false
     });
 
@@ -42,28 +41,26 @@ class Pdate extends Component {
 
   render() {
     return (
-      <div>
-        <SingleDatePicker
-          date={this.state.overlayDate}
-          numberOfMonths={1}
-          initialVisibleMonth={() => this.state.overlayDate} // momentPropTypes.momentObj or null
-          onDateChange={this.onDateSeclectChange} // PropTypes.func.isRequired
-          focused={this.state.focused} // PropTypes.bool
-          onFocusChange={({ focused }) => this.setState({ focused })} // PropTypes.func.isRequired
-        />
-      </div>
+      <SingleDatePicker
+        date={this.state.pickDate}
+        numberOfMonths={1}
+        initialVisibleMonth={() => this.state.pickDate} // momentPropTypes.momentObj or null
+        onDateChange={this.onDateSeclectChange.bind(this)} // PropTypes.func.isRequired
+        focused={this.state.focused} // PropTypes.bool
+        onFocusChange={({ focused }) => this.setState({ focused })} // PropTypes.func.isRequired
+      />
     );
   }
 }
 
 Pdate.defaultProps = {
   onChange: date => {},
-  date: ""
+  date: moment().day(DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET)
 };
 
 Pdate.propTypes = {
-  onChange: React.PropTypes.func,
-  date: React.PropTypes.date
+  onDateChange: React.PropTypes.func,
+  date: ""
 };
 
 export default Pdate;
