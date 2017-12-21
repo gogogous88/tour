@@ -1,5 +1,8 @@
-@value primaryFontColor, secondaryFontColor, borderColor, backShade from 'SharedStyles/globalStyles';
-@value smallBP from 'SharedStyles/globalStyles';
+@value primaryFontColor,
+  secondaryFontColor,
+  borderColor,
+  backShade from "SharedStyles/globalStyles";
+@value smallBP from "SharedStyles/globalStyles";
 
 /**
  * PostBox styles
@@ -10,11 +13,25 @@
   flex-direction: column;
   padding: 10px;
   border-bottom: 1px solid borderColor;
-  &:last-child { border-bottom: none; }
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.cardSection {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
+.discussionTitle {
+  align-items: flex-end;
+  margin-top: 15px;
+  margin-left: 10px;
 }
 
 .title {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 300;
 
   & a {
@@ -23,7 +40,9 @@
   }
 }
 
-.titleBottomMargin { margin-bottom: 10px; }
+.titleBottomMargin {
+  margin-bottom: 10px;
+}
 
 .posterInfo {
   margin-top: 10px;
@@ -34,7 +53,9 @@
     text-decoration: none;
     transition: color 0.3s;
 
-    &:hover { color: primaryFontColor; }
+    &:hover {
+      color: primaryFontColor;
+    }
   }
   & .gitHandler {
     margin-left: 5px;
@@ -47,7 +68,9 @@
       padding: 0 5px;
     }
 
-    &:hover { color: primaryFontColor; }
+    &:hover {
+      color: primaryFontColor;
+    }
   }
 }
 
@@ -68,7 +91,9 @@
   display: flex;
   align-items: center;
 
-  @media smallBP { margin-top: 5px; }
+  @media smallBP {
+    margin-top: 5px;
+  }
 }
 
 .postInfo {
@@ -79,6 +104,8 @@
     text-transform: lowercase;
     color: secondaryFontColor;
 
-    &:first-child { margin-left: 0px; }
+    &:first-child {
+      margin-left: 0px;
+    }
   }
 }

@@ -1,3 +1,4 @@
+import _ from "lodash";
 import {
   START_FETCHING_FORUMS,
   STOP_FETCHING_FORUMS,
@@ -6,14 +7,14 @@ import {
   UPDATECURRENTFORUM,
   START_FETCHING_USER,
   FETCHING_USER_SUCCESS,
-  FETCHING_USER_FAILURE,
-} from './constants';
+  FETCHING_USER_FAILURE
+} from "./constants";
 
 const initialState = {
   fetchingForums: false,
   forums: null,
-  currentForum: 'general',
-  error: false,
+  currentForum: "general",
+  error: false
 };
 
 /**
@@ -23,30 +24,30 @@ export const appReducer = (state = initialState, action) => {
   switch (action.type) {
     case START_FETCHING_FORUMS:
       return Object.assign({}, state, {
-        fetchingForums: true,
-      });;
+        fetchingForums: true
+      });
 
     case STOP_FETCHING_FORUMS:
       return Object.assign({}, state, {
-        fetchingForums: false,
-      });;
+        fetchingForums: false
+      });
 
     case FETCHING_FORUMS_SUCCESS:
       return Object.assign({}, state, {
         forums: action.payload,
         fetchingForums: false,
-        error: false,
+        error: false
       });
 
     case FETCHING_FORUMS_FAILURE:
       return Object.assign({}, state, {
         fetchingForums: false,
-        error: 'Unable to fetch forums',
+        error: "Unable to fetch forums"
       });
 
     case UPDATECURRENTFORUM:
       return Object.assign({}, state, {
-        currentForum: action.payload,
+        currentForum: action.payload
       });
 
     default:
@@ -69,14 +70,14 @@ const initialUserState = {
   githubUrl: null,
   githubLocation: null,
   githubBio: null,
-  role: null,
+  role: null
 };
 
 export const userReducer = (state = initialUserState, action) => {
   switch (action.type) {
     case START_FETCHING_USER:
       return Object.assign({}, state, {
-        fetchUser: true,
+        fetchUser: true
       });
 
     case FETCHING_USER_SUCCESS:
@@ -89,28 +90,31 @@ export const userReducer = (state = initialUserState, action) => {
         githubBio,
         githubUrl,
         githubLocation,
-        role,
+        role
       } = action.payload;
 
-      return Object.assign({}, state), {
-        fetchingUser: false,
-        authenticated: true,
-        error: null,
-        _id,
-        name,
-        username,
-        avatarUrl,
-        email,
-        githubBio,
-        githubUrl,
-        githubLocation,
-        role,
-      };
+      return (
+        Object.assign({}, state),
+        {
+          fetchingUser: false,
+          authenticated: true,
+          error: null,
+          _id,
+          name,
+          username,
+          avatarUrl,
+          email,
+          githubBio,
+          githubUrl,
+          githubLocation,
+          role
+        }
+      );
 
     case FETCHING_USER_FAILURE:
       return Object.assign({}, initialUserState, {
         fetchingUser: false,
-        error: 'Unable to fetch user!',
+        error: "Unable to fetch user!"
       });
 
     default:

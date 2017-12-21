@@ -1,5 +1,7 @@
-@value borderColor, secondaryFontColor, primaryFontColor from 'SharedStyles/globalStyles.css';
-@value smallBP from 'SharedStyles/globalStyles.css';
+@value borderColor,
+  secondaryFontColor,
+  primaryFontColor from "SharedStyles/globalStyles.css";
+@value smallBP from "SharedStyles/globalStyles.css";
 
 /**
  * Discussion styles
@@ -8,6 +10,25 @@
 .container {
   padding: 20px 10px 0px 10px;
   position: relative;
+}
+
+.imageContainer {
+  border-top: 1px solid #f6f6f6;
+  margin-top: 15px;
+  display: flex;
+  justify-content: start;
+  flex-direction: row;
+}
+
+.imgContainer {
+  display: flex;
+  align-items: center;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: start;
+  margin-left: 10px;
 }
 
 .infoContainer {
@@ -23,7 +44,9 @@
   & .columnOnSmallBP {
     flex: 1;
     display: flex;
-    @media smallBP { flex-direction: column; }
+    @media smallBP {
+      flex-direction: column;
+    }
   }
 
   & .userInfo {
@@ -42,16 +65,22 @@
       text-decoration: none;
       color: secondaryFontColor;
       transition: color 0.3s;
-      &:hover { color: primaryFontColor; }
+      &:hover {
+        color: primaryFontColor;
+      }
 
-      & .gitIcon { margin-right: 5px; }
+      & .gitIcon {
+        margin-right: 5px;
+      }
     }
   }
 
   & .dateInfo {
     font-size: 13px;
     color: secondaryFontColor;
-    @media smallBP { margin-left: 10px; }
+    @media smallBP {
+      margin-left: 10px;
+    }
   }
 }
 
@@ -63,8 +92,10 @@
 }
 
 .discContent {
-  margin-top: 10px;
-  font-size: 15px;
+  border-bottom: 1px solid #f6f6f6;
+  margin-top: 30px;
+  margin-left: 15px;
+  font-size: 18px;
   line-height: 26px;
 }
 
@@ -78,7 +109,9 @@
     align-items: flex-start;
   }
 
-  & .tags { flex: 1; }
+  & .tags {
+    flex: 1;
+  }
 
   & .favoriteButton,
   & .deleteButton {

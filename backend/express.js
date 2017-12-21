@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const mongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
+const mongoose = require("mongoose");
 
 /**
  * express configuration
@@ -33,9 +34,14 @@ const expressConfig = (app, serverConfigs) => {
       resave: false,
       saveUninitialized: true,
       secret: "secret",
+      // secret: settings.cookieSecret,
       store: new mongoStore({
+        adapter: "connect-mongo",
         url: serverConfigs.DBURL,
-        collection: "sessions"
+        collection: "sessions",
+        auto_reconnect: false,
+        ssl: false,
+        stringify: true
       })
     })
   );

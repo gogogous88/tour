@@ -11,6 +11,20 @@ import Tag from "Components/Tag";
 import RichEditor from "Components/RichEditor";
 
 class Discussion extends Component {
+  renderUploadImages(uploadImg) {
+    return uploadImg.map(eachImg => {
+      return (
+        <div key={eachImg.secure_url} style={{ marginTop: 15 }}>
+          <li>
+            <img
+              src={eachImg.secure_url}
+              style={{ alignSelf: "center", width: "80%" }}
+            />
+          </li>
+        </div>
+      );
+    });
+  }
   render() {
     const {
       id,
@@ -29,7 +43,8 @@ class Discussion extends Component {
       allowDelete,
       deletingDiscussion,
       deleteAction,
-      imageURL
+      imageURL,
+      uploadImg
     } = this.props;
 
     let dateDisplay = moment(discDate);
@@ -38,7 +53,7 @@ class Discussion extends Component {
     let favCount = "";
     if (toggleingFavorite) favCount = "Toggling Favorite...";
     else if (userFavorited) favCount = `Favorited (${favoriteCount})`;
-    else if (favoriteCount === 0) favCount = "Make favorite";
+    else if (favoriteCount === 0) favCount = "make favorite";
     else if (favoriteCount === 1) favCount = "1 favorite";
     else favCount = `${favoriteCount} favorites`;
 
@@ -64,21 +79,24 @@ class Discussion extends Component {
           </div>
         </div>
 
-        <div style={{ justifyContent: "start", flexDirection: "row" }}>
-          <div>
-            <img src={imageURL} style={{ width: 45 }} />
+        <div className={styles.imageContainer}>
+          <div className={styles.imgContainer}>
+            <img src={imageURL} style={{ width: 60 }} />
           </div>
-          <div className={styles.discTitle}>{discTitle}</div>
+          <div className={styles.titleContainer}>
+            <div className={styles.discTitle}>{discTitle}</div>
+          </div>
         </div>
         <div className={styles.discContent}>
           <RichEditor readOnly={true} value={discContent} />
+          <ul>{this.renderUploadImages(uploadImg)}</ul>
         </div>
 
         <div className={styles.discFooter}>
           <div className={styles.tags}>
             {tags.map(tag => <Tag name={tag} key={_.uniqueId("tag_")} />)}
           </div>
-          <div>{rloc}</div>
+
           <Button
             noUppercase
             className={styles.favoriteButton}
@@ -103,7 +121,7 @@ class Discussion extends Component {
               }}
             >
               <i className={classnames("fa fa-trash", styles.trashIcon)} />
-              <span>Delete</span>
+              <span>删除</span>
             </Button>
           )}
         </div>

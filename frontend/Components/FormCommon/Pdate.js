@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import classnames from "classnames";
-import styles from "./styles.css";
+import styles from "./styles";
 import moment from "moment";
 import $ from "jquery";
 
@@ -41,14 +41,17 @@ class Pdate extends Component {
 
   render() {
     return (
-      <SingleDatePicker
-        date={this.state.pickDate}
-        numberOfMonths={1}
-        initialVisibleMonth={() => this.state.pickDate} // momentPropTypes.momentObj or null
-        onDateChange={this.onDateSeclectChange.bind(this)} // PropTypes.func.isRequired
-        focused={this.state.focused} // PropTypes.bool
-        onFocusChange={({ focused }) => this.setState({ focused })} // PropTypes.func.isRequired
-      />
+      <div className="input_field">
+        <SingleDatePicker
+          noBorder
+          date={this.state.pickDate}
+          numberOfMonths={1}
+          initialVisibleMonth={() => this.state.pickDate} // momentPropTypes.momentObj or null
+          onDateChange={this.onDateSeclectChange.bind(this)} // PropTypes.func.isRequired
+          focused={this.state.focused} // PropTypes.bool
+          onFocusChange={({ focused }) => this.setState({ focused })} // PropTypes.func.isRequired
+        />
+      </div>
     );
   }
 }

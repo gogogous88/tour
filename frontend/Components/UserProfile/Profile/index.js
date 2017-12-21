@@ -29,9 +29,9 @@ class Profile extends Component {
 }
 
 Profile.defaultProps = {
-  name: "Hello World",
-  gitHandler: "helloWorld",
-  location: "Somewhere in the world",
+  name: "大侠",
+  gitHandler: "大导",
+  location: "美利坚和中国",
   avatarUrl: "https://google.com"
 };
 

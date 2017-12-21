@@ -69,7 +69,7 @@ class ForumFeed extends Component {
       >
         <Link to={`/${currentForum}/new_discussion`}>
           <Button type="outline" fullWidth noUppercase>
-            发布
+            点击发布
           </Button>
         </Link>
       </div>

@@ -15,6 +15,11 @@
   }
 }
 
+.imgContainer {
+  display: flex;
+  align-items: center;
+}
+
 .header {
   border-bottom: 1px solid borderColor;
   height: 30px;

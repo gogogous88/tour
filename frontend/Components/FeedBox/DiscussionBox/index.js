@@ -32,8 +32,19 @@ class DiscussionBox extends Component {
             userProfile && styles.titleBottomMargin
           )}
         >
-          <img src={imageURL} style={{ width: 60 }} />
-          <Link to={link}>{discussionTitle}</Link>
+          <div className={styles.cardSection}>
+            <div className={styles.imgContainer}>
+              <img src={imageURL} style={{ width: 60 }} />
+            </div>
+            <div
+              className={classnames(
+                styles.imgContainer,
+                styles.discussionTitle
+              )}
+            >
+              <Link to={link}>{discussionTitle}</Link>
+            </div>
+          </div>
         </div>
 
         {!userProfile && (

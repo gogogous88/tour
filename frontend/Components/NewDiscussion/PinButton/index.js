@@ -25,7 +25,7 @@ class PinButton extends Component {
 
     return (
       <div className={styles.container}>
-        <div className={styles.label}>Is it a pinned discussion?</div>
+        <div className={styles.label}>是否置顶？</div>
 
         <div className={styles.btnContainer}>
           <Button
@@ -34,7 +34,7 @@ class PinButton extends Component {
               this.updateValue(true);
             }}
           >
-            Yes
+            是
           </Button>
 
           <Button
@@ -43,7 +43,7 @@ class PinButton extends Component {
               this.updateValue(false);
             }}
           >
-            No
+            否
           </Button>
         </div>
       </div>

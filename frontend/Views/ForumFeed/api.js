@@ -15,4 +15,4 @@ export const fetchPinnedDiscussions = forum_id => {
 
 //5a2f313e0a0b184f99ab4b54
 
-//localhost:8080//api/forum/5a319a5c10cea7360a06287d/discussions?sorting_method=date
+//localhost:8080/api/forum/5a319a5c10cea7360a06287d/discussions?sorting_method=date

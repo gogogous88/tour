@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from "lodash";
 import {
   START_FETCHING_FORUMS,
   STOP_FETCHING_FORUMS,
@@ -7,13 +7,9 @@ import {
   UPDATECURRENTFORUM,
   START_FETCHING_USER,
   FETCHING_USER_SUCCESS,
-  FETCHING_USER_FAILURE,
-} from './constants';
-import {
-  fetchForums,
-  fetchUser,
-  signOut,
-} from './api';
+  FETCHING_USER_FAILURE
+} from "./constants";
+import { fetchForums, fetchUser, signOut } from "./api";
 
 /**
  * get all forum list
@@ -35,10 +31,10 @@ export const getForums = () => {
  * @param  {String} currentForum
  * @return {action}
  */
-export const updateCurrentForum = (currentForum) => {
+export const updateCurrentForum = currentForum => {
   return {
     type: UPDATECURRENTFORUM,
-    payload: currentForum,
+    payload: currentForum
   };
 };
 

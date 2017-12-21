@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router";
 import styles from "./styles";
+import classnames from "classnames";
 
 import Button from "Components/Button";
 
@@ -10,9 +11,28 @@ class SideBar extends Component {
 
     return (
       <div className={styles.sidebarContainer}>
-        <Link to={`/${currentForum}/new_discussion`}>
-          <Button type="outline">发布新的</Button>
-        </Link>
+        {/* <Link to={`/${currentForum}/new_discussion/req`}>
+          <Button className={styles.button} type="outline">
+            <div className={styles.buttonContent}>+</div>
+          </Button>
+        </Link> */}
+        <div className="fixed-action-btn toolbar">
+          <a className="btn-floating btn-large red">
+            <i className="large material-icons">add</i>
+          </a>
+          <ul>
+            <li className="waves-effect waves-light">
+              <Link to={`/${currentForum}/new_discussion/req`}>
+                发布寻求信息
+              </Link>
+            </li>
+            <li className="waves-effect waves-light">
+              <Link to={`/${currentForum}/new_discussion/sup`}>
+                发布提供信息
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
     );
   }

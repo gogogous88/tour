@@ -9,6 +9,12 @@
   background-size: cover;
   color: rgb(158, 34, 34);
 }
+
+.rowContainer {
+  display: flex;
+  flex-direction: row;
+}
+
 .content {
   margin-top: 10px;
   position: relative;

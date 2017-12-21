@@ -37,6 +37,7 @@ class Rdate extends Component {
     return (
       <div>
         <DateRangePicker
+          noBorder
           startDate={this.state.startDate} // momentPropTypes.momentObj or null,
           endDate={this.state.endDate} // momentPropTypes.momentObj or null,
           onDatesChange={({ startDate, endDate }) => {

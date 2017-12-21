@@ -23,6 +23,8 @@ import Opinion from "Components/SingleDiscussion/Opinion";
 import styles from "./styles.css";
 import appLayout from "SharedStyles/appLayout.css";
 
+import keys from "../../../config/credentials";
+
 class SingleDiscussion extends Component {
   constructor(props) {
     super(props);
@@ -98,22 +100,49 @@ class SingleDiscussion extends Component {
     deleteOpinion(opinionId, discussion);
   }
 
+  renderUploadImg(discussion) {
+    if (discussion.image) {
+      return discussion.image;
+    }
+  }
+
   renderImageURL(discussion) {
     switch (discussion.forum.forum_slug) {
       case "shun_feng_che":
-        const shunFengURL =
-          "http://res.cloudinary.com/markmoo/image/upload/v1513478000/shun_feng_vnphax.png";
-        return shunFengURL;
+        if (discussion.sup_or_req === "提供") {
+          const shunFengURL = keys.SUP_SHUN_FENG_CHE;
+          return shunFengURL;
+        } else {
+          const shunFengURL = keys.REQ_SHUN_FENG_CHE;
+          return shunFengURL;
+        }
 
       case "pin_fang":
-        const pinFangURL =
-          "http://res.cloudinary.com/markmoo/image/upload/v1513478000/pin_fang_k8ipou.png";
-        return pinFangURL;
+        if (discussion.sup_or_req === "提供") {
+          const pinFangURL = keys.SUP_PIN_FANG;
+          return pinFangURL;
+        } else {
+          const pinFangURL = keys.REQ_PIN_FANG;
+          return pinFangURL;
+        }
+
+      case "fa_tuan_jie_huo":
+        if (discussion.sup_or_req === "提供") {
+          const jieTuanURL = keys.SUP_JIE_TUAN;
+          return jieTuanURL;
+        } else {
+          const jieTuanURL = keys.REQ_JIE_TUAN;
+          return jieTuanURL;
+        }
 
       case "market":
-        const marketURL =
-          "http://res.cloudinary.com/markmoo/image/upload/v1513478000/mai_mai_kqhwmx.png";
-        return marketURL;
+        if (discussion.rate) {
+          const marketURL = keys.SUP_MARKET;
+          return marketURL;
+        } else {
+          const marketURL = keys.REQ_MARKET;
+          return marketURL;
+        }
 
       default:
         return discussion.title;
@@ -125,25 +154,63 @@ class SingleDiscussion extends Component {
       case "shun_feng_che":
         const shunFengTitle = `${discussion.sup_or_req}顺风车-:「${moment(
           discussion.pdate
-        ).format("MM/DD")}」-【${discussion.ploc}至${discussion.rloc}】
+        ).format("MM/DD")}」-【${discussion.ploc}至${
+          discussion.rloc
+        },联系方式：「${discussion.ph_no}」
         `;
         return shunFengTitle;
 
       case "pin_fang":
-        const pinFangTitle = `${discussion.sup_or_req}拼房:从${moment(
+        const pinFangTitle = `${discussion.sup_or_req}拼房:从「${moment(
           discussion.rdate[0]
-        ).format("MM/DD")}日-到-${moment(discussion.rdate[1]).format(
+        ).format("MM/DD")}」日-到-「${moment(discussion.rdate[1]).format(
           "MM/DD"
-        )}日--${discussion.ploc}
+        )}」日--「${discussion.ploc}」,联系方式：「${discussion.ph_no}」
         `;
         return pinFangTitle;
 
+      case "fa_tuan_jie_huo":
+        const {
+          sup_or_req,
+          rdate,
+          ploc,
+          rloc,
+          ph_no,
+          vehicleType
+        } = discussion;
+        if (sup_or_req === "提供") {
+          const faTuanTitle = `哪位能接「${moment(rdate[0]).format(
+            "MM/DD"
+          )}-${ploc}」开始「${moment(rdate[1]).format(
+            "MM/DD"
+          )}-${rloc}」结束，需要「${vehicleType}」的团，联系方式:「${ph_no}」,有空的导游请与我取得联系，谢谢。`;
+          return faTuanTitle;
+        } else {
+          const faTuanTitle = `求接团，-各位大导，我从「${moment(
+            rdate[0]
+          ).format("MM/DD")}」到「${moment(rdate[1]).format(
+            "MM/DD"
+          )}」期间可以接「${ploc}」开始的团，联系方式:「${ph_no}」`;
+          return faTuanTitle;
+        }
+
       case "market":
-        const marketTitle = `「${discussion.ploc}」${
-          discussion.sup_or_req
-        }商品：${discussion.title},价格${discussion.rate}
+        if (discussion.rate) {
+          const marketTitle = `「${discussion.ploc}」${
+            discussion.sup_or_req
+          }商品：「${discussion.title}」,价格「${
+            discussion.rate
+          }」,联系方式：「${discussion.ph_no}」
         `;
-        return marketTitle;
+          return marketTitle;
+        } else {
+          const marketTitle = `我在「${discussion.ploc}」，想求购「${
+            discussion.title
+          }」,我的联系电话是:「${
+            discussion.ph_no
+          }」,有出售的朋友请与我取得联系，谢谢。`;
+          return marketTitle;
+        }
 
       default:
         return discussion.title;
@@ -231,14 +298,13 @@ class SingleDiscussion extends Component {
           allowDelete={allowDelete}
           deletingDiscussion={deletingDiscussion}
           deleteAction={this.deleteDiscussion.bind(this)}
+          uploadImg={this.renderUploadImg(discussion)}
         />
 
         {opinionError && <div className={styles.errorMsg}>{opinionError}</div>}
 
         {!userAuthenticated && (
-          <div className={styles.signInMsg}>
-            Please sign in to post a reply.
-          </div>
+          <div className={styles.signInMsg}>请再登录后回复...</div>
         )}
         {userAuthenticated && (
           <ReplyBox

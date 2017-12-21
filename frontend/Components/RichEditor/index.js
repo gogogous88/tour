@@ -102,12 +102,12 @@ class RichEditor extends Component {
     };
 
     let saveButtonLabel = "";
-    if (type === "newOpinion") saveButtonLabel = "Reply";
+    if (type === "newOpinion") saveButtonLabel = "点击回复";
     if (type === "newDiscussion") saveButtonLabel = "点击发布";
 
     let placeholder = "";
-    if (type === "newOpinion") placeholder = "Your opinion...";
-    if (type === "newDiscussion") placeholder = "其他信息(如联系方式等)";
+    if (type === "newOpinion") placeholder = "请填写回复内容......";
+    if (type === "newDiscussion") placeholder = "请输入更多信息....";
 
     return (
       <div
@@ -156,7 +156,7 @@ class RichEditor extends Component {
             noUppercase
             style={{
               alignSelf: "stretch",
-              backgroundColor: "#e44646d4",
+              backgroundColor: "rgb(111, 113, 117)",
               color: "#fff"
             }}
             onClick={onSave}

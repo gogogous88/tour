@@ -69,7 +69,7 @@ class UserMenu extends Component {
                 <i
                   className={classnames("fa fa fa-weixin", styles.subMenuOcto)}
                 />
-                <span className={styles.btnLabel}>WX微信登录</span>
+                <span className={styles.btnLabel}>微信用户登录</span>
               </Button>
             </a>
           )}
@@ -77,14 +77,14 @@ class UserMenu extends Component {
           {signedIn && (
             <span onClick={this.toggleSubMenu}>
               <Link className={styles.subMenuItem} to={`/user/${gitHandler}`}>
-                My Profile
+                我的论坛
               </Link>
             </span>
           )}
           {/* { signedIn && <a className={styles.subMenuItem} href={'#'}>Settings</a> } */}
           {signedIn && (
             <a className={styles.subMenuItem} href={"/api/user/signout"}>
-              Sign Out
+              登出
             </a>
           )}
         </div>
@@ -120,7 +120,7 @@ class UserMenu extends Component {
           className={classnames(styles.signInBtn, styles.title)}
           onClick={this.toggleSubMenu}
         >
-          Sign Up / Sign In
+          注册 / 登录
         </Button>
 
         {this.renderSubMenu()}

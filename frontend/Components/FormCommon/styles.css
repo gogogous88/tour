@@ -73,3 +73,20 @@
 
   background-color: rgba(255, 255, 255, 0.8);
 }
+
+.styledSelect {
+  /* background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0; */
+  height: 29px;
+  overflow: hidden;
+  width: 240px;
+}
+
+.dropzone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  width: 80%;
+  height: 20%;
+  border: 1px dashed rgba(33, 24, 24, 0.76);
+}

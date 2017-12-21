@@ -10,9 +10,9 @@ class BlockStyleControls extends Component {
     const { onToggle, editorState, type } = this.props;
 
     const blockTypes = [
-      // {label: 'H1', style: 'header-one'},
-      // { label: "H2", style: "header-two" },
-      // { label: "H3", style: "header-three" }
+      { label: "标题1", style: "header-one" },
+      { label: "标题2", style: "header-two" },
+      { label: "标题3", style: "header-three" }
       // {label: 'H4', style: 'header-four'},
       // {label: 'H5', style: 'header-five'},
       // {label: 'H6', style: 'header-six'},

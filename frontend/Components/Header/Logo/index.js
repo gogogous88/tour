@@ -28,7 +28,7 @@ const Logo = () => {
           </g>
         </svg>
       </div>
-      <div className={styles.logoTitle}>北美导游通</div>
+      <div className={styles.logoTitle}>途盖大导通</div>
     </div>
   );
 };

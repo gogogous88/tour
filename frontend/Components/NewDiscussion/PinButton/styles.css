@@ -1,5 +1,7 @@
-@value primaryFontColor, secondaryFontColor, borderColor from 'SharedStyles/globalStyles.css';
-@value smallBP from 'SharedStyles/globalStyles.css';
+@value primaryFontColor,
+  secondaryFontColor,
+  borderColor from "SharedStyles/globalStyles.css";
+@value smallBP from "SharedStyles/globalStyles.css";
 
 .container {
   display: flex;
@@ -12,10 +14,9 @@
 }
 
 .btnContainer {
-
 }
 
 .button {
   padding: 10px 20px;
-  border: 1px solid borderColor;
+  border: 5px solid rgb(255, 255, 255, 1);
 }
