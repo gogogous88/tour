@@ -446,7 +446,7 @@ class NewDiscussion extends Component {
                 /> */}
               </div>
             );
-            以上是求集团;
+            // 以上是求集团;
           } else {
             return (
               <div>

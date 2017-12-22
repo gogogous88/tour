@@ -10,7 +10,7 @@ class MapHere extends Component {
   addMarkers = () => {
     const { locations } = this.props;
     const { lat, lng } = this.props.center;
-
+    console.log(locations);
     var map = new google.maps.Map(this.refs.map, {
       zoom: 5,
       center: { lat, lng }
@@ -148,23 +148,19 @@ class MapHere extends Component {
   };
 
   render() {
-    if (!this.props.locations) {
-      console.log("mapHere", this.props.locations);
-      return (
-        <div
-          ref="map"
-          style={{
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            position: "absolute",
-            zIndex: -1
-          }}
-        />
-      );
-    }
-    return <div>loading</div>;
+    return (
+      <div
+        ref="map"
+        style={{
+          height: "88%",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          position: "absolute",
+          zIndex: -1
+        }}
+      />
+    );
   }
 }
 

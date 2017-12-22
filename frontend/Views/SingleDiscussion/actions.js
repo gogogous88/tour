@@ -3,26 +3,21 @@ import {
   FETCHING_SINGLE_DISC_END,
   FETCHING_SINGLE_DISC_SUCCESS,
   FETCHING_SINGLE_DISC_FAILURE,
-
   TOGGLE_FAVORITE_START,
   TOGGLE_FAVORITE_SUCCESS,
   TOGGLE_FAVORITE_FAILURE,
-
   UPDATE_OPINION_CONTENT,
-
   POSTING_OPINION_START,
   POSTING_OPINION_SUCCESS,
   POSTING_OPINION_FAILURE,
-
   DELETE_DISC_START,
   DELETE_DISC_SUCCESS,
   DELETE_DISC_REDIRECT,
   DELETE_DISC_FAILURE,
-
   DELETE_OPINION_START,
   DELETE_OPINION_SUCCESS,
-  DELETE_OPINION_FAILURE,
-} from './constants';
+  DELETE_OPINION_FAILURE
+} from "./constants";
 
 import {
   fetchSingleDiscussion,
@@ -30,20 +25,21 @@ import {
   toggleFavoriteApi,
   postOpinionApi,
   deletePostApi,
-  deleteOpinionApi,
-} from './api';
+  deleteOpinionApi
+} from "./api";
 
 /**
  * get the discussion from server
  * @param  {String} discussionSlug
  * @return {action}
  */
-export const getDiscussion = (discussionSlug) => {
+export const getDiscussion = discussionSlug => {
   return (dispatch, getState) => {
     dispatch({ type: FETCHING_SINGLE_DISC_START });
     fetchSingleDiscussion(discussionSlug).then(
       data => {
-        if (data.data) dispatch({ type: FETCHING_SINGLE_DISC_SUCCESS, payload: data.data });
+        if (data.data)
+          dispatch({ type: FETCHING_SINGLE_DISC_SUCCESS, payload: data.data });
         else dispatch({ type: FETCHING_SINGLE_DISC_FAILURE });
       },
       error => dispatch({ type: FETCHING_SINGLE_DISC_FAILURE })
@@ -56,7 +52,7 @@ export const getDiscussion = (discussionSlug) => {
  * @param  {ObjectId} discussionId
  * @return {action}
  */
-export const toggleFavorite = (discussionId) => {
+export const toggleFavorite = discussionId => {
   return (dispatch, getState) => {
     dispatch({ type: TOGGLE_FAVORITE_START });
 
@@ -65,8 +61,7 @@ export const toggleFavorite = (discussionId) => {
         if (data.data._id) {
           dispatch({ type: TOGGLE_FAVORITE_SUCCESS });
           dispatch({ type: FETCHING_SINGLE_DISC_SUCCESS, payload: data.data });
-        }
-        else dispatch({ type: TOGGLE_FAVORITE_FAILURE });
+        } else dispatch({ type: TOGGLE_FAVORITE_FAILURE });
       },
       error => dispatch({ type: TOGGLE_FAVORITE_FAILURE })
     );
@@ -78,10 +73,10 @@ export const toggleFavorite = (discussionId) => {
  * @param  {Object} value
  * @return {action}
  */
-export const updateOpinionContent = (value) => {
+export const updateOpinionContent = value => {
   return {
     type: UPDATE_OPINION_CONTENT,
-    payload: value,
+    payload: value
   };
 };
 
@@ -98,7 +93,11 @@ export const postOpinion = (opinion, discussionSlug) => {
 
     // validate the opinion
     if (!opinion.content || opinion.content.length < 20) {
-      dispatch({ type: POSTING_OPINION_FAILURE, payload: 'Please provide a bit more info in your opinion....at least 20 characters.' });
+      dispatch({
+        type: POSTING_OPINION_FAILURE,
+        payload:
+          "Please provide a bit more info in your opinion....at least 20 characters."
+      });
     } else {
       // call the api to post the opinion
       postOpinionApi(opinion).then(
@@ -107,13 +106,15 @@ export const postOpinion = (opinion, discussionSlug) => {
             // fetch the discussion to refresh the opinion list
             fetchSingleDiscussion(discussionSlug).then(
               data => {
-                dispatch({ type: FETCHING_SINGLE_DISC_SUCCESS, payload: data.data });
+                dispatch({
+                  type: FETCHING_SINGLE_DISC_SUCCESS,
+                  payload: data.data
+                });
                 dispatch({ type: POSTING_OPINION_SUCCESS });
               },
               error => dispatch({ type: FETCHING_SINGLE_DISC_FAILURE })
             );
-          }
-          else dispatch({ type: POSTING_OPINION_FAILURE });
+          } else dispatch({ type: POSTING_OPINION_FAILURE });
         },
         error => dispatch({ type: POSTING_OPINION_FAILURE })
       );
@@ -126,13 +127,16 @@ export const postOpinion = (opinion, discussionSlug) => {
  * @param  {String} discussionSlug
  * @return {action}
  */
-export const deletePost = (discussionSlug) => {
+export const deletePost = discussionSlug => {
   return (dispatch, getState) => {
     dispatch({ type: DELETE_DISC_START });
     deletePostApi(discussionSlug).then(
       data => {
-        if (data.data.deleted) { dispatch({ type: DELETE_DISC_SUCCESS }); }
-        else { dispatch({ type: DELETE_DISC_FAILURE }); }
+        if (data.data.deleted) {
+          dispatch({ type: DELETE_DISC_SUCCESS });
+        } else {
+          dispatch({ type: DELETE_DISC_FAILURE });
+        }
       },
       error => dispatch({ type: DELETE_DISC_FAILURE })
     );
@@ -165,18 +169,20 @@ export const deleteOpinion = (opinionId, discussionSlug) => {
     deleteOpinionApi(opinionId).then(
       data => {
         if (data.data.deleted) {
-
           // fetch the discussion again to refresh the opinions
           fetchSingleDiscussion(discussionSlug).then(
             data => {
               dispatch({ type: DELETE_OPINION_SUCCESS });
-              dispatch({ type: FETCHING_SINGLE_DISC_SUCCESS, payload: data.data });
+              dispatch({
+                type: FETCHING_SINGLE_DISC_SUCCESS,
+                payload: data.data
+              });
             },
             error => dispatch({ type: FETCHING_SINGLE_DISC_FAILURE })
           );
-
+        } else {
+          dispatch({ type: DELETE_OPINION_FAILURE });
         }
-        else { dispatch({ type: DELETE_OPINION_FAILURE }); }
       },
       error => dispatch({ type: DELETE_OPINION_FAILURE })
     );

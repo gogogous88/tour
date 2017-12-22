@@ -18,6 +18,8 @@ import NewDiscussion from "../Views/NewDiscussion";
 import UserProfile from "../Views/UserProfile";
 import NotFound from "../Views/NotFound";
 import MapHome from "../Views/Map/MapHome";
+import MapAttr from "../Views/Map/MapAttr";
+import MapDetail from "../Views/Map/MapDetail";
 
 //mark - materialize css
 
@@ -33,7 +35,9 @@ ReactDOM.render(
 
       <Route path="/" component={AppContainer}>
         <IndexRoute component={ForumFeed} />
-        <Route path="/map" component={MapHome} />
+        <Route exact path="/map/attr" component={MapAttr} />
+        <Route path="/map/:id" component={MapDetail} />
+        <Route exact path="/map" component={MapHome} />
         <Route path=":forum" component={ForumFeed} />
         <Route
           path=":forum/discussion/:discussion"
