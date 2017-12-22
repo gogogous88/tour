@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchMapData } from "./actions";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import _ from "lodash";
 
 class MapDetail extends Component {
@@ -15,9 +15,9 @@ class MapDetail extends Component {
     return (
       <div role="main" className="container">
         <br />
-        {/* <Link className="btn btn-danger" to="/map">
+        <Link className="btn btn-danger" to="/map">
           《 返回地图
-        </Link> */}
+        </Link>
         <hr />
         <div className="row">
           <div className="col-sm-6 blog-main">
@@ -35,10 +35,10 @@ class MapDetail extends Component {
           <div className="col-sm-6 blog-main">
             <div className="blog-post">
               <h5>电话：</h5>
-              <p>{eachMapData.ph_no}</p>
+              <p className="blog-post-meta">{eachMapData.ph_no}</p>
               <hr />
               <h5>价格：</h5>
-              <p>{eachMapData.rate}</p>
+              <p>{eachMapData.price_rate}</p>
               <hr />
               <h5>描述：</h5>
               <blockquote>{eachMapData.descr}</blockquote>
@@ -57,7 +57,6 @@ class MapDetail extends Component {
     // console.log(this.props.eachMapData);
     return (
       <div>
-        <h1> MapDetail Page is Here </h1>
         <ul>{this.renderList()}</ul>
       </div>
     );

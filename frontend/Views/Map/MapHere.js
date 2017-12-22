@@ -12,7 +12,7 @@ class MapHere extends Component {
     const { lat, lng } = this.props.center;
     console.log(locations);
     var map = new google.maps.Map(this.refs.map, {
-      zoom: 5,
+      zoom: 4,
       center: { lat, lng }
     });
 
@@ -156,8 +156,8 @@ class MapHere extends Component {
           left: 0,
           right: 0,
           bottom: 0,
-          position: "absolute",
-          zIndex: -1
+          position: "absolute"
+          // zIndex: -1
         }}
       />
     );

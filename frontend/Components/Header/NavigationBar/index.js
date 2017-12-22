@@ -13,11 +13,11 @@ class NavigationBar extends Component {
         <ul className={styles.navigationBar}>
           <li>
             <IndexLink
-              to="/"
+              to="/map"
               className={styles.links}
               activeClassName={styles.linkActive}
             >
-              北美团餐厅导航
+              团餐景点导航
             </IndexLink>
           </li>
           {navigationLinks.map(link => {

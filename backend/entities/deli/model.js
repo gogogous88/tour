@@ -9,7 +9,7 @@ const DeliSchema = new Schema({
   coord: String,
   addr: String,
   addr_coord: String,
-  ph_no: Number,
+  ph_no: String,
   rate: String,
   descr: String,
   img: String,
