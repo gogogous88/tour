@@ -57,24 +57,24 @@ class ForumFeed extends Component {
     }
   }
 
-  renderNewDiscussionButtion() {
-    const { currentForum } = this.props;
+  // renderNewDiscussionButtion() {
+  //   const { currentForum } = this.props;
 
-    return (
-      <div
-        className={classnames(
-          appLayout.showOnMediumBP,
-          styles.newDiscussionBtn
-        )}
-      >
-        <Link to={`/${currentForum}/new_discussion`}>
-          <Button type="outline" fullWidth noUppercase>
-            点击发布
-          </Button>
-        </Link>
-      </div>
-    );
-  }
+  //   return (
+  //     <div
+  //       className={classnames(
+  //         appLayout.showOnMediumBP,
+  //         styles.newDiscussionBtn
+  //       )}
+  //     >
+  //       <Link to={`/${currentForum}/new_discussion`}>
+  //         <Button type="outline" fullWidth noUppercase>
+  //           点击发布
+  //         </Button>
+  //       </Link>
+  //     </div>
+  //   );
+  // }
 
   render() {
     const {
@@ -116,7 +116,8 @@ class ForumFeed extends Component {
             activeSortingMethod={sortingMethod}
           />
 
-          {this.renderNewDiscussionButtion()}
+          {/* {this.renderNewDiscussionButtion()} */}
+          <SideBar currentForum={currentForum} />
         </div>
 
         <div className={appLayout.secondaryContent}>

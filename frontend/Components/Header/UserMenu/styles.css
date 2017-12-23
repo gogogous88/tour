@@ -1,5 +1,7 @@
-@value primaryFontColor, secondaryFontColor, borderColor from 'SharedStyles/globalStyles.css';
-@value smallBP, mediumBP, largeBP from 'SharedStyles/globalStyles.css';
+@value primaryFontColor,
+  secondaryFontColor,
+  borderColor from "SharedStyles/globalStyles.css";
+@value smallBP, mediumBP, largeBP from "SharedStyles/globalStyles.css";
 
 /**
  * UserMenu styles
@@ -59,7 +61,7 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(255,255,255, 0.8);
+    background-color: rgba(255, 255, 255, 0.8);
     border: none;
   }
 }
@@ -71,7 +73,9 @@
   text-align: center;
   line-height: 32px;
 
-  &:hover { color: primaryFontColor; }
+  &:hover {
+    color: primaryFontColor;
+  }
 
   @media smallBP {
     color: primaryFontColor;
@@ -84,8 +88,12 @@
   top: 10px;
   right: 10px;
 
-  @media mediumBP { display: none; }
-  @media largeBP { display: none; }
+  @media mediumBP {
+    display: none;
+  }
+  @media largeBP {
+    display: none;
+  }
 }
 
 .gitLoginBtn {

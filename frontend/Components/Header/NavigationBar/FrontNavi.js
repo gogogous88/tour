@@ -7,7 +7,7 @@ import Button from "../../Button";
 import appLayout from "SharedStyles/appLayout.css";
 import styles from "./styles";
 
-class NavigationBar extends Component {
+class FrontNavi extends Component {
   constructor(props) {
     super(props);
     this.state = { activeSubMenu: false };
@@ -25,7 +25,7 @@ class NavigationBar extends Component {
     const { signedIn, gitHandler } = this.props;
     if (navigationLinks) {
       return (
-        <div className={styles.subMenu}>
+        <div className={styles.frontNaviSubMenu}>
           <Button
             className={styles.subMenuClose}
             onClick={this.toggleSubMenu}
@@ -36,6 +36,18 @@ class NavigationBar extends Component {
           <ul>
             <li className={styles.signInLink}>
               <a
+                href="/map/attr"
+                className={styles.links}
+                activeClassName={styles.linkActive}
+              >
+                <i
+                  className={classnames("fa fa-github-alt", styles.subMenuOcto)}
+                />
+                <span style={{ color: "#000" }}>带团景点</span>
+              </a>
+            </li>
+            <li className={styles.signInLink}>
+              <a
                 href="/map"
                 className={styles.links}
                 activeClassName={styles.linkActive}
@@ -43,7 +55,7 @@ class NavigationBar extends Component {
                 <i
                   className={classnames("fa fa-github-alt", styles.subMenuOcto)}
                 />
-                <span style={{ color: "#000" }}>团餐景点导航</span>
+                <span style={{ color: "#000" }}>团餐餐厅</span>
               </a>
             </li>
             {navigationLinks.map(link => {
@@ -97,17 +109,15 @@ class NavigationBar extends Component {
 
   renderBurgerButton() {
     return (
-      <div className={classnames(appLayout.showOnSmallBP)}>
-        <div className={styles.container}>
-          <Button
-            alwaysActive
-            className={classnames(styles.signInBtn, styles.title)}
-            onClick={this.toggleSubMenu}
-          >
-            <i className="fa fa-bars fa-3x" aria-hidden="true" />
-          </Button>
-          {this.renderSubMenu()}
-        </div>
+      <div className={styles.container}>
+        <Button
+          alwaysActive
+          className={classnames(styles.signInBtn, styles.title)}
+          onClick={this.toggleSubMenu}
+        >
+          <i className="fa fa-bars fa-3x" aria-hidden="true" />
+        </Button>
+        {this.renderSubMenu()}
       </div>
     );
   }
@@ -117,49 +127,7 @@ class NavigationBar extends Component {
 
     if (navigationLinks) {
       return (
-        <div>
-          <div className={appLayout.secondaryNavContent}>
-            <ul className={styles.navigationBar}>
-              <li>
-                <IndexLink
-                  to="/map"
-                  className={styles.links}
-                  activeClassName={styles.linkActive}
-                >
-                  团餐景点导航
-                </IndexLink>
-              </li>
-              {navigationLinks.map(link => {
-                if (link.id === 0) {
-                  return (
-                    <li key={_.uniqueId("navLink_")}>
-                      <IndexLink
-                        className={styles.links}
-                        activeClassName={styles.linkActive}
-                        to="/"
-                      >
-                        Home
-                      </IndexLink>
-                    </li>
-                  );
-                }
-
-                return (
-                  <li key={_.uniqueId("navLink_")}>
-                    <Link
-                      className={styles.links}
-                      activeClassName={styles.linkActive}
-                      to={link.link}
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-          {this.renderBurgerButton()}
-        </div>
+        <div className={styles.frontNavi}>{this.renderBurgerButton()}</div>
       );
     }
 
@@ -167,18 +135,18 @@ class NavigationBar extends Component {
   }
 }
 
-NavigationBar.defaultProps = {
+FrontNavi.defaultProps = {
   navigationLinks: [
     {
       id: 1,
-      name: "General",
+      name: "回到论坛",
       link: "/"
     }
   ]
 };
 
-NavigationBar.propTypes = {
+FrontNavi.propTypes = {
   navigationLinks: React.PropTypes.array
 };
 
-export default NavigationBar;
+export default FrontNavi;

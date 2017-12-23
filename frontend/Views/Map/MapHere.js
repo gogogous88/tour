@@ -152,7 +152,7 @@ class MapHere extends Component {
       <div
         ref="map"
         style={{
-          height: "88%",
+          height: "100%",
           left: 0,
           right: 0,
           bottom: 0,

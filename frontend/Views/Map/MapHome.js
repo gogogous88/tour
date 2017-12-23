@@ -8,6 +8,7 @@ import appLayout from "SharedStyles/appLayout.css";
 import * as actions from "./actions";
 
 import MapHere from "./MapHere";
+import FrontNavi from "../../Components/Header/NavigationBar/FrontNavi";
 
 class MapHome extends Component {
   constructor(props) {
@@ -50,6 +51,9 @@ class MapHome extends Component {
     return (
       <div>
         {this.renderMap()}
+        <div style={{ zIndex: 1 }}>
+          <FrontNavi />
+        </div>
         <MapButton
           onClickDelis={() => {
             this.props.fetchMapData();

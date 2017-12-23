@@ -1,4 +1,4 @@
-@value largeBP, mediumBP, smallBP from 'SharedStyles/globalStyles';
+@value largeBP, mediumBP, smallBP from "SharedStyles/globalStyles";
 
 /**
  * application layout styles
@@ -8,21 +8,52 @@
   min-width: 320px;
   max-width: 1100px;
 
-  @media largeBP { padding: 0px; }
-  @media mediumBP { padding: 0px 15px; }
+  @media largeBP {
+    padding: 0px;
+  }
+  @media mediumBP {
+    padding: 0px 15px;
+  }
 }
 
-.primaryContent { flex: 1; }
+.primaryContent {
+  flex: 1;
+}
 
 .secondaryContent {
   width: 260px;
 
-  @media mediumBP { display: none; }
-  @media smallBP { display: none; }
+  @media mediumBP {
+    display: none;
+  }
+  @media smallBP {
+    display: none;
+  }
 }
 
 .showOnMediumBP {
   display: none;
-  @media mediumBP { display: inherit; }
-  @media smallBP { display: inherit; }
+  @media mediumBP {
+    display: inherit;
+  }
+  @media smallBP {
+    display: inherit;
+  }
+}
+
+.secondaryNavContent {
+  /* @media mediumBP {
+    display: none;
+  } */
+  @media smallBP {
+    display: none;
+  }
+}
+
+.showOnSmallBP {
+  display: none;
+
+  @media smallBP {
+    display: inherit;
+  }
 }
