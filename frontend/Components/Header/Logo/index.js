@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import styles from "./styles";
+import keys from "../../../../config/credentials";
 
 const Logo = () => {
   return (
     <div className={styles.logoContainer}>
       <div className={styles.logo}>
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <g
+        {/* <g
             id="Group"
             stroke="none"
             strokeWidth="1"
@@ -25,8 +25,8 @@ const Logo = () => {
               cy="45.2941176"
               r="23.5294118"
             />
-          </g>
-        </svg>
+          </g> */}
+        <img src={keys.TG_LOGO} style={{ width: "100%" }} />
       </div>
       <div className={styles.logoTitle}>途盖大导通</div>
     </div>

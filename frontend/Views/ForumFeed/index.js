@@ -3,6 +3,8 @@ import { Link } from "react-router";
 import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 import classnames from "classnames";
+import _ from "lodash";
+import moment from "moment";
 
 import {
   getDiscussions,
@@ -17,7 +19,32 @@ import SideBar from "Components/SideBar";
 import appLayout from "SharedStyles/appLayout.css";
 import styles from "./styles.css";
 
+import { SingleDatePicker } from "react-dates";
+import {
+  HORIZONTAL_ORIENTATION,
+  VERTICAL_ORIENTATION
+} from "react-dates/constants";
+import "react-dates/initialize";
+
+import "react-dates/lib/css/_datepicker.css";
+
+const DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET = 1 + 7; // default pickup/return date is next Friday/Sunday
+
 class ForumFeed extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      search: "",
+      searchTerm: "",
+      pickDate: moment().day(DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET),
+
+      overlayVisible: false,
+      currentDateKey: "",
+      searchDate: moment().day(DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET),
+      searchStatus: true
+    };
+  }
+
   componentDidMount() {
     const { currentForumId, getDiscussions, getPinnedDiscussions } = this.props;
 
@@ -76,6 +103,91 @@ class ForumFeed extends Component {
   //   );
   // }
 
+  onInputChange(event) {
+    this.setState({ search: event.target.value });
+  }
+
+  renderSearchBar() {
+    // const { discussions } = this.props;
+    // if (!_.isEmpty(discussions)) {
+    //   if (!discussions[0].pdate && !discussions[0].rdate[0]) {
+    switch (this.state.searchStatus) {
+      case true:
+        return (
+          <div>
+            <form
+              onSubmit={event => {
+                event.preventDefault();
+                this.setState({
+                  searchTerm: this.state.search,
+                  searchStatus: false
+                });
+              }}
+            >
+              <input
+                style={{ width: 400, height: 40 }}
+                value={this.state.search}
+                onChange={this.onInputChange.bind(this)}
+                placeholder="按地点、车型、日期(格式为03/10(MM/DD))等搜索"
+              />
+              <button type="submit" className="waves-effect waves-light btn">
+                <i className="material-icons left">search</i>搜索
+              </button>
+            </form>
+          </div>
+        );
+
+      default:
+        return (
+          <div>
+            <button
+              onClick={event => {
+                event.preventDefault();
+                this.setState({
+                  searchTerm: "",
+                  search: "",
+                  searchStatus: true
+                });
+              }}
+            >
+              <i className="material-icons right">clear</i>
+              {this.state.searchTerm}
+            </button>
+          </div>
+        );
+    }
+
+    //   }
+
+    // return (
+    //   <div>
+    //     <form
+    //       onSubmit={event => {
+    //         event.preventDefault();
+    //         this.setState({
+    //           searchDate: this.state.pickDate,
+    //           overlayVisible: false
+    //         });
+    //       }}
+    //     >
+    //       <SingleDatePicker
+    //         noBorder
+    //         date={this.state.pickDate}
+    //         numberOfMonths={1}
+    //         initialVisibleMonth={() => this.state.pickDate} // momentPropTypes.momentObj or null
+    //         onDateChange={date => {
+    //           this.setState({ pickDate: date });
+    //         }}
+    //         focused={this.state.focused} // PropTypes.bool
+    //         onFocusChange={({ focused }) => this.setState({ focused })} // PropTypes.func.isRequired
+    //       />
+    //       <button type="submit">搜索</button>
+    //     </form>
+    //   </div>
+    // );
+    // }
+  }
+
   render() {
     const {
       currentForum,
@@ -86,6 +198,9 @@ class ForumFeed extends Component {
       sortingMethod,
       error
     } = this.props;
+
+    const { searchDate } = this.state;
+    const searchDateMMDD = moment(searchDate).format("MM/DD");
 
     if (error) {
       return <div className={classnames(styles.errorMsg)}>{error}</div>;
@@ -98,8 +213,18 @@ class ForumFeed extends Component {
         <Helmet>
           <title>{`ReForum | ${currentForum}`}</title>
         </Helmet>
-
+        {/* 搜索条在这里 */}
         <div className={appLayout.primaryContent}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            {this.renderSearchBar()}
+          </div>
+
           <FeedBox
             type="pinned"
             loading={fetchingPinnedDiscussions}
@@ -114,6 +239,8 @@ class ForumFeed extends Component {
             currentForum={currentForum}
             onChangeSortingMethod={this.handleSortingChange.bind(this)}
             activeSortingMethod={sortingMethod}
+            searchTerm={this.state.searchTerm}
+            searchDate={searchDateMMDD.toString()}
           />
 
           {/* {this.renderNewDiscussionButtion()} */}

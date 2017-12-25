@@ -9,10 +9,12 @@ import { newDiscussionReducer } from "../Views/NewDiscussion/reducers";
 import { adminInfoReducer } from "../Views/AdminDashboard/reducers";
 import { userProfileReducer } from "../Views/UserProfile/reducers";
 import { mapReducer } from "../Views/Map/reducers";
+import { nightReducer } from "../Views/googleSheet/reducers";
 
 // root reducer for app
 const rootReducer = combineReducers({
   MapDataMore: mapReducer,
+  nightData: nightReducer,
   user: userReducer,
   app: appReducer,
   feed: feedReducer,

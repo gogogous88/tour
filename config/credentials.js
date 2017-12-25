@@ -27,7 +27,10 @@ module.exports = {
   SUP_SHUN_FENG_CHE:
     "http://res.cloudinary.com/markmoo/image/upload/v1513643135/sup_shun_feng_wkgy0i.png",
   REQ_SHUN_FENG_CHE:
-    "http://res.cloudinary.com/markmoo/image/upload/v1513643134/req_shun_feng_che_e9ti90.png"
+    "http://res.cloudinary.com/markmoo/image/upload/v1513643134/req_shun_feng_che_e9ti90.png",
+
+  TG_LOGO:
+    "http://res.cloudinary.com/markmoo/image/upload/v1513998222/TGLogo_2_meq03y.jpg"
 };
 
 // Client ID

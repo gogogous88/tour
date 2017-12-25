@@ -20,6 +20,7 @@ import NotFound from "../Views/NotFound";
 import MapHome from "../Views/Map/MapHome";
 import MapAttr from "../Views/Map/MapAttr";
 import MapDetail from "../Views/Map/MapDetail";
+import GoogleSheet from "../Views/googleSheet";
 
 //mark - materialize css
 
@@ -36,8 +37,12 @@ ReactDOM.render(
       <Route path="/" component={AppContainer}>
         <IndexRoute component={ForumFeed} />
         <Route exact path="/map/attr" component={MapAttr} />
+
         <Route path="/map/:id" component={MapDetail} />
         <Route exact path="/map" component={MapHome} />
+
+        <Route path="/googlesheet" component={GoogleSheet} />
+
         <Route path=":forum" component={ForumFeed} />
         <Route
           path=":forum/discussion/:discussion"

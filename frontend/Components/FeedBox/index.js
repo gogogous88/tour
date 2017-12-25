@@ -10,6 +10,16 @@ import DiscussionBox from "./DiscussionBox";
 
 import keys from "../../../config/credentials";
 
+// function searchingFor(term) {
+//   return function(x) {
+//     return (
+//       x.pdate.toString().includes(term.toString()) ||
+//       x.ploc.toString().includes(term.toString()) ||
+//       !term
+//     );
+//   };
+// }
+
 class FeedBox extends Component {
   renderSort() {
     const { activeSortingMethod, onChangeSortingMethod } = this.props;
@@ -172,6 +182,40 @@ class FeedBox extends Component {
     if (type === "pinned") discussionBoxTitle = "Pinned";
 
     //shun_feng_che, pin_fang, fa_tuan_jie_huo, market
+
+    const filterDiscussions =
+      discussions &&
+      discussions.filter(discussion => {
+        if (discussion.pdate) {
+          console.log("checkTerm", this.props.searchTerm);
+          console.log("checkDate", this.props.searchDate);
+          return (
+            moment(discussion.pdate)
+              .format("MM/DD")
+              .indexOf(moment(this.props.searchTerm).format("MM/DD")) !== -1 ||
+            discussion.ploc.indexOf(this.props.searchTerm) !== -1 ||
+            discussion.rloc.indexOf(this.props.searchTerm) !== -1
+          );
+        }
+        if (discussion.rdate) {
+          return (
+            moment(discussion.rdate[0])
+              .format("MM/DD")
+              .indexOf(moment(this.props.searchTerm).format("MM/DD")) !== -1 ||
+            moment(discussion.rdate[1])
+              .format("MM/DD")
+              .indexOf(moment(this.props.searchTerm).format("MM/DD")) !== -1 ||
+            discussion.ploc.indexOf(this.props.searchTerm) !== -1 ||
+            discussion.rloc.indexOf(this.props.searchTerm) !== -1 ||
+            discussion.vehicleType.indexOf(this.props.searchTerm) !== -1
+          );
+        }
+        return (
+          discussion.ploc.indexOf(this.props.searchTerm) !== -1 ||
+          discussion.title.indexOf(this.props.searchTerm) !== -1
+        );
+      });
+
     return (
       <div className={styles.container}>
         <div className={styles.header}>
@@ -182,8 +226,13 @@ class FeedBox extends Component {
         {this.renderEmptyDiscussionLine(loading, discussions)}
         {!loading && (
           <div className={styles.discussions}>
+            {/* filterDiscussions &&
+              filterDiscussions
+                .filter(searchingFor(this.props.searchTerm))
+                .map(discussion => { */}
+
             {discussions &&
-              discussions.map(discussion => {
+              filterDiscussions.map(discussion => {
                 return (
                   <DiscussionBox
                     userProfile={userProfile}
