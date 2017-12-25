@@ -1,11 +1,12 @@
 // modules for server
-const path = require('path');
-const express = require('express');
-const mongoose = require('mongoose');
-const passport = require('passport');
+const path = require("path");
+const express = require("express");
+const mongoose = require("mongoose");
+const passport = require("passport");
+const each = require("async/each");
 
 // server configurations
-const serverConfigs = require('./config/serverConfig');
+const serverConfigs = require("./config/serverConfig");
 
 // connect to database
 mongoose.connect(serverConfigs.DBURL);
@@ -14,10 +15,10 @@ mongoose.connect(serverConfigs.DBURL);
 const app = express();
 
 // apply express configs
-require('./backend/express')(app, serverConfigs);
+require("./backend/express")(app, serverConfigs);
 
 // fire up the server
-app.listen(serverConfigs.PORT, (error) => {
+app.listen(serverConfigs.PORT, error => {
   if (error) throw error;
-  console.log('Server running on port: ' + serverConfigs.PORT);
+  console.log("Server running on port: " + serverConfigs.PORT);
 });
