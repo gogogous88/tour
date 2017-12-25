@@ -1,9 +1,9 @@
 {
-  "name": "reforum",
+  "name": "TuGaiForum",
   "version": "1.0.0",
   "description":
     "A forum application built with ReactJS, Redux, Express and MongoDB",
-  "author": "Provash Shoumma",
+  "author": "Mark Mu",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/shoumma/ReForum/issues"
