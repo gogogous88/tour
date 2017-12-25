@@ -1,7 +1,8 @@
 {
   "name": "TuGaiForum",
   "version": "1.0.0",
-  "description": "A forum application built with ReactJS, Redux, Express and MongoDB",
+  "description":
+    "A forum application built with ReactJS, Redux, Express and MongoDB",
   "author": "Mark Mu",
   "license": "MIT",
   "bugs": {
@@ -12,13 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/shoumma/ReForum.git"
   },
-  "keywords": [
-    "forum",
-    "react",
-    "redux",
-    "express",
-    "mongodb"
-  ],
+  "keywords": ["forum", "react", "redux", "express", "mongodb"],
   "main": "server.js",
   "engines": {
     "node": "8.1.1",
@@ -26,7 +21,7 @@
   },
   "scripts": {
     "test": "jest",
-    "start": "better-npm-run start",
+    "start": "npm start",
     "start:dev": "better-npm-run start:dev",
     "build": "webpack --config config/webpack.prod.config.js"
   },
