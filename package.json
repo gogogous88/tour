@@ -17,7 +17,7 @@
   "main": "server.js",
   "engines": {
     "node": "8.1.1",
-    "npm": "5.0.3"
+    "better-npm-run": "^0.0.13"
   },
   "scripts": {
     "test": "jest",
@@ -34,7 +34,7 @@
       }
     },
     "start:dev": {
-      "command": "nodemon server.js",
+      "command": "node server.js",
       "env": {
         "NODE_ENV": "development",
         "PORT": 8080
