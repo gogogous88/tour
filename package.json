@@ -15,10 +15,7 @@
   },
   "keywords": ["forum", "react", "redux", "express", "mongodb"],
   "main": "server.js",
-  "engines": {
-    "node": "7.1.0",
-    "npm": "3.10.9"
-  },
+
   "scripts": {
     "test": "jest",
     "start": "better-npm-run start",
