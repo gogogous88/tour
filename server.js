@@ -3,7 +3,6 @@ const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
-const each = require("async/each");
 
 // server configurations
 const serverConfigs = require("./config/serverConfig");

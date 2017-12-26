@@ -107,18 +107,20 @@ class FeedBox extends Component {
       case "shun_feng_che":
         const shunFengTitle = `${discussion.sup_or_req}顺风车-:「${moment(
           discussion.pdate
-        ).format("MM/DD")}」-「${discussion.ploc}」至「${
+        ).format("MM/DD")}--${discussion.ploc}--->${
           discussion.rloc
         }」联系方式：「${discussion.ph_no}」
         `;
         return shunFengTitle;
 
       case "pin_fang":
-        const pinFangTitle = `${discussion.sup_or_req}拼房:从「${moment(
+        const pinFangTitle = `${discussion.sup_or_req}拼房:「${
+          discussion.ploc
+        }--${moment(discussion.rdate[0]).format("MM/DD")}--->${moment(
+          discussion.rdate[1]
+        ).format("MM/DD")}」,联系方式：「${discussion.ph_no}」(${moment(
           discussion.rdate[0]
-        ).format("MM/DD")}」日-到-「${moment(discussion.rdate[1]).format(
-          "MM/DD"
-        )}」日--「${discussion.ploc}」,联系方式：「${discussion.ph_no}」
+        ).format("YYYY")}年)
         `;
         return pinFangTitle;
 

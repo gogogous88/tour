@@ -1,0 +1,8 @@
+{
+  "name": "Node.js Sample",
+  "description": "A barebones Node.js app using Express 4",
+  "repository": "https://github.com/heroku/node-js-sample",
+  "logo":
+    "http://res.cloudinary.com/markmoo/image/upload/v1513998222/TGLogo_2_meq03y.jpg",
+  "keywords": ["node", "express", "static"]
+}
