@@ -9,9 +9,9 @@ const databaseUrl = require("./credentials").DBURL;
  */
 const serverConfigs = {
   PRODUCTION: process.env.NODE_ENV === "production",
-  PORT: process.env.PORT || 5000,
+  PORT: process.env.PORT || 8080,
   ROOT: path.resolve(__dirname, ".."),
-  DBURL: process.env.MONGOLAB_BROWN_URI
+  DBURL: process.env.MONGODB_URI
 };
 
 module.exports = serverConfigs;
