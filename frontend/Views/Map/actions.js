@@ -4,7 +4,7 @@ export const FETCH_MAP_ATTR = "FETCH_MAP_ATTR";
 
 export function fetchMapData() {
   return async dispatch => {
-    const request = await axios.get("http://localhost:5000/api/delis");
+    const request = await axios.get("/api/delis");
 
     dispatch({
       type: FETCH_MAPDATA,
@@ -15,7 +15,7 @@ export function fetchMapData() {
 
 export function fetchAttrs() {
   return async dispatch => {
-    const request = await axios.get("http://localhost:5000/api/attrs");
+    const request = await axios.get("/api/delis");
 
     dispatch({
       type: FETCH_MAP_ATTR,
