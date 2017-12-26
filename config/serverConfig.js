@@ -11,7 +11,7 @@ const serverConfigs = {
   PRODUCTION: process.env.NODE_ENV === "production",
   PORT: process.env.PORT || 5000,
   ROOT: path.resolve(__dirname, ".."),
-  DBURL: process.env.MONGO_URI
+  DBURL: process.env.MONGODB_URI
 };
 
 module.exports = serverConfigs;
