@@ -1,4 +1,4 @@
-@value largeBP from 'SharedStyles/globalStyles';
+@value largeBP from "SharedStyles/globalStyles";
 
 /**
  * Forum view styles
@@ -6,7 +6,9 @@
 .contentArea {
   display: flex;
   margin-top: 15px;
-  @media largeBP { flex-flow: row nowrap; }
+  @media largeBP {
+    flex-flow: row nowrap;
+  }
 }
 
 .newDiscussionBtn {
@@ -15,8 +17,15 @@
 
 .errorMsg {
   margin-top: 20px;
-  color: rgba(231, 76, 60,1.0);
+  color: rgba(231, 76, 60, 1);
   text-align: center;
   font-size: 12px;
   font-weight: bold;
+}
+
+.fixedPosition {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
 }

@@ -248,7 +248,19 @@ class ForumFeed extends Component {
         </div>
 
         <div className={appLayout.secondaryContent}>
-          <SideBar currentForum={currentForum} />
+          <div className={styles.fixedPosition}>
+            <img
+              src="/src/static/images/yale_van_deals.png"
+              style={{ width: "80%" }}
+            />
+            <hr />
+            <img src="/src/static/images/GNC.jpg" style={{ width: "80%" }} />
+            <hr />
+            <img
+              src="/src/static/images/adwords.png"
+              style={{ width: "80%" }}
+            />
+          </div>
         </div>
       </div>
     );
