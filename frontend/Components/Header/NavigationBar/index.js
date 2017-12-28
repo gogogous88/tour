@@ -35,7 +35,7 @@ class NavigationBar extends Component {
           </Button>
           <ul>
             <li className={styles.signInLink}>
-              <Link
+              <a
                 to="/map"
                 className={styles.links}
                 activeClassName={styles.linkActive}
@@ -44,7 +44,7 @@ class NavigationBar extends Component {
                   className={classnames("fa fa-github-alt", styles.subMenuOcto)}
                 />
                 <span style={{ color: "#000" }}>团餐景点导航</span>
-              </Link>
+              </a>
             </li>
             {navigationLinks.map(link => {
               if (link.id === 0) {

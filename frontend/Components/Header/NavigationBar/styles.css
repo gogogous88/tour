@@ -49,7 +49,8 @@
   align-items: flex-start;
   flex-flow: row nowrap;
   justify-content: flex-end;
-  margin-right: 30px;
+  margin-right: 25px;
+  /* margin-left: 25px; */
 }
 
 .userAvatar {
@@ -74,7 +75,8 @@
   padding-right: 0px;
   height: 40px;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  justify-content: flex-start;
 }
 
 .subMenu {
@@ -179,4 +181,12 @@
 .frontNavi {
   z-index: 1;
   display: flex;
+}
+
+.rowNavi {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  margin: 0px;
+  padding: 0px;
 }

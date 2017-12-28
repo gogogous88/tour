@@ -41,7 +41,8 @@ class ForumFeed extends Component {
       overlayVisible: false,
       currentDateKey: "",
       searchDate: moment().day(DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET),
-      searchStatus: true
+      searchStatus: true,
+      searchBool: false
     };
   }
 
@@ -108,6 +109,19 @@ class ForumFeed extends Component {
   }
 
   renderSearchBar() {
+    if (!this.state.searchBool) {
+      return (
+        <button
+          onClick={() => {
+            this.setState({ searchBool: true });
+          }}
+          className="waves-effect waves-light btn"
+        >
+          <i className="material-icons left">search</i>
+          通过日期/地点筛选
+        </button>
+      );
+    }
     // const { discussions } = this.props;
     // if (!_.isEmpty(discussions)) {
     //   if (!discussions[0].pdate && !discussions[0].rdate[0]) {
@@ -125,13 +139,14 @@ class ForumFeed extends Component {
               }}
             >
               <input
-                style={{ width: 400, height: 40 }}
+                style={{ width: 280, height: 35, fontSize: 12 }}
                 value={this.state.search}
                 onChange={this.onInputChange.bind(this)}
-                placeholder="按地点、车型、日期(格式为03/10(MM/DD))等搜索"
+                placeholder="按地点,车型,日期(格式为03/10(MM/DD))等搜索"
               />
-              <button type="submit" className="waves-effect waves-light btn">
-                <i className="material-icons left">search</i>搜索
+
+              <button type="submit" className="waves-effect grey btn">
+                <i className="material-icons">search</i>
               </button>
             </form>
           </div>
@@ -222,8 +237,6 @@ class ForumFeed extends Component {
     if (error) {
       return <div className={classnames(styles.errorMsg)}>{error}</div>;
     }
-
-    console.log(this.props);
 
     return (
       <div
