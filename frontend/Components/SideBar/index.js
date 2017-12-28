@@ -23,12 +23,12 @@ class SideBar extends Component {
           <ul>
             <li className="waves-effect waves-light">
               <Link to={`/${currentForum}/new_discussion/req`}>
-                发布寻求信息
+                {this.props.title.reqTitle}
               </Link>
             </li>
             <li className="waves-effect waves-light">
               <Link to={`/${currentForum}/new_discussion/sup`}>
-                发布提供信息
+                {this.props.title.supTitle}
               </Link>
             </li>
           </ul>

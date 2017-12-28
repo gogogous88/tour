@@ -188,6 +188,23 @@ class ForumFeed extends Component {
     // }
   }
 
+  renderTitle() {
+    switch (this.props.currentForum) {
+      case "shun_feng_che":
+        return { supTitle: "提供顺风车", reqTitle: "寻求顺风车" };
+      case "pin_fang":
+        return { supTitle: "提供拼房发布", reqTitle: "寻求拼房发布" };
+      case "fa_tuan_jie_huo":
+        return { supTitle: "发团信息发布", reqTitle: "寻求接团发布" };
+      case "market":
+        return { supTitle: "发布出售信息", reqTitle: "发布求购信息" };
+      case "tour_wiki":
+        return { supTitle: "发布攻略信息", reqTitle: "发布科普信息" };
+      default:
+        return { supTitle: "提供信息发布", reqTitle: "寻求信息发布" };
+    }
+  }
+
   render() {
     const {
       currentForum,
@@ -205,6 +222,8 @@ class ForumFeed extends Component {
     if (error) {
       return <div className={classnames(styles.errorMsg)}>{error}</div>;
     }
+
+    console.log(this.props);
 
     return (
       <div
@@ -244,7 +263,7 @@ class ForumFeed extends Component {
           />
 
           {/* {this.renderNewDiscussionButtion()} */}
-          <SideBar currentForum={currentForum} />
+          <SideBar title={this.renderTitle()} currentForum={currentForum} />
         </div>
 
         <div className={appLayout.secondaryContent}>

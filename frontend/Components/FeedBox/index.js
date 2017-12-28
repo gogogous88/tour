@@ -97,6 +97,15 @@ class FeedBox extends Component {
           return faTuanURL;
         }
 
+      case "tour_wiki":
+        if (discussion.sup_or_req === "提供") {
+          const faTuanURL = "/src/statics/baike.png";
+          return faTuanURL;
+        } else {
+          const faTuanURL = "/src/statics/gong_lve.png";
+          return faTuanURL;
+        }
+
       default:
         return discussion.title;
     }

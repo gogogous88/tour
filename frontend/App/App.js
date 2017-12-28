@@ -45,14 +45,13 @@ class AppContainer extends Component {
           <Helmet>
             <title>ReForum</title>
           </Helmet>
-
           <div className={styles.gitForkTag}>
             <a className={styles.gitLink} href="#" target="_blank">
               下载途盖儿通App
             </a>
           </div>
-
           <Header />
+
           {this.props.children}
           <Footer />
         </div>

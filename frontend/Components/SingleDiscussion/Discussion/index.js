@@ -10,6 +10,8 @@ import Button from "Components/Button";
 import Tag from "Components/Tag";
 import RichEditor from "Components/RichEditor";
 
+import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
+
 class Discussion extends Component {
   renderUploadImages(uploadImg) {
     return uploadImg.map(eachImg => {
@@ -25,6 +27,23 @@ class Discussion extends Component {
       );
     });
   }
+
+  renderContent() {
+    const { forum_slug, discContent, uploadImg } = this.props;
+    switch (forum_slug) {
+      case "tour_wiki":
+        return <FroalaEditorView model={discContent} />;
+
+      default:
+        return (
+          <div>
+            <RichEditor readOnly={true} value={discContent} />
+            <ul>{this.renderUploadImages(uploadImg)}</ul>
+          </div>
+        );
+    }
+  }
+
   render() {
     const {
       id,
@@ -87,10 +106,8 @@ class Discussion extends Component {
             <div className={styles.discTitle}>{discTitle}</div>
           </div>
         </div>
-        <div className={styles.discContent}>
-          <RichEditor readOnly={true} value={discContent} />
-          <ul>{this.renderUploadImages(uploadImg)}</ul>
-        </div>
+
+        <div className={styles.discContent}>{this.renderContent()}</div>
 
         <div className={styles.discFooter}>
           <div className={styles.tags}>

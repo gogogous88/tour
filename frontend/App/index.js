@@ -21,6 +21,7 @@ import MapHome from "../Views/Map/MapHome";
 import MapAttr from "../Views/Map/MapAttr";
 import MapDetail from "../Views/Map/MapDetail";
 import GoogleSheet from "../Views/googleSheet";
+import TourGuideWiki from "../Views/TourGuideWiki/TourGuideWiki";
 
 //mark - materialize css
 
@@ -42,6 +43,8 @@ ReactDOM.render(
         <Route exact path="/map" component={MapHome} />
 
         <Route path="/googlesheet" component={GoogleSheet} />
+
+        <Route path="/wiki" component={TourGuideWiki} />
 
         <Route path=":forum" component={ForumFeed} />
         <Route

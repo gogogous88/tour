@@ -212,6 +212,8 @@ class SingleDiscussion extends Component {
           return marketTitle;
         }
 
+      case "tour_wiki":
+        return discussion.title;
       default:
         return discussion.title;
     }
@@ -281,6 +283,7 @@ class SingleDiscussion extends Component {
         </Helmet>
 
         <Discussion
+          forum_slug={forum.forum_slug}
           id={_id}
           userAvatar={avatarUrl}
           userName={name}

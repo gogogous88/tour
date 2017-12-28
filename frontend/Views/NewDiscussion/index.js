@@ -12,6 +12,8 @@ import RichEditor from "Components/RichEditor";
 import PinButton from "Components/NewDiscussion/PinButton";
 import TagsInput from "Components/NewDiscussion/TagsInput";
 import ImgUL from "../../Components/FormCommon/ImgUL";
+import Froala from "../../Components/Froala/Froala";
+
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import "bootstrap/dist/js/bootstrap.min";
 
@@ -235,6 +237,7 @@ class NewDiscussion extends Component {
             /* //以上顺风车
         //以下拼房 */
           }
+
         case "5a319a6e10cea7360a06287e":
           return (
             <div>
@@ -806,9 +809,49 @@ class NewDiscussion extends Component {
 
           {
             /* //以上二手市场
+        //以下百科 */
+          }
+        case "5a43f499ca420fd7dfe6e5ad":
+          return (
+            <div>
+              <div className="col s12">
+                <label>请输入标题</label>
+                <input
+                  key={"title"}
+                  type="text"
+                  className={styles.titleInput}
+                  placeholder={"标题"}
+                  value={title}
+                  onChange={event => {
+                    updateDiscussionTitle(event.target.value);
+                  }}
+                />
+              </div>
+              <TagsInput
+                key={"tags"}
+                value={tags}
+                onChange={tags => {
+                  updateDiscussionTags(tags);
+                }}
+              />
+
+              <Froala
+                key={"content"}
+                type="newDiscussion"
+                value={content}
+                onChange={value => {
+                  updateDiscussionContent(value);
+                }}
+                onSave={() => {
+                  postDiscussion(userId, forumId, currentForum);
+                }}
+              />
+            </div>
+          );
+          {
+            /* //以上百科
         //以下默认 */
           }
-
         default:
           return [
             <input
@@ -819,6 +862,7 @@ class NewDiscussion extends Component {
               value={sup_or_req}
               onChange={event => updateDiscussionSup_or_req(event.target.value)}
             />,
+
             <input
               key={"ploc"}
               type="text"
