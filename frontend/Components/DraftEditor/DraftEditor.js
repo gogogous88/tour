@@ -4,6 +4,8 @@ import { EditorState, Modifier, convertToRaw, ContentState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
 import draftToHtml from "draftjs-to-html";
+import styles from "./styles.css";
+import ImgUL from "../FormCommon/ImgUL";
 
 class CustomOption extends Component {
   static propTypes = {
@@ -27,7 +29,7 @@ class CustomOption extends Component {
   }
 }
 
-export default class DraftEditor extends Component {
+class DraftEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,20 +51,29 @@ export default class DraftEditor extends Component {
 
     return (
       <div>
-        <Editor
-          editorState={editorState}
-          wrapperClassName="demo-wrapper"
-          editorClassName="demo-editor"
-          onEditorStateChange={this.onEditorStateChange}
-          toolbarCustomButtons={[<CustomOption />]}
-          toolbar={{
-            image: {
-              upLoadEnabled: true,
-              uploadCallback: true,
-              previewImage: true
-            }
-          }}
-        />
+        <span style={{ backgroundColor: "#f6f6f6" }}>
+          <ImgUL />
+          <Editor
+            editorStyle={{
+              borderStyle: "groove",
+              borderTopWidth: 0,
+              height: 300
+            }}
+            editorState={editorState}
+            wrapperClassName="wrapper-class"
+            editorClassName="editor-class"
+            toolbarClassName="toolbar-class"
+            onEditorStateChange={this.onEditorStateChange}
+            toolbarCustomButtons={[<CustomOption />]}
+            toolbar={{
+              image: {
+                upLoadEnabled: true,
+                uploadCallback: true,
+                previewImage: true
+              }
+            }}
+          />
+        </span>
 
         <div
           style={{
@@ -90,3 +101,5 @@ export default class DraftEditor extends Component {
     );
   }
 }
+
+export default DraftEditor;

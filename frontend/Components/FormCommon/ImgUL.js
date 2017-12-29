@@ -60,8 +60,7 @@ class ImgUL extends Component {
           <img
             style={{ marginTop: 5, marginRight: 6, width: 100 }}
             src={image.secure_url}
-          />
-
+          />图片路径:{image.secure_url}
           <a
             id={i}
             className="btn-floating"

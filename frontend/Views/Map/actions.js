@@ -15,7 +15,7 @@ export function fetchMapData() {
 
 export function fetchAttrs() {
   return async dispatch => {
-    const request = await axios.get("/api/delis");
+    const request = await axios.get("/api/attrs");
 
     dispatch({
       type: FETCH_MAP_ATTR,

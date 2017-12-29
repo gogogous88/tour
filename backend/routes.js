@@ -44,6 +44,9 @@ const routesConfig = app => {
   // apply deli apis
   deliAPI(app);
 
+  // apply attr apis
+  require("./entities/attr/api")(app);
+
   // all get request will send index.html for react-router
   // to handle the route request
   app.get("*", (req, res) => {
