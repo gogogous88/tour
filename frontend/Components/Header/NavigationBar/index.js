@@ -36,7 +36,7 @@ class NavigationBar extends Component {
           <ul>
             <li className={styles.signInLink}>
               <a
-                to="/map"
+                href="/map"
                 className={styles.links}
                 activeClassName={styles.linkActive}
               >
@@ -121,13 +121,13 @@ class NavigationBar extends Component {
           <div className={appLayout.secondaryNavContent}>
             <ul className={styles.navigationBar}>
               <li>
-                <IndexLink
-                  to="/map"
+                <a
+                  href="/map"
                   className={styles.links}
                   activeClassName={styles.linkActive}
                 >
                   团餐景点导航
-                </IndexLink>
+                </a>
               </li>
               {navigationLinks.map(link => {
                 if (link.id === 0) {
@@ -146,13 +146,13 @@ class NavigationBar extends Component {
 
                 return (
                   <li key={_.uniqueId("navLink_")}>
-                    <Link
+                    <a
                       className={styles.links}
                       activeClassName={styles.linkActive}
-                      to={link.link}
+                      href={link.link}
                     >
                       {link.name}
-                    </Link>
+                    </a>
                   </li>
                 );
               })}

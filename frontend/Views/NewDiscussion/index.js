@@ -12,7 +12,8 @@ import RichEditor from "Components/RichEditor";
 import PinButton from "Components/NewDiscussion/PinButton";
 import TagsInput from "Components/NewDiscussion/TagsInput";
 import ImgUL from "../../Components/FormCommon/ImgUL";
-import Froala from "../../Components/Froala/Froala";
+
+import DraftEditor from "../../components/DraftEditor/DraftEditor";
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import "bootstrap/dist/js/bootstrap.min";
@@ -126,7 +127,6 @@ class NewDiscussion extends Component {
       switch (forumId) {
         //以下顺风车
         case "5a319a5c10cea7360a06287d":
-          console.log(this.state.sup_or_req);
           return (
             <div>
               {role === "admin" && (
@@ -835,7 +835,7 @@ class NewDiscussion extends Component {
                 }}
               />
 
-              <Froala
+              <DraftEditor
                 key={"content"}
                 type="newDiscussion"
                 value={content}

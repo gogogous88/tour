@@ -35,12 +35,10 @@ class ImgUL extends Component {
         .then(response => {
           const data = response.data;
           const fileURL = data.secure_url; // You should store this URL for future references in your app
-          console.log(data);
           const uploadedImages = Object.assign([], this.state.images);
           uploadedImages.push(data);
           this.setState({ images: uploadedImages });
           this.props.onChange(this.state.images);
-          console.log(this.state.images);
         });
     });
   };
