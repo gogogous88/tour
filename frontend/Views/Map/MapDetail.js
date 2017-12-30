@@ -14,7 +14,7 @@ class MapDetail extends Component {
   }
 
   renderButton() {
-    if (this.props.params.id.length === 5) {
+    if (this.props.eachMapData.ph_no) {
       return (
         <Link className="btn btn-danger" to="/map">
           《 返回团餐地图
@@ -30,15 +30,15 @@ class MapDetail extends Component {
 
   fetchData() {
     console.log("length", this.props.params.id.length);
-    if (!this.props.params.id.length === 8) {
-      this.props.fetchMapData();
+    if (this.props.params.id.length === 8) {
+      this.props.fetchAttrs();
     }
-    this.props.fetchAttrs();
+    this.props.fetchMapData();
   }
 
   renderDesc() {
     const { eachMapData } = this.props;
-    if (!_.isEmpty(eachMapData)) {
+    if (!_.isEmpty(eachMapData.ph_no)) {
       return (
         <div>
           <h5>电话：</h5>
@@ -121,9 +121,11 @@ class MapDetail extends Component {
 function mapStateToProps({ MapDataMore }, ownProps) {
   const MapData = _.mapKeys(MapDataMore.delis, "id");
   const AttrData = _.mapKeys(MapDataMore.attrs, "id");
-  if (!ownProps.params.id.length === 8) {
-    return { eachMapData: MapData[ownProps.params.id] };
+  if (ownProps.params.id.length === 8) {
+    console.log("attrsDetailMap", AttrData);
+    return { eachMapData: AttrData[ownProps.params.id] };
   }
-  return { eachMapData: AttrData[ownProps.params.id] };
+  console.log("delisDetailMap", MapData);
+  return { eachMapData: MapData[ownProps.params.id] };
 }
 export default connect(mapStateToProps, actions)(MapDetail);
