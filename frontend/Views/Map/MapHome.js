@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 import _ from "lodash";
 
+import Loading from "../../Components/Loading";
+
 import MapButton from "../../Components/MapButton";
 import appLayout from "SharedStyles/appLayout.css";
 import * as actions from "./actions";
@@ -52,7 +54,7 @@ class MapHome extends Component {
 
   render() {
     if (_.isEmpty(this.state.locations)) {
-      return <div>loading...</div>;
+      return <Loading />;
     }
     return (
       <div>

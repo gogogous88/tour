@@ -27,9 +27,10 @@ import { postDiscussionApi } from "./api";
  * @param  {ObjectId} userId
  * @param  {ObjectId} forumId
  * @param  {String} currentForum
+ *
  * @return {action}
  */
-export const postDiscussion = (userId, forumId, currentForum) => {
+export const postDiscussion = (userId, forumId, currentForum, Sup_or_req) => {
   return (dispatch, getState) => {
     dispatch({ type: POSTING_DISCUSSION_START });
 
@@ -62,13 +63,184 @@ export const postDiscussion = (userId, forumId, currentForum) => {
       });
     }
 
-    // if (title === null || title.length < 15) {
-    //   validated = false;
-    //   return dispatch({
-    //     type: POSTING_DISCUSSION_FAILURE,
-    //     payload: "Title should be at least 15 characters."
-    //   });
-    // }
+    if (forumId === "5a319a5c10cea7360a06287d") {
+      if (ploc === null || ploc.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写出发城市了..."
+        });
+      }
+
+      if (rloc === null || rloc.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写抵达城市了...."
+        });
+      }
+      if (ph_no === null || ph_no.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写联系信息了...."
+        });
+      }
+    }
+
+    if (forumId === "5a319a6e10cea7360a06287e") {
+      if (ploc === null || ploc.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写入住城市了..."
+        });
+      }
+      if (ph_no === null || ph_no.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写联系信息了...."
+        });
+      }
+    }
+
+    if (forumId === "5a319a6e10cea7360a06287e") {
+      if (ploc === null || ploc.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写入住城市了..."
+        });
+      }
+      if (ph_no === null || ph_no.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写联系信息了...."
+        });
+      }
+    }
+
+    console.log("param", sup_or_req);
+
+    if (forumId === "5a319a9310cea7360a06287f" && sup_or_req === "提供") {
+      if (ploc === null || ploc.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写出发城市了..."
+        });
+      }
+      if (ph_no === null || ph_no.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写联系信息了...."
+        });
+      }
+      if (rloc === null || rloc.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写结束城市了...."
+        });
+      }
+      if (vehicleType === null || vehicleType.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写车型了...."
+        });
+      }
+    }
+
+    if (forumId === "5a319a9310cea7360a06287f" && sup_or_req === "寻求") {
+      if (ploc === null || ploc.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写您可以接团的城市了..."
+        });
+      }
+      if (ph_no === null || ph_no.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写联系信息了...."
+        });
+      }
+    }
+
+    if (forumId === "5a319aaa10cea7360a062880" && sup_or_req === "寻求") {
+      if (ploc === null || ploc.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写您所在的城市了..."
+        });
+      }
+      if (ph_no === null || ph_no.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写联系信息了...."
+        });
+      }
+      if (title === null || title.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写求购哪种商品了...."
+        });
+      }
+    }
+
+    if (forumId === "5a319aaa10cea7360a062880" && sup_or_req === "提供") {
+      if (ploc === null || ploc.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写您所在的城市了..."
+        });
+      }
+      if (ph_no === null || ph_no.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写联系信息了...."
+        });
+      }
+      if (title === null || title.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写出售哪种商品了...."
+        });
+      }
+      if (rate === null || rate.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "价格不能为空(可填写‘面议’或具体数字)..."
+        });
+      }
+    } else {
+      if (content === null || content.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "请填写具体内容..."
+        });
+      }
+      if (tags === null || tags.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "请添加至少一个标签"
+        });
+      }
+    }
 
     // if (content === null || content.length === 0) {
     //   validated = false;
@@ -78,21 +250,7 @@ export const postDiscussion = (userId, forumId, currentForum) => {
     //   });
     // }
 
-    // if (rloc === null || rloc.length === 0) {
-    //   validated = false;
-    //   return dispatch({
-    //     type: POSTING_DISCUSSION_FAILURE,
-    //     payload: "请填写抵达城市."
-    //   });
-    // }
-
-    // if (ploc === null || ploc.length === 0) {
-    //   validated = false;
-    //   return dispatch({
-    //     type: POSTING_DISCUSSION_FAILURE,
-    //     payload: "请填写出发地点"
-    //   });
-    // }
+    //
 
     // if (sup_or_req === null || sup_or_req.length === 0) {
     //   validated = false;
@@ -118,13 +276,6 @@ export const postDiscussion = (userId, forumId, currentForum) => {
     //   });
     // }
 
-    // if (ph_no === null || ph_no.length === 0) {
-    //   validated = false;
-    //   return dispatch({
-    //     type: POSTING_DISCUSSION_FAILURE,
-    //     payload: "联系人电话格式不正确美国10位或11位，中国11位"
-    //   });
-    // }
     // if (rate === null || rate.length === 0) {
     //   validated = false;
     //   return dispatch({
@@ -146,14 +297,6 @@ export const postDiscussion = (userId, forumId, currentForum) => {
     //   return dispatch({
     //     type: POSTING_DISCUSSION_FAILURE,
     //     payload: "请填写出发日期."
-    //   });
-    // }
-
-    // if (tags === null || tags.length === 0) {
-    //   validated = false;
-    //   return dispatch({
-    //     type: POSTING_DISCUSSION_FAILURE,
-    //     payload: "Please provide some tags."
     //   });
     // }
 

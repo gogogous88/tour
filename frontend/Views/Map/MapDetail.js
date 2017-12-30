@@ -5,6 +5,7 @@ import { Link } from "react-router";
 import _ from "lodash";
 import MapAttr from "./MapAttr";
 import MapHome from "./MapHome";
+import Loading from "../../Components/Loading";
 
 class MapDetail extends Component {
   componentWillMount() {
@@ -107,7 +108,7 @@ class MapDetail extends Component {
   render() {
     const { eachMapData } = this.props;
     if (_.isEmpty(eachMapData)) {
-      return <h1>Loading...</h1>;
+      return <Loading />;
     }
     // console.log(this.props.eachMapData);
     return (

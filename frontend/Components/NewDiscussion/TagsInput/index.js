@@ -23,7 +23,7 @@ class TagsInput extends Component {
   }
 
   validateTag(tagName) {
-    const regex = /^[a-z0-9.\-_$@*!]{4,20}$/;
+    const regex = /[^]{2,10}$/;
     return regex.test(tagName);
   }
 
@@ -53,8 +53,7 @@ class TagsInput extends Component {
       }
     } else {
       this.setState({
-        errorMsg:
-          "Tags can only contain small letters and numbers. No space or special characters please. Min 4 and max 20 chars."
+        errorMsg: "标签字数不能少于2个不能超过10个"
       });
     }
   }
@@ -95,7 +94,7 @@ class TagsInput extends Component {
         <div className={styles.inputContainer}>
           <input
             className={styles.tagInput}
-            placeholder={"tag name..."}
+            placeholder={"标签名..."}
             value={tagName}
             onChange={e => {
               this.setState({ tagName: e.target.value });
@@ -124,7 +123,7 @@ class TagsInput extends Component {
     return (
       <div className={styles.container}>
         <div className={styles.tagContainer}>
-          <div className={styles.label}>Tags :</div>
+          <div className={styles.label}>标签:</div>
           {this.renderTags()}
           {this.renderInput()}
         </div>

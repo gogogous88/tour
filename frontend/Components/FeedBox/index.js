@@ -6,6 +6,7 @@ import moment from "moment";
 import styles from "./styles";
 import _ from "lodash";
 
+import Loading from "../../Components/Loading";
 import DiscussionBox from "./DiscussionBox";
 
 import keys from "../../../config/credentials";
@@ -79,15 +80,6 @@ class FeedBox extends Component {
           return pinFangURL;
         }
 
-      case "market":
-        if (discussion.sup_or_req === "提供") {
-          const marketURL = keys.SUP_MARKET;
-          return marketURL;
-        } else {
-          const faTuanURL = keys.REQ_MARKET;
-          return faTuanURL;
-        }
-
       case "fa_tuan_jie_huo":
         if (discussion.sup_or_req === "提供") {
           const faTuanURL = keys.SUP_JIE_TUAN;
@@ -97,12 +89,21 @@ class FeedBox extends Component {
           return faTuanURL;
         }
 
+      case "market":
+        if (discussion.sup_or_req === "提供") {
+          const marketURL = keys.SUP_MARKET;
+          return marketURL;
+        } else {
+          const marketURL = keys.REQ_MARKET;
+          return marketURL;
+        }
+
       case "tour_wiki":
         if (discussion.sup_or_req === "提供") {
-          const faTuanURL = "/src/statics/baike.png";
+          const faTuanURL = "/src/static/images/baike.png";
           return faTuanURL;
         } else {
-          const faTuanURL = "/src/statics/gong_lve.png";
+          const faTuanURL = "/src/static/images/gong_lve.png";
           return faTuanURL;
         }
 
@@ -233,7 +234,11 @@ class FeedBox extends Component {
           <span className={styles.title}>{discussionBoxTitle}</span>
           {!userProfile && this.renderSort()}
         </div>
-        {loading && <div className={styles.loading}>Loading...</div>}
+        {loading && (
+          <div>
+            <Loading />
+          </div>
+        )}
         {this.renderEmptyDiscussionLine(loading, discussions)}
         {!loading && (
           <div className={styles.discussions}>

@@ -13,6 +13,8 @@ import PinButton from "Components/NewDiscussion/PinButton";
 import TagsInput from "Components/NewDiscussion/TagsInput";
 import ImgUL from "../../Components/FormCommon/ImgUL";
 
+import Loading from "../../Components/Loading";
+
 // import DraftEditor from "../../components/DraftEditor/DraftEditor";
 
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -117,7 +119,8 @@ class NewDiscussion extends Component {
       rate,
       pdate,
       tags,
-      pinned
+      pinned,
+      errorMsg
     } = this.props.newDiscussion;
 
     const { forumId, userId } = this.state;
@@ -213,7 +216,11 @@ class NewDiscussion extends Component {
                     <p style={{ fontSize: 16, paddingLeft: 20 }}>
                       {sup_or_req}「{moment(pdate).format("MM/DD")}」从「{ploc}」到「{
                         rloc
-                      }」的顺风车，我的联系电话是:「{ph_no}」
+                      }」的顺风车，我的联系电话是:「{ph_no}」<span
+                        className={styles.errorMsg}
+                      >
+                        {errorMsg}
+                      </span>
                     </p>
                   </div>
                   <div
@@ -313,6 +320,7 @@ class NewDiscussion extends Component {
                       )}」入住，到「{moment(rdate[1]).format("MM/DD")}」出住的拼房，我的联系电话是:「{
                         ph_no
                       }」
+                      <span className={styles.errorMsg}>{errorMsg}</span>
                     </p>
                   </div>
                   <div
@@ -417,7 +425,7 @@ class NewDiscussion extends Component {
                           "MM/DD"
                         )}」期间可以接「{ploc}」开始的团，我的联系电话是:「{
                           ph_no
-                        }」
+                        }」<span className={styles.errorMsg}>{errorMsg}</span>
                       </p>
                     </div>
                     <div
@@ -432,7 +440,12 @@ class NewDiscussion extends Component {
                           updateDiscussionContent(value);
                         }}
                         onSave={() => {
-                          postDiscussion(userId, forumId, currentForum);
+                          postDiscussion(
+                            userId,
+                            forumId,
+                            currentForum,
+                            sup_or_req
+                          );
                         }}
                       />
                     </div>
@@ -558,7 +571,11 @@ class NewDiscussion extends Component {
                           "MM/DD"
                         )}」期间有一个「{ploc}」开始「{rloc}」结束，需要「{
                           vehicleType
-                        }」的团，我的联系电话是:「{ph_no}」,有空的导游请与我取得联系，谢谢。
+                        }」的团，我的联系电话是:「{ph_no}」,有空的导游请与我取得联系，谢谢。<span
+                          className={styles.errorMsg}
+                        >
+                          {errorMsg}
+                        </span>
                       </p>
                     </div>
                     <div
@@ -694,7 +711,11 @@ class NewDiscussion extends Component {
                   <p style={{ fontSize: 16, paddingLeft: 20 }}>
                     我在「{ploc}」，出售「{title}」,价格「{rate}」,我的联系电话是:「{
                       ph_no
-                    }」,有需要的朋友请与我取得联系，谢谢。
+                    }」,有需要的朋友请与我取得联系，谢谢。<span
+                      className={styles.errorMsg}
+                    >
+                      {errorMsg}
+                    </span>
                   </p>
                 </div>
                 <div className="col s12">
@@ -787,7 +808,9 @@ class NewDiscussion extends Component {
               <div style={{ paddingLeft: 10, marginTop: 20 }}>
                 <p style={{ fontSize: 18, paddingLeft: 10 }}>标题预览：</p>
                 <p style={{ fontSize: 16, paddingLeft: 20 }}>
-                  我在「{ploc}」，想求购「{title}」,我的联系电话是:「{ph_no}」,有出售的朋友请与我取得联系，谢谢。
+                  我在「{ploc}」，想求购「{title}」,我的联系电话是:「{ph_no}」,有出售的朋友请与我取得联系，谢谢。{
+                    errorMsg
+                  }
                 </p>
               </div>
               <div className="col s12">
@@ -834,6 +857,35 @@ class NewDiscussion extends Component {
                   updateDiscussionTags(tags);
                 }}
               />
+              <div className="col s12">
+                <ImgUL
+                  key={"image"}
+                  value={image}
+                  onChange={value => {
+                    updateDiscussionImage(value);
+                  }}
+                />
+              </div>
+              <div style={{ paddingLeft: 10, marginTop: 20 }}>
+                <p style={{ fontSize: 18, paddingLeft: 10 }}>标题预览：</p>
+                <p style={{ fontSize: 16, paddingLeft: 20 }}>
+                  {title}:<span className={styles.errorMsg}>{errorMsg}</span>
+                </p>
+              </div>
+              <div className="col s12">
+                <RichEditor
+                  key={"content"}
+                  type="newDiscussion"
+                  value={content}
+                  contentInput={"具体信息..."}
+                  onChange={value => {
+                    updateDiscussionContent(value);
+                  }}
+                  onSave={() => {
+                    postDiscussion(userId, forumId, currentForum);
+                  }}
+                />
+              </div>
 
               {/* <DraftEditor
                 key={"content"}
@@ -976,10 +1028,26 @@ class NewDiscussion extends Component {
 
     return (
       <div className={classnames(appLayout.constraintWidth, styles.signInMsg)}>
-        Please sign in before posting a new discussion.
+        发布信息前请先登录...
       </div>
     );
   }
+
+  // renderForumTitle() {
+  //   switch (this.props.currentForum) {
+  //     case "shun_feng_che":
+  //       return (
+  //         <div>
+  //           你正在发布一个
+  //           <span className={styles.forumName}>顺风车</span>
+  //           信息
+  //         </div>
+  //       );
+
+  //     default:
+  //       return this.props.currentForum;
+  //   }
+  // }
 
   render() {
     const { fatalError } = this.state;
@@ -1005,19 +1073,18 @@ class NewDiscussion extends Component {
           <title>ReForum | New Discussion</title>
         </Helmet>
 
-        <div className={styles.forumInfo}>
-          You are creating a new discussion on{" "}
-          <span className={styles.forumName}>{currentForum}</span> forum.
-        </div>
-        <div className={styles.errorMsg}>{errorMsg}</div>
+        {/* <div className={styles.forumInfo}>{this.renderForumTitle()}</div> */}
+
         {postingSuccess && (
-          <div className={styles.successMsg}>
-            Your discussion is created :-)
-          </div>
+          <div className={styles.successMsg}>您的信息已发布 :-)</div>
         )}
         {this.renderEditor()}
         {postingDiscussion && (
-          <div className={styles.postingMsg}>Posting discussion...</div>
+          <div className={styles.postingMsg}>
+            <div>
+              <Loading />
+            </div>发布中...
+          </div>
         )}
       </div>
     );

@@ -6,6 +6,8 @@ import { Helmet } from "react-helmet";
 import classnames from "classnames";
 import moment from "moment";
 
+import Loading from "../../Components/Loading";
+
 import {
   getDiscussion,
   toggleFavorite,
@@ -241,7 +243,9 @@ class SingleDiscussion extends Component {
     // return loading status if discussion is not fetched yet
     if (fetchingDiscussion) {
       return (
-        <div className={styles.loadingWrapper}>Loading discussion ...</div>
+        <div>
+          <Loading />
+        </div>
       );
     }
 
