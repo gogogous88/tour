@@ -30,7 +30,7 @@ class MapDetail extends Component {
 
   fetchData() {
     console.log("length", this.props.params.id.length);
-    if (this.props.params.id.length === 5) {
+    if (!this.props.params.id.length === 8) {
       this.props.fetchMapData();
     }
     this.props.fetchAttrs();
@@ -121,7 +121,7 @@ class MapDetail extends Component {
 function mapStateToProps({ MapDataMore }, ownProps) {
   const MapData = _.mapKeys(MapDataMore.delis, "id");
   const AttrData = _.mapKeys(MapDataMore.attrs, "id");
-  if (ownProps.params.id.length === 5) {
+  if (!ownProps.params.id.length === 8) {
     return { eachMapData: MapData[ownProps.params.id] };
   }
   return { eachMapData: AttrData[ownProps.params.id] };
