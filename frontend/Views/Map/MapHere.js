@@ -1,16 +1,46 @@
 /*global google*/
 
 import React, { Component } from "react";
+import _ from "lodash";
 
 class MapHere extends Component {
   componentDidMount() {
     this.addMarkers();
   }
 
-  addMarkers = () => {
-    const { locations } = this.props;
+  renderIcon(locations) {
+    if (!_.isEmpty(locations.ph_no)) {
+      if (locations.category === "桌餐") {
+        return "/src/static/icons/pins/redhead.svg";
+      }
+      if (locations.category === "自助" || "自助餐") {
+        return "/src/static/icons/pins/orangehead.svg";
+      }
+      return "/src/static/icons/pins/purplehead.svg";
+    } else {
+      if (locations.class === 1) {
+        return "/src/static/icons/pins/orangehead.svg";
+      }
+      if (locations.class === 2) {
+        return "/src/static/icons/pins/yellowhead.svg";
+      }
+      if (locations.class === 3) {
+        return "/src/static/icons/pins/greenhead.svg";
+      }
+      if (locations.class === 4) {
+        return "/src/static/icons/pins/bluehead.svg";
+      }
+      if (locations.class === 5) {
+        return "/src/static/icons/pins/purplehead.svg";
+      }
+      return "/src/static/icons/pins/redhead.svg";
+    }
+  }
+
+  addMarkers = props => {
+    const { locations, pin } = this.props;
     const { lat, lng } = this.props.center;
-    console.log(locations);
+
     var map = new google.maps.Map(this.refs.map, {
       zoom: 4,
       center: { lat, lng }
@@ -21,10 +51,14 @@ class MapHere extends Component {
     var marker, i;
 
     for (i = 0; i < locations.length; i++) {
+      // const icon = "https://png.icons8.com/map-pin/color/43/2980b9";
+      // const icon1 = "/src/static/images/icons8-map-pin-orange-48 2.png";
+
       marker = new google.maps.Marker({
         position: { lat: locations[i].lat, lng: locations[i].lng },
         map: map,
-        icon: "https://png.icons8.com/map-pin/color/43/2980b9"
+        // icon: `${locations[i].category === "桌餐" ? icon : icon1}`
+        icon: `${this.renderIcon(locations[i])}`
       });
 
       google.maps.event.addListener(
@@ -40,7 +74,7 @@ class MapHere extends Component {
                 locations[i].name +
                 "</a></h5></div><div>" +
                 "<a href='http://maps.google.com/maps?q=" +
-                locations[i].addr +
+                locations[i].coord +
                 "'/>" +
                 "<div><p><a href=" +
                 url +
@@ -48,8 +82,9 @@ class MapHere extends Component {
                 "查看详情" +
                 "</a></p></div><div>" +
                 "<a href='http://maps.google.com/maps?q=" +
-                locations[i].addr +
+                locations[i].coord +
                 "'/>" +
+                locations[i].location +
                 "<h6>" +
                 "导航前往" +
                 "</h6></a>" +

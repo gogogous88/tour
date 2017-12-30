@@ -13,7 +13,7 @@ import PinButton from "Components/NewDiscussion/PinButton";
 import TagsInput from "Components/NewDiscussion/TagsInput";
 import ImgUL from "../../Components/FormCommon/ImgUL";
 
-import DraftEditor from "../../components/DraftEditor/DraftEditor";
+// import DraftEditor from "../../components/DraftEditor/DraftEditor";
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import "bootstrap/dist/js/bootstrap.min";
@@ -835,7 +835,7 @@ class NewDiscussion extends Component {
                 }}
               />
 
-              <DraftEditor
+              {/* <DraftEditor
                 key={"content"}
                 type="newDiscussion"
                 value={content}
@@ -845,7 +845,7 @@ class NewDiscussion extends Component {
                 onSave={() => {
                   postDiscussion(userId, forumId, currentForum);
                 }}
-              />
+              /> */}
             </div>
           );
           {

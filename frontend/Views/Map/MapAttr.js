@@ -25,7 +25,13 @@ class MapAttr extends Component {
   renderMap() {
     const location = { lat: 43, lng: -72.9 };
 
-    return <MapHere center={location} locations={this.state.locations} />;
+    return (
+      <MapHere
+        center={location}
+        locations={this.state.locations}
+        pin="https://png.icons8.com/map-pin/color/43/2980b9"
+      />
+    );
   }
 
   render() {

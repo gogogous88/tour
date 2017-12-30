@@ -41,7 +41,13 @@ class MapHome extends Component {
     const location = { lat: 38.998459, lng: -97.563037 };
     console.log("checking", this.state.locations);
 
-    return <MapHere center={location} locations={this.state.locations} />;
+    return (
+      <MapHere
+        center={location}
+        locations={this.state.locations}
+        pin="/src/static/images/icons8-map-pin-orange-48 2.png"
+      />
+    );
   }
 
   render() {
