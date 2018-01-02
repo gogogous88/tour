@@ -104,7 +104,10 @@ class NavigationBar extends Component {
             className={classnames(styles.signInBtn, styles.title)}
             onClick={this.toggleSubMenu}
           >
-            <i className="fa fa-bars fa-3x" aria-hidden="true" />
+            <img
+              src="/src/static/icons/buttons/blacksquare.svg"
+              aria-hidden="true"
+            />
           </Button>
           {this.renderSubMenu()}
         </div>

@@ -107,7 +107,7 @@ class RichEditor extends Component {
 
     let placeholder = "";
     if (type === "newOpinion") placeholder = "请填写回复内容......";
-    if (type === "newDiscussion") placeholder = "请输入更多信息....";
+    if (type === "newDiscussion") placeholder = "未留下任何具体内容....";
 
     return (
       <div

@@ -34,10 +34,23 @@ class Discussion extends Component {
       case "tour_wiki":
         return <FroalaEditorView model={discContent} />;
 
-      default:
+      case "fa_tuan_jie_huo":
         return (
           <div>
             <RichEditor readOnly={true} value={discContent} />
+            <ul>{this.renderUploadImages(uploadImg)}</ul>
+          </div>
+        );
+      case "market":
+        return (
+          <div>
+            <RichEditor readOnly={true} value={discContent} />
+            <ul>{this.renderUploadImages(uploadImg)}</ul>
+          </div>
+        );
+      default:
+        return (
+          <div>
             <ul>{this.renderUploadImages(uploadImg)}</ul>
           </div>
         );

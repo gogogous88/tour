@@ -156,9 +156,9 @@ class SingleDiscussion extends Component {
       case "shun_feng_che":
         const shunFengTitle = `${discussion.sup_or_req}顺风车-:「${moment(
           discussion.pdate
-        ).format("MM/DD")}」-【${discussion.ploc}至${
+        ).format("MM/DD")}」-「${discussion.ploc}-->${
           discussion.rloc
-        },联系方式：「${discussion.ph_no}」
+        }」,联系方式：「${discussion.ph_no}」
         `;
         return shunFengTitle;
 

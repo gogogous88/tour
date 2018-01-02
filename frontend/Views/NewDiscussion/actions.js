@@ -122,8 +122,6 @@ export const postDiscussion = (userId, forumId, currentForum, Sup_or_req) => {
       }
     }
 
-    console.log("param", sup_or_req);
-
     if (forumId === "5a319a9310cea7360a06287f" && sup_or_req === "提供") {
       if (ploc === null || ploc.length === 0) {
         validated = false;
@@ -215,7 +213,7 @@ export const postDiscussion = (userId, forumId, currentForum, Sup_or_req) => {
         validated = false;
         return dispatch({
           type: POSTING_DISCUSSION_FAILURE,
-          payload: "您忘记填写出售哪种商品了...."
+          payload: "您忘记填写标题了...."
         });
       }
       if (rate === null || rate.length === 0) {
@@ -225,7 +223,15 @@ export const postDiscussion = (userId, forumId, currentForum, Sup_or_req) => {
           payload: "价格不能为空(可填写‘面议’或具体数字)..."
         });
       }
-    } else {
+    }
+    if (forumId === "5a43f499ca420fd7dfe6e5ad") {
+      if (title === null || title.length === 0) {
+        validated = false;
+        return dispatch({
+          type: POSTING_DISCUSSION_FAILURE,
+          payload: "您忘记填写求购哪种商品了...."
+        });
+      }
       if (content === null || content.length === 0) {
         validated = false;
         return dispatch({
@@ -233,14 +239,23 @@ export const postDiscussion = (userId, forumId, currentForum, Sup_or_req) => {
           payload: "请填写具体内容..."
         });
       }
-      if (tags === null || tags.length === 0) {
-        validated = false;
-        return dispatch({
-          type: POSTING_DISCUSSION_FAILURE,
-          payload: "请添加至少一个标签"
-        });
-      }
     }
+    // else {
+    //   if (content === null || content.length === 0) {
+    //     validated = false;
+    //     return dispatch({
+    //       type: POSTING_DISCUSSION_FAILURE,
+    //       payload: "请填写具体内容..."
+    //     });
+    //   }
+    //   if (tags === null || tags.length === 0) {
+    //     validated = false;
+    //     return dispatch({
+    //       type: POSTING_DISCUSSION_FAILURE,
+    //       payload: "请添加至少一个标签"
+    //     });
+    //   }
+    // }
 
     // if (content === null || content.length === 0) {
     //   validated = false;
