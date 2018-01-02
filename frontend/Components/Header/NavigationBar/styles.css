@@ -49,7 +49,7 @@
   align-items: flex-start;
   flex-flow: row nowrap;
   justify-content: flex-end;
-  height: 55px;
+  height: 100px;
   margin-right: 25px;
   /* margin-left: 25px; */
 }
