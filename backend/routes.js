@@ -10,6 +10,7 @@ const discussionAPI = require("./entities/discussion/api");
 const opinionAPI = require("./entities/opinion/api");
 const adminAPI = require("./entities/admin/api");
 const deliAPI = require("./entities/deli/api");
+const rentalAPI = require("./entities/rental/api");
 
 /**
  * routes configurations
@@ -43,6 +44,9 @@ const routesConfig = app => {
 
   // apply deli apis
   deliAPI(app);
+
+  //apply rental apis
+  rentalAPI(app);
 
   // apply attr apis
   require("./entities/attr/api")(app);

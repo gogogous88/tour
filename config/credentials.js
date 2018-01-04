@@ -30,7 +30,17 @@ module.exports = {
     "http://res.cloudinary.com/markmoo/image/upload/v1513643134/req_shun_feng_che_e9ti90.png",
 
   TG_LOGO:
-    "http://res.cloudinary.com/markmoo/image/upload/v1513998222/TGLogo_2_meq03y.jpg"
+    "http://res.cloudinary.com/markmoo/image/upload/v1513998222/TGLogo_2_meq03y.jpg",
+
+  //rental keys:
+  cookieKey: "dHDUdsafAdweaHU23d13rfrWQDG23DExsadad",
+  navotar_grant_type: "client_credentials",
+  navotar_client_id: "6c65d7d2-020b-4c9b-9240-bd359e64bd67",
+  navotar_client_secret: "6c65d7d2-020b-4c9b-9240-bd359e64bd45",
+  google_places_service_key: "AIzaSyBeFlJ4hzhjJzaU7HOD0rsORKEO8CN50LM",
+  qiniu_action: "https://up.qbox.me",
+  qiniu_key: "WRRLTKa646g3KsTfOc16AeRZgh5ikuToJK3pGU4S",
+  qiniu_secret: "HVjQLUfA1Gu-LloyZu5hmRl_M_qCeT_68Hq-rDiB"
 };
 
 // Client ID
