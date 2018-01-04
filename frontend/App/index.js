@@ -21,7 +21,7 @@ import MapHome from "../Views/Map/MapHome";
 import MapAttr from "../Views/Map/MapAttr";
 import MapDetail from "../Views/Map/MapDetail";
 import GoogleSheet from "../Views/googleSheet";
-import Search from "../Views/CarRental";
+import Search from "../Views/search/Search";
 import TourGuideWiki from "../Views/TourGuideWiki/TourGuideWiki";
 
 //mark - materialize css
