@@ -3,10 +3,11 @@ import React from "react";
 const AgeDropdown = props => (
   <div className="col-12 col-lg-6">
     <div className="input-box-wrap">
-      <label>Please Select an Age</label>
+      {/* <label>Please Select an Age</label> */}
+      <label>驾驶人年龄:</label>
       <div className="input-box">
         <div className="select-wrap">
-          <span>{props.value}</span>
+          {/* <span>{props.value}</span> */}
           <select
             style={{ display: "flex", zIndex: 1 }}
             name={props.name}

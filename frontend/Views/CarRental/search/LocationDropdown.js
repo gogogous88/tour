@@ -10,7 +10,10 @@ const LocationDropdown = props => {
   return (
     <div className={classNames({ "col-12": true, "col-lg-6": true })}>
       <div className="input-box-wrap">
-        <label>{props.labelText}</label>
+        <label>
+          <i className="fa fa-map-marker fa-1x" />
+          {props.labelText === "Pickup Location" ? "取车地点:" : "还车地点:"}
+        </label>
         <div
           className={classNames({
             "input-box": true,
@@ -18,7 +21,8 @@ const LocationDropdown = props => {
           })}
         >
           <div className="select-wrap">
-            <span>{renderLocationName(props.value)}</span>
+            {/* <span>{renderLocationName(props.value)}</span> */}
+
             <select
               style={{ display: "flex", zIndex: 1 }}
               name={props.name}
@@ -33,19 +37,19 @@ const LocationDropdown = props => {
               ))}
             </select>
           </div>
-          <i className="fa fa-map-marker fa-1" />
         </div>
         {props.name === "pickLocation" && (
           <div className="form-check">
             <label className="form-check-label">
               <input
+                style={{ zIndex: 1, display: "flex" }}
                 type="checkbox"
                 name="syncLocation"
                 className="form-check-input"
                 onChange={props.onInputChange}
                 checked={!props.syncLocation}
               />
-              Return car to a different location
+              在其他城市还车
             </label>
           </div>
         )}

@@ -18,6 +18,7 @@ import LocationDropdown from "./LocationDropdown";
 import DateTimeDropdown from "./DateTimeDropdown";
 import AgeDropdown from "./AgeDropdown";
 import Loading from "./Loading";
+import styles from "./styles.css";
 
 const DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET = 5 + 7; // default pickup/return date is next Friday/Sunday
 const DEFAULT_RETURN_DAY_OFFSET = 2;
@@ -260,9 +261,9 @@ class Search extends Component {
         />
 
         <div className="col-12 col-lg-6">
-          <div className="input-box-wrap">
+          <div className={styles.inputBoxWrap}>
             <label>Promotion Code (Optional)</label>
-            <div className="input-box">
+            <div className={styles.inputBox}>
               <div className="select-wrap">
                 <input
                   name="promotion"
@@ -280,7 +281,7 @@ class Search extends Component {
             className="btn btn-block btn-lg btn-danger rounded-0"
             onClick={this.onHandleSubmit}
           >
-            Search
+            搜索
           </button>
         </div>
       </div>
@@ -308,9 +309,11 @@ class Search extends Component {
           <div className="row">
             <div className="col">
               <div className="search-wrap">{this.renderForm()}</div>
-              <div className="date-overlay-wrap">
+              {/* <div className="date-overlay-wrap"> */}
+              <div style={{ display: "flex", zIndex: -1 }}>
                 <SingleDatePicker
                   id={"dateInput"}
+                  noBorder
                   date={this.state.overlayDate}
                   focused={this.state.overlayVisible}
                   initialVisibleMonth={() => this.state.overlayDate}

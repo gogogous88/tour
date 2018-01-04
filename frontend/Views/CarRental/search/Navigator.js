@@ -68,12 +68,14 @@ const Navigator = props => {
             active: passedStep >= 1
           })}
         >
-          <i className="check-icon fa fa-check-circle" />
           <div
             className="detail"
             onClick={passedStep >= 1 ? () => returnToSearch("step1") : () => {}}
           >
-            <h3>1. Rental Data & Time</h3>
+            <h5>
+              <i className="check-icon fa fa-check-circle" />
+              1. Rental Data & Time
+            </h5>
             <p>{`${pickDateTimeStr} - ${returnDateTimeStr}`}</p>
           </div>
         </div>
@@ -83,12 +85,13 @@ const Navigator = props => {
             active: passedStep >= 2
           })}
         >
-          <i className="check-icon fa fa-check-circle" />
           <div
             className="detail"
             onClick={passedStep >= 2 ? () => returnToSearch("step2") : () => {}}
           >
-            <h3>2. Pickup & Return</h3>
+            <h5>
+              <i className="check-icon fa fa-check-circle" />2. Pickup & Return
+            </h5>
             <p>{`${pickLocationName} - ${returnLocationName}`}</p>
           </div>
         </div>
@@ -98,12 +101,13 @@ const Navigator = props => {
             active: passedStep >= 3
           })}
         >
-          <i className="check-icon fa fa-check-circle" />
           <div
             className="detail"
             onClick={passedStep >= 3 ? () => returnToSearch("step3") : () => {}}
           >
-            <h3>3. Vehicle</h3>
+            <h5>
+              <i className="check-icon fa fa-check-circle" />3. Vehicle
+            </h5>
             <div className="types-dropdown-wrap">
               <a href="#" className="current-name">
                 {_.get(selectedVehicle, "vehicleName") || "All Vehicle Class"}
@@ -126,12 +130,13 @@ const Navigator = props => {
             active: passedStep >= 4
           })}
         >
-          <i className="check-icon fa fa-check-circle" />
           <div
             className="detail"
             onClick={passedStep >= 4 ? () => returnToSearch("step4") : () => {}}
           >
-            <h3>4. Extras</h3>
+            <h5>
+              <i className="check-icon fa fa-check-circle" />4. Extras
+            </h5>
             {passedStep >= 4 ? <p>Modify Extras</p> : <p>Select Extras</p>}
           </div>
         </div>
