@@ -15,6 +15,7 @@ import {
 import Button from "Components/Button";
 import FeedBox from "Components/FeedBox";
 import SideBar from "Components/SideBar";
+import Search from "../CarRental/search/Search";
 
 import appLayout from "SharedStyles/appLayout.css";
 import styles from "./styles.css";
@@ -108,6 +109,10 @@ class ForumFeed extends Component {
     this.setState({ search: event.target.value });
   }
 
+  renderCarRental() {
+    return <Search />;
+  }
+
   renderSearchBar() {
     if (!this.state.searchBool) {
       return (
@@ -122,6 +127,7 @@ class ForumFeed extends Component {
         </button>
       );
     }
+
     // const { discussions } = this.props;
     // if (!_.isEmpty(discussions)) {
     //   if (!discussions[0].pdate && !discussions[0].rdate[0]) {
@@ -247,14 +253,18 @@ class ForumFeed extends Component {
         </Helmet>
         {/* 搜索条在这里 */}
         <div className={appLayout.primaryContent}>
+          <div style={{ display: "flex", justifyContent: "center" }} />
+          {/* {this.renderCarRental()} */}
           <div
             style={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "center"
+              justifyContent: "space-evenly",
+              flexDirection: "row"
             }}
           >
-            {this.renderSearchBar()}
+            {/* <img src="/src/static/banners/sprinter-banner.jpg" width="80%" /> */}
+            {/* <div>{this.renderSearchBar()}</div> */}
           </div>
 
           <FeedBox
@@ -263,7 +273,16 @@ class ForumFeed extends Component {
             discussions={pinnedDiscussions}
             currentForum={currentForum}
           />
-
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-evenly",
+              flexDirection: "row"
+            }}
+          >
+            {this.renderSearchBar()}
+          </div>
           <FeedBox
             type="general"
             loading={fetchingDiscussions}
