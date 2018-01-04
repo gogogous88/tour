@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import {
   fetchUploadToken,
@@ -7,12 +7,12 @@ import {
   flushResults,
   fetchMisCharges,
   flushSelectedVehicle
-} from '../../actions';
-import Navigator from './Navigator';
-import Loading from './Loading';
-import Equipment from './Equipment';
-import LocationDelivery from './LocationDelivery';
-import FileUploader from '../common/FileUploader';
+} from "../actions";
+import Navigator from "./Navigator";
+import Loading from "./Loading";
+import Equipment from "./Equipment";
+// import LocationDelivery from "./LocationDelivery";
+// import FileUploader from "../common/FileUploader";
 
 class Extras extends Component {
   state = {
@@ -22,7 +22,7 @@ class Extras extends Component {
   componentDidMount = async () => {
     // redirect to search page if it comes without locations or conditions
     if (_.isEmpty(this.props.locations) || _.isEmpty(this.props.conditions)) {
-      this.props.history.push('/search');
+      this.props.router.push("/search");
       return;
     }
 
@@ -42,28 +42,28 @@ class Extras extends Component {
   initMiscCharges = () => {
     const { selectedVehicle, misCharges } = this.props;
 
-    const childSeat = _.find(misCharges, ['name', 'Child Seat']);
+    const childSeat = _.find(misCharges, ["name", "Child Seat"]);
     const childSeatEuipment = {
-      title: _.get(childSeat, 'name'),
-      price: _.get(childSeat, 'value'),
+      title: _.get(childSeat, "name"),
+      price: _.get(childSeat, "value"),
       days: selectedVehicle.totalDays,
       amount: 0,
       multipliable: true
     };
 
-    const gps = _.find(misCharges, ['name', 'GPS']);
+    const gps = _.find(misCharges, ["name", "GPS"]);
     const gpsEuipment = {
-      title: _.get(gps, 'name'),
-      price: _.get(gps, 'value'),
+      title: _.get(gps, "name"),
+      price: _.get(gps, "value"),
       days: selectedVehicle.totalDays,
       amount: 0,
       multipliable: false
     };
 
-    const cdw = _.find(misCharges, ['name', 'CDW No Tax']);
+    const cdw = _.find(misCharges, ["name", "CDW No Tax"]);
     const cdwEuipment = {
-      title: _.get(cdw, 'name'),
-      price: _.get(cdw, 'value'),
+      title: _.get(cdw, "name"),
+      price: _.get(cdw, "value"),
       days: selectedVehicle.totalDays,
       amount: 0,
       multipliable: false
@@ -123,16 +123,16 @@ class Extras extends Component {
 
   handleUploadComplete = (imageHash, name) => {
     // TODO: add result to redux
-    console.log('handleUploadComplete', imageHash, name);
+    console.log("handleUploadComplete", imageHash, name);
   };
 
   handleDelete = name => {
     // TODO: remove uploaded image
-    console.log('handleonDelete', name);
+    console.log("handleonDelete", name);
   };
 
   onSubmit = () => {
-    this.props.history.push('/form');
+    this.props.history.push("/form");
   };
 
   renderMisChargeItems = misCharges => (
@@ -185,25 +185,25 @@ class Extras extends Component {
                   <h3>Pick-up & Return Location</h3>
                   <em>Free Delivery if total is more than $300</em>
                 </div>
-                <div className="body">
+                {/* <div className="body">
                   <div className="location-group">
                     <LocationDelivery
                       name="pickLocation"
                       labelText="Pickup Location"
                       checkboxText="Deliver the Vehicle to Me"
-                      addresses={['317 E. Foothill Blvd #105']}
+                      addresses={["317 E. Foothill Blvd #105"]}
                     />
                     <LocationDelivery
                       name="returnLocation"
                       labelText="Return Location"
                       checkboxText="Pickup the Vehicle from Me"
                       addresses={[
-                        '1577 Morris ave',
-                        '133-53 37th ave, Flushing NY 11354'
+                        "1577 Morris ave",
+                        "133-53 37th ave, Flushing NY 11354"
                       ]}
                     />
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <div className="extra-item">
@@ -212,7 +212,7 @@ class Extras extends Component {
                 </div>
                 <div className="body">
                   <div className="upload-group">
-                    <div className="upload-item">
+                    {/* <div className="upload-item">
                       <h4>Driver’s License Info</h4>
                       <FileUploader
                         name="driverLicense"
@@ -231,7 +231,7 @@ class Extras extends Component {
                         onUploadComplete={this.handleUploadComplete}
                         onDelete={this.handleDelete}
                       />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

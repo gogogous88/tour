@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const AgeDropdown = props => (
   <div className="col-12 col-lg-6">
@@ -8,6 +8,7 @@ const AgeDropdown = props => (
         <div className="select-wrap">
           <span>{props.value}</span>
           <select
+            style={{ display: "flex", zIndex: 1 }}
             name={props.name}
             onChange={props.onInputChange}
             value={props.value}

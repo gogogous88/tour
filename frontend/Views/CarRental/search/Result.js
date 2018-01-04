@@ -1,9 +1,9 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-import { connect } from 'react-redux';
-import querystring from 'querystring';
+import _ from "lodash";
+import React, { Component } from "react";
+import moment from "moment";
+import "moment/locale/zh-cn";
+import { connect } from "react-redux";
+import querystring from "querystring";
 
 import {
   fetchToken,
@@ -15,16 +15,16 @@ import {
   flushResults,
   updateSearchConditions,
   saveSelectedVehicle
-} from '../../actions';
+} from "../actions";
 
-import Navigator from './Navigator';
-import Vehicle from './Vehicle';
-import Loading from './Loading';
+import Navigator from "./Navigator";
+import Vehicle from "./Vehicle";
+import Loading from "./Loading";
 
 class Result extends Component {
   constructor(props) {
     super(props);
-    moment.locale(document.documentElement.lang || 'en');
+    moment.locale(document.documentElement.lang || "en");
   }
 
   componentDidMount = async () => {
@@ -42,7 +42,7 @@ class Result extends Component {
     if (_.isEmpty(this.props.conditions)) {
       const conditions = querystring.parse(window.location.search.slice(1));
       if (_.isEmpty(conditions)) {
-        this.props.history.push('/search');
+        this.props.router.push("/search");
         return;
       }
       this.props.updateSearchConditions(conditions);
@@ -71,11 +71,11 @@ class Result extends Component {
 
     // fetch rates
     const startDate = moment(
-      `${pickDate} ${moment(pickTime, 'hhmm').format('HH:mm')}`
+      `${pickDate} ${moment(pickTime, "hhmm").format("HH:mm")}`
     ).format();
 
     const endDate = moment(
-      `${returnDate} ${moment(returnTime, 'hhmm').format('HH:mm')}`
+      `${returnDate} ${moment(returnTime, "hhmm").format("HH:mm")}`
     ).format();
 
     await this.props.fetchRates({
@@ -96,7 +96,7 @@ class Result extends Component {
 
   onVehicleSelect = selectedVehicle => {
     this.props.saveSelectedVehicle(selectedVehicle);
-    this.props.history.push('/extras');
+    this.props.router.push("/extras");
   };
 
   render() {

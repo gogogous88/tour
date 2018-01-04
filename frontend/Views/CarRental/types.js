@@ -1,0 +1,14 @@
+export const FETCH_TOKEN = "fetch_token";
+export const FETCH_LOCATIONS = "fetch_locations";
+export const FETCH_VEHICLES = "fetch_vehicles";
+export const FETCH_RATES = "fetch_rates";
+export const FETCH_TAX = "fetch_tax";
+export const FETCH_ONE_WAY_FEE = "fetch_one_way_fee";
+export const UPDATE_SEARCH_CONDITIONS = "update_search_conditions";
+export const FETCH_PLACES = "fetch_places";
+export const FETCH_PLACE_DETAIL = "fetch_place_detail";
+export const FETCH_UPLOAD_TOKEN = "fetch_upload_token";
+export const FLUSH_RESULTS = "flush_results";
+export const FLUSH_SELECTED_VEHICLE = "flush_selected_vehicle";
+export const SAVE_SELECTED_VEHICLE = "save_selected_vehicle";
+export const FETCH_MISCHARGES = "fetch_mischarges";

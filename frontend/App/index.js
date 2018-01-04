@@ -21,7 +21,9 @@ import MapHome from "../Views/Map/MapHome";
 import MapAttr from "../Views/Map/MapAttr";
 import MapDetail from "../Views/Map/MapDetail";
 import GoogleSheet from "../Views/googleSheet";
-import Search from "../Views/search/Search";
+import Search from "../Views/CarRental/search/Search";
+import Result from "../Views/CarRental/search/Result";
+import Extras from "../Views/CarRental/search/Extras";
 import TourGuideWiki from "../Views/TourGuideWiki/TourGuideWiki";
 
 //mark - materialize css
@@ -46,6 +48,10 @@ ReactDOM.render(
         <Route path="/googlesheet" component={GoogleSheet} />
 
         <Route path="/car-rental" component={Search} />
+
+        <Route path="/result" component={Result} />
+
+        <Route path="/extras" component={Extras} />
 
         <Route path="/wiki" component={TourGuideWiki} />
 

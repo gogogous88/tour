@@ -1,9 +1,9 @@
-import React from 'react';
-import moment from 'moment';
+import React from "react";
+import moment from "moment";
 
 const DateTimeDropdown = props => {
   function renderTime(timeStr) {
-    return moment(timeStr, 'hhmm').format('h:mm a');
+    return moment(timeStr, "hhmm").format("h:mm a");
   }
 
   return (
@@ -17,11 +17,12 @@ const DateTimeDropdown = props => {
               props.onDateOverlayVisible(props.dateValue, props.dateSelectName)
             }
           >
-            {props.dateValue.format('ll')}
+            {props.dateValue.format("ll")}
           </div>
           <div className="select-wrap">
             <span>{renderTime(props.timeValue)}</span>
             <select
+              style={{ display: "flex", zIndex: 1 }}
               name={props.timeSelectName}
               onChange={props.onTimeChange}
               value={props.timeValue}

@@ -10,6 +10,7 @@ import { adminInfoReducer } from "../Views/AdminDashboard/reducers";
 import { userProfileReducer } from "../Views/UserProfile/reducers";
 import { mapReducer } from "../Views/Map/reducers";
 import { nightReducer } from "../Views/googleSheet/reducers";
+import rentalReducer from "../Views/CarRental/reducers";
 
 // root reducer for app
 const rootReducer = combineReducers({
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   discussion: singleDiscussionReducer,
   newDiscussion: newDiscussionReducer,
   adminInfo: adminInfoReducer,
-  userProfile: userProfileReducer
+  userProfile: userProfileReducer,
+  rentalReducer: rentalReducer
 });
 
 // dev tool extension

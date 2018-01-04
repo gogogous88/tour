@@ -1,17 +1,17 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
-import classNames from 'classnames/bind';
+import _ from "lodash";
+import React, { Component } from "react";
+import classNames from "classnames/bind";
 
 class Vehicle extends Component {
   state = {
-    currentView: 'default'
+    currentView: "default"
   };
 
   showDetailView = e => {
     e.preventDefault();
     e.stopPropagation();
     this.setState({
-      currentView: 'detail'
+      currentView: "detail"
     });
   };
 
@@ -19,13 +19,13 @@ class Vehicle extends Component {
     e.preventDefault();
     e.stopPropagation();
     this.setState({
-      currentView: 'price'
+      currentView: "price"
     });
   };
 
   showDefaultView = () => {
     this.setState({
-      currentView: 'default'
+      currentView: "default"
     });
   };
 
@@ -35,7 +35,7 @@ class Vehicle extends Component {
         2
       )} Per Mile`;
     }
-    return 'Unlimited Miles Per Day';
+    return "Unlimited Miles Per Day";
   };
 
   render() {
@@ -61,16 +61,18 @@ class Vehicle extends Component {
     const totalWithTax = totalWithoutTax * (1 + tax / 100) + oneWayFee;
 
     // i18n tweak
-    let vehicleName = _.split(vehicleType, '|');
-    let vehicleDesc = _.split(sample, '|');
+    let vehicleName = _.split(vehicleType, "|");
+    let vehicleDesc = _.split(sample, "|");
 
-    if (lang === 'en') {
-      vehicleName = _.first(vehicleName);
-      vehicleDesc = _.first(vehicleDesc);
-    } else if (lang === 'zh-cn') {
-      vehicleName = _.last(vehicleName);
-      vehicleDesc = _.last(vehicleDesc);
-    }
+    // if (lang === 'en') {
+    //   vehicleName = _.first(vehicleName);
+    //   vehicleDesc = _.first(vehicleDesc);
+    // } else if (lang === 'zh-cn') {
+    //   vehicleName = _.last(vehicleName);
+    //   vehicleDesc = _.last(vehicleDesc);
+    // }
+    vehicleName = _.first(vehicleName);
+    vehicleDesc = _.first(vehicleDesc);
 
     return (
       <div className="result-item" onClick={this.showDefaultView}>
@@ -117,8 +119,8 @@ class Vehicle extends Component {
         </div>
         <div
           className={classNames({
-            'price-view': true,
-            open: this.state.currentView === 'price'
+            "price-view": true,
+            open: this.state.currentView === "price"
           })}
         >
           <i
@@ -156,8 +158,8 @@ class Vehicle extends Component {
         </div>
         <div
           className={classNames({
-            'detail-view': true,
-            open: this.state.currentView === 'detail'
+            "detail-view": true,
+            open: this.state.currentView === "detail"
           })}
         >
           <i

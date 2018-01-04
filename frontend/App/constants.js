@@ -10,3 +10,5 @@ export const FETCHING_USER_SUCCESS = "fetching_user_success";
 export const FETCHING_USER_FAILURE = "fetching_user_failure";
 export const SIGNOUT_USER_SUCCESS = "signOut_user_success";
 export const SIGNOUT_USER_FAILURE = "signOut_user_failure";
+
+//rental parts:
