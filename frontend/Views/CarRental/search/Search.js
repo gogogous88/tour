@@ -17,7 +17,7 @@ import { fetchToken, fetchLocations, updateSearchConditions } from "../actions";
 import LocationDropdown from "./LocationDropdown";
 import DateTimeDropdown from "./DateTimeDropdown";
 import AgeDropdown from "./AgeDropdown";
-import Loading from "./Loading";
+import Loading from "../../../Components/Loading";
 import styles from "./styles.css";
 
 const DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET = 5 + 7; // default pickup/return date is next Friday/Sunday
