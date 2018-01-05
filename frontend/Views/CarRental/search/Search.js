@@ -265,7 +265,7 @@ class Search extends Component {
 
         <div className="col-12 col-lg-6">
           <div className={styles.inputBoxWrap}>
-            <label>Promotion Code (Optional)</label>
+            <label>打折代码 (选填):</label>
             <div className={styles.inputBox}>
               <div className="select-wrap">
                 <input

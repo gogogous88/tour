@@ -89,3 +89,8 @@
 
   cursor: pointer;
 }
+
+.checkBox {
+  display: flex;
+  z-index: 1;
+}
