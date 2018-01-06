@@ -12,15 +12,13 @@ import {
   VERTICAL_ORIENTATION
 } from "react-dates/constants";
 import withUserAgent from "react-useragent";
-import classNames from "classnames/bind";
 
 import { fetchToken, fetchLocations, updateSearchConditions } from "../actions";
 import LocationDropdown from "./LocationDropdown";
 import DateTimeDropdown from "./DateTimeDropdown";
 import AgeDropdown from "./AgeDropdown";
-import Loading from "./Loading";
-
-import styles from "./styles/search.css";
+import Loading from "../../../Components/Loading";
+import styles from "./styles.css";
 
 const DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET = 5 + 7; // default pickup/return date is next Friday/Sunday
 const DEFAULT_RETURN_DAY_OFFSET = 2;
@@ -30,7 +28,7 @@ class Search extends Component {
   constructor(props) {
     super(props);
 
-    moment.locale(document.documentElement.lang || "en");
+    // moment.locale(document.documentElement.lang || "en");
 
     this.state = {
       pickLocation: 5761,
@@ -154,6 +152,9 @@ class Search extends Component {
 
     this.props.updateSearchConditions(conditions);
     this.props.router.push(`/result?${querystring.stringify(conditions)}`);
+    // window.open(
+    //   `http://yale.demo5.cn/rental/result?${querystring.stringify(conditions)}`
+    // );
   };
 
   onDateOverlayToggle = ({ focused }) => {
@@ -222,7 +223,7 @@ class Search extends Component {
       <div className="row">
         <LocationDropdown
           name="pickLocation"
-          labelText="取车城市"
+          labelText="Pickup Location"
           value={this.state.pickLocation}
           onInputChange={this.onInputChange}
           locations={this.props.locations}
@@ -230,7 +231,7 @@ class Search extends Component {
         />
         <LocationDropdown
           name="returnLocation"
-          labelText="还车城市"
+          labelText="Return Location"
           value={this.state.returnLocation}
           onInputChange={this.onInputChange}
           locations={this.props.locations}
@@ -239,7 +240,7 @@ class Search extends Component {
         <DateTimeDropdown
           dateSelectName="pickDate"
           timeSelectName="pickTime"
-          labelText="取车日期及时间"
+          labelText="Pickup Date &amps; Time"
           dateValue={this.state.pickDate}
           timeValue={this.state.pickTime}
           onDateChange={this.onDateChange}
@@ -249,7 +250,7 @@ class Search extends Component {
         <DateTimeDropdown
           dateSelectName="returnDate"
           timeSelectName="returnTime"
-          labelText="还车日期及时间"
+          labelText="Return Date &amps; Time"
           dateValue={this.state.returnDate}
           timeValue={this.state.returnTime}
           onDateChange={this.onDateChange}
@@ -263,16 +264,11 @@ class Search extends Component {
         />
 
         <div className="col-12 col-lg-6">
-          <div className="input-box-wrap">
-            <label
-              className={classNames(styles.labelStyle, styles.labelPadding)}
-            >
-              打折码(选填)
-            </label>
+          <div className={styles.inputBoxWrap}>
+            <label>打折代码 (选填):</label>
             <div className={styles.inputBox}>
-              <div className={classNames(styles.divInInput, styles.selectWrap)}>
+              <div className="select-wrap">
                 <input
-                  className={styles.inputInWrap}
                   name="promotion"
                   onChange={this.onInputChange}
                   type="text"
@@ -283,7 +279,7 @@ class Search extends Component {
           </div>
         </div>
 
-        <div className={classNames(styles.searchButton, "col-12")}>
+        <div className="col-12">
           <button
             className="btn btn-block btn-lg btn-danger rounded-0"
             onClick={this.onHandleSubmit}
@@ -298,10 +294,10 @@ class Search extends Component {
   render() {
     if (_.isEmpty(this.props.locations)) {
       return (
-        <div className={styles.searchContainer}>
+        <div className="search-container">
           <div className="container">
             <div className="row">
-              <div className={classNames(styles.divInRow, "col")}>
+              <div className="col">
                 <Loading />
               </div>
             </div>
@@ -311,14 +307,16 @@ class Search extends Component {
     }
 
     return (
-      <div className={styles.searchContainer}>
-        <div className={classNames(styles.divInRow, "col")}>
+      <div className="search-container">
+        <div className="container">
           <div className="row">
             <div className="col">
-              <div className={styles.searchWrap}>{this.renderForm()}</div>
-              <div className={styles.dateOverlayWrap}>
+              <div className="search-wrap">{this.renderForm()}</div>
+              {/* <div className="date-overlay-wrap"> */}
+              <div style={{ display: "flex", zIndex: -1 }}>
                 <SingleDatePicker
                   id={"dateInput"}
+                  noBorder
                   date={this.state.overlayDate}
                   focused={this.state.overlayVisible}
                   initialVisibleMonth={() => this.state.overlayDate}

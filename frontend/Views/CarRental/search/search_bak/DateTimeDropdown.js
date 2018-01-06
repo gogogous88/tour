@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import styles from "./styles/search.css";
+import styles from "./styles.css";
 
 const DateTimeDropdown = props => {
   function renderTime(timeStr) {
@@ -9,23 +9,37 @@ const DateTimeDropdown = props => {
 
   return (
     <div className="col-12 col-lg-6">
-      <div className="input-box-wrap">
-        <label className={styles.labelStyle}>{props.labelText}</label>
-        <div className={styles.inputBox}>
+      <div className={styles.inputBoxWrap}>
+        <label>
+          <i className="fa fa-calendar fa-1x" />
+          {props.labelText === "Pickup Date &amps; Time"
+            ? "取车日期及时间:"
+            : "还车日期及时间:"}
+        </label>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center"
+          }}
+        >
           <div
-            className={styles.textWrap}
+            className={styles.inputBox}
             onClick={() =>
               props.onDateOverlayVisible(props.dateValue, props.dateSelectName)
             }
           >
             {props.dateValue.format("ll")}
           </div>
-          <div className={styles.selectWrap}>
-            <span className={styles.spanInWrap}>
-              {renderTime(props.timeValue)}
-            </span>
+          <div className={styles.inputBox}>
+            {/* <span>{renderTime(props.timeValue)}</span> */}
             <select
-              className={styles.selectInWrap}
+              style={{
+                display: "flex",
+                zIndex: 1,
+                border: 0,
+                height: 29
+              }}
               name={props.timeSelectName}
               onChange={props.onTimeChange}
               value={props.timeValue}
@@ -84,8 +98,6 @@ const DateTimeDropdown = props => {
               </optgroup>
             </select>
           </div>
-
-          <i className="fa fa-calendar fa-1" />
         </div>
       </div>
     </div>

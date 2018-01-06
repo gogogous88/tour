@@ -1,15 +1,15 @@
 import React from "react";
-import styles from "./styles/search.css";
 
 const AgeDropdown = props => (
   <div className="col-12 col-lg-6">
-    <div className={styles.labelPadding}>
-      <label className={styles.labelStyle}>驾驶人年龄</label>
-      <div className={styles.inputBox}>
-        <div className={styles.selectWrap}>
-          <span className={styles.spanInWrap}>{props.value}</span>
+    <div className="input-box-wrap">
+      {/* <label>Please Select an Age</label> */}
+      <label>驾驶人年龄:</label>
+      <div className="input-box">
+        <div className="select-wrap">
+          {/* <span>{props.value}</span> */}
           <select
-            className={styles.selectInWrap}
+            style={{ display: "flex", zIndex: 1 }}
             name={props.name}
             onChange={props.onInputChange}
             value={props.value}
