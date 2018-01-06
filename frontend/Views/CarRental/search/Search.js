@@ -324,11 +324,11 @@ class Search extends Component {
                   isDayHighlighted={this.isDayHighlighted}
                   onFocusChange={this.onDateOverlayToggle}
                   withPortal={true}
-                  orientation={
-                    this.props.ua.mobile
-                      ? VERTICAL_ORIENTATION
-                      : HORIZONTAL_ORIENTATION
-                  }
+                  // orientation={
+                  //   this.props.ua.mobile
+                  //     ? VERTICAL_ORIENTATION
+                  //     : HORIZONTAL_ORIENTATION
+                  // }
                   numberOfMonths={1}
                   isOutsideRange={this.isOutsideRange}
                 />

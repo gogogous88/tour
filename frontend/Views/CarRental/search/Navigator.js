@@ -64,7 +64,7 @@ class Navigator extends Component {
     return (
       _.get(selectedVehicle, "vehicleName") ||
       justSelectedVehicleName ||
-      "All Vehicle Class"
+      "所有车型"
     );
   };
 

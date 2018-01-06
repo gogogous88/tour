@@ -1,3 +1,8 @@
+@value primaryFontColor,
+  secondaryFontColor,
+  borderColor from "SharedStyles/globalStyles.css";
+@value smallBP, mediumBP, largeBP from "SharedStyles/globalStyles.css";
+
 .resultWrap {
   background-color: #eee;
   padding-top: 30px;
@@ -17,7 +22,7 @@
   font-size: 18px;
 }
 
-img {
+.imageStyle {
   max-width: 90%;
   max-height: 90%;
 }
@@ -69,14 +74,14 @@ strong {
   text-align: center;
 }
 
-a {
-  color: #666;
+.aStyle {
+  color: rgba(1, 5, 10, 0.747);
   text-decoration: underline;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .detailView {
-  transition: all 1s ease-out;
+  transition: all 0.3s ease-out;
   position: absolute;
   top: 100%;
   right: 0;
@@ -90,7 +95,7 @@ a {
 }
 
 .priceView {
-  transition: all 1s ease-out;
+  transition: all 0.3s ease-out;
   position: absolute;
   top: 100%;
   right: 0;
@@ -109,7 +114,7 @@ a {
 }
 
 .closeIcon {
-  transition: all 1s ease-out;
+  transition: all 0.3s ease-out;
   position: absolute;
   top: 5px;
   right: 15px;
@@ -164,4 +169,46 @@ h4 {
   margin-bottom: 0;
   text-transform: uppercase;
   z-index: 9;
+}
+
+.defaultView {
+  position: relative;
+}
+
+.detailLink {
+  position: absolute;
+  right: 0;
+  top: -5px;
+  color: #666;
+  font-size: 14px;
+  text-decoration: underline;
+  line-height: 1;
+  z-index: 5;
+}
+
+.resultItem {
+  transition: all 0.3s ease-out;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  margin-right: 1%;
+  margin-bottom: 2%;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  user-select: none;
+  cursor: default;
+
+  @media smallBP {
+    width: 100%;
+  }
+  @media largeBP {
+    width: 32%;
+  }
+
+  @media mediumBP {
+    width: 40%;
+  }
 }

@@ -42,7 +42,7 @@ class Result extends Component {
     if (_.isEmpty(this.props.conditions)) {
       const conditions = querystring.parse(window.location.search.slice(1));
       if (_.isEmpty(conditions)) {
-        this.props.history.push("/search");
+        this.props.router.push("/car-rental");
         return;
       }
       this.props.updateSearchConditions(conditions);
@@ -96,7 +96,7 @@ class Result extends Component {
 
   onVehicleSelect = selectedVehicle => {
     this.props.saveSelectedVehicle(selectedVehicle);
-    this.props.history.push("/extras");
+    this.props.router.push("/extras");
   };
 
   render() {
@@ -128,7 +128,7 @@ class Result extends Component {
     }
 
     return (
-      <div className="result-container">
+      <div className={styles.resultContainer}>
         <Navigator passedStep={2} {...this.props} />
         <div className={styles.resultWrap}>
           <div
