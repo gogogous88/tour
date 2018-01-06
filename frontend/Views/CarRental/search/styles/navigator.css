@@ -1,0 +1,56 @@
+.searchConditionsWrap {
+  border-bottom: 1px solid #ccc;
+  padding: 20px 0;
+  background-color: white;
+}
+
+.searchConditions {
+  display: flex;
+}
+
+.conditionItem {
+  flex: 1;
+  padding: 0 5px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.checkIcon {
+  font-size: 30px;
+  margin-right: 10px;
+  color: #d6d6d6;
+}
+
+h3 {
+  font-size: 16px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.detail {
+  position: relative;
+}
+
+.currentName {
+  color: #000;
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.typesDropdownWrap {
+  position: relative;
+  z-index: 99;
+}
+
+.subMenu {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  display: none;
+  overflow: auto;
+  min-width: 100px;
+  max-width: 200px;
+  max-height: 400px;
+}

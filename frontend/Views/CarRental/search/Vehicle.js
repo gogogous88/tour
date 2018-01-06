@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React, { Component } from "react";
 import classNames from "classnames/bind";
+import styles from "./styles/result.css";
 
 class Vehicle extends Component {
   state = {
@@ -80,32 +81,32 @@ class Vehicle extends Component {
           <a href="#" className="detail-link" onClick={this.showDetailView}>
             Details
           </a>
-          <div className="image">
+          <div className={styles.image}>
             <img
               src={`http://www.yalevanrental.com/uploads/rental/${vehicleTypeId}.jpg`}
             />
           </div>
-          <div className="desc">
-            <div className="desc-row">
-              <div className="desc-title">Details</div>
-              <div className="desc-content">
+          <div className={styles.desc}>
+            <div className={styles.descRow}>
+              <div className={styles.descTitle}>Details</div>
+              <div className={styles.descContent}>
                 <p>{vehicleName}</p>
                 <p>{vehicleDesc}</p>
               </div>
             </div>
-            <div className="desc-row">
-              <div className="desc-title">Price</div>
-              <div className="desc-content">
-                <div className="price-content">
-                  <div>
+            <div className={styles.descRow}>
+              <div className={styles.descTitle}>Price</div>
+              <div className={styles.descContent}>
+                <div className={styles.priceContent}>
+                  <div className={styles.divContainer}>
                     <strong>${dailyRate.toFixed(2)}</strong>
                     <p>Per Day</p>
                   </div>
-                  <div>
-                    <strong className="highlight">
+                  <div className={styles.divContainer}>
+                    <strong className={styles.highlight}>
                       ${totalWithTax.toFixed(2)}
                     </strong>
-                    <p>Total</p>
+                    <p>HiTotal</p>
                     <p>
                       <a href="#" onClick={this.showPriceView}>
                         Price Details
@@ -118,13 +119,16 @@ class Vehicle extends Component {
           </div>
         </div>
         <div
-          className={classNames({
-            "price-view": true,
-            open: this.state.currentView === "price"
-          })}
+          className={classNames(
+            styles.priceView,
+            this.state.currentView === "price" ? styles.open : ""
+          )}
         >
           <i
-            className="fa fa-times-thin close-icon"
+            className={classNames(
+              styles.closeIcon,
+              "fa fa-times-thin close-icon"
+            )}
             onClick={this.showDefaultView}
           />
           <h4>{vehicleName}</h4>
@@ -135,35 +139,39 @@ class Vehicle extends Component {
               kMorMileageCharge
             )}
           </p>
-          <ul className="list-unstyled price-chart">
-            <li>
+          <ul className={classNames(styles.priceChart, "list-unstyled")}>
+            <li className={styles.liStyle}>
               <span>{totalDays} Day(s)</span>
               <span>${totalWithoutTax.toFixed(2)}</span>
             </li>
-            <li>
+            <li className={styles.liStyle}>
               <span>Tax({tax}%)</span>
               <span>${taxFee.toFixed(2)}</span>
             </li>
             {oneWayFee > 0 && (
-              <li>
+              <li className={styles.liStyle}>
                 <span>One Way Fee</span>
                 <span>${oneWayFee.toFixed(2)}</span>
               </li>
             )}
-            <li>
+            <li className={styles.liStyle}>
               <span>Estimated Total</span>
-              <strong className="highlight">${totalWithTax.toFixed(2)}</strong>
+              <strong className={styles.highlight}>
+                ${totalWithTax.toFixed(2)}
+              </strong>
             </li>
           </ul>
         </div>
         <div
-          className={classNames({
-            "detail-view": true,
+          className={classNames(styles.detailView, {
             open: this.state.currentView === "detail"
           })}
         >
           <i
-            className="fa fa-times-thin close-icon"
+            className={classNames(
+              styles.closeIcon,
+              "fa fa-times-thin close-icon"
+            )}
             onClick={this.showDefaultView}
           />
           <h4>{vehicleName}</h4>
@@ -174,17 +182,17 @@ class Vehicle extends Component {
               kMorMileageCharge
             )}
           </p>
-          <table className="detail-table">
+          <table className={styles.detailTable}>
             <tbody>
               <tr>
-                <th>Switch Type</th>
-                <th>Passenger Capacity</th>
-                <th>Bags</th>
+                <th className={styles.thStyle}>Switch Type</th>
+                <th className={styles.thStyle}>Passenger Capacity</th>
+                <th className={styles.thStyle}>Bags</th>
               </tr>
               <tr>
-                <td>AUTOMATIC</td>
-                <td>{seats}</td>
-                <td>{doors}</td>
+                <td className={styles.tdStyle}>AUTOMATIC</td>
+                <td className={styles.tdStyle}>{seats}</td>
+                <td className={styles.tdStyle}>{doors}</td>
               </tr>
             </tbody>
           </table>
@@ -194,7 +202,10 @@ class Vehicle extends Component {
           </p>
         </div>
         <button
-          className="btn btn-block btn-danger rounded-0 select-button"
+          className={classNames(
+            styles.selectButton,
+            "btn btn-block btn-danger rounded-0"
+          )}
           onClick={() =>
             this.props.onVehicleSelect({
               vehicleTypeId,

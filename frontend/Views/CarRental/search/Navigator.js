@@ -1,148 +1,239 @@
+import $ from "jquery";
 import _ from "lodash";
-import React from "react";
+import React, { Component } from "react";
 import moment from "moment";
+import "moment/locale/zh-cn";
 import classNames from "classnames/bind";
+import querystring from "querystring";
+import styles from "./styles/navigator.css";
 
-const Navigator = props => {
-  const {
-    conditions,
-    locations,
-    passedStep,
-    flushResults,
-    selectedVehicle,
-    flushSelectedVehicle,
-    vehicleTypes
-  } = props;
-
-  function renderTime(timeStr) {
-    return moment(timeStr, "hhmm").format("h:mm a");
+class Navigator extends Component {
+  constructor(props) {
+    super(props);
+    moment.locale(document.documentElement.lang || "en");
   }
 
-  function returnToSearch(stepId) {
+  renderTime = timeStr => moment(timeStr, "hhmm").format("h:mm a");
+
+  returnToSearch = stepId => {
     if (stepId === "step1" || stepId === "step2") {
-      flushResults();
-      props.history.push("/search");
+      this.props.flushResults();
+      this.props.history.push("/search");
     } else if (stepId === "step3") {
-      flushSelectedVehicle();
-      props.history.push("/result");
+      this.props.flushSelectedVehicle();
+      this.props.history.push(
+        `/result?${querystring.stringify(this.props.conditions)}`
+      );
     } else if (stepId === "step4") {
-      props.history.push("/extras");
+      this.props.history.push("/extras");
     }
-  }
+  };
 
-  function vehicleNameByLocale(vehicleType) {
+  vehicleNameByLocale = vehicleType => {
     const vehicleNames = _.split(vehicleType, "|");
-
-    return _.first(vehicleNames);
 
     // if (lang === 'en') {
     //   return _.first(vehicleNames);
     // }
 
-    // return _.last(vehicleNames);
-  }
+    return _.last(vehicleNames);
+  };
 
-  const pickDateTimeStr = `${moment(conditions.pickDate).format(
-    "ll"
-  )} ${renderTime(conditions.pickTime)}`;
+  selectVehicleType = (e, vehicleTypeId) => {
+    e.preventDefault();
+    this.props.updateSearchConditions({ vehicleTypeId });
+    $("#subMenu").css("display", "none");
+  };
 
-  const returnDateTimeStr = `${moment(conditions.returnDate).format(
-    "ll"
-  )} ${renderTime(conditions.returnTime)}`;
+  handleMenuShow = () => {
+    $("#subMenu").css("display", "block");
+  };
 
-  const pickLocationName = _.get(locations, [
-    conditions.pickLocation,
-    "locationName"
-  ]);
-  const returnLocationName = _.get(locations, [
-    conditions.returnLocation,
-    "locationName"
-  ]);
+  handleMenuHide = () => {
+    $("#subMenu").css("display", "none");
+  };
 
-  return (
-    <div className="search-conditions-wrap">
-      <div className="container search-conditions">
-        <div
-          className={classNames({
-            "condition-item": true,
-            active: passedStep >= 1
-          })}
-        >
+  showVehicleSelectTitle = () => {
+    const { conditions, selectedVehicle } = this.props;
+    const justSelectedVehicleName =
+      conditions.vehicleTypeId > 0
+        ? vehicleNameByLocale(
+            _.get(vehicleTypes, [conditions.vehicleTypeId, "vehicleType"])
+          )
+        : "";
+    return (
+      _.get(selectedVehicle, "vehicleName") ||
+      justSelectedVehicleName ||
+      "All Vehicle Class"
+    );
+  };
+
+  render() {
+    const {
+      conditions,
+      locations,
+      passedStep,
+      selectedVehicle,
+      vehicleTypes
+    } = this.props;
+
+    const pickDateTimeStr = `${moment(conditions.pickDate).format(
+      "ll"
+    )} ${this.renderTime(conditions.pickTime)}`;
+
+    const returnDateTimeStr = `${moment(conditions.returnDate).format(
+      "ll"
+    )} ${this.renderTime(conditions.returnTime)}`;
+
+    const pickLocationName = _.get(locations, [
+      conditions.pickLocation,
+      "locationName"
+    ]);
+    const returnLocationName = _.get(locations, [
+      conditions.returnLocation,
+      "locationName"
+    ]);
+
+    return (
+      <div className={styles.searchConditionsWrap}>
+        <div className={classNames(styles.searchConditions, { container })}>
           <div
-            className="detail"
-            onClick={passedStep >= 1 ? () => returnToSearch("step1") : () => {}}
+            className={classNames(styles.conditionItem, {
+              active: passedStep >= 1
+            })}
           >
-            <h5>
-              <i className="check-icon fa fa-check-circle" />
-              1. Rental Data & Time
-            </h5>
-            <p>{`${pickDateTimeStr} - ${returnDateTimeStr}`}</p>
+            <i
+              className={classNames(
+                styles.checkIcon,
+                "check-icon fa fa-check-circle"
+              )}
+            />
+            <div
+              className={styles.detail}
+              onClick={
+                passedStep >= 1 ? () => this.returnToSearch("step1") : () => {}
+              }
+            >
+              <h3>1. 租车日期</h3>
+              <p>{`${pickDateTimeStr} - ${returnDateTimeStr}`}</p>
+            </div>
           </div>
-        </div>
-        <div
-          className={classNames({
-            "condition-item": true,
-            active: passedStep >= 2
-          })}
-        >
           <div
-            className="detail"
-            onClick={passedStep >= 2 ? () => returnToSearch("step2") : () => {}}
+            className={classNames(styles.conditionItem, {
+              active: passedStep >= 2
+            })}
           >
-            <h5>
-              <i className="check-icon fa fa-check-circle" />2. Pickup & Return
-            </h5>
-            <p>{`${pickLocationName} - ${returnLocationName}`}</p>
+            <i
+              className={classNames(
+                styles.checkIcon,
+                "check-icon fa fa-check-circle"
+              )}
+            />
+            <div
+              className={styles.detail}
+              onClick={
+                passedStep >= 2 ? () => this.returnToSearch("step2") : () => {}
+              }
+            >
+              <h3>2. 取还地点</h3>
+              <p>
+                {pickLocationName === returnLocationName
+                  ? pickLocationName
+                  : pickLocationName - returnLocationName}
+              </p>
+            </div>
           </div>
-        </div>
-        <div
-          className={classNames({
-            "condition-item": true,
-            active: passedStep >= 3
-          })}
-        >
           <div
-            className="detail"
-            onClick={passedStep >= 3 ? () => returnToSearch("step3") : () => {}}
+            className={classNames(styles.conditionItem, {
+              active: passedStep >= 3
+            })}
           >
-            <h5>
-              <i className="check-icon fa fa-check-circle" />3. Vehicle
-            </h5>
-            <div className="types-dropdown-wrap">
-              <a href="#" className="current-name">
-                {_.get(selectedVehicle, "vehicleName") || "All Vehicle Class"}
-              </a>
-              <ul className="list-unstyled sub-menu">
-                {_.map(vehicleTypes, ({ vehicleTypeId, vehicleType }) => (
-                  <li key={vehicleTypeId}>
-                    <a href="#" title={vehicleNameByLocale(vehicleType)}>
-                      {vehicleNameByLocale(vehicleType)}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+            <i
+              className={classNames(
+                styles.checkIcon,
+                "check-icon fa fa-check-circle"
+              )}
+            />
+            <div
+              className={styles.detail}
+              onClick={
+                passedStep >= 3 ? () => this.returnToSearch("step3") : () => {}
+              }
+              onMouseEnter={this.handleMenuShow}
+              onMouseLeave={this.handleMenuHide}
+            >
+              <h3>3. 筛选车型</h3>
+              <div className={styles.typesDropdownWrap}>
+                <a href="#" className={styles.currentName}>
+                  {this.showVehicleSelectTitle()}
+                </a>
+                {passedStep === 2 && (
+                  <ul
+                    className={classNames(styles.subMenu, "list-unstyled")}
+                    id="subMenu"
+                  >
+                    {conditions.vehicleTypeId > 0 && (
+                      <li>
+                        <a
+                          href="#"
+                          title="All Vehicle Class"
+                          onClick={e => this.selectVehicleType(e, 0)}
+                        >
+                          All Vehicle Class
+                        </a>
+                      </li>
+                    )}
+                    {_.map(vehicleTypes, ({ vehicleTypeId, vehicleType }) => (
+                      <li
+                        key={vehicleTypeId}
+                        className={classNames({
+                          active:
+                            vehicleTypeId === conditions.vehicleTypeId ||
+                            vehicleTypeId ===
+                              _.get(selectedVehicle, "vehicleTypeId")
+                        })}
+                      >
+                        <a
+                          href="#"
+                          title={this.vehicleNameByLocale(vehicleType)}
+                          onClick={e =>
+                            this.selectVehicleType(e, vehicleTypeId)
+                          }
+                        >
+                          {this.vehicleNameByLocale(vehicleType)}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </div>
+          <div
+            className={classNames(styles.conditionItem, {
+              active: passedStep >= 4
+            })}
+          >
+            <i
+              className={classNames(
+                styles.checkIcon,
+                "check-icon fa fa-check-circle"
+              )}
+            />
+            <div
+              className={styles.detail}
+              onClick={
+                passedStep >= 4 ? () => returnToSearch("step4") : () => {}
+              }
+            >
+              <h3>4. 额外选项</h3>
+              {passedStep >= 4 ? <p>Modify Extras</p> : <p>Select Extras</p>}
             </div>
           </div>
         </div>
-        <div
-          className={classNames({
-            "condition-item": true,
-            active: passedStep >= 4
-          })}
-        >
-          <div
-            className="detail"
-            onClick={passedStep >= 4 ? () => returnToSearch("step4") : () => {}}
-          >
-            <h5>
-              <i className="check-icon fa fa-check-circle" />4. Extras
-            </h5>
-            {passedStep >= 4 ? <p>Modify Extras</p> : <p>Select Extras</p>}
-          </div>
-        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Navigator;

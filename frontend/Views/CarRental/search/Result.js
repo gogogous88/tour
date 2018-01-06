@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React, { Component } from "react";
 import moment from "moment";
-import "moment/locale/zh-cn";
+import classNames from "classnames/bind";
 import { connect } from "react-redux";
 import querystring from "querystring";
 
@@ -14,20 +14,20 @@ import {
   fetchOneWayFee,
   flushResults,
   updateSearchConditions,
-  saveSelectedVehicle
+  saveSelectedVehicle,
+  flushSelectedVehicle
 } from "../actions";
 
 import Navigator from "./Navigator";
 import Vehicle from "./Vehicle";
-import Loading from "./Loading";
+import Loading from "../../../Components/Loading";
+
+import styles from "./styles/result.css";
 
 class Result extends Component {
-  constructor(props) {
-    super(props);
-    moment.locale(document.documentElement.lang || "en");
-  }
-
   componentDidMount = async () => {
+    this.props.flushSelectedVehicle();
+
     // check access_token
     if (!this.props.access_token) {
       await this.props.fetchToken();
@@ -42,7 +42,7 @@ class Result extends Component {
     if (_.isEmpty(this.props.conditions)) {
       const conditions = querystring.parse(window.location.search.slice(1));
       if (_.isEmpty(conditions)) {
-        this.props.router.push("/search");
+        this.props.history.push("/search");
         return;
       }
       this.props.updateSearchConditions(conditions);
@@ -96,7 +96,7 @@ class Result extends Component {
 
   onVehicleSelect = selectedVehicle => {
     this.props.saveSelectedVehicle(selectedVehicle);
-    this.props.router.push("/extras");
+    this.props.history.push("/extras");
   };
 
   render() {
@@ -119,12 +119,26 @@ class Result extends Component {
       return <Loading />;
     }
 
+    let ratesResultFlitered = ratesResult;
+    if (conditions.vehicleTypeId > 0) {
+      ratesResultFlitered = _.filter(
+        ratesResultFlitered,
+        o => o.vehicleTypeId === conditions.vehicleTypeId
+      );
+    }
+
     return (
       <div className="result-container">
         <Navigator passedStep={2} {...this.props} />
-        <div className="result-wrap">
-          <div className="container result-list">
-            {_.map(ratesResult, rate => (
+        <div className={styles.resultWrap}>
+          <div
+            className={classNames(
+              styles.resultList,
+              styles.resultEmpty,
+              "container"
+            )}
+          >
+            {_.map(ratesResultFlitered, rate => (
               <Vehicle
                 key={rate.rateId}
                 tax={tax}
@@ -134,6 +148,7 @@ class Result extends Component {
                 onVehicleSelect={this.onVehicleSelect}
               />
             ))}
+            {_.size(ratesResultFlitered) === 0 && <div>no result matched</div>}
           </div>
         </div>
       </div>
@@ -156,5 +171,6 @@ export default connect(mapStateToProps, {
   fetchOneWayFee,
   updateSearchConditions,
   flushResults,
-  saveSelectedVehicle
+  saveSelectedVehicle,
+  flushSelectedVehicle
 })(Result);

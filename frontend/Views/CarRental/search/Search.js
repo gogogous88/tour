@@ -151,10 +151,10 @@ class Search extends Component {
     };
 
     this.props.updateSearchConditions(conditions);
-    // this.props.router.push(`/result?${querystring.stringify(conditions)}`);
-    window.open(
-      `http://yale.demo5.cn/rental/result?${querystring.stringify(conditions)}`
-    );
+    this.props.router.push(`/result?${querystring.stringify(conditions)}`);
+    // window.open(
+    //   `http://yale.demo5.cn/rental/result?${querystring.stringify(conditions)}`
+    // );
   };
 
   onDateOverlayToggle = ({ focused }) => {
