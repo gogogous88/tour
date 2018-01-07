@@ -283,7 +283,7 @@ class SingleDiscussion extends Component {
     return (
       <div className={appLayout.constraintWidth}>
         <Helmet>
-          <title>{`${title} | ReForum`}</title>
+          <title>{`${title} | 途盖大导通`}</title>
         </Helmet>
 
         <Discussion

@@ -5,7 +5,7 @@ import _ from "lodash";
 
 import Button from "../../Button";
 import appLayout from "SharedStyles/appLayout.css";
-import styles from "./styles";
+import styles from "./styles.css";
 
 class NavigationBar extends Component {
   constructor(props) {
@@ -34,6 +34,30 @@ class NavigationBar extends Component {
             <i className={classnames("fa fa-close")} />
           </Button>
           <ul>
+            <li className={styles.signInLink}>
+              <a
+                href="/map"
+                className={styles.links}
+                activeClassName={styles.linkActive}
+              >
+                <i
+                  className={classnames("fa fa-github-alt", styles.subMenuOcto)}
+                />
+                <span style={{ color: "#339ce6" }}>团餐景点导航</span>
+              </a>
+            </li>
+            <li className={styles.signInLink}>
+              <a
+                href="/car-rental"
+                className={styles.links}
+                activeClassName={styles.linkActive}
+              >
+                <i
+                  className={classnames("fa fa-github-alt", styles.subMenuOcto)}
+                />
+                <span style={{ color: "#339ce6" }}>商务租车</span>
+              </a>
+            </li>
             {navigationLinks.map(link => {
               if (link.id === 0) {
                 return (
@@ -67,30 +91,6 @@ class NavigationBar extends Component {
                 </li>
               );
             })}
-            <li className={styles.signInLink}>
-              <a
-                href="/map"
-                className={styles.links}
-                activeClassName={styles.linkActive}
-              >
-                <i
-                  className={classnames("fa fa-github-alt", styles.subMenuOcto)}
-                />
-                <span style={{ color: "#000" }}>团餐景点导航</span>
-              </a>
-            </li>
-            <li className={styles.signInLink}>
-              <a
-                href="/car-rental"
-                className={styles.links}
-                activeClassName={styles.linkActive}
-              >
-                <i
-                  className={classnames("fa fa-github-alt", styles.subMenuOcto)}
-                />
-                <span style={{ color: "#000" }}>商务租车</span>
-              </a>
-            </li>
           </ul>
         </div>
       );
@@ -135,6 +135,24 @@ class NavigationBar extends Component {
         <div>
           <div className={appLayout.secondaryNavContent}>
             <ul className={styles.navigationBar}>
+              <li>
+                <a
+                  href="/map"
+                  className={styles.links}
+                  activeClassName={styles.linkActive}
+                >
+                  团餐景点导航
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/car-rental"
+                  className={styles.links}
+                  activeClassName={styles.linkActive}
+                >
+                  商务租车
+                </a>
+              </li>
               {navigationLinks.map(link => {
                 if (link.id === 0) {
                   return (
@@ -162,24 +180,6 @@ class NavigationBar extends Component {
                   </li>
                 );
               })}
-              <li>
-                <a
-                  href="/map"
-                  className={styles.links}
-                  activeClassName={styles.linkActive}
-                >
-                  团餐景点导航
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/car-rental"
-                  className={styles.links}
-                  activeClassName={styles.linkActive}
-                >
-                  商务租车
-                </a>
-              </li>
             </ul>
           </div>
           {this.renderBurgerButton()}

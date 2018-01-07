@@ -1070,7 +1070,7 @@ class NewDiscussion extends Component {
     return (
       <div className={classnames(appLayout.constraintWidth, styles.content)}>
         <Helmet>
-          <title>ReForum | New Discussion</title>
+          <title>途盖大导通 | New Discussion</title>
         </Helmet>
 
         {/* <div className={styles.forumInfo}>{this.renderForumTitle()}</div> */}

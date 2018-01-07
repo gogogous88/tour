@@ -285,7 +285,7 @@ class Search extends Component {
 
         <div className={classNames(styles.searchButton, "col-12")}>
           <button
-            className="btn btn-block btn-lg btn-danger rounded-0"
+            className="btn btn-block red lighten-1 rounded-0"
             onClick={this.onHandleSubmit}
           >
             搜索

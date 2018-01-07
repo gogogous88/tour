@@ -249,7 +249,7 @@ class ForumFeed extends Component {
         className={classnames(appLayout.constraintWidth, styles.contentArea)}
       >
         <Helmet>
-          <title>{`ReForum | ${currentForum}`}</title>
+          <title>{`途盖大导通 | ${currentForum}`}</title>
         </Helmet>
         {/* 搜索条在这里 */}
         <div className={appLayout.primaryContent}>

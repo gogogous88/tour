@@ -43,7 +43,7 @@ class AppContainer extends Component {
       return (
         <div>
           <Helmet>
-            <title>ReForum</title>
+            <title>途盖大导通</title>
           </Helmet>
           <div className={styles.gitForkTag}>
             <a className={styles.gitLink} href="#" target="_blank">
