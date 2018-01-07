@@ -8,7 +8,7 @@ import MapHome from "./MapHome";
 import Loading from "../../Components/Loading";
 import classNames from "classnames/bind";
 import styles from "./styles.css";
-
+import WrapMap from "./WrapMap";
 class MapDetail extends Component {
   componentWillMount() {
     this.fetchData();
@@ -32,7 +32,6 @@ class MapDetail extends Component {
   }
 
   fetchData() {
-    console.log("length", this.props.params.id.length);
     if (this.props.params.id.length === 8) {
       this.props.fetchAttrs();
     }
@@ -47,18 +46,16 @@ class MapDetail extends Component {
           <h5>电话：</h5>
           <p className="blog-post-meta">{eachMapData.ph_no}</p>
           <hr />
-          <h5>价格：</h5>
-          <p>{eachMapData.price_rate}</p>
-          <hr />
-          <h5>描述：</h5>
-          <blockquote>{eachMapData.descr}</blockquote>
+          <h5>类型：</h5>
+          <p>{eachMapData.category}</p>
         </div>
       );
     }
     return (
       <div>
-        <h5>描述：</h5>
-        <blockquote>{eachMapData.descr}</blockquote>
+        <h5>类型：</h5>
+        <p>{eachMapData.category}</p>
+        <hr />
       </div>
     );
   }
@@ -83,11 +80,7 @@ class MapDetail extends Component {
                 </a>
               </p>
               <hr />
-              <img
-                src="https://4d6e2fb69029ba36990b-4ef77e602e2f02dfb7fb07a25d14325f.ssl.cf4.rackcdn.com/2015/06/GPS-Map-Pin.jpg"
-                alt=""
-                width="90%"
-              />
+              {this.renderDesc()}
             </div>
           </div>
           <div className="col-sm-6 blog-main">
@@ -100,9 +93,18 @@ class MapDetail extends Component {
               <hr />
               <h5>描述：</h5>
               <blockquote>{eachMapData.descr}</blockquote> */}
-              {this.renderDesc()}
+              <WrapMap
+                lat={eachMapData.lat}
+                lng={eachMapData.lng}
+                location={eachMapData}
+              />
             </div>
           </div>
+          <div className={classNames(styles.imageStyle, "col-sm-12 blog-main")}>
+            <h5>描述：</h5>
+            <blockquote>{eachMapData.descr}</blockquote>
+          </div>
+          <hr />
           <a href={imageURL}>
             <div
               className={classNames(styles.imageStyle, "col-sm-12 blog-main")}
@@ -133,10 +135,9 @@ function mapStateToProps({ MapDataMore }, ownProps) {
   const MapData = _.mapKeys(MapDataMore.delis, "id");
   const AttrData = _.mapKeys(MapDataMore.attrs, "id");
   if (ownProps.params.id.length === 8) {
-    console.log("attrsDetailMap", AttrData);
     return { eachMapData: AttrData[ownProps.params.id] };
   }
-  console.log("delisDetailMap", MapData);
+
   return { eachMapData: MapData[ownProps.params.id] };
 }
 export default connect(mapStateToProps, actions)(MapDetail);
