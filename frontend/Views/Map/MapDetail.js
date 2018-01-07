@@ -6,6 +6,8 @@ import _ from "lodash";
 import MapAttr from "./MapAttr";
 import MapHome from "./MapHome";
 import Loading from "../../Components/Loading";
+import classNames from "classnames/bind";
+import styles from "./styles.css";
 
 class MapDetail extends Component {
   componentWillMount() {
@@ -63,6 +65,7 @@ class MapDetail extends Component {
 
   renderList() {
     const { eachMapData } = this.props;
+    const imageURL = eachMapData.img;
     return (
       <div role="main" className="container">
         <br />
@@ -100,6 +103,13 @@ class MapDetail extends Component {
               {this.renderDesc()}
             </div>
           </div>
+          <a href={imageURL}>
+            <div
+              className={classNames(styles.imageStyle, "col-sm-12 blog-main")}
+            >
+              <img src={imageURL} width="90%" />
+            </div>
+          </a>
         </div>
       </div>
     );

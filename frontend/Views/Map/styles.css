@@ -1,0 +1,7 @@
+.imageStyle {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
