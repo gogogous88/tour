@@ -43,19 +43,35 @@ class MapDetail extends Component {
     if (!_.isEmpty(eachMapData.ph_no)) {
       return (
         <div>
-          <h5>电话：</h5>
-          <p className="blog-post-meta">{eachMapData.ph_no}</p>
+          <h6>电话：</h6>
+          <a href="tel:eachMapData.ph_no">
+            <p className="blog-post-meta">{eachMapData.ph_no}</p>
+          </a>
           <hr />
-          <h5>类型：</h5>
-          <p>{eachMapData.category}</p>
+          <div className={styles.rowStyle}>
+            <div style={{ display: "flex", flex: 1 }}>
+              <blockquote>
+                类型：
+                {eachMapData.category}
+              </blockquote>
+            </div>
+            <div style={{ display: "flex", flex: 2 }}>
+              <blockquote>
+                位于：
+                {eachMapData.location}
+              </blockquote>
+            </div>
+          </div>
         </div>
       );
     }
     return (
       <div>
-        <h5>类型：</h5>
-        <p>{eachMapData.category}</p>
+        <h6>类型：</h6>
+        <blockquote>{eachMapData.category}</blockquote>
         <hr />
+        <h6>位于：</h6>
+        <blockquote>{eachMapData.location}</blockquote>
       </div>
     );
   }
@@ -100,16 +116,24 @@ class MapDetail extends Component {
               />
             </div>
           </div>
-          <div className={classNames(styles.imageStyle, "col-sm-12 blog-main")}>
-            <h5>描述：</h5>
-            <blockquote>{eachMapData.descr}</blockquote>
+          <div className="col-sm-12 blog-main">
+            <h6>
+              <hr />
+              <h5>描述：</h5>
+              <br />
+              <p style={{ lineHeight: "180%" }}>{eachMapData.descr}</p>
+            </h6>
           </div>
           <hr />
           <a href={imageURL}>
             <div
               className={classNames(styles.imageStyle, "col-sm-12 blog-main")}
             >
-              <img src={imageURL} width="90%" />
+              <h6>
+                <hr />
+                图片：<hr />
+                <img src={imageURL} width="90%" />
+              </h6>
             </div>
           </a>
         </div>

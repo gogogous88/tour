@@ -26,7 +26,7 @@ const Logo = () => {
               r="23.5294118"
             />
           </g> */}
-        <img src={keys.TG_LOGO} style={{ width: "100%" }} />
+        <img src="/src/static/images/shangche.png" style={{ width: "100%" }} />
       </div>
       <div className={styles.logoTitle}>途盖大导通</div>
     </div>
