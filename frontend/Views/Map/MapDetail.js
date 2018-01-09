@@ -9,6 +9,7 @@ import Loading from "../../Components/Loading";
 import classNames from "classnames/bind";
 import styles from "./styles.css";
 import WrapMap from "./WrapMap";
+
 class MapDetail extends Component {
   componentWillMount() {
     this.fetchData();
@@ -17,7 +18,9 @@ class MapDetail extends Component {
   }
 
   renderButton() {
-    if (this.props.eachMapData.ph_no) {
+    const { eachMapData } = this.props;
+    const id = eachMapData.id.toString();
+    if (id.length === 5) {
       return (
         <Link className="btn btn-danger" to="/map">
           《 返回团餐地图
@@ -32,7 +35,8 @@ class MapDetail extends Component {
   }
 
   fetchData() {
-    if (this.props.params.id.length === 8) {
+    const id = this.props.params.id.toString();
+    if (id.length === 8) {
       this.props.fetchAttrs();
     }
     this.props.fetchMapData();
@@ -76,9 +80,25 @@ class MapDetail extends Component {
     );
   }
 
+  renderMap() {
+    const { eachMapData } = this.props;
+    const id = eachMapData.id.toString();
+
+    return (
+      <WrapMap
+        lat={eachMapData.lat}
+        lng={eachMapData.lng}
+        location={eachMapData}
+      />
+    );
+  }
+
   renderList() {
     const { eachMapData } = this.props;
     const imageURL = eachMapData.img;
+    if (!eachMapData.id) {
+      return <Loading />;
+    }
     return (
       <div role="main" className="container">
         <br />
@@ -109,11 +129,7 @@ class MapDetail extends Component {
               <hr />
               <h5>描述：</h5>
               <blockquote>{eachMapData.descr}</blockquote> */}
-              <WrapMap
-                lat={eachMapData.lat}
-                lng={eachMapData.lng}
-                location={eachMapData}
-              />
+              {this.renderMap()}
             </div>
           </div>
           <div className="col-sm-12 blog-main">
@@ -158,7 +174,8 @@ class MapDetail extends Component {
 function mapStateToProps({ MapDataMore }, ownProps) {
   const MapData = _.mapKeys(MapDataMore.delis, "id");
   const AttrData = _.mapKeys(MapDataMore.attrs, "id");
-  if (ownProps.params.id.length === 8) {
+  const idToString = ownProps.params.id.toString();
+  if (idToString.length === 8) {
     return { eachMapData: AttrData[ownProps.params.id] };
   }
 
