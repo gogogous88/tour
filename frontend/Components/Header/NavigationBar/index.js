@@ -111,7 +111,7 @@ class NavigationBar extends Component {
     return (
       <div className={classnames(appLayout.showOnSmallBP)}>
         <div className={styles.container}>
-          <Button
+          {/* <Button
             alwaysActive
             className={classnames(styles.signInBtn, styles.title)}
             onClick={this.toggleSubMenu}
@@ -120,7 +120,13 @@ class NavigationBar extends Component {
               src="/src/static/icons/buttons/blacksquare.svg"
               aria-hidden="true"
             />
-          </Button>
+          </Button> */}
+          <button
+            className="btn-floating grey lighten-3 pulse "
+            onClick={this.toggleSubMenu}
+          >
+            <i className="material-icons black-text">menu</i>
+          </button>
           {this.renderSubMenu()}
         </div>
       </div>

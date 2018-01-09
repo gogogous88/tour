@@ -75,7 +75,7 @@
 .signInBtn {
   padding-left: 0px;
   padding-right: 0px;
-  height: 40px;
+  height: 55px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -191,4 +191,8 @@
   flex: 1;
   margin-top: 0px;
   padding: 0px;
+}
+
+i.icon-black {
+  color: black;
 }

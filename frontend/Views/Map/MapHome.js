@@ -59,9 +59,9 @@ class MapHome extends Component {
     return (
       <div>
         {this.renderMap()}
-        <div style={{ zIndex: 1 }}>
+        {/* <div style={{ zIndex: 1 }}>
           <FrontNavi />
-        </div>
+        </div> */}
         <MapButton
           onClickDelis={() => {
             this.props.fetchMapData();
