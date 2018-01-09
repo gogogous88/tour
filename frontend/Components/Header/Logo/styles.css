@@ -1,19 +1,23 @@
 /* logo */
 .logoContainer {
   display: flex;
-  flex-flow: row nowrap;
+  flex-direction: row;
   align-items: center;
+  flex: 1;
+  justify-content: flex-start;
 }
 
 .logo {
-  width: 65px;
-  height: 65px;
-  border-radius: 10%;
+  width: 60px;
+  height: 60px;
 }
 
 .logoTitle {
   margin-left: 14px;
+  margin-top: 10px;
   font-size: 22px;
   font-weight: 400;
-  font-family: sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC,
+    Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei,
+    sans-serif;
 }
