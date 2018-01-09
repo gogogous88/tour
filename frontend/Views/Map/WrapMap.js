@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import _ from "lodash";
 
 class WrapMap extends Component {
   componentDidMount() {
@@ -25,7 +26,37 @@ class WrapMap extends Component {
       // icon: `${locations[i].category === "桌餐" ? icon : icon1}`
       // icon: `${this.renderIcon(locations[i])}`
     });
-    google.maps.event.addListener(
+    if (!_.isEmpty(location.ph_no)) {
+      return google.maps.event.addListener(
+        marker,
+        "click",
+        (function(marker) {
+          const url = "/map/" + location.id;
+          return function() {
+            infowindow.setContent(
+              "<div>" +
+                "<a href='http://maps.google.com/maps?q=" +
+                location.coord +
+                "'/>" +
+                location.location +
+                "<h5>" +
+                "导航前往" +
+                "</h5></a>" +
+                "<a href='tel:" +
+                location.ph_no +
+                "'/>" +
+                "<h6>" +
+                location.ph_no +
+                "</h6></a>" +
+                "</div>"
+            );
+
+            infowindow.open(map, marker);
+          };
+        })(marker)
+      );
+    }
+    return google.maps.event.addListener(
       marker,
       "click",
       (function(marker) {
@@ -37,15 +68,9 @@ class WrapMap extends Component {
               location.coord +
               "'/>" +
               location.location +
-              "<h5>" +
+              "<h6>" +
               "导航前往" +
-              "</h5></a>" +
-              "<a href='tel:" +
-              location.ph_no +
-              "'/>" +
-              "<h5>" +
-              location.ph_no +
-              "</h5></a>" +
+              "</h6></a>" +
               "</div>"
           );
 
