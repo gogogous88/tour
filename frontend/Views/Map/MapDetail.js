@@ -80,18 +80,19 @@ class MapDetail extends Component {
     );
   }
 
-  renderMap() {
-    const { eachMapData } = this.props;
-    const id = eachMapData.id.toString();
+  // renderMap() {
+  //   const { eachMapData } = this.props;
+  //   const id = eachMapData.id.toString();
 
-    return (
-      <WrapMap
-        lat={eachMapData.lat}
-        lng={eachMapData.lng}
-        location={eachMapData}
-      />
-    );
-  }
+  //   return (
+  //     if
+  //     <WrapMap
+  //       lat={eachMapData.lat}
+  //       lng={eachMapData.lng}
+  //       location={eachMapData}
+  //     />
+  //   );
+  // }
 
   renderList() {
     const { eachMapData } = this.props;
@@ -129,7 +130,7 @@ class MapDetail extends Component {
               <hr />
               <h5>描述：</h5>
               <blockquote>{eachMapData.descr}</blockquote> */}
-              {this.renderMap()}
+              {/* {this.renderMap()} */}
             </div>
           </div>
           <div className="col-sm-12 blog-main">
