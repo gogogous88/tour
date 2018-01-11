@@ -19,7 +19,8 @@ const userSchema = mongoose.Schema({
     followers: Number,
     following: Number
   },
-  googleId: String
+  googleId: String,
+  uberId: String
 });
 
 module.exports = mongoose.model("user", userSchema);

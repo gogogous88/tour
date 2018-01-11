@@ -40,6 +40,18 @@ const userAPI = app => {
     }
   );
 
+  //uber oauth
+
+  app.get("/auth/uber", passport.authenticate("uber", { scope: ["profile"] }));
+
+  app.get(
+    "/auth/uber/callback",
+    passport.authenticate("uber", { failureRedirect: "/login" }),
+    function(req, res) {
+      res.redirect("/");
+    }
+  );
+
   // signout the user
   app.get("/api/user/signout", (req, res) => {
     req.logout();

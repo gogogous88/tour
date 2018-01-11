@@ -39,6 +39,15 @@ class UserMenu extends Component {
           </Button>
 
           {!signedIn && (
+            <a className={styles.signInLink} href={"/auth/uber"}>
+              <Button className={styles.gitLoginBtn} alwaysActive>
+                <i className={classnames("fa fa-mobile", styles.subMenuOcto)} />
+                <span className={styles.btnLabel}>手机及Uber登录</span>
+              </Button>
+            </a>
+          )}
+
+          {/* {!signedIn && (
             <a className={styles.signInLink} href={"/api/user/authViaGitHub"}>
               <Button className={styles.gitLoginBtn} alwaysActive>
                 <i
@@ -47,7 +56,7 @@ class UserMenu extends Component {
                 <span className={styles.btnLabel}>Github登录</span>
               </Button>
             </a>
-          )}
+          )} */}
 
           {!signedIn && (
             <a className={styles.signInLink} href={"/auth/google"}>

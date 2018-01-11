@@ -9,6 +9,10 @@ module.exports = {
   GOOGLE_CLIENT_SECRET: "4FKQEYlN-LY4xG_iuTBx7sdT",
   GOOGLE_CALLBACK_URL: "/auth/google/callback",
 
+  UBER_CLIENT_ID: "NvclpmUtIdSicwIIbcIBaF0vtwWeOCHF",
+  UBER_CLIENT_SECRET: "V3lKxUWYJJJbDWLeJRdgNCY89RsVk_WKw_islPXR",
+  UBER_CALLBACK_URL: "/auth/uber/callback",
+
   SUP_PIN_FANG:
     "http://res.cloudinary.com/markmoo/image/upload/v1513643135/sup_pin_fang_thekge.png",
   REQ_PIN_FANG:

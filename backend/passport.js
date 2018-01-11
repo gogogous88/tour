@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 
 const GitHubStrategy = require("passport-github").Strategy;
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const uberStrategy = require("passport-uber-v2").Strategy;
 
 const GITHUB_CLIENT_ID = require("../config/credentials").GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = require("../config/credentials")
@@ -81,6 +82,31 @@ const passportConfig = app => {
           name: profile.displayName,
           username: profile.emails[0].value,
           avatarUrl: profile._json.image.url
+        }).save();
+        done(null, user);
+      }
+    )
+  );
+
+  passport.use(
+    new uberStrategy(
+      {
+        clientID: keys.UBER_CLIENT_ID,
+        clientSecret: keys.UBER_CLIENT_SECRET,
+        callbackURL: "/auth/uber/callback",
+        proxy: true
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        const existingUser = await User.findOne({ uberId: profile.id });
+        if (existingUser) {
+          return done(null, existingUser);
+        }
+        const name = `${profile.firstname} ${profile.lastname} `;
+        const user = await new User({
+          uberId: profile.id,
+          name: name,
+          username: name,
+          avatarUrl: profile.avatar
         }).save();
         done(null, user);
       }

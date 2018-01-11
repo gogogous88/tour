@@ -97,6 +97,17 @@ class MapDetail extends Component {
   renderList() {
     const { eachMapData } = this.props;
     const imageURL = eachMapData.img;
+
+    const streetURL = !_.isEmpty(eachMapData.addr)
+      ? `https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${
+          eachMapData.addr
+        }
+    &fov=90&heading=90&pitch=10 &key=AIzaSyBoHhk8Y-oh2rfaRt9IbBFgCOv175YFOyQ`
+      : `https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${
+          eachMapData.lat
+        },${eachMapData.lng}
+    &fov=90&heading=90&pitch=10 &key=AIzaSyBoHhk8Y-oh2rfaRt9IbBFgCOv175YFOyQ`;
+
     if (!eachMapData.id) {
       return <Loading />;
     }
@@ -142,17 +153,22 @@ class MapDetail extends Component {
             </h6>
           </div>
           <hr />
-          <a href={imageURL}>
-            <div
-              className={classNames(styles.imageStyle, "col-sm-12 blog-main")}
-            >
-              <h6>
-                <hr />
-                图片：<hr />
-                <img src={imageURL} width="90%" />
-              </h6>
-            </div>
-          </a>
+
+          <div className={classNames(styles.imageStyle, "col-sm-12 blog-main")}>
+            <h6>
+              <hr />
+              图片：<hr />
+              <div>
+                <div>
+                  <img src={streetURL} width="90%" />
+                </div>
+
+                <a href={imageURL}>
+                  <img src={imageURL} width="90%" />
+                </a>
+              </div>
+            </h6>
+          </div>
         </div>
       </div>
     );

@@ -40,7 +40,7 @@
 }
 
 .subMenu {
-  z-index: 1;
+  z-index: 99;
   padding: 10px 0px;
   position: absolute;
   top: 42px;
