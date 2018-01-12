@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 // import { Field, reduxForm } from 'redux-form';
-import { flushResults, flushSelectedVehicle } from '../../actions';
+import { flushResults, flushSelectedVehicle } from "../../actions";
 
-import Navigator from './Navigator';
+import Navigator from "./Navigator";
 
 class Form extends Component {
-  componentDidMount() {}
+  constructor(props) {
+    super(props);
+    moment.locale(document.documentElement.lang || "en");
+  }
 
   render() {
     return (
@@ -312,8 +315,7 @@ class Form extends Component {
                           the Vehicle or our repossession of it. We make no
                           warranties, express, implied or apparent, regarding
                           the Vehicle, no warranty of merchantability and no
-                          warranty that Vehicle is fit for a particular purpose.<br
-                          />
+                          warranty that Vehicle is fit for a particular purpose.<br />
                           3. Condition and Return of Vehicle.<br />
                           You must return the Vehicle to our rental office or
                           other location we specify, on the date and time
@@ -699,8 +701,7 @@ class Form extends Component {
                           provided for in our standard agreement). We are not
                           bad people because of it, there's just limits to what
                           we can provide and still offer vehicles at a
-                          reasonable price. Please have realistic expectations.<br
-                          />
+                          reasonable price. Please have realistic expectations.<br />
                           16 .Rental Requirements Rental Requirements:<br />
                           Anybody who plans on driving our vehicle must meet the
                           following requirements: Valid driver's license (or
@@ -748,7 +749,7 @@ class Form extends Component {
 
                       <div className="tos-agree">
                         By clicking on the “Submit”button,you confirm that you
-                        understand and accept our{' '}
+                        understand and accept our{" "}
                         <span className="highlight">
                           Rental Qualification and Requirements,Terms and
                           Conditions and you understand the Age Restrictions.

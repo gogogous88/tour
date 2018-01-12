@@ -11,6 +11,7 @@ import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_ORIENTATION
 } from "react-dates/constants";
+import MobileDetect from "mobile-detect";
 import withUserAgent from "react-useragent";
 import classNames from "classnames/bind";
 
@@ -296,6 +297,7 @@ class Search extends Component {
   }
 
   render() {
+    const md = new MobileDetect(window.navigator.userAgent);
     if (_.isEmpty(this.props.locations)) {
       return (
         <div className={styles.searchContainer}>
@@ -326,11 +328,9 @@ class Search extends Component {
                   isDayHighlighted={this.isDayHighlighted}
                   onFocusChange={this.onDateOverlayToggle}
                   withPortal={true}
-                  // orientation={
-                  //   this.props.ua.mobile
-                  //     ? VERTICAL_ORIENTATION
-                  //     : HORIZONTAL_ORIENTATION
-                  // }
+                  orientation={
+                    md.mobile() ? VERTICAL_ORIENTATION : HORIZONTAL_ORIENTATION
+                  }
                   numberOfMonths={1}
                   isOutsideRange={this.isOutsideRange}
                 />
