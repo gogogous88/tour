@@ -16,7 +16,7 @@ const discussionSchema = mongoose.Schema({
   ph_no: String,
   sup_or_req: String,
   pname: String,
-  pdate: Date,
+  pdate: String,
   rdate: Array,
   vehicleType: String,
   content: Object,

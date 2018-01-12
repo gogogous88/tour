@@ -29,7 +29,7 @@ import "react-dates/initialize";
 
 import "react-dates/lib/css/_datepicker.css";
 
-const DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET = 1 + 7; // default pickup/return date is next Friday/Sunday
+const DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET = ""; // default pickup/return date is next Friday/Sunday
 
 class ForumFeed extends Component {
   constructor(props) {
@@ -41,7 +41,8 @@ class ForumFeed extends Component {
 
       overlayVisible: false,
       currentDateKey: "",
-      searchDate: moment().day(DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET),
+      // searchDate: moment().day(DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET),
+
       searchStatus: true,
       searchBool: false
     };
@@ -113,7 +114,133 @@ class ForumFeed extends Component {
     return <Search />;
   }
 
+  renderTwoSearch() {
+    if (!this.state.searchBool) {
+      return (
+        <div className="row">
+          <form className="col s12">
+            <div className="row">
+              <div className="input-field col s6">
+                <i className="material-icons prefix">search</i>
+                <input
+                  onBlur={() => {
+                    this.setState({ searchBool: true });
+                  }}
+                  id="icon_prefix"
+                  type="text"
+                  className="validate"
+                />
+                <label htmlFor="icon_prefix">按地点搜索</label>
+              </div>
+              <div className="input-field col s6">
+                <i className="material-icons prefix">date</i>
+                <input
+                  onBlur={() => {
+                    this.setState({ searchBool: true });
+                  }}
+                  id="icon_prefix"
+                  type="text"
+                  className="validate"
+                />
+                <label htmlFor="icon_prefix">按日期搜索</label>
+              </div>
+            </div>
+          </form>
+        </div>
+      );
+    }
+  }
+  renderSingleSearch() {
+    if (!this.state.searchBool) {
+      return (
+        <div>
+          <form className="col s12">
+            <div className="input-field">
+              <i className="material-icons prefix">search</i>
+              <input
+                onBlur={() => {
+                  this.setState({ searchBool: true });
+                }}
+                id="icon_prefix"
+                type="text"
+                className="validate"
+              />
+              <label htmlFor="icon_prefix">按城市/商品等文字搜索</label>
+            </div>
+          </form>
+        </div>
+      );
+    }
+  }
+
   renderSearchBar() {
+    const { discussions } = this.props;
+    if (discussions) {
+      const pdate = discussions[0].pdate;
+      const rdate = discussions[0].rdate[0];
+      return !_.isEmpty(pdate) || !_.isEmpty(rdate)
+        ? this.renderTwoSearch()
+        : this.renderSingleSearch();
+    }
+  }
+
+  searchByTerm() {
+    return (
+      <div>
+        <form
+          onSubmit={event => {
+            event.preventDefault();
+            this.setState({
+              searchTerm: this.state.search,
+              searchStatus: false
+            });
+          }}
+        >
+          <input
+            style={{ width: 280, height: 35, fontSize: 12 }}
+            value={this.state.search}
+            onChange={this.onInputChange.bind(this)}
+            placeholder="按地点,车型,日期(格式为03/10(MM/DD))等搜索"
+          />
+
+          <button type="submit" className="waves-effect grey btn">
+            <i className="material-icons">search</i>
+          </button>
+        </form>
+      </div>
+    );
+  }
+
+  searchByDate() {
+    return (
+      <div>
+        <form
+          onSubmit={event => {
+            event.preventDefault();
+            this.setState({
+              searchDate: this.state.pickDate,
+              overlayVisible: false
+            });
+          }}
+        >
+          <SingleDatePicker
+            noBorder
+            date={this.state.pickDate}
+            numberOfMonths={1}
+            initialVisibleMonth={() => this.state.pickDate} // momentPropTypes.momentObj or null
+            onDateChange={date => {
+              this.setState({ pickDate: date });
+            }}
+            focused={this.state.focused} // PropTypes.bool
+            onFocusChange={({ focused }) => this.setState({ focused })} // PropTypes.func.isRequired
+          />
+          <button type="submit">搜索</button>
+        </form>
+      </div>
+    );
+  }
+
+  renderSearchButton() {
     if (!this.state.searchBool) {
       return (
         <button
@@ -123,91 +250,74 @@ class ForumFeed extends Component {
           className="waves-effect waves-light btn"
         >
           <i className="material-icons left">search</i>
-          通过日期/地点筛选
+          筛选
         </button>
       );
     }
-
-    // const { discussions } = this.props;
-    // if (!_.isEmpty(discussions)) {
-    //   if (!discussions[0].pdate && !discussions[0].rdate[0]) {
-    switch (this.state.searchStatus) {
-      case true:
-        return (
-          <div>
-            <form
-              onSubmit={event => {
-                event.preventDefault();
-                this.setState({
-                  searchTerm: this.state.search,
-                  searchStatus: false
-                });
-              }}
-            >
-              <input
-                style={{ width: 280, height: 35, fontSize: 12 }}
-                value={this.state.search}
-                onChange={this.onInputChange.bind(this)}
-                placeholder="按地点,车型,日期(格式为03/10(MM/DD))等搜索"
-              />
-
-              <button type="submit" className="waves-effect grey btn">
-                <i className="material-icons">search</i>
-              </button>
-            </form>
-          </div>
-        );
-
-      default:
-        return (
-          <div>
-            <button
-              onClick={event => {
-                event.preventDefault();
-                this.setState({
-                  searchTerm: "",
-                  search: "",
-                  searchStatus: true
-                });
-              }}
-            >
-              <i className="material-icons right">clear</i>
-              {this.state.searchTerm}
-            </button>
-          </div>
-        );
-    }
-
-    //   }
-
-    // return (
-    //   <div>
-    //     <form
-    //       onSubmit={event => {
-    //         event.preventDefault();
-    //         this.setState({
-    //           searchDate: this.state.pickDate,
-    //           overlayVisible: false
-    //         });
-    //       }}
-    //     >
-    //       <SingleDatePicker
-    //         noBorder
-    //         date={this.state.pickDate}
-    //         numberOfMonths={1}
-    //         initialVisibleMonth={() => this.state.pickDate} // momentPropTypes.momentObj or null
-    //         onDateChange={date => {
-    //           this.setState({ pickDate: date });
-    //         }}
-    //         focused={this.state.focused} // PropTypes.bool
-    //         onFocusChange={({ focused }) => this.setState({ focused })} // PropTypes.func.isRequired
-    //       />
-    //       <button type="submit">搜索</button>
-    //     </form>
-    //   </div>
-    // );
-    // }
+    return this.searchByDate();
   }
+
+  // onMouseEnter={this.renderSearchMenu.bind(this)}
+  //           onMouseLeave={this.HideSearchMenu.bind(this)}
+
+  // const { discussions } = this.props;
+  // if (!_.isEmpty(discussions)) {
+  //   if (!discussions[0].pdate && !discussions[0].rdate[0]) {
+
+  // switch (this.state.searchStatus) {
+  //   case true:
+
+  //   default:
+  //     return (
+  //       <div>
+  //         <button
+  //           onClick={event => {
+  //             event.preventDefault();
+  //             this.setState({
+  //               searchTerm: "",
+  //               search: "",
+  //               searchStatus: true
+  //             });
+  //           }}
+  //         >
+  //           <i className="material-icons right">clear</i>
+  //           {this.state.searchTerm}
+  //         </button>
+  //       </div>
+  //     );
+  // }
+
+  //   }
+  // switch (this.state.searchStatus) {
+  //   case true:
+  //     return (
+  //       <div>
+  //         <form
+  //           onSubmit={event => {
+  //             event.preventDefault();
+  //             this.setState({
+  //               searchDate: this.state.pickDate,
+  //               overlayVisible: false
+  //             });
+  //           }}
+  //         >
+  //           <SingleDatePicker
+  //             noBorder
+  //             date={this.state.pickDate}
+  //             numberOfMonths={1}
+  //             initialVisibleMonth={() => this.state.pickDate} // momentPropTypes.momentObj or null
+  //             onDateChange={date => {
+  //               this.setState({ pickDate: date });
+  //             }}
+  //             focused={this.state.focused} // PropTypes.bool
+  //             onFocusChange={({ focused }) => this.setState({ focused })} // PropTypes.func.isRequired
+  //           />
+  //           <button type="submit">搜索</button>
+  //         </form>
+  //       </div>
+  //     );
+  // }
+  // }
 
   renderTitle() {
     switch (this.props.currentForum) {
@@ -258,13 +368,14 @@ class ForumFeed extends Component {
           <div
             style={{
               display: "flex",
-              alignItems: "center",
-              justifyContent: "space-evenly",
+              // alignItems: "center",
+              // justifyContent: "space-evenly",
               flexDirection: "row"
             }}
           >
             {/* <img src="/src/static/banners/sprinter-banner.jpg" width="80%" /> */}
-            {/* <div>{this.renderSearchBar()}</div> */}
+            <div>{this.renderSearchBar()}</div>
+            <div>{this.renderSearchButton()}</div>
           </div>
 
           <FeedBox
@@ -273,16 +384,7 @@ class ForumFeed extends Component {
             discussions={pinnedDiscussions}
             currentForum={currentForum}
           />
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-evenly",
-              flexDirection: "row"
-            }}
-          >
-            {this.renderSearchBar()}
-          </div>
+
           <FeedBox
             type="general"
             loading={fetchingDiscussions}
@@ -292,6 +394,7 @@ class ForumFeed extends Component {
             activeSortingMethod={sortingMethod}
             searchTerm={this.state.searchTerm}
             searchDate={searchDateMMDD.toString()}
+            searchStatus={this.state.searchBool}
           />
 
           {/* {this.renderNewDiscussionButtion()} */}

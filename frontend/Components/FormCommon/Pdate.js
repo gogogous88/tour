@@ -63,7 +63,7 @@ Pdate.defaultProps = {
 
 Pdate.propTypes = {
   onDateChange: React.PropTypes.func,
-  date: ""
+  date: React.PropTypes.date
 };
 
 export default Pdate;

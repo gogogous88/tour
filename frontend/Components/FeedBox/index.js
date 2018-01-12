@@ -198,28 +198,39 @@ class FeedBox extends Component {
     const filterDiscussions =
       discussions &&
       discussions.filter(discussion => {
-        if (discussion.pdate) {
+        if (this.props.searchStatus && discussion.pdate) {
           console.log("checkTerm", this.props.searchTerm);
           console.log("checkDate", this.props.searchDate);
+          const theDate = moment(discussion.pdate).format("MM/DD");
           return (
-            moment(discussion.pdate)
-              .format("MM/DD")
-              .indexOf(moment(this.props.searchTerm).format("MM/DD")) !== -1 ||
-            discussion.ploc.indexOf(this.props.searchTerm) !== -1 ||
-            discussion.rloc.indexOf(this.props.searchTerm) !== -1
+            theDate.indexOf(moment(this.props.searchDate).format("MM/DD")) !==
+            -1
+            //   ||
+            // discussion.ploc.indexOf(this.props.searchTerm) !== -1 ||
+            // discussion.rloc.indexOf(this.props.searchTerm) !== -1
           );
         }
-        if (discussion.rdate) {
+        if (this.props.searchStatus && discussion.rdate) {
+          const checkInDate = moment(discussion.rdate[0]).format("MM/DD");
+          const checkOutDate = moment(discussion.rdate[1]).format("MM/DD");
+          // console.log("searchDate", this.props.searchDate);
+          // console.log(
+          //   "searchDate",
+          //   moment(this.props.searchDate).format("MM/DD")
+          // );
+          // console.log("rdateToString", discussion.rdate.toString());
+          // console.log("rdateMomented", checkInDate);
           return (
-            moment(discussion.rdate[0])
-              .format("MM/DD")
-              .indexOf(moment(this.props.searchTerm).format("MM/DD")) !== -1 ||
-            moment(discussion.rdate[1])
-              .format("MM/DD")
-              .indexOf(moment(this.props.searchTerm).format("MM/DD")) !== -1 ||
-            discussion.ploc.indexOf(this.props.searchTerm) !== -1 ||
-            discussion.rloc.indexOf(this.props.searchTerm) !== -1 ||
-            discussion.vehicleType.indexOf(this.props.searchTerm) !== -1
+            checkInDate.indexOf(
+              moment(this.props.searchDate).format("MM/DD")
+            ) !== -1 ||
+            checkOutDate.indexOf(
+              moment(this.props.searchDate).format("MM/DD")
+            ) !== -1
+            // ||
+            // discussion.ploc.indexOf(this.props.searchTerm) !== -1 ||
+            // discussion.rloc.indexOf(this.props.searchTerm) !== -1 ||
+            // discussion.vehicleType.indexOf(this.props.searchTerm) !== -1
           );
         }
         return (
