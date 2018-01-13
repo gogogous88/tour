@@ -64,6 +64,8 @@ class ForumFeed extends Component {
       getPinnedDiscussions
     } = this.props;
 
+    console.log("checkhereeerere", this.props.location.search);
+
     // get the discussions again
     // if the forum didn't matched
     if (prevProps.currentForum !== currentForum) {
@@ -383,8 +385,12 @@ class ForumFeed extends Component {
             loading={fetchingPinnedDiscussions}
             discussions={pinnedDiscussions}
             currentForum={currentForum}
+            onChangeSortingMethod={this.handleSortingChange.bind(this)}
+            activeSortingMethod={sortingMethod}
+            searchTerm={this.state.searchTerm}
+            searchDate={searchDateMMDD.toString()}
+            searchStatus={this.state.searchBool}
           />
-
           <FeedBox
             type="general"
             loading={fetchingDiscussions}

@@ -1,26 +1,26 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import classnames from 'classnames';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import classnames from "classnames";
 
-import appLayout from 'SharedStyles/appLayout';
-import styles from './styles';
+import appLayout from "SharedStyles/appLayout";
+import styles from "./styles";
 
 // components for Header
-import UserMenu from 'Components/Header/UserMenu';
-import Logo from 'Components/Header/Logo';
-import NavigationBar from 'Components/Header/NavigationBar';
-import PlaceholderImage from 'SharedStyles/placeholder.jpg';
+import UserMenu from "Components/Header/UserMenu";
+import Logo from "Components/Header/Logo";
+import NavigationBar from "Components/Header/NavigationBar";
+import PlaceholderImage from "SharedStyles/placeholder.jpg";
 
 class Header extends Component {
   renderNavLinks() {
     const { forums } = this.props;
 
     if (forums) {
-      return forums.map((forum) => {
+      return forums.map(forum => {
         return {
           id: forum._id,
           name: forum.forum_name,
-          link: `/${forum.forum_slug}`,
+          link: `/${forum.forum_slug}`
         };
       });
     }
@@ -29,12 +29,9 @@ class Header extends Component {
   }
 
   render() {
-    const {
-      authenticated,
-      name,
-      username,
-      avatarUrl,
-    } = this.props.user;
+    const { authenticated, name, username, avatarUrl } = this.props.user;
+
+    const currentForum = this.props;
 
     return (
       <div className={classnames(appLayout.constraintWidth)}>
@@ -48,6 +45,7 @@ class Header extends Component {
           />
         </div>
         <NavigationBar
+          currentForum={currentForum}
           navigationLinks={this.renderNavLinks()}
         />
       </div>
@@ -55,9 +53,9 @@ class Header extends Component {
   }
 }
 
-export default connect(
-  (state) => { return {
+export default connect(state => {
+  return {
     user: state.user,
-    forums: state.app.forums,
-  }; }
-)(Header);
+    forums: state.app.forums
+  };
+})(Header);

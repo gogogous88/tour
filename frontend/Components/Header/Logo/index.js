@@ -4,7 +4,7 @@ import keys from "../../../../config/credentials";
 
 const Logo = () => {
   return (
-    <div className={styles.logoContainer}>
+    <a className={styles.logoContainer} href="/">
       <div className={styles.logo}>
         {/* <g
             id="Group"
@@ -29,7 +29,7 @@ const Logo = () => {
         <img src="/src/static/images/shangche.png" style={{ width: "100%" }} />
       </div>
       <div className={styles.logoTitle}>途盖大导通</div>
-    </div>
+    </a>
   );
 };
 

@@ -36,7 +36,7 @@ class AppContainer extends Component {
   }
 
   render() {
-    const { forums } = this.props;
+    const { forums, currentForum } = this.props;
 
     // render only if we get the forum lists
     if (forums) {
@@ -50,7 +50,7 @@ class AppContainer extends Component {
               下载途盖儿通App
             </a>
           </div> */}
-          <Header />
+          <Header currentForum={currentForum} />
 
           {this.props.children}
           <Footer />

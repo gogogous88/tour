@@ -55,7 +55,7 @@ ReactDOM.render(
 
         <Route path="/wiki" component={TourGuideWiki} />
 
-        <Route path=":forum" component={ForumFeed} />
+        <Route path="/:forum" component={ForumFeed} />
         <Route
           path=":forum/discussion/:discussion"
           component={SingleDiscussion}

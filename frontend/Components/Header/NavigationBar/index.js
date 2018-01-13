@@ -7,11 +7,25 @@ import Button from "../../Button";
 import appLayout from "SharedStyles/appLayout.css";
 import styles from "./styles.css";
 
+const forums = {
+  shun_feng_che: "顺风车",
+  pin_fang: "拼房",
+  fa_tuan_jie_huo: "发团接活",
+  market: "商品信息",
+  tour_wiki: "攻略信息"
+};
+
 class NavigationBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { activeSubMenu: false };
+    this.state = { activeSubMenu: false, searchToggle: false };
     this.toggleSubMenu = this.toggleSubMenu.bind(this);
+  }
+
+  toggleSearchMenu() {
+    this.setState(prevState => {
+      return { searchToggle: !prevState.searchToggle };
+    });
   }
 
   toggleSubMenu() {
@@ -98,11 +112,76 @@ class NavigationBar extends Component {
     return null;
   }
 
+  renderSearchContent() {
+    const { currentForum, navigationLinks, signedIn, gitHandler } = this.props;
+    const currentForumURL = `/${currentForum.currentForum}`;
+
+    // const forumName = currentForum ? forums.currentForum.currentForum : "";
+    // console.log(forumName);
+
+    if (navigationLinks) {
+      return (
+        <div className={styles.subMenu}>
+          <Button
+            className={styles.subMenuClose}
+            onClick={this.toggleSearchMenu.bind(this)}
+            alwaysActive
+          >
+            <i className={classnames("fa fa-close")} />
+          </Button>
+          <ul>
+            <li className={styles.signInLink}>
+              <Link
+                className={styles.links}
+                onClick={this.toggleSearchMenu.bind(this)}
+                to={{
+                  pathname: `${currentForumURL}`,
+                  query: { search: "word" }
+                }}
+              >
+                <i className={classnames("fa fa-search", styles.subMenuOcto)} />
+
+                <span style={{ color: "#339ce6" }}>按文字搜索</span>
+              </Link>
+            </li>
+            <li className={styles.signInLink}>
+              <Link
+                onClick={() => {
+                  this.setState(prevState => {
+                    return { searchToggle: !prevState.searchToggle };
+                  });
+                }}
+                className={styles.links}
+                to={{
+                  pathname: `${currentForumURL}`,
+                  query: { search: "date" }
+                }}
+              >
+                <i className={classnames("fa fa-search", styles.subMenuOcto)} />
+                <span style={{ color: "#339ce6" }}>按日期搜索</span>
+              </Link>
+            </li>
+          </ul>
+        </div>
+      );
+    }
+    return null;
+  }
+
   renderSubMenu() {
     const { activeSubMenu } = this.state;
 
     if (activeSubMenu) {
       return this.renderSubMenuContent();
+    }
+    return null;
+  }
+
+  renderSearchMenu() {
+    const { searchToggle } = this.state;
+
+    if (searchToggle) {
+      return this.renderSearchContent();
     }
     return null;
   }
@@ -121,20 +200,63 @@ class NavigationBar extends Component {
               aria-hidden="true"
             />
           </Button> */}
-          <button
-            className="btn-floating grey lighten-3 pulse "
-            onClick={this.toggleSubMenu}
-          >
-            <i className="material-icons black-text">menu</i>
-          </button>
+
+          <div className="file-field input-field" />
+
+          <div className="input-field col s6">
+            <img
+              src="/src/static/icons/buttons/searchIcon.svg"
+              className="prefix"
+            />
+            <input
+              onClick={this.renderSearchOptions.bind(this)}
+              id="icon_prefix"
+              type="text"
+              className="validate"
+            />
+            <label htmlFor="icon_prefix">按日期/城市等搜索</label>
+          </div>
+
+          <div className="file-field input-field">
+            <button
+              className="btn-floating btn grey lighten-3 pulse "
+              onClick={this.toggleSubMenu}
+            >
+              <i className="material-icons black-text">menu</i>
+            </button>
+          </div>
+
           {this.renderSubMenu()}
         </div>
       </div>
     );
   }
 
+  renderSearchOptions() {
+    this.setState(prevState => {
+      return { searchToggle: !prevState.searchToggle };
+    });
+  }
+
+  renderSearchBar() {
+    return (
+      <div>
+        <button
+          className="btn-floating btn grey lighten-3"
+          onClick={this.renderSearchOptions.bind(this)}
+        >
+          <i className="material-icons black-text">search</i>
+        </button>
+      </div>
+    );
+  }
+
   render() {
-    const { navigationLinks } = this.props;
+    const { navigationLinks, currentForum } = this.props;
+
+    console.log("navigation bar", this.props);
+
+    const currentForumURL = `/${currentForum.currentForum}`;
 
     if (navigationLinks) {
       return (
@@ -186,8 +308,11 @@ class NavigationBar extends Component {
                   </li>
                 );
               })}
+              <li className={styles.links}>{this.renderSearchBar()}</li>
             </ul>
           </div>
+
+          {this.renderSearchMenu()}
           {this.renderBurgerButton()}
         </div>
       );
