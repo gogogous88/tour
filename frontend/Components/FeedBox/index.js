@@ -35,7 +35,7 @@ class FeedBox extends Component {
             )}
             onClick={() => onChangeSortingMethod("date")}
           >
-            最新发布
+            Latest
           </span>
           <span
             className={classnames(
@@ -44,7 +44,7 @@ class FeedBox extends Component {
             )}
             onClick={() => onChangeSortingMethod("popularity")}
           >
-            出发日期
+            Popular
           </span>
         </div>
       );
@@ -186,7 +186,8 @@ class FeedBox extends Component {
       loading,
       discussions,
       currentForum,
-      userProfile
+      userProfile,
+      searchDate
     } = this.props;
 
     let discussionBoxTitle = "";
@@ -202,9 +203,28 @@ class FeedBox extends Component {
           console.log("checkTerm", this.props.searchTerm);
           console.log("checkDate", this.props.searchDate);
           const theDate = moment(discussion.pdate).format("MM/DD");
+          const searchDateToString = moment(this.props.searchDate).format(
+            "MM/DD"
+          );
+
+          const { pdate } = discussion;
+          const d = new Date(pdate);
+          const d1 = d.getDate().toString();
+          const searchd = new Date(searchDate);
+          const searchd1 = searchd.getDate().toString();
+          console.log("pdate", d1);
+
+          console.log('searchd"s date', typeof searchd1);
+          console.log("pMonth", d.getMonth());
+
+          console.log("theDate", theDate);
+          console.log("searchDate", this.props.searchDate);
+          console.log("searchDateToString", searchDateToString);
+          console.log("比较", theDate === searchDateToString);
+
           return (
-            theDate.indexOf(moment(this.props.searchDate).format("MM/DD")) !==
-            -1
+            // theDate.indexOf(searchDateToString) !== -1
+            d1.indexOf(searchd1) !== -1
             //   ||
             // discussion.ploc.indexOf(this.props.searchTerm) !== -1 ||
             // discussion.rloc.indexOf(this.props.searchTerm) !== -1
@@ -233,6 +253,7 @@ class FeedBox extends Component {
             // discussion.vehicleType.indexOf(this.props.searchTerm) !== -1
           );
         }
+
         return (
           discussion.ploc.indexOf(this.props.searchTerm) !== -1 ||
           discussion.title.indexOf(this.props.searchTerm) !== -1

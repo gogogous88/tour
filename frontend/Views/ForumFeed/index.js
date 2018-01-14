@@ -505,7 +505,7 @@ class ForumFeed extends Component {
             onChangeSortingMethod={this.handleSortingChange.bind(this)}
             activeSortingMethod={sortingMethod}
             searchTerm={this.state.searchTerm}
-            searchDate={searchDateMMDD.toString()}
+            searchDate={searchDate}
             searchStatus={this.state.searchDate}
           />
           <FeedBox
@@ -516,7 +516,7 @@ class ForumFeed extends Component {
             onChangeSortingMethod={this.handleSortingChange.bind(this)}
             activeSortingMethod={sortingMethod}
             searchTerm={this.state.searchTerm}
-            searchDate={searchDateMMDD.toString()}
+            searchDate={searchDate}
             searchStatus={this.state.searchDate}
           />
 
