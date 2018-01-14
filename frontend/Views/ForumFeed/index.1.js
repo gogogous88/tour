@@ -46,7 +46,7 @@ class ForumFeed extends Component {
       searchDateStatus: false,
 
       searchStatus: true,
-      zIndex: 99
+      searchBool: false
     };
   }
 
@@ -61,18 +61,6 @@ class ForumFeed extends Component {
     // get the discussions and pinned discussions
     getDiscussions(currentForumId());
     getPinnedDiscussions(currentForumId());
-    this.searchBy();
-  }
-
-  searchBy() {
-    const { location } = this.props;
-    if (location.search === "?search=date") {
-      this.setState({ searchDateStatus: true, searchTermStatus: false });
-    } else if (location.search === "?search=word") {
-      this.setState({ searchDateStatus: false, searchTermStatus: true });
-    } else {
-      return null;
-    }
   }
 
   componentWillReceiveProps() {
@@ -159,75 +147,75 @@ class ForumFeed extends Component {
     return <Search />;
   }
 
-  // renderTwoSearch() {
-  //   if (!this.state.searchDateStatus) {
-  //     return (
-  //       <div className="row">
-  //         <form className="col s12">
-  //           <div className="row">
-  //             <div className="input-field col s6">
-  //               <i className="material-icons prefix">search</i>
-  //               <input
-  //                 onBlur={() => {
-  //                   this.setState({ searchDateStatus: true });
-  //                 }}
-  //                 id="icon_prefix"
-  //                 type="text"
-  //                 className="validate"
-  //               />
-  //               <label htmlFor="icon_prefix">按地点搜索</label>
-  //             </div>
-  //             <div className="input-field col s6">
-  //               <i className="material-icons prefix">date</i>
-  //               <input
-  //                 onBlur={() => {
-  //                   this.setState({ searchDateStatus: true });
-  //                 }}
-  //                 id="icon_prefix"
-  //                 type="text"
-  //                 className="validate"
-  //               />
-  //               <label htmlFor="icon_prefix">按日期搜索</label>
-  //             </div>
-  //           </div>
-  //         </form>
-  //       </div>
-  //     );
-  //   }
-  // }
-  // renderSingleSearch() {
-  //   if (!this.state.searchDateStatus) {
-  //     return (
-  //       <div>
-  //         <form className="col s12">
-  //           <div className="input-field">
-  //             <i className="material-icons prefix">search</i>
-  //             <input
-  //               onBlur={() => {
-  //                 this.setState({ searchDateStatus: true });
-  //               }}
-  //               id="icon_prefix"
-  //               type="text"
-  //               className="validate"
-  //             />
-  //             <label htmlFor="icon_prefix">按城市/商品等文字搜索</label>
-  //           </div>
-  //         </form>
-  //       </div>
-  //     );
-  //   }
-  // }
+  renderTwoSearch() {
+    if (!this.state.searchBool) {
+      return (
+        <div className="row">
+          <form className="col s12">
+            <div className="row">
+              <div className="input-field col s6">
+                <i className="material-icons prefix">search</i>
+                <input
+                  onBlur={() => {
+                    this.setState({ searchBool: true });
+                  }}
+                  id="icon_prefix"
+                  type="text"
+                  className="validate"
+                />
+                <label htmlFor="icon_prefix">按地点搜索</label>
+              </div>
+              <div className="input-field col s6">
+                <i className="material-icons prefix">date</i>
+                <input
+                  onBlur={() => {
+                    this.setState({ searchBool: true });
+                  }}
+                  id="icon_prefix"
+                  type="text"
+                  className="validate"
+                />
+                <label htmlFor="icon_prefix">按日期搜索</label>
+              </div>
+            </div>
+          </form>
+        </div>
+      );
+    }
+  }
+  renderSingleSearch() {
+    if (!this.state.searchBool) {
+      return (
+        <div>
+          <form className="col s12">
+            <div className="input-field">
+              <i className="material-icons prefix">search</i>
+              <input
+                onBlur={() => {
+                  this.setState({ searchBool: true });
+                }}
+                id="icon_prefix"
+                type="text"
+                className="validate"
+              />
+              <label htmlFor="icon_prefix">按城市/商品等文字搜索</label>
+            </div>
+          </form>
+        </div>
+      );
+    }
+  }
 
-  // renderSearchBar() {
-  //   const { discussions } = this.props;
-  //   if (discussions) {
-  //     const pdate = discussions[0].pdate;
-  //     const rdate = discussions[0].rdate[0];
-  //     return !_.isEmpty(pdate) || !_.isEmpty(rdate)
-  //       ? this.renderTwoSearch()
-  //       : this.renderSingleSearch();
-  //   }
-  // }
+  renderSearchBar() {
+    const { discussions } = this.props;
+    if (discussions) {
+      const pdate = discussions[0].pdate;
+      const rdate = discussions[0].rdate[0];
+      return !_.isEmpty(pdate) || !_.isEmpty(rdate)
+        ? this.renderTwoSearch()
+        : this.renderSingleSearch();
+    }
+  }
 
   searchByTerm() {
     return (
@@ -256,41 +244,15 @@ class ForumFeed extends Component {
     );
   }
 
-  closeAllPopups() {
-    this.setState({
-      search: "",
-      searchTerm: "",
-      pickDate: moment().day(DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET),
-
-      overlayVisible: false,
-      currentDateKey: "",
-      // searchDate: moment().day(DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET),
-      searchTermStatus: false,
-      searchDateStatus: false,
-
-      searchStatus: true
-    });
-  }
-
   searchByDate() {
-    const { currentForum } = this.props;
     return (
-      <div className={classnames(styles.subMenu)}>
-        <Link
-          to={`/${currentForum}`}
-          className={styles.subMenuClose}
-          onClick={this.closeAllPopups.bind(this)}
-          alwaysActive
-        >
-          <i className={classnames("fa fa-close")} />
-        </Link>
+      <div>
         <form
           onSubmit={event => {
             event.preventDefault();
             this.setState({
               searchDate: this.state.pickDate,
-              overlayVisible: false,
-              searchDateStatus: false
+              overlayVisible: false
             });
           }}
         >
@@ -311,22 +273,22 @@ class ForumFeed extends Component {
     );
   }
 
-  // renderSearchButton() {
-  //   if (!this.state.searchDateStatus) {
-  //     return (
-  //       <button
-  //         onClick={() => {
-  //           this.setState({ searchDateStatus: true });
-  //         }}
-  //         className="waves-effect waves-light btn"
-  //       >
-  //         <i className="material-icons left">search</i>
-  //         筛选
-  //       </button>
-  //     );
-  //   }
-  //   return this.searchByDate();
-  // }
+  renderSearchButton() {
+    if (!this.state.searchBool) {
+      return (
+        <button
+          onClick={() => {
+            this.setState({ searchBool: true });
+          }}
+          className="waves-effect waves-light btn"
+        >
+          <i className="material-icons left">search</i>
+          筛选
+        </button>
+      );
+    }
+    return this.searchByDate();
+  }
 
   // onMouseEnter={this.renderSearchMenu.bind(this)}
   //           onMouseLeave={this.HideSearchMenu.bind(this)}
@@ -410,41 +372,11 @@ class ForumFeed extends Component {
   renderBySearchStatus() {
     const { searchDateStatus, searchTermStatus } = this.state;
     if (searchDateStatus) {
-      return this.searchByDate();
+      return <h1>日期搜索</h1>;
     } else if (searchTermStatus) {
-      return <h1>日期</h1>;
+      return <h1>文字搜索</h1>;
     }
     return null;
-  }
-
-  closeDateConditions() {
-    this.setState({
-      searchDate: "",
-      search: "",
-      searchStatus: true
-    });
-  }
-
-  renderDateSearched() {
-    if (this.state.searchDate) {
-      const { currentForum } = this.props;
-      const { searchDate } = this.state;
-      const searchDateMMDD = moment(searchDate).format("MM/DD");
-
-      return (
-        <div className="container">
-          <Link
-            to={`/${currentForum}`}
-            className="waves-effect waves-light btn"
-            onClick={this.closeDateConditions.bind(this)}
-          >
-            <i className="material-icons right">clear</i>搜索日期:{
-              searchDateMMDD
-            }
-          </Link>
-        </div>
-      );
-    }
   }
 
   render() {
@@ -459,7 +391,6 @@ class ForumFeed extends Component {
     } = this.props;
 
     const { searchDate } = this.state;
-    console.log("!this.state.searchDate", !this.state.searchDate);
     const searchDateMMDD = moment(searchDate).format("MM/DD");
 
     if (error) {
@@ -490,12 +421,11 @@ class ForumFeed extends Component {
           >
             {/* <img src="/src/static/banners/sprinter-banner.jpg" width="80%" /> */}
 
-            {/* <div>{this.renderSearchBar()}</div> */}
-            {/* <div>{this.renderSearchButton()}</div> */}
+            <div>{this.renderSearchBar()}</div>
+            <div>{this.renderSearchButton()}</div>
           </div>
 
           {this.renderBySearchStatus()}
-          {this.renderDateSearched()}
 
           <FeedBox
             type="pinned"
@@ -506,7 +436,7 @@ class ForumFeed extends Component {
             activeSortingMethod={sortingMethod}
             searchTerm={this.state.searchTerm}
             searchDate={searchDateMMDD.toString()}
-            searchStatus={this.state.searchDate}
+            searchStatus={this.state.searchBool}
           />
           <FeedBox
             type="general"
@@ -517,7 +447,7 @@ class ForumFeed extends Component {
             activeSortingMethod={sortingMethod}
             searchTerm={this.state.searchTerm}
             searchDate={searchDateMMDD.toString()}
-            searchStatus={this.state.searchDate}
+            searchStatus={this.state.searchBool}
           />
 
           {/* {this.renderNewDiscussionButtion()} */}

@@ -204,18 +204,24 @@ class NavigationBar extends Component {
           <div className="file-field input-field" />
 
           <div className="input-field col s6">
-            <img
-              src="/src/static/icons/buttons/searchIcon.svg"
-              className="prefix"
-            />
-            <input
-              onClick={this.renderSearchOptions.bind(this)}
-              id="icon_prefix"
-              type="text"
-              className="validate"
-            />
-            <label htmlFor="icon_prefix">按日期/城市等搜索</label>
+            <span>
+              <img
+                src="/src/static/icons/buttons/searchIcon.svg"
+                className="prefix"
+              />
+              <input
+                onClick={this.renderSearchOptions.bind(this)}
+                id="icon_prefix"
+                type="text"
+                className="validate"
+                readOnly="true"
+              />
+              <label htmlFor="icon_prefix">按日期/城市等搜索</label>
+            </span>
           </div>
+          {/* <div>
+            <img src="/src/static/icons/buttons/searchBar.png" width="100%" />
+          </div> */}
 
           <div className="file-field input-field">
             <button
