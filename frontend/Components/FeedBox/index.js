@@ -213,7 +213,7 @@ class FeedBox extends Component {
         if (this.props.searchStatus && discussion.rdate) {
           const checkInDate = moment(discussion.rdate[0]).format("MM/DD");
           const checkOutDate = moment(discussion.rdate[1]).format("MM/DD");
-          // console.log("searchDate", this.props.searchDate);
+          console.log("searchDateInFeedBox", this.props.searchDate);
           // console.log(
           //   "searchDate",
           //   moment(this.props.searchDate).format("MM/DD")

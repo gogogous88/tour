@@ -42,6 +42,8 @@ class ForumFeed extends Component {
       overlayVisible: false,
       currentDateKey: "",
       // searchDate: moment().day(DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET),
+      searchTermStatus: false,
+      searchDateStatus: false,
 
       searchStatus: true,
       searchBool: false
@@ -49,14 +51,34 @@ class ForumFeed extends Component {
   }
 
   componentDidMount() {
-    const { currentForumId, getDiscussions, getPinnedDiscussions } = this.props;
+    const {
+      currentForumId,
+      getDiscussions,
+      getPinnedDiscussions,
+      location
+    } = this.props;
 
     // get the discussions and pinned discussions
     getDiscussions(currentForumId());
     getPinnedDiscussions(currentForumId());
   }
 
-  componentDidUpdate(prevProps) {
+  componentWillReceiveProps() {
+    //looks like not work but componentDidUpdate work
+  }
+
+  searchStateSwitcher() {
+    const { location } = this.props;
+    if (location.search === "?search=date") {
+      this.setState({ searchDateStatus: true, searchTermStatus: false });
+    } else if (location.search === "?search=word") {
+      this.setState({ searchDateStatus: false, searchTermStatus: true });
+    } else {
+      return null;
+    }
+  }
+
+  feedByForum(prevProps) {
     const {
       currentForum,
       currentForumId,
@@ -64,15 +86,24 @@ class ForumFeed extends Component {
       getPinnedDiscussions
     } = this.props;
 
-    console.log("checkhereeerere", this.props.location.search);
-
     // get the discussions again
     // if the forum didn't matched
+
+    if (prevProps.location.search != location.search) {
+      this.searchStateSwitcher();
+    }
+
     if (prevProps.currentForum !== currentForum) {
       const feedChanged = true;
       getDiscussions(currentForumId(), feedChanged);
+
       getPinnedDiscussions(currentForumId(), feedChanged);
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    this.feedByForum(prevProps);
+    // this.searchStateSwitcher();
   }
 
   handleSortingChange(newSortingMethod) {
@@ -338,6 +369,16 @@ class ForumFeed extends Component {
     }
   }
 
+  renderBySearchStatus() {
+    const { searchDateStatus, searchTermStatus } = this.state;
+    if (searchDateStatus) {
+      return <h1>日期搜索</h1>;
+    } else if (searchTermStatus) {
+      return <h1>文字搜索</h1>;
+    }
+    return null;
+  }
+
   render() {
     const {
       currentForum,
@@ -356,6 +397,9 @@ class ForumFeed extends Component {
       return <div className={classnames(styles.errorMsg)}>{error}</div>;
     }
 
+    console.log("searchDateStatus", this.state.searchDateStatus);
+    console.log("searchTermStatus", this.state.searchTermStatus);
+
     return (
       <div
         className={classnames(appLayout.constraintWidth, styles.contentArea)}
@@ -367,6 +411,7 @@ class ForumFeed extends Component {
         <div className={appLayout.primaryContent}>
           <div style={{ display: "flex", justifyContent: "center" }} />
           {/* {this.renderCarRental()} */}
+          {/* 1月13日关
           <div
             style={{
               display: "flex",
@@ -374,11 +419,15 @@ class ForumFeed extends Component {
               // justifyContent: "space-evenly",
               flexDirection: "row"
             }}
-          >
-            {/* <img src="/src/static/banners/sprinter-banner.jpg" width="80%" /> */}
+          > */}
+          {/* <img src="/src/static/banners/sprinter-banner.jpg" width="80%" /> */}
+
+          {/* //1月13日关
             <div>{this.renderSearchBar()}</div>
             <div>{this.renderSearchButton()}</div>
-          </div>
+          </div> */}
+
+          {this.renderBySearchStatus()}
 
           <FeedBox
             type="pinned"

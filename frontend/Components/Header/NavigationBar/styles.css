@@ -99,6 +99,26 @@
   justify-content: center;
   align-items: center;
 
+  @media largeBP {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+  }
+
+  @media mediumBP {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+  }
+
   @media smallBP {
     position: fixed;
     top: 0;
@@ -157,15 +177,16 @@
 }
 
 .subMenuClose {
+  display: flex;
   position: absolute;
   top: 10px;
   right: 10px;
 
   @media mediumBP {
-    display: none;
+    color: black;
   }
   @media largeBP {
-    display: none;
+    color: black;
   }
 }
 
