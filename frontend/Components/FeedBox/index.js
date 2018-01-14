@@ -209,44 +209,48 @@ class FeedBox extends Component {
 
           const { pdate } = discussion;
           const d = new Date(pdate);
+
           const d1 = d.getDate().toString();
+          const m1 = d.getMonth().toString();
+          const y1 = d.getFullYear().toString();
           const searchd = new Date(searchDate);
           const searchd1 = searchd.getDate().toString();
-          console.log("pdate", d1);
-
-          console.log('searchd"s date', typeof searchd1);
-          console.log("pMonth", d.getMonth());
-
-          console.log("theDate", theDate);
-          console.log("searchDate", this.props.searchDate);
-          console.log("searchDateToString", searchDateToString);
-          console.log("比较", theDate === searchDateToString);
+          const searchm1 = searchd.getMonth().toString();
+          const searchy1 = searchd.getFullYear().toString();
 
           return (
-            // theDate.indexOf(searchDateToString) !== -1
-            d1.indexOf(searchd1) !== -1
+            d1.indexOf(searchd1) !== -1 &&
+            m1.indexOf(searchm1) !== -1 &&
+            y1.indexOf(searchy1) !== -1
             //   ||
             // discussion.ploc.indexOf(this.props.searchTerm) !== -1 ||
             // discussion.rloc.indexOf(this.props.searchTerm) !== -1
           );
         }
         if (this.props.searchStatus && discussion.rdate) {
-          const checkInDate = moment(discussion.rdate[0]).format("MM/DD");
-          const checkOutDate = moment(discussion.rdate[1]).format("MM/DD");
-          console.log("searchDateInFeedBox", this.props.searchDate);
-          // console.log(
-          //   "searchDate",
-          //   moment(this.props.searchDate).format("MM/DD")
-          // );
-          // console.log("rdateToString", discussion.rdate.toString());
-          // console.log("rdateMomented", checkInDate);
+          const checkInDate = new Date(discussion.rdate[0]);
+          const checkOutDate = new Date(discussion.rdate[1]);
+
+          const checkind = checkInDate.getDate().toString();
+          const checkinm = checkInDate.getMonth().toString();
+          const checkiny = checkInDate.getFullYear().toString();
+
+          const checkoutd = checkOutDate.getDate().toString();
+          const checkoutm = checkOutDate.getMonth().toString();
+          const checkouty = checkOutDate.getFullYear().toString();
+
+          const searchd = new Date(searchDate);
+          const searchd1 = searchd.getDate().toString();
+          const searchm1 = searchd.getMonth().toString();
+          const searchy1 = searchd.getFullYear().toString();
+
           return (
-            checkInDate.indexOf(
-              moment(this.props.searchDate).format("MM/DD")
-            ) !== -1 ||
-            checkOutDate.indexOf(
-              moment(this.props.searchDate).format("MM/DD")
-            ) !== -1
+            (checkind.indexOf(searchd1) !== -1 &&
+              checkinm.indexOf(searchm1) !== -1 &&
+              checkiny.indexOf(searchy1) !== -1) ||
+            (checkoutd.indexOf(searchd1) !== -1 &&
+              checkoutm.indexOf(searchm1) !== -1 &&
+              checkouty.indexOf(searchy1) !== -1)
             // ||
             // discussion.ploc.indexOf(this.props.searchTerm) !== -1 ||
             // discussion.rloc.indexOf(this.props.searchTerm) !== -1 ||
