@@ -13,6 +13,10 @@ import RichEditor from "Components/RichEditor";
 import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
 
 class Discussion extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { showPhone: false };
+  }
   renderUploadImages(uploadImg) {
     return uploadImg.map(eachImg => {
       return (
@@ -32,7 +36,12 @@ class Discussion extends Component {
     const { forum_slug, discContent, uploadImg } = this.props;
     switch (forum_slug) {
       case "tour_wiki":
-        return <FroalaEditorView model={discContent} />;
+        return (
+          <div>
+            <FroalaEditorView model={discContent} />
+            <ul>{this.renderUploadImages(uploadImg)}</ul>
+          </div>
+        );
 
       case "fa_tuan_jie_huo":
         return (
@@ -57,6 +66,34 @@ class Discussion extends Component {
     }
   }
 
+  renderNameOrPhoneNo() {
+    const { phoneNo, userGitHandler } = this.props;
+    if (!_.isEmpty(phoneNo)) {
+      if (!this.state.showPhone) {
+        return (
+          <div>
+            <button
+              className="btn-flat red lighten-2 pulse"
+              onClick={() => {
+                this.setState({ showPhone: true });
+              }}
+            >
+              查看联系方式
+            </button>
+          </div>
+        );
+      }
+
+      return (
+        <div>
+          <a href={`tel://${phoneNo}`} className="waves-effect white btn-flat">
+            <i className="material-icons left">phone</i>
+            {phoneNo}
+          </a>
+        </div>
+      );
+    }
+  }
   render() {
     const {
       id,
@@ -76,7 +113,8 @@ class Discussion extends Component {
       deletingDiscussion,
       deleteAction,
       imageURL,
-      uploadImg
+      uploadImg,
+      phoneNo
     } = this.props;
 
     let dateDisplay = moment(discDate);
@@ -95,17 +133,18 @@ class Discussion extends Component {
           <img className={styles.avatar} src={userAvatar} />
           <div className={styles.columnOnSmallBP}>
             <div className={styles.userInfo}>
-              <Link to={`/user/${userGitHandler}`} className={styles.name}>
+              {/* <Link to={`/user/${userGitHandler}`} className={styles.name}> */}
+              <button className={styles.name}>
                 {userName || userGitHandler}
-              </Link>
-              <a
-                href={`https://www.github.com/${userGitHandler}`}
+              </button>
+              <button
+                // href={`https://www.github.com/${userGitHandler}`}
                 target="_blank"
                 className={styles.gitHandler}
               >
                 <i className={classnames("fa fa-github-alt", styles.gitIcon)} />
                 <span>{userGitHandler}</span>
-              </a>
+              </button>
             </div>
             <div className={styles.dateInfo}>{dateDisplay}</div>
           </div>
@@ -134,12 +173,13 @@ class Discussion extends Component {
               !toggleingFavorite && favoriteAction(id);
             }}
           >
-            <i
+            {this.renderNameOrPhoneNo()}
+            {/* <i
               className={classnames(
                 `fa fa-${userFavorited ? "heart" : "heart-o"}`
               )}
-            />
-            <span>{favCount}</span>
+            /> */}
+            {/* <span>{favCount}</span> */}
           </Button>
 
           {allowDelete && (

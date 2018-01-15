@@ -12,10 +12,11 @@ import RichEditor from "Components/RichEditor";
 import PinButton from "Components/NewDiscussion/PinButton";
 import TagsInput from "Components/NewDiscussion/TagsInput";
 import ImgUL from "../../Components/FormCommon/ImgUL";
+import QuillEditor from "../../Components/QullEditor";
 
 import Loading from "../../Components/Loading";
 
-// import DraftEditor from "../../components/DraftEditor/DraftEditor";
+// import DraftEditor from "../../Components/Rich_Editor/DraftEditor/DraftEditor";
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import "bootstrap/dist/js/bootstrap.min";
@@ -857,7 +858,7 @@ class NewDiscussion extends Component {
                   updateDiscussionTags(tags);
                 }}
               />
-              <div className="col s12">
+              <div style={{ marginTop: 15 }}>
                 <ImgUL
                   key={"image"}
                   value={image}
@@ -872,8 +873,9 @@ class NewDiscussion extends Component {
                   {title}:<span className={styles.errorMsg}>{errorMsg}</span>
                 </p>
               </div>
-              <div className="col s12">
-                <RichEditor
+
+              <div>
+                <QuillEditor
                   key={"content"}
                   type="newDiscussion"
                   value={content}
@@ -886,18 +888,34 @@ class NewDiscussion extends Component {
                   }}
                 />
               </div>
+              {/* <div className="col s12">
+                <RichEditor
+                  key={"content"}
+                  type="newDiscussion"
+                  value={content}
+                  contentInput={"具体信息..."}
+                  onChange={value => {
+                    updateDiscussionContent(value);
+                  }}
+                  onSave={() => {
+                    postDiscussion(userId, forumId, currentForum);
+                  }}
+                />
+              </div> */}
 
-              {/* <DraftEditor
-                key={"content"}
-                type="newDiscussion"
-                value={content}
-                onChange={value => {
-                  updateDiscussionContent(value);
-                }}
-                onSave={() => {
-                  postDiscussion(userId, forumId, currentForum);
-                }}
-              /> */}
+              {/* <div className="col s12">
+                <DraftEditor
+                  key={"content"}
+                  type="newDiscussion"
+                  value={content}
+                  onChange={value => {
+                    updateDiscussionContent(value);
+                  }}
+                  onSave={() => {
+                    postDiscussion(userId, forumId, currentForum);
+                  }}
+                />
+              </div> */}
             </div>
           );
           {

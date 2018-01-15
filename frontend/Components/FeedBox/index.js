@@ -286,12 +286,15 @@ class FeedBox extends Component {
 
             {discussions &&
               filterDiscussions.map(discussion => {
+                const discussionYear = `${moment(discussion.date).format(
+                  "YYYY"
+                )}年`;
                 return (
                   <DiscussionBox
                     userProfile={userProfile}
                     key={discussion._id}
-                    userName={discussion.user.name || discussion.user.username}
-                    userGitHandler={discussion.user.username}
+                    userName={discussionYear}
+                    userGitHandler={discussion.user.name}
                     discussionTitle={this.renderTitle(discussion)}
                     time={discussion.date}
                     tags={discussion.tags}

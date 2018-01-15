@@ -27,6 +27,9 @@ class MapButton extends Component {
             <li className="waves-effect waves-light pulse">
               <Link to={`/map`}>全美团餐</Link>
             </li>
+            <li>
+              <Link to={`/`}>回到首页</Link>
+            </li>
           </ul>
         </div>
       </div>

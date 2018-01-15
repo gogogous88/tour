@@ -86,9 +86,10 @@
 
 .discTitle {
   margin-top: 15px;
-  font-size: 24px;
+  font-size: 16px;
   line-height: 32px;
-  font-weight: 400;
+  font-weight: 300;
+  margin-left: 10px;
 }
 
 .discContent {

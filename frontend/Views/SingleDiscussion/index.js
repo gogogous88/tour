@@ -158,7 +158,7 @@ class SingleDiscussion extends Component {
           discussion.pdate
         ).format("MM/DD")}」-「${discussion.ploc}-->${
           discussion.rloc
-        }」,联系方式：「${discussion.ph_no}」
+        }」,请与我联系，谢谢。
         `;
         return shunFengTitle;
 
@@ -167,7 +167,7 @@ class SingleDiscussion extends Component {
           discussion.rdate[0]
         ).format("MM/DD")}」日-到-「${moment(discussion.rdate[1]).format(
           "MM/DD"
-        )}」日--「${discussion.ploc}」,联系方式：「${discussion.ph_no}」
+        )}」日--「${discussion.ploc}」,请与我联系，谢谢。
         `;
         return pinFangTitle;
 
@@ -185,14 +185,14 @@ class SingleDiscussion extends Component {
             "MM/DD"
           )}-${ploc}」开始「${moment(rdate[1]).format(
             "MM/DD"
-          )}-${rloc}」结束，需要「${vehicleType}」的团，联系方式:「${ph_no}」,有空的导游请与我取得联系，谢谢。`;
+          )}-${rloc}」结束，需要「${vehicleType}」的团，有空的导游请与我取得联系，谢谢。`;
           return faTuanTitle;
         } else {
           const faTuanTitle = `求接团，-各位大导，我从「${moment(
             rdate[0]
           ).format("MM/DD")}」到「${moment(rdate[1]).format(
             "MM/DD"
-          )}」期间可以接「${ploc}」开始的团，联系方式:「${ph_no}」`;
+          )}」期间可以接「${ploc}」开始的团，请与我取得联系，谢谢`;
           return faTuanTitle;
         }
 
@@ -200,16 +200,12 @@ class SingleDiscussion extends Component {
         if (discussion.rate) {
           const marketTitle = `「${discussion.ploc}」${
             discussion.sup_or_req
-          }商品：「${discussion.title}」,价格「${
-            discussion.rate
-          }」,联系方式：「${discussion.ph_no}」
+          }商品：「${discussion.title}」,价格「${discussion.rate}」
         `;
           return marketTitle;
         } else {
           const marketTitle = `我在「${discussion.ploc}」，想求购「${
             discussion.title
-          }」,我的联系电话是:「${
-            discussion.ph_no
           }」,有出售的朋友请与我取得联系，谢谢。`;
           return marketTitle;
         }
@@ -259,7 +255,8 @@ class SingleDiscussion extends Component {
       opinions,
       rloc,
       ploc,
-      forum
+      forum,
+      ph_no
     } = discussion;
 
     const { avatarUrl, name, username } = discussion.user;
@@ -306,6 +303,7 @@ class SingleDiscussion extends Component {
           deletingDiscussion={deletingDiscussion}
           deleteAction={this.deleteDiscussion.bind(this)}
           uploadImg={this.renderUploadImg(discussion)}
+          phoneNo={ph_no}
         />
 
         {opinionError && <div className={styles.errorMsg}>{opinionError}</div>}

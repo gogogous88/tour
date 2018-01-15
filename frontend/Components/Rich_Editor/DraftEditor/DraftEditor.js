@@ -5,29 +5,29 @@ import { Editor } from "react-draft-wysiwyg";
 import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
 import draftToHtml from "draftjs-to-html";
 import styles from "./styles.css";
-import ImgUL from "../FormCommon/ImgUL";
+import ImgUL from "../../FormCommon/ImgUL";
 
-class CustomOption extends Component {
-  static propTypes = {
-    onChange: PropTypes.func,
-    editorState: PropTypes.object
-  };
+// class CustomOption extends Component {
+//   static propTypes = {
+//     onChange: PropTypes.func,
+//     editorState: PropTypes.object
+//   };
 
-  addStar: Function = (): void => {
-    const { editorState, onChange } = this.props;
-    const contentState = Modifier.replaceText(
-      editorState.getCurrentContent(),
-      editorState.getSelection(),
-      "hello",
-      editorState.getCurrentInlineStyle()
-    );
-    onChange(EditorState.push(editorState, contentState, "insert-characters"));
-  };
+// addStar: Function = (): void => {
+//   const { editorState, onChange } = this.props;
+//   const contentState = Modifier.replaceText(
+//     editorState.getCurrentContent(),
+//     editorState.getSelection(),
+//     "hello",
+//     editorState.getCurrentInlineStyle()
+//   );
+//   onChange(EditorState.push(editorState, contentState, "insert-characters"));
+// };
 
-  render() {
-    return <div onClick={this.addStar}>⭐</div>;
-  }
-}
+//   render() {
+//     return <div onClick={this.addStar}>⭐</div>;
+//   }
+// }
 
 class DraftEditor extends Component {
   constructor(props) {
@@ -37,7 +37,7 @@ class DraftEditor extends Component {
     };
   }
 
-  onEditorStateChange: Function = editorState => {
+  onEditorStateChangeFunction = editorState => {
     const value = draftToHtml(convertToRaw(editorState.getCurrentContent()));
     this.setState({
       editorState
@@ -50,9 +50,9 @@ class DraftEditor extends Component {
     const { onSave, onChange } = this.props;
 
     return (
-      <div>
+      <div style={{ marginTop: 10 }}>
         <span style={{ backgroundColor: "#f6f6f6" }}>
-          <ImgUL />
+          {/* <ImgUL /> */}
           <Editor
             editorStyle={{
               borderStyle: "groove",
@@ -64,14 +64,16 @@ class DraftEditor extends Component {
             editorClassName="editor-class"
             toolbarClassName="toolbar-class"
             onEditorStateChange={this.onEditorStateChange}
-            toolbarCustomButtons={[<CustomOption />]}
-            toolbar={{
-              image: {
-                upLoadEnabled: true,
-                uploadCallback: true,
-                previewImage: true
-              }
-            }}
+            // toolbarCustomButtons={[<CustomOption />]}
+            // toolbar={
+            //   {
+            //     // image: {
+            //     //   upLoadEnabled: true,
+            //     //   uploadCallback: true,
+            //     //   previewImage: true
+            //     // }
+            //   }
+            // }
           />
         </span>
 
