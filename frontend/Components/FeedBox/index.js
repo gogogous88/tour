@@ -115,12 +115,13 @@ class FeedBox extends Component {
   renderTitle(discussion) {
     switch (discussion.forum.forum_slug) {
       case "shun_feng_che":
-        const shunFengTitle = `${discussion.sup_or_req}顺风车-:「${moment(
+        const shunFengTitle = `${discussion.sup_or_req}拼车-:「${moment(
           discussion.pdate
-        ).format("MM/DD")}--${discussion.ploc}--->${
-          discussion.rloc
-        }」联系方式：「${discussion.ph_no}」
+        ).format("MM/DD")}--${discussion.ploc}--->${discussion.rloc}」(${moment(
+          discussion.pdate
+        ).format("YYYY")}),我的联系方式...
         `;
+        // 联系方式：「${discussion.ph_no}」
         return shunFengTitle;
 
       case "pin_fang":
@@ -128,9 +129,9 @@ class FeedBox extends Component {
           discussion.ploc
         }--${moment(discussion.rdate[0]).format("MM/DD")}--->${moment(
           discussion.rdate[1]
-        ).format("MM/DD")}」,联系方式：「${discussion.ph_no}」(${moment(
-          discussion.rdate[0]
-        ).format("YYYY")}年)
+        ).format("MM/DD")}」(${moment(discussion.rdate[0]).format(
+          "YYYY"
+        )}年),我的联系方式...
         `;
         return pinFangTitle;
 
@@ -139,13 +140,13 @@ class FeedBox extends Component {
           const marketTitle = `「${discussion.ploc}」
             出售：「${discussion.title}」,价格「${
             discussion.rate
-          }」，联系方式：「${discussion.ph_no}」
+          }」,我的联系方式...
           `;
           return marketTitle;
         } else {
           const marketTitle = `「${discussion.ploc}」求购商品：「${
             discussion.title
-          }」，联系方式：「${discussion.ph_no}」
+          }」,我的联系方式...
           `;
           return marketTitle;
         }
@@ -160,18 +161,18 @@ class FeedBox extends Component {
           vehicleType
         } = discussion;
         if (sup_or_req === "提供") {
-          const faTuanTitle = `哪位能接「${moment(rdate[0]).format(
+          const faTuanTitle = `「${moment(rdate[0]).format(
             "MM/DD"
           )}-${ploc}」开始「${moment(rdate[1]).format(
             "MM/DD"
-          )}-${rloc}」结束，需要「${vehicleType}」的团，联系方式:「${ph_no}」,有空的导游请与我取得联系，谢谢。`;
+          )}-${rloc}」结束，需要「${vehicleType}」,有空的导游请与我取得联系.....`;
           return faTuanTitle;
         } else {
-          const faTuanTitle = `求接团，-各位大导，我从「${moment(
-            rdate[0]
-          ).format("MM/DD")}」到「${moment(rdate[1]).format(
+          const faTuanTitle = `我从「${moment(rdate[0]).format(
             "MM/DD"
-          )}」期间可以接「${ploc}」开始的团，联系方式:「${ph_no}」`;
+          )}」到「${moment(rdate[1]).format(
+            "MM/DD"
+          )}」期间可接「${ploc}」开始的团......`;
           return faTuanTitle;
         }
 

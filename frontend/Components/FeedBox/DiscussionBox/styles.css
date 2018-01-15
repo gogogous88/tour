@@ -22,12 +22,11 @@
   display: flex;
   flex-direction: row;
   flex: 1;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .discussionTitle {
-  align-items: flex-end;
-  margin-top: 15px;
-  margin-left: 10px;
 }
 
 .title {

@@ -7,6 +7,15 @@
  * NavigationBar styles
  */
 
+.naviMobileBar {
+  border-top: 1px solid rgb(229, 227, 227);
+  border-bottom: 1px solid rgb(229, 227, 227);
+  margin-top: 18px;
+  display: flex;
+  list-style-type: none;
+  justify-content: space-around;
+}
+
 .navigationBar {
   border-top: 1px solid borderColor;
   border-bottom: 1px solid borderColor;

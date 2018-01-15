@@ -189,7 +189,7 @@ class NavigationBar extends Component {
   renderBurgerButton() {
     return (
       <div className={classnames(appLayout.showOnSmallBP)}>
-        <div className={styles.container}>
+        <ul className={styles.naviMobileBar}>
           {/* <Button
             alwaysActive
             className={classnames(styles.signInBtn, styles.title)}
@@ -201,10 +201,7 @@ class NavigationBar extends Component {
             />
           </Button> */}
 
-          <div className="file-field input-field" />
-
-          <div className="input-field col s6">
-            <span>
+          {/* <span>
               <textarea
                 onClick={this.renderSearchOptions.bind(this)}
                 id="icon_prefix"
@@ -228,23 +225,44 @@ class NavigationBar extends Component {
                   />
                 </span>&nbsp;&nbsp;按日期/城市等搜索
               </label>
-            </span>
-          </div>
+            </span> */}
+
+          <li className={classnames("white btn-small", styles.signInLink)}>
+            <button onClick={this.renderSearchOptions.bind(this)}>
+              <i className="fa fa-filter">&nbsp;&nbsp;搜索</i>
+            </button>
+          </li>
+          <li className={classnames("white btn-small", styles.signInLink)}>
+            <Link to="/map">团餐</Link>
+          </li>
+          <li className={classnames("white btn-small", styles.signInLink)}>
+            <Link to="/car-rental">租车</Link>
+          </li>
+          <li className={classnames("white btn-small", styles.signInLink)}>
+            <Link to="/pin_fang">拼房</Link>
+          </li>
+
+          <li className={classnames("white btn-small", styles.signInLink)}>
+            <i className="fa fa-caret-down" aria-hidden="true">
+              <button onClick={this.toggleSubMenu}>&nbsp;&nbsp;更多</button>
+            </i>
+          </li>
+
           {/* <div>
             <img src="/src/static/icons/buttons/searchBar.png" width="100%" />
           </div> */}
 
-          <div className="file-field input-field">
+          {/* <div className="file-field input-field">
             <button
               className="btn-floating btn grey lighten-3 pulse "
               onClick={this.toggleSubMenu}
             >
               <i className="material-icons black-text">menu</i>
             </button>
-          </div>
+          </div> */}
 
           {this.renderSubMenu()}
-        </div>
+        </ul>
       </div>
     );
   }
@@ -258,12 +276,11 @@ class NavigationBar extends Component {
   renderSearchBar() {
     return (
       <div>
-        <button
-          className="btn-floating btn grey lighten-3"
-          onClick={this.renderSearchOptions.bind(this)}
-        >
-          <i className="material-icons black-text">search</i>
-        </button>
+        <li className={classnames("white btn-small", styles.signInLink)}>
+          <button onClick={this.renderSearchOptions.bind(this)}>
+            <i className="fa fa-filter">&nbsp;&nbsp;搜索</i>
+          </button>
+        </li>
       </div>
     );
   }

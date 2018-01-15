@@ -33,15 +33,10 @@ class DiscussionBox extends Component {
           )}
         >
           <div className={styles.cardSection}>
-            <div className={styles.imgContainer}>
-              <img src={imageURL} style={{ width: 60 }} />
+            <div>
+              <img src={imageURL} style={{ width: 45 }} />
             </div>
-            <div
-              className={classnames(
-                styles.imgContainer,
-                styles.discussionTitle
-              )}
-            >
+            <div style={{ marginLeft: 10 }}>
               <Link to={link}>{discussionTitle}</Link>
             </div>
           </div>
