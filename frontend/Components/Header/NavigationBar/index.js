@@ -205,18 +205,29 @@ class NavigationBar extends Component {
 
           <div className="input-field col s6">
             <span>
-              <img
-                src="/src/static/icons/buttons/searchIcon.svg"
-                className="prefix"
-              />
-              <input
+              <textarea
                 onClick={this.renderSearchOptions.bind(this)}
                 id="icon_prefix"
                 type="text"
-                className="validate"
+                style={{
+                  borderBottomLeftRadius: "10px",
+                  borderTopLeftRadius: "10px",
+                  borderBottomRightRadius: "10px",
+                  borderTopRightRadius: "10px",
+                  width: "80%",
+                  borderColor: "#e4e1e1a8",
+                  borderWidth: "4px"
+                }}
+                // className="validate"
                 readOnly="true"
               />
-              <label htmlFor="icon_prefix">按日期/城市等搜索</label>
+              <label htmlFor="icon_prefix" style={{ paddingLeft: "20px" }}>
+                <span>
+                  <i
+                    className={classnames(styles.iconA, "fa fa-search fa-2x")}
+                  />
+                </span>&nbsp;&nbsp;按日期/城市等搜索
+              </label>
             </span>
           </div>
           {/* <div>
