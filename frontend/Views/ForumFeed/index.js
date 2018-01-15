@@ -229,33 +229,6 @@ class ForumFeed extends Component {
   //   }
   // }
 
-  searchByTerm() {
-    return (
-      <div>
-        <form
-          onSubmit={event => {
-            event.preventDefault();
-            this.setState({
-              searchTerm: this.state.search,
-              searchStatus: false
-            });
-          }}
-        >
-          <input
-            style={{ width: 280, height: 35, fontSize: 12 }}
-            value={this.state.search}
-            onChange={this.onInputChange.bind(this)}
-            placeholder="按地点,车型,日期(格式为03/10(MM/DD))等搜索"
-          />
-
-          <button type="submit" className="waves-effect grey btn">
-            <i className="material-icons">search</i>
-          </button>
-        </form>
-      </div>
-    );
-  }
-
   closeAllPopups() {
     this.setState({
       search: "",
@@ -270,6 +243,43 @@ class ForumFeed extends Component {
 
       searchStatus: true
     });
+  }
+
+  searchByTerm() {
+    const { currentForum } = this.props;
+    return (
+      <div className={classnames(styles.subMenu)}>
+        <Link
+          to={`/${currentForum}`}
+          className={styles.subMenuClose}
+          onClick={this.closeAllPopups.bind(this)}
+          alwaysActive
+        >
+          <i className={classnames("fa fa-close")} />
+        </Link>
+        <form
+          onSubmit={event => {
+            event.preventDefault();
+            this.setState({
+              searchTerm: this.state.search,
+              searchStatus: false,
+              searchTermStatus: false
+            });
+          }}
+        >
+          <input
+            style={{ width: 280, height: 35, fontSize: 12 }}
+            value={this.state.search}
+            onChange={this.onInputChange.bind(this)}
+            placeholder="按地点,车型,商品名等搜索"
+          />
+
+          <button type="submit" className="waves-effect grey btn">
+            <i className="material-icons">search</i>
+          </button>
+        </form>
+      </div>
+    );
   }
 
   searchByDate() {
@@ -412,7 +422,7 @@ class ForumFeed extends Component {
     if (searchDateStatus) {
       return this.searchByDate();
     } else if (searchTermStatus) {
-      return <h1>日期</h1>;
+      return this.searchByTerm();
     }
     return null;
   }
@@ -420,6 +430,14 @@ class ForumFeed extends Component {
   closeDateConditions() {
     this.setState({
       searchDate: "",
+      search: "",
+      searchStatus: true
+    });
+  }
+
+  closeTermConditions() {
+    this.setState({
+      searchTerm: "",
       search: "",
       searchStatus: true
     });
@@ -441,6 +459,30 @@ class ForumFeed extends Component {
             <i className="material-icons right">clear</i>搜索日期:{
               searchDateMMDD
             }
+          </Link>
+        </div>
+      );
+    }
+  }
+
+  renderTermSearched() {
+    if (this.state.searchTerm) {
+      const { currentForum } = this.props;
+      const { searchTerm } = this.state;
+
+      return (
+        <div className="container">
+          <Link
+            to={`/${currentForum}`}
+            className="waves-effect white btn"
+            onClick={this.closeTermConditions.bind(this)}
+          >
+            <i className="material-icons right black-text">clear</i>
+            <span style={{ color: "black" }}>
+              搜索文字:&nbsp;&nbsp;<span style={{ fontSize: 16 }}>
+                {searchTerm}
+              </span>
+            </span>
           </Link>
         </div>
       );
@@ -496,6 +538,7 @@ class ForumFeed extends Component {
 
           {this.renderBySearchStatus()}
           {this.renderDateSearched()}
+          {this.renderTermSearched()}
 
           <FeedBox
             type="pinned"

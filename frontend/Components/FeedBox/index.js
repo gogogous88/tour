@@ -11,16 +11,6 @@ import DiscussionBox from "./DiscussionBox";
 
 import keys from "../../../config/credentials";
 
-// function searchingFor(term) {
-//   return function(x) {
-//     return (
-//       x.pdate.toString().includes(term.toString()) ||
-//       x.ploc.toString().includes(term.toString()) ||
-//       !term
-//     );
-//   };
-// }
-
 class FeedBox extends Component {
   renderSort() {
     const { activeSortingMethod, onChangeSortingMethod } = this.props;
@@ -201,8 +191,8 @@ class FeedBox extends Component {
       discussions &&
       discussions.filter(discussion => {
         if (this.props.searchStatus && discussion.pdate) {
-          console.log("checkTerm", this.props.searchTerm);
-          console.log("checkDate", this.props.searchDate);
+          // console.log("checkTerm", this.props.searchTerm);
+          // console.log("checkDate", this.props.searchDate);
           const theDate = moment(discussion.pdate).format("MM/DD");
           const searchDateToString = moment(this.props.searchDate).format(
             "MM/DD"
@@ -259,7 +249,22 @@ class FeedBox extends Component {
           );
         }
 
+        if (!discussion.content) {
+          return (
+            discussion.ph_no.indexOf(this.props.searchTerm) !== -1 ||
+            discussion.vehicleType.indexOf(this.props.searchTerm) !== -1 ||
+            discussion.pname.indexOf(this.props.searchTerm) !== -1 ||
+            discussion.rloc.indexOf(this.props.searchTerm) !== -1 ||
+            discussion.ploc.indexOf(this.props.searchTerm) !== -1 ||
+            discussion.title.indexOf(this.props.searchTerm) !== -1
+          );
+        }
         return (
+          discussion.content.indexOf(this.props.searchTerm) !== -1 ||
+          discussion.ph_no.indexOf(this.props.searchTerm) !== -1 ||
+          discussion.vehicleType.indexOf(this.props.searchTerm) !== -1 ||
+          discussion.pname.indexOf(this.props.searchTerm) !== -1 ||
+          discussion.rloc.indexOf(this.props.searchTerm) !== -1 ||
           discussion.ploc.indexOf(this.props.searchTerm) !== -1 ||
           discussion.title.indexOf(this.props.searchTerm) !== -1
         );
