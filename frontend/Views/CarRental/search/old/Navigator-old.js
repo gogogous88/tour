@@ -8,31 +8,34 @@ import querystring from "querystring";
 import styles from "./styles/navigator.css";
 import appLayout from "SharedStyles/appLayout.css";
 
-import { renderDateTime } from "../utils/yale";
-
 class Navigator extends Component {
   constructor(props) {
     super(props);
     moment.locale(document.documentElement.lang || "en");
-    this.state = { naviCondition: false };
   }
+
+  renderTime = timeStr => moment(timeStr, "hhmm").format("h:mm a");
 
   returnToSearch = stepId => {
     if (stepId === "step1" || stepId === "step2") {
       this.props.flushResults();
-      this.props.router.push("/car-rental");
+      this.props.history.push("/search");
     } else if (stepId === "step3") {
       this.props.flushSelectedVehicle();
-      this.props.router.push(
+      this.props.history.push(
         `/result?${querystring.stringify(this.props.conditions)}`
       );
     } else if (stepId === "step4") {
-      this.props.router.push("/extras");
+      this.props.history.push("/extras");
     }
   };
 
   vehicleNameByLocale = vehicleType => {
     const vehicleNames = _.split(vehicleType, "|");
+
+    // if (lang === 'en') {
+    //   return _.first(vehicleNames);
+    // }
 
     return _.last(vehicleNames);
   };
@@ -52,10 +55,10 @@ class Navigator extends Component {
   };
 
   showVehicleSelectTitle = () => {
-    const { conditions, selectedVehicle, vehicleTypes } = this.props;
+    const { conditions, selectedVehicle } = this.props;
     const justSelectedVehicleName =
       conditions.vehicleTypeId > 0
-        ? this.vehicleNameByLocale(
+        ? vehicleNameByLocale(
             _.get(vehicleTypes, [conditions.vehicleTypeId, "vehicleType"])
           )
         : "";
@@ -74,37 +77,6 @@ class Navigator extends Component {
       selectedVehicle,
       vehicleTypes
     } = this.props;
-
-    const pickLocationName = _.get(locations, [
-      conditions.pickLocation,
-      "locationName"
-    ]);
-    const returnLocationName = _.get(locations, [
-      conditions.returnLocation,
-      "locationName"
-    ]);
-
-    if (!this.state.naviCondition) {
-      return (
-        <div
-          className={classNames(
-            styles.searchConditionsWrap,
-            appLayout.showOnSmallBP
-          )}
-        >
-          <div className={classNames(styles.searchConditions, { container })}>
-            <button
-              onClick={() => {
-                this.setState({ naviCondition: true });
-              }}
-              className="grey lighten-3 btn"
-            >
-              <span style={{ color: "black" }}>筛选车型</span>
-            </button>
-          </div>
-        </div>
-      );
-    }
     return (
       <div
         className={classNames(
@@ -129,14 +101,14 @@ class Navigator extends Component {
               onClick={
                 passedStep >= 3 ? () => this.returnToSearch("step3") : () => {}
               }
-              onMouseEnter={this.handleMenuShow}
-              onMouseLeave={this.handleMenuHide}
+              onMouseEnter={this.handleMenuShow.bind(this)}
+              onMouseLeave={this.handleMenuHide.bind(this)}
             >
-              <h3>3. 筛选车型</h3>
               <div className={styles.typesDropdownWrap}>
                 <a href="#" className={styles.currentName}>
-                  {this.showVehicleSelectTitle()}
+                  <h3>筛选车型: {this.showVehicleSelectTitle()}</h3>
                 </a>
+
                 {passedStep === 2 && (
                   <ul
                     className={classNames(styles.subMenu, "list-unstyled")}
@@ -149,7 +121,7 @@ class Navigator extends Component {
                           title="All Vehicle Class"
                           onClick={e => this.selectVehicleType(e, 0)}
                         >
-                          所有车型
+                          All Vehicle Class
                         </a>
                       </li>
                     )}
@@ -193,6 +165,14 @@ class Navigator extends Component {
       vehicleTypes
     } = this.props;
 
+    const pickDateTimeStr = `${moment(conditions.pickDate).format(
+      "ll"
+    )} ${this.renderTime(conditions.pickTime)}`;
+
+    const returnDateTimeStr = `${moment(conditions.returnDate).format(
+      "ll"
+    )} ${this.renderTime(conditions.returnTime)}`;
+
     const pickLocationName = _.get(locations, [
       conditions.pickLocation,
       "locationName"
@@ -231,11 +211,7 @@ class Navigator extends Component {
                 }
               >
                 <h3>1. 租车日期</h3>
-                <p>{`${moment(renderDateTime(conditions, "pick")).format(
-                  "MM/DD"
-                )} -${moment(renderDateTime(conditions, "return")).format(
-                  "MM/DD"
-                )}`}</p>
+                <p>{`${pickDateTimeStr} - ${returnDateTimeStr}`}</p>
               </div>
             </div>
             <div
@@ -257,7 +233,7 @@ class Navigator extends Component {
                     : () => {}
                 }
               >
-                <h3>2. 取环地点</h3>
+                <h3>2. 取还地点</h3>
                 <p>
                   {pickLocationName === returnLocationName
                     ? pickLocationName
@@ -303,7 +279,7 @@ class Navigator extends Component {
                             title="All Vehicle Class"
                             onClick={e => this.selectVehicleType(e, 0)}
                           >
-                            所有车型
+                            All Vehicle Class
                           </a>
                         </li>
                       )}

@@ -66,6 +66,16 @@
   flex: 1;
 }
 
+.selectStyle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
 .spanInWrap {
   transition: all 0.3s ease-out;
   display: flex;

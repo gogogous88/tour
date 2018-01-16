@@ -11,6 +11,7 @@ import { userProfileReducer } from "../Views/UserProfile/reducers";
 import { mapReducer } from "../Views/Map/reducers";
 import { nightReducer } from "../Views/googleSheet/reducers";
 import rentalReducer from "../Views/CarRental/reducers";
+import { reducer as form } from "redux-form";
 
 // root reducer for app
 const rootReducer = combineReducers({
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
   newDiscussion: newDiscussionReducer,
   adminInfo: adminInfoReducer,
   userProfile: userProfileReducer,
-  rentalReducer: rentalReducer
+  rentalReducer: rentalReducer,
+  form
 });
 
 // dev tool extension

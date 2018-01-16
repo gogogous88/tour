@@ -1,9 +1,193 @@
+import _ from "lodash";
 import React, { Component } from "react";
+import moment from "moment";
+import "moment/locale/zh-cn";
 import { connect } from "react-redux";
-// import { Field, reduxForm } from 'redux-form';
-import { flushResults, flushSelectedVehicle } from "../../actions";
+import { Field, reduxForm } from "redux-form";
+import classNames from "classnames/bind";
 
 import Navigator from "./Navigator";
+
+import {
+  savePaymentForm,
+  flushResults,
+  flushSelectedVehicle
+} from "../actions";
+import {
+  formatMoney,
+  getTotalDays,
+  validateEmail,
+  validateCreditCard,
+  validateCVV,
+  renderDateTime
+} from "../utils/yale";
+
+import styles from "./styles/form.css";
+
+const I18N_CHOOSE_ONE = "Choose...";
+const I18N_NO_EMPTY = "Please fill out this field";
+const I18N_NO_SELECT = "Please select a value";
+const I18N_INVALID_EMAIL = "Please provide a valid email address";
+const I18N_CONFIRM_EMAIL_NOT_MATCH = "Confirm Email don't match";
+const I18N_INVALID_CREDIT_CARD = "Please provide a valid credit card number";
+const I18N_INVALID_CVV = "Please provide a valid CVV";
+const I18N_TOS_NEEDED =
+  "Please agree to all the terms and conditions before placing the order.";
+
+const cardTypeValues = [
+  I18N_CHOOSE_ONE,
+  "VISA",
+  "MasterCard",
+  "Discover",
+  "American Express",
+  "JCB"
+];
+
+const cardExpireMonthValues = _.concat(
+  "MM",
+  _.map(_.range(1, 13), o => (o < 10 ? `0${o}` : `${o}`))
+);
+
+const cardExpireYearValues = _.concat(
+  "YYYY",
+  _.map(
+    _.range(new Date().getFullYear(), new Date().getFullYear() + 20),
+    o => o
+  )
+);
+
+const billingStateValues = [
+  I18N_CHOOSE_ONE,
+  "Alabama",
+  "Alaska",
+  "American Samoa",
+  "Arizona",
+  "Arkansas",
+  "California",
+  "Colorado",
+  "Connecticut",
+  "Delaware",
+  "District Of Columbia",
+  "Federated States Of Micronesia",
+  "Florida",
+  "Georgia",
+  "Guam",
+  "Hawaii",
+  "Idaho",
+  "Illinois",
+  "Indiana",
+  "Iowa",
+  "Kansas",
+  "Kentucky",
+  "Louisiana",
+  "Maine",
+  "Marshall Islands",
+  "Maryland",
+  "Massachusetts",
+  "Michigan",
+  "Minnesota",
+  "Mississippi",
+  "Missouri",
+  "Montana",
+  "Nebraska",
+  "Nevada",
+  "New Hampshire",
+  "New Jersey",
+  "New Mexico",
+  "New York",
+  "North Carolina",
+  "North Dakota",
+  "Northern Mariana Islands",
+  "Ohio",
+  "Oklahoma",
+  "Oregon",
+  "Palau",
+  "Pennsylvania",
+  "Puerto Rico",
+  "Rhode Island",
+  "South Carolina",
+  "South Dakota",
+  "Tennessee",
+  "Texas",
+  "Utah",
+  "Vermont",
+  "Virgin Islands",
+  "Virginia",
+  "Washington",
+  "West Virginia",
+  "Wisconsin",
+  "Wyoming",
+  "None/Other"
+];
+
+const validate = values => {
+  const requiredFields = [
+    "firstName",
+    "lastName",
+    "email",
+    "confirmEmail",
+    "phone",
+    "cardHolderName",
+    "cardType",
+    "cardNumber",
+    "cardExpireMonth",
+    "cardExpireYear",
+    "cardCVV",
+    "billingAddress1",
+    "billingState",
+    "billingCity",
+    "billingZip"
+  ];
+  const errors = {};
+
+  _.each(requiredFields, field => {
+    if (!values[field]) {
+      errors[field] = I18N_NO_EMPTY;
+    }
+  });
+
+  if (values.email && !validateEmail(values.email)) {
+    errors.email = I18N_INVALID_EMAIL;
+  }
+
+  if (values.confirmEmail && !validateEmail(values.confirmEmail)) {
+    errors.confirmEmail = I18N_INVALID_EMAIL;
+  }
+
+  if (
+    values.email &&
+    values.confirmEmail &&
+    values.email !== values.confirmEmail
+  ) {
+    errors.confirmEmail = I18N_CONFIRM_EMAIL_NOT_MATCH;
+  }
+
+  if (values.cardNumber && !validateCreditCard(values.cardNumber)) {
+    errors.cardNumber = I18N_INVALID_CREDIT_CARD;
+  }
+
+  if (values.cardCVV && !validateCVV(values.cardCVV)) {
+    errors.cardCVV = I18N_INVALID_CVV;
+  }
+
+  if (values.cardType === _.first(cardTypeValues)) {
+    errors.cardType = I18N_NO_SELECT;
+  }
+
+  if (values.cardExpireMonth === _.first(cardExpireMonthValues)) {
+    errors.cardExpireMonth = I18N_NO_SELECT;
+  }
+
+  if (values.cardExpireYear === _.first(cardExpireYearValues)) {
+    errors.cardExpireYear = I18N_NO_SELECT;
+  }
+
+  if (values.billingState === _.first(billingStateValues)) {
+    errors.billingState = I18N_NO_SELECT;
+  }
+
+  return errors;
+};
 
 class Form extends Component {
   constructor(props) {
@@ -11,78 +195,290 @@ class Form extends Component {
     moment.locale(document.documentElement.lang || "en");
   }
 
-  render() {
+  componentDidMount() {
+    // redirect to search page
+    if (
+      _.isEmpty(this.props.locations) ||
+      _.isEmpty(this.props.conditions) ||
+      // _.isEmpty(this.props.uploadedDocuments) ||
+      _.isEmpty(this.props.selectedAddresses)
+    ) {
+      this.props.router.push("/car-rental");
+    }
+
+    if (!_.isEmpty(this.props.paymentResult)) {
+      this.props.router.push("/success");
+    }
+  }
+
+  extractAddresses = locationId => {
+    const addresses = [];
+
+    // extract addresses from 'address1' and 'address2'
+    _.each([1, 2], i => {
+      const address = _.get(this.props.locations, [locationId, `address${i}`]);
+      if (address) {
+        addresses.push(address);
+      }
+    });
+
+    return addresses;
+  };
+
+  renderField(field) {
+    const {
+      required,
+      name,
+      input,
+      label,
+      labelInvisible,
+      placeholder,
+      children,
+      type,
+      rows,
+      meta: { touched, error }
+    } = field;
+
+    const className = classNames({
+      "form-group": type !== "checkbox",
+      "form-check": type === "checkbox"
+    });
+
+    const labelClassName = classNames({
+      "form-control-label": true,
+      invisible: labelInvisible
+    });
+
+    const inputClassName = classNames({
+      "form-control": type !== "checkbox",
+      "form-check-input": type === "checkbox",
+      "is-invalid": touched && error
+    });
+
+    let formEl;
+
+    switch (type) {
+      case "select":
+        formEl = (
+          <select className={inputClassName} {...input}>
+            {children}
+          </select>
+        );
+        break;
+      case "textarea":
+        formEl = (
+          <textarea
+            className={inputClassName}
+            rows={rows}
+            placeholder={placeholder}
+            {...input}
+          />
+        );
+        break;
+      case "checkbox":
+        formEl = (
+          <input className={inputClassName} type="checkbox" {...input} />
+        );
+        break;
+      case "hidden":
+        formEl = (
+          <input
+            className={inputClassName}
+            type="hidden"
+            placeholder={placeholder}
+            {...input}
+          />
+        );
+        break;
+      default:
+        formEl = (
+          <input
+            className={inputClassName}
+            type={type || "text"}
+            placeholder={placeholder}
+            {...input}
+          />
+        );
+        break;
+    }
+
+    if (type === "checkbox") {
+      return (
+        <div className={className}>
+          <label className="form-check-label">
+            {formEl}
+            {label}
+          </label>
+          <div className="invalid-feedback">{touched ? error : ""}</div>
+        </div>
+      );
+    }
+
     return (
-      <div className="result-container">
+      <div className={className}>
+        <label className={labelClassName} htmlFor={name}>
+          {label}
+          {required && <span>*</span>}
+        </label>
+        {formEl}
+        <div className="invalid-feedback">{touched ? error : ""}</div>
+      </div>
+    );
+  }
+
+  onSubmit = async values => {
+    if (values.tos) {
+      // if (!values.tos) {原始状态是否
+      alert(I18N_TOS_NEEDED);
+    } else {
+      // console.log("mark go through", this.props.tax);
+      const {
+        conditions,
+        selectedVehicle,
+        ratesResult,
+        vehicleTypes,
+        tax,
+        oneWayFee,
+        finalPrice,
+        selectedAddresses,
+        uploadedDocuments
+      } = this.props;
+      const rateDetail = _.get(ratesResult, [selectedVehicle.vehicleTypeId]);
+      const vehicleDetail = _.get(vehicleTypes, [
+        selectedVehicle.vehicleTypeId
+      ]);
+
+      const dailyKMorMileageAllowed = _.get(
+        rateDetail,
+        "dailyKMorMileageAllowed",
+        0
+      );
+      const kMorMileageCharge = _.get(rateDetail, "kMorMileageCharge", 0);
+
+      let milages = "Unlimited Miles Per Day";
+      if (dailyKMorMileageAllowed > 0) {
+        milages = `${dailyKMorMileageAllowed} Miles Per Day, Miles Charge: ${formatMoney(
+          kMorMileageCharge
+        )} Per Mile`;
+      }
+
+      const orderDetail = {
+        requestCode: 1089,
+        vehicle: {
+          vehicleTypeId: selectedVehicle.vehicleTypeId,
+          vehicleName: selectedVehicle.vehicleName,
+          vehicleDesc: selectedVehicle.vehicleDesc,
+          milages,
+          bags: _.get(vehicleDetail, "baggages"),
+          seats: _.get(vehicleDetail, "seats")
+        },
+        price: {
+          total: finalPrice.total,
+          vehicleTotalWithTax: selectedVehicle.totalWithoutTax,
+          totalTax: selectedVehicle.taxFee,
+          prePaid: finalPrice.total * 0.2,
+          restPaid: finalPrice.total * 0.8,
+          perDay: rateDetail.dailyRate,
+          totalDays: getTotalDays(conditions),
+          tax,
+          oneWayFee: oneWayFee || 0,
+          misCharges: _.get(finalPrice, "equipmentTotal", 0),
+          driveForPickFee: _.get(finalPrice, "driveForPickFee", 0),
+          driveForReturnFee: _.get(finalPrice, "driveForReturnFee", 0)
+        },
+        address: {
+          pick: {
+            datetime: renderDateTime(conditions, "pick"),
+            address: selectedAddresses.pickLocation,
+            customAddress: !_.includes(
+              this.extractAddresses(conditions.pickLocation),
+              selectedAddresses.pickLocation
+            )
+          },
+          return: {
+            datetime: renderDateTime(conditions, "return"),
+            address: selectedAddresses.returnLocation,
+            customAddress: !_.includes(
+              this.extractAddresses(conditions.returnLocation),
+              selectedAddresses.returnLocation
+            )
+          }
+        },
+        paymentForm: values,
+        uploadedDocuments
+      };
+
+      await this.props.savePaymentForm(orderDetail);
+      this.props.router.push("/success");
+    }
+  };
+
+  render() {
+    const { finalPrice, handleSubmit, submitting } = this.props;
+
+    return (
+      <div className="container">
         <Navigator passedStep={4} {...this.props} />
-        <div className="form-wrap">
-          <div className="container">
-            <div className="main-block">
-              <form>
-                <div className="form-items">
-                  <div className="form-item">
-                    <div className="header">
+        <div className={styles.formWrap}>
+          <div className={styles.formWrapcontainer}>
+            <div className={styles.mainBlock}>
+              <form
+                className={styles.formStyle}
+                onSubmit={handleSubmit(this.onSubmit)}
+              >
+                <div className={styles.formItems}>
+                  <div className={styles.formItem}>
+                    <div className={styles.headerStyle}>
                       <h3>Personal Information</h3>
                     </div>
-                    <div className="body">
+                    <div className={styles.bodyStyle}>
                       <div className="form-row">
                         <div className="form-group col-md-6">
-                          <label htmlFor="firstName">
-                            First Name<span>*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="firstName"
+                          <Field
+                            label="First Name"
                             name="firstName"
+                            required
+                            component={this.renderField}
                           />
                         </div>
                         <div className="form-group col-md-6">
-                          <label htmlFor="lastName">
-                            Last Name<span>*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="lastName"
+                          <Field
+                            label="Last Name"
                             name="lastName"
+                            required
+                            component={this.renderField}
                           />
                         </div>
                       </div>
                       <div className="form-row">
                         <div className="form-group col-md-6">
-                          <label htmlFor="email">
-                            Email<span>*</span>
-                          </label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="email"
+                          <Field
+                            label="Email"
                             name="email"
+                            type="email"
+                            required
+                            component={this.renderField}
                           />
                         </div>
                         <div className="form-group col-md-6">
-                          <label htmlFor="emailConfirm">
-                            Confirm Email<span>*</span>
-                          </label>
-                          <input
+                          <Field
+                            label="Confirm Email"
+                            name="confirmEmail"
                             type="email"
-                            className="form-control"
-                            id="emailConfirm"
-                            name="emailConfirm"
+                            required
+                            placeholder=""
+                            component={this.renderField}
                           />
                         </div>
                       </div>
                       <div className="form-row">
                         <div className="form-group col-md-6">
-                          <label htmlFor="phone">
-                            Phone Number<span>*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="phone"
+                          <Field
+                            label="Phone Number"
                             name="phone"
+                            type="tel"
+                            required
+                            component={this.renderField}
                           />
                         </div>
                       </div>
@@ -95,85 +491,82 @@ class Form extends Component {
                     <div className="body">
                       <div className="form-row">
                         <div className="form-group col-md-6">
-                          <label htmlFor="cardHolderName">
-                            Cardholder Name
-                            <span>*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="cardHolderName"
+                          <Field
+                            label="Cardholder Name"
                             name="cardHolderName"
+                            required
+                            component={this.renderField}
                           />
                         </div>
                       </div>
                       <div className="form-row">
                         <div className="form-group col-md-6">
-                          <label htmlFor="cardType">
-                            Credit Card Type<span>*</span>
-                          </label>
-                          <select
-                            className="form-control"
-                            id="cardType"
+                          <Field
+                            label="Credit Card Type"
                             name="cardType"
+                            type="select"
+                            component={this.renderField}
                           >
-                            <option>Choose...</option>
-                            <option>VISA</option>
-                            <option>MasterCard</option>
-                            <option>Discover</option>
-                            <option>American Express</option>
-                          </select>
+                            {cardTypeValues.map(y => (
+                              <option key={y} value={y}>
+                                {y}
+                              </option>
+                            ))}
+                          </Field>
                         </div>
                         <div className="form-group col-md-6">
-                          <label htmlFor="cardNo">
-                            Card Number<span>*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
+                          <Field
+                            label="Card Number"
+                            name="cardNumber"
                             placeholder="•••• •••• •••• ••••"
-                            id="cardNo"
-                            name="cardNo"
+                            required
+                            component={this.renderField}
                           />
                         </div>
                       </div>
                       <div className="form-row">
                         <div className="form-group col-md-6">
-                          <label htmlFor="expireMM">
-                            Expire Date<span>*</span>
-                          </label>
                           <div className="row gutter-10">
                             <div className="col-md-6">
-                              <select
-                                className="form-control"
-                                id="expireMM"
-                                name="expireMM"
+                              <Field
+                                label="Expire Date"
+                                name="cardExpireMonth"
+                                type="select"
+                                required
+                                component={this.renderField}
                               >
-                                <option>MM</option>
-                                <option>01</option>
-                              </select>
+                                {cardExpireMonthValues.map(o => (
+                                  <option key={o} value={o}>
+                                    {o}
+                                  </option>
+                                ))}
+                              </Field>
                             </div>
                             <div className="col-md-6">
-                              <select
-                                className="form-control"
-                                id="expireYY"
-                                name="expireYY"
+                              <Field
+                                label="Expire Year"
+                                labelInvisible={true}
+                                name="cardExpireYear"
+                                type="select"
+                                required
+                                component={this.renderField}
                               >
-                                <option>YY</option>
-                              </select>
+                                {cardExpireYearValues.map(o => (
+                                  <option key={o} value={o}>
+                                    {o}
+                                  </option>
+                                ))}
+                              </Field>
                             </div>
                           </div>
                         </div>
                         <div className="form-group col-md-6">
-                          <label htmlFor="cvv">
-                            CVV<span>*</span>
-                          </label>
-                          <input
+                          <Field
+                            label="CVV"
+                            name="cardCVV"
                             type="text"
-                            className="form-control"
-                            placeholder="•••"
-                            id="cvv"
-                            name="cvv"
+                            required
+                            component={this.renderField}
                           />
                         </div>
                       </div>
@@ -185,71 +578,61 @@ class Form extends Component {
                     </div>
                     <div className="body">
                       <div className="form-group">
-                        <label htmlFor="address1">
-                          Address 1<span>*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="1234 Main St"
-                          id="address1"
-                          name="address1"
+                        <Field
+                          label="Address 1"
+                          name="billingAddress1"
+                          required
+                          component={this.renderField}
                         />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="address2">Address 2</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Apartment, studio, or floor"
-                          id="address2"
-                          name="address2"
+                        <Field
+                          label="Address 2"
+                          name="billingAddress2"
+                          component={this.renderField}
                         />
                       </div>
                       <div className="form-row">
                         <div className="form-group col-md-4">
-                          <label htmlFor="city">
-                            City<span>*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="city"
-                            name="city"
+                          <Field
+                            label="City"
+                            name="billingCity"
+                            required
+                            component={this.renderField}
                           />
                         </div>
                         <div className="form-group col-md-4">
-                          <label htmlFor="state">
-                            State<span>*</span>
-                          </label>
-                          <select
-                            className="form-control"
-                            id="state"
-                            name="state"
+                          <Field
+                            label="State"
+                            labelInvisible={true}
+                            name="billingState"
+                            type="select"
+                            required
+                            component={this.renderField}
                           >
-                            <option>Choose...</option>
-                            <option>...</option>
-                          </select>
+                            {billingStateValues.map(o => (
+                              <option key={o} value={o}>
+                                {o}
+                              </option>
+                            ))}
+                          </Field>
                         </div>
                         <div className="form-group col-md-4">
-                          <label htmlFor="zip">
-                            Zip<span>*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="zip"
-                            name="zip"
+                          <Field
+                            label="Zip"
+                            name="billingZip"
+                            required
+                            component={this.renderField}
                           />
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="form-item">
-                    <div className="body">
-                      <div className="tos-wrap">
+                  <div className={styles.formItem}>
+                    <div className={styles.bodyStyle}>
+                      <div>
                         <div>Terms and Conditions</div>
-                        <div className="tos-content">
+                        <div className={styles.tosContent}>
                           1.Definations.<br />
                           "Agreement" means all terms and conditions found on
                           the "Face Page", these Terms &amp; Conditions, and any
@@ -736,21 +1119,23 @@ class Form extends Component {
                         </div>
                       </div>
 
-                      <div className="tos-checkbox">
+                      <div className={styles.tosCheckbox}>
                         <label>
-                          <input
+                          <Field
+                            label="I have read and accept the Terms & Conditions above."
+                            name="tos"
+                            labelInvisible={true}
                             type="checkbox"
-                            name="tosAgree"
-                            defaultChecked
+                            required
+                            component={this.renderField}
                           />
-                          I have read and accept the Terms & Conditions above.
                         </label>
                       </div>
 
-                      <div className="tos-agree">
+                      <div className={styles.tosAgree}>
                         By clicking on the “Submit”button,you confirm that you
                         understand and accept our{" "}
-                        <span className="highlight">
+                        <span className={styles.highlightStyle}>
                           Rental Qualification and Requirements,Terms and
                           Conditions and you understand the Age Restrictions.
                         </span>
@@ -758,8 +1143,9 @@ class Form extends Component {
 
                       <div className="submit-wrap">
                         <button
-                          type="button"
+                          type="submit"
                           className="btn btn-danger rounded-0"
+                          disabled={submitting}
                         >
                           Submit
                         </button>
@@ -769,25 +1155,31 @@ class Form extends Component {
                 </div>
               </form>
             </div>
-            <div className="side-block">
-              <div className="price-total">
-                <ul className="list-unstyled">
-                  <li className="total-line">
-                    <strong>Total</strong>
-                    <span>$174.55</span>
-                  </li>
-                  <li>
-                    20% of your total will be charged for your reservation<span>
-                      $34.91
+            <div className={styles.sideBlock}>
+              <div className={styles.priceTotal}>
+                <ul className={classNames(styles.ulStyle, "list-unstyled")}>
+                  <li className={classNames(styles.liStyle, styles.totalLine)}>
+                    <strong className={styles.totalstrong}>Total</strong>
+                    <span className={styles.priceTotalspan}>
+                      {formatMoney(finalPrice.total)}
                     </span>
                   </li>
                   <li>
-                    80% will be charged when you pick-up the car<span>
-                      $139.64
+                    20% of your total will be charged for your reservation<span
+                      className={styles.spanStyle}
+                    >
+                      {formatMoney(finalPrice.total * 0.2)}
+                    </span>
+                  </li>
+                  <li>
+                    80% will be charged when you pick-up the car<span
+                      className={styles.spanStyle}
+                    >
+                      {formatMoney(finalPrice.total * 0.8)}
                     </span>
                   </li>
                 </ul>
-                <p className="desc">
+                <p className={styles.desc}>
                   'Total' does not include any additional items you may select
                   at the location or any costs arising from the rental (such as
                   damage, fuel or road traffic charges). For renters under the
@@ -809,6 +1201,13 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { flushResults, flushSelectedVehicle })(
-  Form
+export default connect(mapStateToProps, {
+  savePaymentForm,
+  flushResults,
+  flushSelectedVehicle
+})(
+  reduxForm({
+    form: "payForm",
+    validate
+  })(Form)
 );

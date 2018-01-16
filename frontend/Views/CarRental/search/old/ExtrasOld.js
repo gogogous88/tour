@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import querystring from "querystring";
 import classNames from "classnames/bind";
-import styles from "./styles/extras.css";
 
 import {
   fetchUploadToken,
@@ -247,13 +246,13 @@ class Extras extends Component {
 
   isSubmittable = () => {
     const { misCharges, uploadedDocuments, selectedAddresses } = this.props;
-    // if (
-    //   _.isEmpty(misCharges) ||
-    //   _.isEmpty(uploadedDocuments) ||
-    //   !_.isEmpty(_.filter(selectedAddresses, o => _.isEmpty(_.trim(o))))
-    // ) {
-    //   return false;
-    // }
+    if (
+      _.isEmpty(misCharges) ||
+      _.isEmpty(uploadedDocuments) ||
+      !_.isEmpty(_.filter(selectedAddresses, o => _.isEmpty(_.trim(o))))
+    ) {
+      return false;
+    }
 
     return true;
   };
@@ -270,7 +269,7 @@ class Extras extends Component {
     const { selectedEquipments } = this.props;
 
     return (
-      <table className={classNames(styles.tableStyle, "table-striped")}>
+      <table className="table table-striped">
         <tbody>
           {_.map(misCharges, (misCharge, k) => (
             <Equipment
@@ -316,17 +315,17 @@ class Extras extends Component {
     return (
       <div className="result-container">
         <Navigator passedStep={3} {...this.props} />
-        <div className={styles.extrasWrap}>
+        <div className="extras-wrap">
           <div className="container">
-            <div className={styles.extrasItems}>
-              <div className={styles.extraItem}>
-                <div className={styles.headerStyle}>
-                  <h3>额外选项</h3>
-                  {/* {finalPrice.total < 300 && (
+            <div className="extras-items">
+              <div className="extra-item">
+                <div className="header">
+                  <h3>Additional Options</h3>
+                  {finalPrice.total < 300 && (
                     <em>A best way to make the total > $300</em>
-                  )} */}
+                  )}
                 </div>
-                <div className={styles.bodyStyle}>
+                <div className="body">
                   {_.isEmpty(misCharges) ? (
                     <Loading containerClass="mischarge-loading" smallDots />
                   ) : (
@@ -335,15 +334,15 @@ class Extras extends Component {
                 </div>
               </div>
 
-              <div className={styles.extraItem}>
-                <div className={styles.headerStyle}>
-                  <h3>取还地</h3>
-                  {/* {finalPrice.total < 300 && (
+              <div className="extra-item">
+                <div className="header">
+                  <h3>Pick-up & Return Location</h3>
+                  {finalPrice.total < 300 && (
                     <em>Free Delivery if total is more than $300</em>
-                  )} */}
+                  )}
                 </div>
-                <div className={styles.bodyStyle}>
-                  <div className={styles.locationGroup}>
+                <div className="body">
+                  <div className="location-group">
                     <LocationDelivery
                       name="pickLocation"
                       labelText="Pickup Location"
@@ -396,14 +395,12 @@ class Extras extends Component {
                 </div>
               </div> */}
 
-              <div className={styles.extraItem}>
-                <div className={styles.bodyStyle}>
-                  <div className={styles.extraSubmit}>
-                    <div className={styles.totalStyle}>
+              <div className="extra-item">
+                <div className="body">
+                  <div className="extra-submit">
+                    <div className="total">
                       Total
-                      <strong className={styles.strongStyle}>
-                        {formatMoney(finalPrice.total)}
-                      </strong>
+                      <strong>{formatMoney(finalPrice.total)}</strong>
                     </div>
                     <button
                       className={classNames({
@@ -416,7 +413,7 @@ class Extras extends Component {
                       onClick={this.onSubmit}
                       disabled={_.isEmpty(misCharges)}
                     >
-                      下一步
+                      Next Step
                     </button>
                   </div>
                 </div>

@@ -1,25 +1,57 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
+import _ from "lodash";
+import React, { Component } from "react";
 
-import GeoSuggestInput from '../common/GeoSuggestInput';
+import GeoSuggestInput from "../common/GeoSuggestInput";
+import styles from "./styles/extras.css";
+import searchStyles from "./styles/search.css";
 
 class LocationDelivery extends Component {
   state = {
     typedAddress: false
   };
 
-  toggleTypedAddress = ({ target }) => {
-    this.setState({ typedAddress: target.checked });
+  componentDidMount() {
+    this.setState({
+      [this.props.name]: _.first(this.props.addresses)
+    });
+  }
+
+  toggleTypedAddress = async ({ target }) => {
+    await this.setState({ typedAddress: target.checked });
+
+    const { name } = this.props;
+
+    if (!target.checked) {
+      // select from list
+      const value = this.state[name];
+      if (value) {
+        this.props.onAddressSelect({
+          [name]: value
+        });
+      }
+    }
+
+    this.props.proceedTotal();
   };
 
-  onAddressChange = ({ target }) => {
-    this.setState({
+  onAddressChange = async ({ target }) => {
+    await this.setState({
       [target.name]: target.value
     });
+
+    this.props.onAddressSelect({
+      [this.props.name]: target.value
+    });
+
+    this.props.proceedTotal();
   };
 
-  onAddressSelected = address => {
-    console.log(`onAddressSelected ${address}`);
+  onAddressSelected = ({ description }) => {
+    this.props.onAddressSelect({
+      [this.props.name]: description
+    });
+
+    this.props.proceedTotal();
   };
 
   render() {
@@ -27,14 +59,27 @@ class LocationDelivery extends Component {
     const { typedAddress } = this.state;
 
     return (
-      <div className="location-item">
-        <div className="input-box-wrap">
-          <label>{labelText}</label>
+      <div className={styles.locationItem}>
+        <div>
+          <label
+          // className={styles.inputBoxWrapLabel}
+          >
+            {labelText === "Pickup Location" ? "取车地址:" : "还车地址:"}
+          </label>
           {!typedAddress && (
-            <div className="input-box">
-              <div className="select-wrap">
+            <div
+            // className={searchStyles.inputBox}
+            >
+              <div
+              // className={searchStyles.selectWrap}
+              >
                 <span>{_.get(this.state, [name]) || _.first(addresses)}</span>
-                <select name={name} onChange={this.onAddressChange}>
+                <select
+                  // className={searchStyles.selectStyle}
+                  name={name}
+                  onChange={this.onAddressChange}
+                  defaultValue={this.state[name]}
+                >
                   {_.map(addresses, address => (
                     <option key={address} value={address}>
                       {address}
@@ -42,25 +87,25 @@ class LocationDelivery extends Component {
                   ))}
                 </select>
               </div>
-              <i className="fa fa-map-marker fa-1" />
             </div>
           )}
         </div>
 
-        <div className="custom-address">
-          <label>
+        {/* <div className={styles.customAddress}>
+          <label className={styles.customAddresslabel}>
             <input
               type="checkbox"
+              className={styles.customAddressinput}
               checked={typedAddress}
               onChange={this.toggleTypedAddress}
             />
             {checkboxText}
           </label>
-        </div>
+        </div> */}
 
-        {typedAddress && (
+        {/* {typedAddress && (
           <GeoSuggestInput onSelected={this.onAddressSelected} />
-        )}
+        )} */}
       </div>
     );
   }

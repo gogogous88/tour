@@ -24,6 +24,7 @@ import GoogleSheet from "../Views/googleSheet";
 import Search from "../Views/CarRental/search/Search";
 import Result from "../Views/CarRental/search/Result";
 import Extras from "../Views/CarRental/search/Extras";
+import Form from "../Views/CarRental/search/Form";
 import TourGuideWiki from "../Views/TourGuideWiki/TourGuideWiki";
 
 //mark - materialize css
@@ -52,6 +53,8 @@ ReactDOM.render(
         <Route path="/result" component={Result} />
 
         <Route path="/extras" component={Extras} />
+
+        <Route path="/form" component={Form} />
 
         <Route path="/wiki" component={TourGuideWiki} />
 

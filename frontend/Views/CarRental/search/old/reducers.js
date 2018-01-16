@@ -13,13 +13,7 @@ import {
   FLUSH_RESULTS,
   FLUSH_SELECTED_VEHICLE,
   SAVE_SELECTED_VEHICLE,
-  FETCH_MISCHARGES,
-  UPDATE_SAVED_EQUIPMENTS,
-  UPDATE_SELECTED_ADDRESSES,
-  UPDATE_FINAL_PRICE,
-  UPDATE_UPLOADED_DOCUMENTS,
-  REMOVE_UPLOADED_DOCUMENTS,
-  SAVE_PAYMENT_FORM
+  FETCH_MISCHARGES
 } from "./types";
 
 export default (
@@ -35,13 +29,8 @@ export default (
     uploadToken: {},
     tax: 0,
     oneWayFee: null,
-    misCharges: {},
     selectedVehicle: {},
-    selectedEquipments: {},
-    selectedAddresses: {},
-    uploadedDocuments: {},
-    finalPrice: {},
-    paymentResult: {}
+    misCharges: {}
   },
   action
 ) => {
@@ -88,8 +77,7 @@ export default (
     case FLUSH_SELECTED_VEHICLE:
       return {
         ...state,
-        selectedVehicle: {},
-        selectedEquipments: {}
+        selectedVehicle: {}
       };
 
     case FETCH_ONE_WAY_FEE:
@@ -124,7 +112,6 @@ export default (
       if (action.payload.status === "OK") {
         placesResult = _.map(
           action.payload.predictions,
-          // eslint-disable-next-line camelcase
           ({ description, place_id }) => ({
             description,
             id: place_id
@@ -152,7 +139,6 @@ export default (
 
         _.each(
           _.get(action.payload.result, "address_components"),
-          // eslint-disable-next-line camelcase
           ({ long_name, types }) => {
             if (_.includes(types, "postal_code")) {
               postalCode = long_name; // eslint-disable-line
@@ -184,61 +170,6 @@ export default (
       return {
         ...state,
         tax: _.get(_.first(action.payload), "value")
-      };
-
-    case UPDATE_SAVED_EQUIPMENTS:
-      return {
-        ...state,
-        selectedEquipments: {
-          ...state.selectedEquipments,
-          [action.payload.id]: {
-            id: action.payload.id,
-            amount: action.payload.amount
-          }
-        }
-      };
-
-    case UPDATE_SELECTED_ADDRESSES:
-      return {
-        ...state,
-        selectedAddresses: {
-          ...state.selectedAddresses,
-          ...action.payload
-        }
-      };
-
-    case UPDATE_FINAL_PRICE:
-      return {
-        ...state,
-        finalPrice: {
-          ...state.finalPrice,
-          ...action.payload
-        }
-      };
-
-    case UPDATE_UPLOADED_DOCUMENTS:
-      return {
-        ...state,
-        uploadedDocuments: {
-          ...state.uploadedDocuments,
-          ...action.payload
-        }
-      };
-
-    case REMOVE_UPLOADED_DOCUMENTS:
-      return {
-        ...state,
-        uploadedDocuments: {
-          ..._.omit(state.uploadedDocuments, action.payload)
-        }
-      };
-
-    case SAVE_PAYMENT_FORM:
-      return {
-        ...state,
-        paymentResult: {
-          ...action.payload
-        }
       };
 
     default:
