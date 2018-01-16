@@ -294,29 +294,31 @@ class ForumFeed extends Component {
         >
           <i className={classnames("fa fa-close")} />
         </Link>
-        <form
-          onSubmit={event => {
-            event.preventDefault();
-            this.setState({
-              searchDate: this.state.pickDate,
-              overlayVisible: false,
-              searchDateStatus: false
-            });
-          }}
-        >
-          <SingleDatePicker
-            noBorder
-            date={this.state.pickDate}
-            numberOfMonths={1}
-            initialVisibleMonth={() => this.state.pickDate} // momentPropTypes.momentObj or null
-            onDateChange={date => {
-              this.setState({ pickDate: date });
+        <div className={styles.mobileDate}>
+          <form
+            onSubmit={event => {
+              event.preventDefault();
+              this.setState({
+                searchDate: this.state.pickDate,
+                overlayVisible: false,
+                searchDateStatus: false
+              });
             }}
-            focused={this.state.focused} // PropTypes.bool
-            onFocusChange={({ focused }) => this.setState({ focused })} // PropTypes.func.isRequired
-          />
-          <button type="submit">搜索</button>
-        </form>
+          >
+            <SingleDatePicker
+              noBorder
+              date={this.state.pickDate}
+              numberOfMonths={1}
+              initialVisibleMonth={() => this.state.pickDate} // momentPropTypes.momentObj or null
+              onDateChange={date => {
+                this.setState({ pickDate: date });
+              }}
+              focused={this.state.focused} // PropTypes.bool
+              onFocusChange={({ focused }) => this.setState({ focused })} // PropTypes.func.isRequired
+            />
+            <button type="submit">搜索</button>
+          </form>
+        </div>
       </div>
     );
   }

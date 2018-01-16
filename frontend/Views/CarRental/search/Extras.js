@@ -1,18 +1,28 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import querystring from "querystring";
+import classNames from "classnames/bind";
 
 import {
   fetchUploadToken,
   uploadPhoto,
   flushResults,
   fetchMisCharges,
-  flushSelectedVehicle
+  flushSelectedVehicle,
+  updateSavedEquipments,
+  updateSelectedAddresses,
+  updateFinalPrice,
+  updateUploadedDocuments,
+  removeUploadedDocuments
 } from "../actions";
 import Navigator from "./Navigator";
 import Loading from "./Loading";
 import Equipment from "./Equipment";
-// import LocationDelivery from "./LocationDelivery";
-// import FileUploader from "../common/FileUploader";
+import LocationDelivery from "./LocationDelivery";
+import FileUploader from "../common/FileUploader";
+import { formatMoney, getTotalDays } from "../utils/yale";
+
+import styles from "./styles/extras.css";
 
 class Extras extends Component {
   state = {
@@ -20,157 +30,303 @@ class Extras extends Component {
   };
 
   componentDidMount = async () => {
-    // redirect to search page if it comes without locations or conditions
+    // redirect to search page
     if (_.isEmpty(this.props.locations) || _.isEmpty(this.props.conditions)) {
       this.props.router.push("/search");
       return;
     }
+
+    // redirect to result page
+    if (
+      _.isEmpty(this.props.selectedVehicle) &&
+      !_.isEmpty(this.props.conditions)
+    ) {
+      this.props.router.push(
+        `/result?${querystring.stringify(this.props.conditions)}`
+      );
+    }
+
+    this.proceedTotal();
+
+    this.selectDefaultAddress();
 
     if (_.isEmpty(this.props.uploadToken)) {
       const uploadToken = await this.props.fetchUploadToken();
       this.setState({ uploadToken });
     }
 
-    await this.props.fetchMisCharges({
-      vehicleTypeId: this.props.selectedVehicle.vehicleTypeId,
-      locationId: this.props.conditions.pickLocation
-    });
+    if (_.isEmpty(this.props.misCharges)) {
+      await this.props.fetchMisCharges({
+        vehicleTypeId: this.props.selectedVehicle.vehicleTypeId,
+        locationId: this.props.conditions.pickLocation
+      });
+    }
 
     this.initMiscCharges();
   };
 
+  formatMiscChargeItem = name => {
+    const item = _.find(this.props.misCharges, ["name", name]);
+
+    return {
+      id: _.get(item, "miscChargeID"),
+      title: _.get(item, "name"),
+      price: _.get(item, "value"),
+      days: getTotalDays(this.props.conditions),
+      amount: 0,
+      multipliable: name === "Child Seat"
+    };
+  };
+
   initMiscCharges = () => {
-    const { selectedVehicle, misCharges } = this.props;
-
-    const childSeat = _.find(misCharges, ["name", "Child Seat"]);
-    const childSeatEuipment = {
-      title: _.get(childSeat, "name"),
-      price: _.get(childSeat, "value"),
-      days: selectedVehicle.totalDays,
-      amount: 0,
-      multipliable: true
-    };
-
-    const gps = _.find(misCharges, ["name", "GPS"]);
-    const gpsEuipment = {
-      title: _.get(gps, "name"),
-      price: _.get(gps, "value"),
-      days: selectedVehicle.totalDays,
-      amount: 0,
-      multipliable: false
-    };
-
-    const cdw = _.find(misCharges, ["name", "CDW No Tax"]);
-    const cdwEuipment = {
-      title: _.get(cdw, "name"),
-      price: _.get(cdw, "value"),
-      days: selectedVehicle.totalDays,
-      amount: 0,
-      multipliable: false
-    };
-
     this.setState({
       misCharges: {
-        childSeatEuipment,
-        gpsEuipment,
-        cdwEuipment
+        childSeatEuipment: this.formatMiscChargeItem("Child Seat"),
+        gpsEuipment: this.formatMiscChargeItem("GPS"),
+        cdwEuipment: this.formatMiscChargeItem("CDW No Tax")
       }
     });
   };
 
-  handleAddClick = name => {
-    const equipment = _.get(this.state.misCharges, name);
-    this.setState({
-      misCharges: {
-        ...this.state.misCharges,
-        [name]: {
-          ...equipment,
-          amount: equipment.amount + 1
-        }
-      }
+  selectDefaultAddress = () => {
+    const { locations, conditions } = this.props;
+
+    const pickLocation = _.get(locations, [
+      conditions.pickLocation,
+      "address1"
+    ]);
+
+    const returnLocation = _.get(locations, [
+      conditions.returnLocation,
+      "address1"
+    ]);
+
+    this.props.updateSelectedAddresses({
+      pickLocation,
+      returnLocation
     });
   };
 
-  handleRemoveClick = name => {
+  handleAddClick = async name => {
     const equipment = _.get(this.state.misCharges, name);
-    this.setState({
-      misCharges: {
-        ...this.state.misCharges,
-        [name]: {
-          ...equipment,
-          amount: 0
+    await this.setState(
+      {
+        misCharges: {
+          ...this.state.misCharges,
+          [name]: {
+            ...equipment,
+            amount: equipment.amount + 1
+          }
         }
-      }
-    });
+      },
+      this.props.updateSavedEquipments(equipment.id, equipment.amount + 1)
+    );
+    this.proceedTotal();
+  };
+
+  handleRemoveClick = async name => {
+    const equipment = _.get(this.state.misCharges, name);
+    await this.setState(
+      {
+        misCharges: {
+          ...this.state.misCharges,
+          [name]: {
+            ...equipment,
+            amount: 0
+          }
+        }
+      },
+      this.props.updateSavedEquipments(equipment.id, 0)
+    );
+    this.proceedTotal();
   };
 
   handleIncreaseClick = name => {
     this.handleAddClick(name);
   };
 
-  handleDecreaseClick = name => {
+  handleDecreaseClick = async name => {
     const equipment = _.get(this.state.misCharges, name);
-    this.setState({
-      misCharges: {
-        ...this.state.misCharges,
-        [name]: {
-          ...equipment,
-          amount: Math.max(equipment.amount - 1, 0)
+    await this.setState(
+      {
+        misCharges: {
+          ...this.state.misCharges,
+          [name]: {
+            ...equipment,
+            amount: Math.max(equipment.amount - 1, 0)
+          }
         }
-      }
-    });
+      },
+      this.props.updateSavedEquipments(
+        equipment.id,
+        Math.max(equipment.amount - 1, 0)
+      )
+    );
+    this.proceedTotal();
   };
 
   handleUploadComplete = (imageHash, name) => {
-    // TODO: add result to redux
-    console.log("handleUploadComplete", imageHash, name);
+    this.props.updateUploadedDocuments({ [name]: imageHash });
   };
 
   handleDelete = name => {
-    // TODO: remove uploaded image
-    console.log("handleonDelete", name);
+    this.props.removeUploadedDocuments(name);
+  };
+
+  proceedTotal = () => {
+    const {
+      selectedVehicle,
+      selectedEquipments,
+      misCharges,
+      conditions,
+      selectedAddresses
+    } = this.props;
+
+    const vehicleTotal = selectedVehicle.totalWithTax;
+    const vehicleTotalWithoutTax = selectedVehicle.totalWithoutTax;
+
+    const equipmentTotal = _.reduce(
+      selectedEquipments,
+      (result, value, id) => {
+        const chargeItem = _.find(
+          misCharges,
+          o => o.miscChargeID === _.toInteger(id)
+        );
+
+        return (
+          result + value.amount * chargeItem.value * getTotalDays(conditions)
+        );
+      },
+      0
+    );
+
+    const pickAddresses = this.extractAddresses(conditions.pickLocation);
+    const returnAddresses = this.extractAddresses(conditions.returnLocation);
+    const isDriveForPick = selectedAddresses.pickLocation
+      ? !_.includes(pickAddresses, selectedAddresses.pickLocation)
+      : false;
+    const isDriveForReturn = selectedAddresses.returnLocation
+      ? !_.includes(returnAddresses, selectedAddresses.returnLocation)
+      : false;
+
+    const driveForPickFee = isDriveForPick ? 50 : 0;
+    const driveForReturnFee = isDriveForReturn ? 50 : 0;
+
+    const driveFeeTotal =
+      vehicleTotal + equipmentTotal < 300
+        ? driveForPickFee + driveForReturnFee
+        : 0;
+
+    const total = vehicleTotal + equipmentTotal + driveFeeTotal;
+
+    this.props.updateFinalPrice({
+      vehicleTotal,
+      vehicleTotalWithoutTax,
+      equipmentTotal,
+      driveFeeTotal,
+      driveForPickFee,
+      driveForReturnFee,
+      total
+    });
+  };
+
+  refreshErrorUI = () => {
+    const { selectedAddresses, uploadedDocuments } = this.props;
+    let errorText = "";
+
+    if (_.isEmpty(uploadedDocuments)) {
+      errorText +=
+        "Please upload photos of your driver's license and vehicle insurance";
+    }
+
+    if (!_.isEmpty(_.filter(selectedAddresses, o => _.isEmpty(_.trim(o))))) {
+      errorText += "Please complete Pick-up & Return address";
+    }
+
+    alert(errorText);
+  };
+
+  isSubmittable = () => {
+    const { misCharges, uploadedDocuments, selectedAddresses } = this.props;
+    if (
+      _.isEmpty(misCharges) ||
+      _.isEmpty(uploadedDocuments) ||
+      !_.isEmpty(_.filter(selectedAddresses, o => _.isEmpty(_.trim(o))))
+    ) {
+      return false;
+    }
+
+    return true;
   };
 
   onSubmit = () => {
-    this.props.history.push("/form");
+    if (this.isSubmittable()) {
+      this.props.router.push("/form");
+    } else {
+      this.refreshErrorUI();
+    }
   };
 
-  renderMisChargeItems = misCharges => (
-    <table className="table table-striped">
-      <tbody>
-        {_.map(misCharges, (misCharge, k) => (
-          <Equipment
-            key={k}
-            name={k}
-            {...misCharge}
-            onAddClick={() => this.handleAddClick(k)}
-            onRemoveClick={() => this.handleRemoveClick(k)}
-            onIncreaseClick={() => this.handleIncreaseClick(k)}
-            onDecreaseClick={() => this.handleDecreaseClick(k)}
-          />
-        ))}
-      </tbody>
-    </table>
-  );
+  renderMisChargeItems = misCharges => {
+    const { selectedEquipments } = this.props;
+
+    return (
+      <table className="table table-striped">
+        <tbody>
+          {_.map(misCharges, (misCharge, k) => (
+            <Equipment
+              key={k}
+              name={k}
+              {...misCharge}
+              amount={_.get(selectedEquipments, [misCharge.id, "amount"]) || 0}
+              onAddClick={() => this.handleAddClick(k)}
+              onRemoveClick={() => this.handleRemoveClick(k)}
+              onIncreaseClick={() => this.handleIncreaseClick(k)}
+              onDecreaseClick={() => this.handleDecreaseClick(k)}
+            />
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
+  extractAddresses = locationId => {
+    const addresses = [];
+
+    // extract addresses from 'address1' and 'address2'
+    _.each([1, 2], i => {
+      const address = _.get(this.props.locations, [locationId, `address${i}`]);
+      if (address) {
+        addresses.push(address);
+      }
+    });
+
+    return addresses;
+  };
 
   render() {
-    const { conditions, locations, misCharges } = this.props;
+    const { conditions, locations, misCharges, finalPrice } = this.props;
 
     if (!locations || _.isEmpty(conditions)) {
       return <Loading />;
     }
 
+    const pickAddresses = this.extractAddresses(conditions.pickLocation);
+    const returnAddresses = this.extractAddresses(conditions.returnLocation);
+
     return (
       <div className="result-container">
         <Navigator passedStep={3} {...this.props} />
-        <div className="extras-wrap">
+        <div className="extrasWrap">
           <div className="container">
             <div className="extras-items">
               <div className="extra-item">
-                <div className="header">
+                {/* <div className="header">
                   <h3>Additional Options</h3>
-                  <em>A best way to make the total > $300.00</em>
-                </div>
+                  {finalPrice.total < 300 && (
+                    <em>A best way to make the total > $300</em>
+                  )}
+                </div> */}
                 <div className="body">
                   {_.isEmpty(misCharges) ? (
                     <Loading containerClass="mischarge-loading" smallDots />
@@ -181,29 +337,34 @@ class Extras extends Component {
               </div>
 
               <div className="extra-item">
-                <div className="header">
+                {/* <div className="header">
                   <h3>Pick-up & Return Location</h3>
-                  <em>Free Delivery if total is more than $300</em>
-                </div>
-                {/* <div className="body">
+                  {finalPrice.total < 300 && (
+                    <em>Free Delivery if total is more than $300</em>
+                  )}
+                </div> */}
+                <div className="body">
                   <div className="location-group">
                     <LocationDelivery
                       name="pickLocation"
                       labelText="Pickup Location"
                       checkboxText="Deliver the Vehicle to Me"
-                      addresses={["317 E. Foothill Blvd #105"]}
+                      addresses={pickAddresses}
+                      onAddressSelect={this.props.updateSelectedAddresses}
+                      onAddressChange={this.props.updateSelectedAddresses}
+                      proceedTotal={this.proceedTotal}
                     />
                     <LocationDelivery
                       name="returnLocation"
                       labelText="Return Location"
                       checkboxText="Pickup the Vehicle from Me"
-                      addresses={[
-                        "1577 Morris ave",
-                        "133-53 37th ave, Flushing NY 11354"
-                      ]}
+                      addresses={returnAddresses}
+                      onAddressSelect={this.props.updateSelectedAddresses}
+                      onAddressChange={this.props.updateSelectedAddresses}
+                      proceedTotal={this.proceedTotal}
                     />
                   </div>
-                </div> */}
+                </div>
               </div>
 
               <div className="extra-item">
@@ -212,9 +373,9 @@ class Extras extends Component {
                 </div>
                 <div className="body">
                   <div className="upload-group">
-                    {/* <div className="upload-item">
+                    <div className="upload-item">
                       <h4>Driver’s License Info</h4>
-                      <FileUploader
+                      {/* <FileUploader
                         name="driverLicense"
                         uploadToken={this.props.uploadToken}
                         onUploadPhoto={this.props.uploadPhoto}
@@ -230,8 +391,8 @@ class Extras extends Component {
                         onUploadPhoto={this.props.uploadPhoto}
                         onUploadComplete={this.handleUploadComplete}
                         onDelete={this.handleDelete}
-                      />
-                    </div> */}
+                      /> */}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -241,10 +402,16 @@ class Extras extends Component {
                   <div className="extra-submit">
                     <div className="total">
                       Total
-                      <strong>$92.07</strong>
+                      {/* <strong>{formatMoney(finalPrice.total)}</strong> */}
                     </div>
                     <button
-                      className="btn btn-danger rounded-0 select-button"
+                      className={classNames({
+                        btn: true,
+                        "btn-danger": true,
+                        "rounded-0": true,
+                        "select-button": true,
+                        disabled: !this.isSubmittable()
+                      })}
                       onClick={this.onSubmit}
                       disabled={_.isEmpty(misCharges)}
                     >
@@ -272,5 +439,10 @@ export default connect(mapStateToProps, {
   uploadPhoto,
   flushResults,
   fetchMisCharges,
-  flushSelectedVehicle
+  flushSelectedVehicle,
+  updateSavedEquipments,
+  updateSelectedAddresses,
+  updateFinalPrice,
+  updateUploadedDocuments,
+  removeUploadedDocuments
 })(Extras);

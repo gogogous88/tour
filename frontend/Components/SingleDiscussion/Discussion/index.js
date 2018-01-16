@@ -73,12 +73,12 @@ class Discussion extends Component {
         return (
           <div>
             <button
-              className="btn-flat red lighten-2 pulse"
+              className="btn-flat green lighten-1"
               onClick={() => {
                 this.setState({ showPhone: true });
               }}
             >
-              查看联系方式
+              <span style={{ color: "white" }}>查看联系方式</span>
             </button>
           </div>
         );
@@ -150,14 +150,19 @@ class Discussion extends Component {
           </div>
         </div>
 
-        <div className={styles.imageContainer}>
+        {/* <div className={styles.imageContainer}>
           <div className={styles.imgContainer}>
-            <img src={imageURL} style={{ width: 60 }} />
+            <img src={imageURL} style={{ width: 48 }} />
           </div>
           <div className={styles.titleContainer}>
             <div className={styles.discTitle}>{discTitle}</div>
           </div>
+        </div> */}
+        <div className={styles.imageContainer}>
+          {/* <div className={styles.titleContainer}> */}
+          <div className={styles.discTitle}>{discTitle}</div>
         </div>
+        {/* </div> */}
 
         <div className={styles.discContent}>{this.renderContent()}</div>
 

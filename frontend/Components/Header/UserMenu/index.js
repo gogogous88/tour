@@ -72,7 +72,7 @@ class UserMenu extends Component {
             </a>
           )}
 
-          {!signedIn && (
+          {/* {!signedIn && (
             <a className={styles.signInLink} href={"/auth/google"}>
               <Button className={styles.gitLoginBtn} alwaysActive>
                 <i
@@ -81,7 +81,7 @@ class UserMenu extends Component {
                 <span className={styles.btnLabel}>微信用户登录</span>
               </Button>
             </a>
-          )}
+          )} */}
 
           {signedIn && (
             <span onClick={this.toggleSubMenu}>

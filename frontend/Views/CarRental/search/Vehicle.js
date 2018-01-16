@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import classNames from "classnames/bind";
 import styles from "./styles/result.css";
 
+import { formatMoney, getTotalDays } from "../utils/yale";
+
 class Vehicle extends Component {
   state = {
     currentView: "default"
@@ -32,15 +34,15 @@ class Vehicle extends Component {
 
   renderExtraMilesLine = (dailyKMorMileageAllowed, kMorMileageCharge) => {
     if (dailyKMorMileageAllowed > 0) {
-      return `${dailyKMorMileageAllowed} 英里/天, 额外每英里收取: $${kMorMileageCharge.toFixed(
-        2
-      )} Per Mile`;
+      return `${dailyKMorMileageAllowed} Miles Per Day, Miles Charge: ${formatMoney(
+        kMorMileageCharge
+      )} 每英里`;
     }
     return "不限英里数";
   };
 
   render() {
-    const { tax, oneWayFee } = this.props;
+    const { tax, oneWayFee, conditions } = this.props;
     const {
       vehicleTypeId,
       dailyKMorMileageAllowed,
@@ -50,10 +52,11 @@ class Vehicle extends Component {
       weeklyQty,
       weeklyRate,
       monthlyQty,
-      monthlyRate,
-      totalDays
+      monthlyRate
     } = this.props.rate;
     const { vehicleType, sample, seats, doors } = this.props.vehicle;
+
+    const totalDays = getTotalDays(conditions);
 
     // total rate
     const totalWithoutTax =
@@ -104,12 +107,12 @@ class Vehicle extends Component {
               <div className={styles.descContent}>
                 <div className={styles.priceContent}>
                   <div className={styles.divContainer}>
-                    <strong>${dailyRate.toFixed(2)}</strong>
+                    <strong>{formatMoney(dailyRate)}</strong>
                     <p>每天</p>
                   </div>
                   <div className={styles.divContainer}>
                     <strong className={styles.highlight}>
-                      ${totalWithTax.toFixed(2)}
+                      {formatMoney(totalWithTax)}
                     </strong>
                     <p>总价</p>
                     <p>
@@ -150,22 +153,22 @@ class Vehicle extends Component {
           <ul className={classNames(styles.priceChart, "list-unstyled")}>
             <li className={styles.liStyle}>
               <span>{totalDays} 天(天数)</span>
-              <span>${totalWithoutTax.toFixed(2)}</span>
+              <span>{formatMoney(totalWithoutTax)}</span>
             </li>
             <li className={styles.liStyle}>
               <span>税率({tax}%)</span>
-              <span>${taxFee.toFixed(2)}</span>
+              <span>{formatMoney(taxFee)}</span>
             </li>
             {oneWayFee > 0 && (
               <li className={styles.liStyle}>
                 <span>异地还车费</span>
-                <span>${oneWayFee.toFixed(2)}</span>
+                <span>{formatMoney(oneWayFee)}</span>
               </li>
             )}
             <li className={styles.liStyle}>
               <span>小计</span>
               <strong className={styles.highlight}>
-                ${totalWithTax.toFixed(2)}
+                {formatMoney(totalWithTax)}
               </strong>
             </li>
           </ul>

@@ -15,7 +15,13 @@ import {
   FLUSH_RESULTS,
   FLUSH_SELECTED_VEHICLE,
   SAVE_SELECTED_VEHICLE,
-  FETCH_MISCHARGES
+  FETCH_MISCHARGES,
+  UPDATE_SAVED_EQUIPMENTS,
+  UPDATE_SELECTED_ADDRESSES,
+  UPDATE_FINAL_PRICE,
+  UPDATE_UPLOADED_DOCUMENTS,
+  REMOVE_UPLOADED_DOCUMENTS,
+  SAVE_PAYMENT_FORM
 } from "./types";
 
 export const fetchToken = callback => async dispatch => {
@@ -102,11 +108,25 @@ export const fetchMisCharges = params => async dispatch => {
 
 export const updateSearchConditions = conditions => dispatch => {
   const conditionsConverted = {
-    ...conditions,
-    pickLocation: _.toNumber(conditions.pickLocation),
-    returnLocation: _.toNumber(conditions.returnLocation),
-    syncLocation: conditions.syncLocation !== "false"
+    ...conditions
   };
+
+  if (conditions.pickLocation) {
+    conditionsConverted.pickLocation = _.toNumber(
+      conditionsConverted.pickLocation
+    );
+  }
+
+  if (conditions.returnLocation) {
+    conditionsConverted.returnLocation = _.toNumber(
+      conditionsConverted.returnLocation
+    );
+  }
+
+  if (conditions.syncLocation) {
+    conditionsConverted.syncLocation = conditions.syncLocation !== "false";
+  }
+
   dispatch({ type: UPDATE_SEARCH_CONDITIONS, payload: conditionsConverted });
 };
 
@@ -127,6 +147,27 @@ export const fetchPlaceDetail = params => async dispatch => {
 export const fetchUploadToken = () => async dispatch => {
   const { data } = await axios.get("/api/photos/fetchUploadToken");
   dispatch({ type: FETCH_UPLOAD_TOKEN, payload: data });
+};
+
+export const updateSavedEquipments = (id, amount) => dispatch => {
+  dispatch({
+    type: UPDATE_SAVED_EQUIPMENTS,
+    payload: { id, amount }
+  });
+};
+
+export const updateSelectedAddresses = data => dispatch => {
+  dispatch({
+    type: UPDATE_SELECTED_ADDRESSES,
+    payload: data
+  });
+};
+
+export const updateFinalPrice = data => dispatch => {
+  dispatch({
+    type: UPDATE_FINAL_PRICE,
+    payload: data
+  });
 };
 
 export const uploadPhoto = (uploadToken, file, callback) => async () => {
@@ -159,4 +200,26 @@ export const uploadPhoto = (uploadToken, file, callback) => async () => {
   };
 
   _.attempt(callback(returnData));
+};
+
+export const updateUploadedDocuments = data => dispatch => {
+  dispatch({
+    type: UPDATE_UPLOADED_DOCUMENTS,
+    payload: data
+  });
+};
+
+export const removeUploadedDocuments = data => dispatch => {
+  dispatch({
+    type: REMOVE_UPLOADED_DOCUMENTS,
+    payload: data
+  });
+};
+
+export const savePaymentForm = params => async dispatch => {
+  const { data } = await axios.post("/api/rental/makeReservation", params);
+  dispatch({
+    type: SAVE_PAYMENT_FORM,
+    payload: data
+  });
 };
