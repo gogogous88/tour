@@ -1,5 +1,5 @@
 .formWrap {
-  background-color: #eee;
+  background-color: #fff;
   padding-top: 30px;
 }
 
@@ -96,7 +96,7 @@
   overflow: scroll;
   overflow-x: hidden;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  color: $gray;
+  color: grey;
   font-size: 12px;
   padding: 10px;
   margin-top: 10px;
@@ -115,11 +115,24 @@
 }
 
 .highlightStyle {
-  color: black;
+  color: rgb(241, 4, 4);
 }
 
 .sideBlock {
   width: 380px;
   flex-grow: 0;
   flex-shrink: 0;
+}
+
+.submitWrap {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.buttonStyle {
+  width: 50%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 24px;
 }

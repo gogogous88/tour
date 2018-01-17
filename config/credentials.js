@@ -44,7 +44,13 @@ module.exports = {
   google_places_service_key: "AIzaSyBeFlJ4hzhjJzaU7HOD0rsORKEO8CN50LM",
   qiniu_action: "https://up.qbox.me",
   qiniu_key: "WRRLTKa646g3KsTfOc16AeRZgh5ikuToJK3pGU4S",
-  qiniu_secret: "HVjQLUfA1Gu-LloyZu5hmRl_M_qCeT_68Hq-rDiB"
+  qiniu_secret: "HVjQLUfA1Gu-LloyZu5hmRl_M_qCeT_68Hq-rDiB",
+  uploadImageHost: "http://yale-image.demo5.cn",
+  sendGridKey:
+    "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",
+  sendGridSendEmail: "no-reply@yalevanrental.com",
+  // sendGridBccEmail: 'markblueplan@gmail.com',
+  sendGridBccEmail: "senseluo@gmail.com"
 };
 
 // Client ID

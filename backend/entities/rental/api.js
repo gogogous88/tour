@@ -14,6 +14,7 @@ module.exports = app => {
   app.post("/api/rental/fetchTax", rental.fetchTax);
   app.post("/api/rental/fetchOneWayFee", rental.fetchOneWayFee);
   app.post("/api/rental/fetchMisCharges", rental.fetchMisCharges);
+  app.post("/api/rental/makeReservation", rental.makeReservation);
   app.get("/api/place/search", rental.placeSearch);
   app.get("/api/place/detail", rental.placeDetail);
   app.get("/api/photos/fetchUploadToken", rental.fetchUploadToken);

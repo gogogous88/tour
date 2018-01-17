@@ -2,9 +2,16 @@ const _ = require("lodash");
 const axios = require("axios");
 const querystring = require("querystring");
 const qiniu = require("qiniu");
+const shortid = require("shortid");
 const keys = require("../../../config/credentials");
+const Mailer = require("./services/Mailer");
+const orderTemplate_en = require("./services/emailTemplates/order_en");
+const orderTemplate_zh_cn = require("./services/emailTemplates/order_zh-cn");
 
 axios.defaults.timeout = 20000; // 20 seconds timeout
+shortid.characters(
+  "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ*#"
+);
 
 const hostNavotar = "https://app.navotar.com";
 const hostGoogleApis = "https://maps.googleapis.com";
@@ -112,8 +119,8 @@ exports.fetchOneWayFee = async (req, res, next) => {
   const oneWayFeeData = {
     "5761-5763": 1800,
     "5761-6916": 350,
-    "5761-5764": 250,
     "5761-5765": 0,
+    "5761-5764": 250,
     "5765-5761": 0,
     "5765-5764": 250,
     "5765-5763": 1800,
@@ -245,6 +252,151 @@ exports.placeDetail = async (req, res, next) => {
 // create token for qiniu upload
 exports.fetchUploadToken = async (req, res, next) => {
   res.json(createUploadCredential());
+};
+
+// make reservation
+exports.makeReservation = async (req, res, next) => {
+  const { vehicle, price, address, paymentForm, uploadedDocuments } = req.body;
+
+  const requestCode = shortid.generate().toUpperCase();
+
+  const order = {
+    requestCode,
+    vehicle,
+    price,
+    address,
+    paymentForm
+  };
+
+  // send an email to customer
+  const content = orderTemplate_en(order);
+  const mailer1 = new Mailer(
+    {
+      subject: `Details for Your Yale Van Rental Reservation, Confirmation # ${requestCode}`,
+      recipients: [{ email: paymentForm.email }]
+    },
+    content
+  );
+
+  // send an email to administrator
+  const paymentContent = `
+    <h4>Contact Info</h4>
+    <table border="1" cellpadding="8" cellspacing="0" class="wrapper" width="640">
+      <tbody>
+        <tr>
+          <td style="color: gray">First Name</td>
+          <td>${paymentForm.firstName}</td>
+        </tr>
+        <tr>
+          <td style="color: gray">Last Name</td>
+          <td>${paymentForm.lastName}</td>
+        </tr>
+        <tr>
+          <td style="color: gray">Phone</td>
+          <td>${paymentForm.phone}</td>
+        </tr>
+        <tr>
+          <td style="color: gray">Email</td>
+          <td>${paymentForm.email}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>Payment Info</h4>
+    <table border="1" cellpadding="8" cellspacing="0" class="wrapper" width="640">
+      <tbody>
+        <tr>
+          <td style="color: gray">Card Holder Name</td>
+          <td>${paymentForm.cardHolderName}</td>
+        </tr>
+        <tr>
+          <td style="color: gray">Card Type</td>
+          <td>${paymentForm.cardType}</td>
+        </tr>
+        <tr>
+          <td style="color: gray">Card Number</td>
+          <td>${paymentForm.cardNumber}</td>
+        </tr>
+        <tr>
+          <td style="color: gray">Expire Month</td>
+          <td>${paymentForm.cardExpireMonth}</td>
+        </tr>
+        <tr>
+          <td style="color: gray">Expire Year</td>
+          <td>${paymentForm.cardExpireYear}</td>
+        </tr>
+        <tr>
+          <td style="color: gray">CVV</td>
+          <td>${paymentForm.cardCVV}</td>
+        </tr>
+        <tr>
+          <td style="color: gray">Billing State</td>
+          <td>${paymentForm.billingState}</td>
+        </tr>
+        <tr>
+          <td style="color: gray">Billing City</td>
+          <td>${paymentForm.billingCity}</td>
+        </tr>
+        <tr>
+          <td style="color: gray">Billing Address1</td>
+          <td>${paymentForm.billingAddress1}</td>
+        </tr>
+        <tr>
+          <td style="color: gray">Billing Address2</td>
+          <td>${paymentForm.billingAddress2 || ""}</td>
+        </tr>
+        <tr>
+          <td style="color: gray">Zip</td>
+          <td>${paymentForm.billingZip}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>Uploaded Documents</h4>
+    <table border="1" cellpadding="8" cellspacing="0" class="wrapper" width="640">
+      <tbody>
+        <tr>
+          <td style="color: gray">Driver’s License Info</td>
+          <td>
+            <a href="${`${keys.uploadImageHost}/${
+              uploadedDocuments.driverLicense
+            }-s1200`}"><img src="${`${keys.uploadImageHost}/${
+    uploadedDocuments.driverLicense
+  }-s250`}"></a>
+ 
+          </td>
+        </tr>
+        <tr>
+          <td style="color: gray">Insurance Info</td>
+          <td><a href="${`${keys.uploadImageHost}/${
+            uploadedDocuments.insuranceInfo
+          }-s1200`}"><img src="${`${keys.uploadImageHost}/${
+    uploadedDocuments.insuranceInfo
+  }-s250`}"></a></td>
+        </tr>
+        </tbody>
+      </table>
+  `;
+
+  const mailer2 = new Mailer(
+    {
+      subject: `New Reservation Requested # ${requestCode} - ${new Date().toLocaleString()}`,
+      recipients: [{ email: keys.sendGridBccEmail }]
+    },
+    `${content}${paymentContent}`
+  );
+
+  try {
+    await mailer1.send();
+    await mailer2.send();
+  } catch (err) {
+    res.status(422).send(err);
+  }
+
+  res.json({
+    requestCode,
+    content
+  });
 };
 
 // redirect all requests under /rental to rental home

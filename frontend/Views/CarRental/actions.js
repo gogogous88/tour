@@ -217,6 +217,7 @@ export const removeUploadedDocuments = data => dispatch => {
 };
 
 export const savePaymentForm = params => async dispatch => {
+  console.log("params are in actions", params);
   const { data } = await axios.post("/api/rental/makeReservation", params);
   dispatch({
     type: SAVE_PAYMENT_FORM,
