@@ -512,6 +512,7 @@ class ForumFeed extends Component {
 
     console.log("searchDateStatus", this.state.searchDateStatus);
     console.log("searchTermStatus", this.state.searchTermStatus);
+    console.log("登录情况", this.props);
 
     return (
       <div

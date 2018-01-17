@@ -18,3 +18,4 @@ export const UPDATE_FINAL_PRICE = "update_final_price";
 export const UPDATE_UPLOADED_DOCUMENTS = "update_uploaded_documents";
 export const REMOVE_UPLOADED_DOCUMENTS = "remove_uploaded_documents";
 export const SAVE_PAYMENT_FORM = "save_payment_form";
+export const CREATE_RESERVATION = "create_reservation";

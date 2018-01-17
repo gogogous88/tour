@@ -16,6 +16,12 @@ shortid.characters(
 const hostNavotar = "https://app.navotar.com";
 const hostGoogleApis = "https://maps.googleapis.com";
 
+const mongoose = require("mongoose");
+
+//require rentals model
+require("./model");
+const Rental = mongoose.model("rentals"); //get Rental instance from rentals collection.
+
 // fetch token from navotar
 exports.fetchToken = async (req, res, next) => {
   try {
@@ -415,6 +421,37 @@ exports.pref = (req, res, next) => {
 // rental home page
 exports.rentalHome = (req, res, next) => {
   res.redirect("/rental");
+};
+
+//post new reservation to mlab mongodb mongo db
+exports.rentalReservation = async (req, res, next) => {
+  const { pick } = await req.body.address;
+  const { requestCode, user, vehicle, price, paymentForm } = await req.body;
+  const reservationDetail = await new Rental({
+    location: {
+      ploc: pick.address,
+      pdate: pick.datetime,
+      rloc: req.body.address.return.address,
+      rdate: req.body.address.return.datetime
+    },
+    user: user.userId,
+    userName: user.userName,
+    rental_id: requestCode,
+
+    vehicle,
+    price,
+    paymentForm,
+    createDate: Date()
+  });
+
+  reservationDetail.save().then(() => {
+    res.json(reservationDetail);
+  });
+};
+
+exports.getReservation = async (req, res) => {
+  const result = await Rental.find({});
+  res.json(result);
 };
 
 function createUploadCredential() {

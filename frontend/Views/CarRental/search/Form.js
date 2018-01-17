@@ -11,7 +11,8 @@ import Navigator from "./Navigator";
 import {
   savePaymentForm,
   flushResults,
-  flushSelectedVehicle
+  flushSelectedVehicle,
+  createReservation
 } from "../actions";
 import {
   formatMoney,
@@ -31,8 +32,7 @@ const I18N_INVALID_EMAIL = "请填写有效的邮件地址...";
 const I18N_CONFIRM_EMAIL_NOT_MATCH = "Email地址不吻合...";
 const I18N_INVALID_CREDIT_CARD = "请填写有效的信用卡卡号...";
 const I18N_INVALID_CVV = "请填写有效的CVV号码...";
-const I18N_TOS_NEEDED =
-  "请阅读并点击同意《租车条款》...";
+const I18N_TOS_NEEDED = "请阅读并点击同意《租车条款》...";
 
 const cardTypeValues = [
   I18N_CHOOSE_ONE,
@@ -340,7 +340,8 @@ class Form extends Component {
         oneWayFee,
         finalPrice,
         selectedAddresses,
-        uploadedDocuments
+        uploadedDocuments,
+        user
       } = this.props;
       const rateDetail = _.get(ratesResult, [selectedVehicle.vehicleTypeId]);
       const vehicleDetail = _.get(vehicleTypes, [
@@ -404,10 +405,15 @@ class Form extends Component {
           }
         },
         paymentForm: values,
-        uploadedDocuments
+        uploadedDocuments,
+        user: {
+          userId: user._id,
+          userName: user.username
+        }
       };
 
       await this.props.savePaymentForm(orderDetail);
+      await this.props.createReservation(orderDetail);
       this.props.router.push("/success");
     }
   };
@@ -422,6 +428,8 @@ class Form extends Component {
     // console.log(finalPrice);
     // console.log(handleSubmit);
     // console.log(submitting);
+    // console.log("log本页所有", this.props);
+    console.log("user", this.props.user);
 
     return (
       <div>
@@ -1279,14 +1287,16 @@ class Form extends Component {
 
 function mapStateToProps(state) {
   return {
-    ...state.rentalReducer
+    ...state.rentalReducer,
+    user: state.user
   };
 }
 
 export default connect(mapStateToProps, {
   savePaymentForm,
   flushResults,
-  flushSelectedVehicle
+  flushSelectedVehicle,
+  createReservation
 })(
   reduxForm({
     form: "payForm",

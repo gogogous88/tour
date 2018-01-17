@@ -49,8 +49,8 @@ module.exports = {
   sendGridKey:
     "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",
   sendGridSendEmail: "no-reply@yalevanrental.com",
-  // sendGridBccEmail: 'markblueplan@gmail.com',
-  sendGridBccEmail: "senseluo@gmail.com"
+
+  sendGridBccEmail: "markblueplan@gmail.com"
 };
 
 // Client ID

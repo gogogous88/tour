@@ -21,7 +21,8 @@ import {
   UPDATE_FINAL_PRICE,
   UPDATE_UPLOADED_DOCUMENTS,
   REMOVE_UPLOADED_DOCUMENTS,
-  SAVE_PAYMENT_FORM
+  SAVE_PAYMENT_FORM,
+  CREATE_RESERVATION
 } from "./types";
 
 export const fetchToken = callback => async dispatch => {
@@ -221,6 +222,15 @@ export const savePaymentForm = params => async dispatch => {
   const { data } = await axios.post("/api/rental/makeReservation", params);
   dispatch({
     type: SAVE_PAYMENT_FORM,
+    payload: data
+  });
+};
+
+export const createReservation = params => async dispatch => {
+  console.log("parmas for createReservation", params);
+  const { data } = await axios.post("/api/rental/reservation", params);
+  dispatch({
+    type: CREATE_RESERVATION,
     payload: data
   });
 };

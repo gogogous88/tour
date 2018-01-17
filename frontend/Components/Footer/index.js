@@ -10,7 +10,7 @@ class Footer extends Component {
       <div
         className={classnames(appLayout.constraintWidth, styles.contentArea)}
       >
-        Copyright: TourGuy INC.
+        Copyright: All Right Reserved
       </div>
     );
   }

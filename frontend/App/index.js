@@ -22,6 +22,7 @@ import MapAttr from "../Views/Map/MapAttr";
 import MapDetail from "../Views/Map/MapDetail";
 import GoogleSheet from "../Views/googleSheet";
 import Search from "../Views/CarRental/search/Search";
+import Success from "../Views/CarRental/search/Success";
 import Result from "../Views/CarRental/search/Result";
 import Extras from "../Views/CarRental/search/Extras";
 import Form from "../Views/CarRental/search/Form";
@@ -53,6 +54,7 @@ ReactDOM.render(
         <Route path="/result" component={Result} />
 
         <Route path="/extras" component={Extras} />
+        <Route path="/success" component={Success} />
 
         <Route path="/form" component={Form} />
 

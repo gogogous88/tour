@@ -52,7 +52,7 @@ class DiscussionBox extends Component {
               href={`https://www.github.com/${userGitHandler}`}
               className={styles.gitHandler}
             >
-              - <i className={classnames("fa fa-github-alt", styles.gitIcon)} />{" "}
+              - <i className={classnames("fa fa-github-alt", styles.gitIcon)} />
               {userGitHandler}
             </a>
           </div>

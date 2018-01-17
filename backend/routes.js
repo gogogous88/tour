@@ -24,7 +24,7 @@ const routesConfig = app => {
   app.get("/api", (req, res) => {
     res.send("Hello from API endpoint");
   });
-
+  //require user model
   require("./entities/user/model");
 
   // apply user apis

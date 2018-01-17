@@ -18,4 +18,7 @@ module.exports = app => {
   app.get("/api/place/search", rental.placeSearch);
   app.get("/api/place/detail", rental.placeDetail);
   app.get("/api/photos/fetchUploadToken", rental.fetchUploadToken);
+
+  app.post("/api/rental/reservation", rental.rentalReservation);
+  app.get("/api/rental/reservation", rental.getReservation);
 };

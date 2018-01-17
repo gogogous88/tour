@@ -305,7 +305,7 @@ class Extras extends Component {
 
   render() {
     const { conditions, locations, misCharges, finalPrice } = this.props;
-    console.log("here", this.props);
+    // console.log("here", this.props);
     if (!locations || _.isEmpty(conditions)) {
       return <Loading />;
     }
