@@ -171,7 +171,7 @@ class FeedBox extends Component {
     }
   }
 
-  render() {
+  renderDiscussion() {
     const {
       type,
       loading,
@@ -184,15 +184,10 @@ class FeedBox extends Component {
     let discussionBoxTitle = "";
     if (type === "general") discussionBoxTitle = "Discussions";
     if (type === "pinned") discussionBoxTitle = "Pinned";
-
-    //shun_feng_che, pin_fang, fa_tuan_jie_huo, market
-
     const filterDiscussions =
       discussions &&
       discussions.filter(discussion => {
         if (this.props.searchStatus && discussion.pdate) {
-          // console.log("checkTerm", this.props.searchTerm);
-          // console.log("checkDate", this.props.searchDate);
           const theDate = moment(discussion.pdate).format("MM/DD");
           const searchDateToString = moment(this.props.searchDate).format(
             "MM/DD"
@@ -213,9 +208,6 @@ class FeedBox extends Component {
             d1.indexOf(searchd1) !== -1 &&
             m1.indexOf(searchm1) !== -1 &&
             y1.indexOf(searchy1) !== -1
-            //   ||
-            // discussion.ploc.indexOf(this.props.searchTerm) !== -1 ||
-            // discussion.rloc.indexOf(this.props.searchTerm) !== -1
           );
         }
         if (this.props.searchStatus && discussion.rdate) {
@@ -242,10 +234,6 @@ class FeedBox extends Component {
             (checkoutd.indexOf(searchd1) !== -1 &&
               checkoutm.indexOf(searchm1) !== -1 &&
               checkouty.indexOf(searchy1) !== -1)
-            // ||
-            // discussion.ploc.indexOf(this.props.searchTerm) !== -1 ||
-            // discussion.rloc.indexOf(this.props.searchTerm) !== -1 ||
-            // discussion.vehicleType.indexOf(this.props.searchTerm) !== -1
           );
         }
 
@@ -269,6 +257,103 @@ class FeedBox extends Component {
           discussion.title.indexOf(this.props.searchTerm) !== -1
         );
       });
+    return (
+      <div>
+        {loading && (
+          <div>
+            <Loading />
+          </div>
+        )}
+        {this.renderEmptyDiscussionLine(loading, discussions)}
+        {userProfile
+          ? !loading && (
+              <div className={styles.discussions}>
+                {/* filterDiscussions &&
+          filterDiscussions
+            .filter(searchingFor(this.props.searchTerm))
+            .map(discussion => { */}
+
+                {discussions &&
+                  discussions.map(discussion => {
+                    return (
+                      <DiscussionBox
+                        userProfile={userProfile}
+                        key={discussion._id}
+                        userName={
+                          discussion.user.name || discussion.user.username
+                        }
+                        userGitHandler={discussion.user.username}
+                        discussionTitle={this.renderTitle(discussion)}
+                        time={discussion.date}
+                        tags={discussion.tags}
+                        imageURL={this.renderImageURL(discussion)}
+                        opinionCount={discussion.opinion_count}
+                        voteCount={discussion.favorites.length}
+                        link={`/${
+                          userProfile
+                            ? discussion.forum.forum_slug
+                            : currentForum
+                        }/discussion/${discussion.discussion_slug}`}
+                      />
+                    );
+                  })}
+              </div>
+            )
+          : !loading && (
+              <div className={styles.discussions}>
+                {/* filterDiscussions &&
+          filterDiscussions
+            .filter(searchingFor(this.props.searchTerm))
+            .map(discussion => { */}
+
+                {discussions &&
+                  filterDiscussions.map(discussion => {
+                    const discussionYear = `${moment(discussion.date).format(
+                      "YYYY"
+                    )}年`;
+                    return (
+                      <DiscussionBox
+                        userProfile={userProfile}
+                        key={discussion._id}
+                        userName={
+                          discussion.user.name || discussion.user.username
+                        }
+                        userGitHandler={discussion.user.username}
+                        discussionTitle={this.renderTitle(discussion)}
+                        time={discussion.date}
+                        tags={discussion.tags}
+                        imageURL={this.renderImageURL(discussion)}
+                        opinionCount={discussion.opinion_count}
+                        voteCount={discussion.favorites.length}
+                        link={`/${
+                          userProfile
+                            ? discussion.forum.forum_slug
+                            : currentForum
+                        }/discussion/${discussion.discussion_slug}`}
+                      />
+                    );
+                  })}
+              </div>
+            )}
+      </div>
+    );
+  }
+
+  render() {
+    const {
+      type,
+      loading,
+      discussions,
+      currentForum,
+      userProfile,
+      searchDate
+    } = this.props;
+
+    let discussionBoxTitle = "";
+    if (type === "general") discussionBoxTitle = "Discussions";
+    if (type === "pinned") discussionBoxTitle = "Pinned";
+
+    //shun_feng_che, pin_fang, fa_tuan_jie_huo, market
 
     return (
       <div className={styles.container}>
@@ -276,44 +361,7 @@ class FeedBox extends Component {
           <span className={styles.title}>{discussionBoxTitle}</span>
           {!userProfile && this.renderSort()}
         </div>
-        {loading && (
-          <div>
-            <Loading />
-          </div>
-        )}
-        {this.renderEmptyDiscussionLine(loading, discussions)}
-        {!loading && (
-          <div className={styles.discussions}>
-            {/* filterDiscussions &&
-              filterDiscussions
-                .filter(searchingFor(this.props.searchTerm))
-                .map(discussion => { */}
-
-            {discussions &&
-              filterDiscussions.map(discussion => {
-                const discussionYear = `${moment(discussion.date).format(
-                  "YYYY"
-                )}年`;
-                return (
-                  <DiscussionBox
-                    userProfile={userProfile}
-                    key={discussion._id}
-                    userName={discussionYear}
-                    userGitHandler={discussion.user.name}
-                    discussionTitle={this.renderTitle(discussion)}
-                    time={discussion.date}
-                    tags={discussion.tags}
-                    imageURL={this.renderImageURL(discussion)}
-                    opinionCount={discussion.opinion_count}
-                    voteCount={discussion.favorites.length}
-                    link={`/${
-                      userProfile ? discussion.forum.forum_slug : currentForum
-                    }/discussion/${discussion.discussion_slug}`}
-                  />
-                );
-              })}
-          </div>
-        )}
+        {this.renderDiscussion(loading, discussions)}
       </div>
     );
   }
