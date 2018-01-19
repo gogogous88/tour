@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
-
+import classnames from "classnames";
+import { Link } from "react-router";
 import Header from "Containers/Header";
 import Footer from "Components/Footer";
+import SlideShow from "Components/SlideShow";
 import appLayout from "SharedStyles/appLayout.css";
 import styles from "./styles.css";
 
@@ -35,6 +37,58 @@ class AppContainer extends Component {
     if (newCurrentForum !== currentForum) updateCurrentForum(newCurrentForum);
   }
 
+  renderHomePage() {
+    const { forums, currentForum } = this.props;
+    if (this.props.location.pathname === "/") {
+      return (
+        <div style={{ marginLeft: 10, marginRight: 10 }}>
+          <div
+            className={classnames(
+              appLayout.showOnMediumBP,
+
+              "card my-4"
+            )}
+          >
+            <div className="card-header">板块</div>
+            <div className="card-body">
+              <div className={styles.blockContainer}>
+                <div className={styles.rowAround}>
+                  <Link to="/shun_feng_che">
+                    <img src="/src/static/icons/buttons/shun_feng_che.png" />
+                  </Link>
+                  <Link to="/pin_fang">
+                    <img src="/src/static/icons/buttons/pin_fang.png" />
+                  </Link>
+                  <Link to="/market">
+                    <img src="/src/static/icons/buttons/mai_mai.png" />
+                  </Link>
+                  <Link to="/fa_tuan_jie_huo">
+                    <img src="/src/static/icons/buttons/fa_tuan.png" />
+                  </Link>
+                </div>
+                <div className={styles.rowAround}>
+                  <Link to="/map">
+                    <img src="/src/static/icons/buttons/tuan_can.png" />
+                  </Link>
+                  <Link to="/map/attr">
+                    <img src="/src/static/icons/buttons/jing_dian.png" />
+                  </Link>
+                  <Link to="/car-rental">
+                    <img src="/src/static/icons/buttons/zu_che.png" />
+                  </Link>
+                  <Link to="/tour_wiki">
+                    <img src="/src/static/icons/buttons/bai_ke.png" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  }
+
   render() {
     const { forums, currentForum } = this.props;
 
@@ -51,8 +105,22 @@ class AppContainer extends Component {
             </a>
           </div> */}
           <Header currentForum={currentForum} />
+          <div className={appLayout.showOnMediumBP}>
+            {this.props.location.pathname === "/" ? (
+              <SlideShow
+                img1="/src/static/banners/zu_che_banner.jpg"
+                link1="/car-rental"
+                img2="/src/static/banners/tuan_can_banner.jpg"
+                link2="/map"
+              />
+            ) : (
+              ""
+            )}
+          </div>
 
-          {this.props.children}
+          {this.renderHomePage()}
+
+          <div>{this.props.children}</div>
           <Footer />
         </div>
       );

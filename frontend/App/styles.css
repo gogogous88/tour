@@ -29,3 +29,17 @@
   text-decoration: none;
   color: black;
 }
+
+.blockContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.rowAround {
+  display: flex;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  flex-direction: row;
+  justify-content: space-around;
+}
