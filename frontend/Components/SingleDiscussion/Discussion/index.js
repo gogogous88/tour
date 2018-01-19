@@ -10,7 +10,7 @@ import Button from "Components/Button";
 import Tag from "Components/Tag";
 import RichEditor from "Components/RichEditor";
 
-import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
+import renderHTML from "react-render-html";
 
 class Discussion extends Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class Discussion extends Component {
       case "tour_wiki":
         return (
           <div>
-            <FroalaEditorView model={discContent} />
+            {renderHTML(discContent)}
             <ul>{this.renderUploadImages(uploadImg)}</ul>
           </div>
         );

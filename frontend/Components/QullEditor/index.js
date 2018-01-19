@@ -1,6 +1,7 @@
+import React, { Component } from "react";
 import ReactQuill from "react-quill";
 
-import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView";
+import renderHTML from "react-render-html";
 import draftToHtml from "draftjs-to-html";
 
 import Button from "Components/Button";
@@ -36,7 +37,7 @@ export default class QuillEditor extends React.Component {
         >
           <h5>发表前请预览：</h5>
 
-          <FroalaEditorView model={this.state.text} />
+          {renderHTML(this.state.text)}
         </div>
         <div
           style={{
