@@ -10,7 +10,7 @@
   justify-content: space-between;
 
   @media smallBP {
-    background-color: #50ab57;
+    background-color: #379cd5;
     padding: 0px 10px;
   }
 }

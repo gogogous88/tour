@@ -203,14 +203,28 @@ class UserMenu extends Component {
     if (signedIn) {
       return (
         <div style={{ position: "relative" }}>
-          <div className={styles.container} onClick={this.toggleSubMenu}>
+          <div className={styles.container}>
             <img
+              onClick={this.toggleSubMenu.bind(this)}
               className={styles.userAvatar}
               src={avatar}
               alt={`${userName} Avatar`}
             />
-            <span className={styles.title}>{userName}</span>
+            <span
+              className={styles.title}
+              onClick={this.toggleSubMenu.bind(this)}
+            >
+              {userName}
+            </span>
+
+            <img
+              style={{ marginLeft: 15 }}
+              src="/src/static/icons/buttons/burger-menu.svg"
+              onClick={this.toggleNaviMenu.bind(this)}
+              width="35px"
+            />
           </div>
+          {this.renderNaviMenu()}
           {this.renderSubMenu()}
         </div>
       );

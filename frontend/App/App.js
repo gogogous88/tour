@@ -41,15 +41,8 @@ class AppContainer extends Component {
     const { forums, currentForum } = this.props;
     if (this.props.location.pathname === "/") {
       return (
-        <div style={{ marginLeft: 10, marginRight: 10 }}>
-          <div
-            className={classnames(
-              appLayout.showOnMediumBP,
-
-              "card my-4"
-            )}
-          >
-            <div className="card-header">板块</div>
+        <div style={{ marginLeft: 10, marginRight: 10, marginTop: 25 }}>
+          <div className={classnames(appLayout.showOnMediumBP)}>
             <div className="card-body">
               <div className={styles.blockContainer}>
                 <div className={styles.rowAround}>
@@ -108,6 +101,7 @@ class AppContainer extends Component {
             currentForum={currentForum}
             path={this.props.location.pathname}
           />
+
           <div className={appLayout.showOnMediumBP}>
             {this.props.location.pathname === "/" ? (
               <SlideShow
@@ -120,11 +114,17 @@ class AppContainer extends Component {
               ""
             )}
           </div>
+          <div>{this.renderHomePage()}</div>
 
-          {this.renderHomePage()}
-
-          <div>{this.props.children}</div>
-          <Footer />
+          <div className={appLayout.showOnLargeBP}>{this.props.children}</div>
+          <div className={classnames(appLayout.showOnMediumBP)}>
+            <div style={{ marginLeft: 10, marginRight: 10 }}>
+              {this.props.children}
+            </div>
+          </div>
+          <div style={{ marginLeft: 10, marginRight: 10 }}>
+            <Footer />
+          </div>
         </div>
       );
     }

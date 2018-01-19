@@ -18,12 +18,28 @@
   width: 40px;
   height: 40px;
   border-radius: 50px;
+  @media mediumBP {
+    width: 35px;
+    height: 35px;
+  }
+
+  @media smallBP {
+    width: 35px;
+    height: 35px;
+  }
 }
 
 .title {
   margin-left: 15px;
   font-size: 14px;
   font-weight: 700;
+
+  @media smallBP {
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: 400;
+    color: white;
+  }
 }
 
 .signInLink {

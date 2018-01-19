@@ -34,14 +34,18 @@
   @media largeBP {
     font-size: 22px;
     margin-left: 14px;
+    color: black;
   }
   @media mediumBP {
     font-size: 16px;
     margin-left: 12px;
+    color: black;
   }
   @media smallBP {
     margin-bottom: 10px;
     font-size: 16px;
     margin-left: 8px;
+    margin-top: 10px;
+    color: white;
   }
 }
