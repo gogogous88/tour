@@ -1,3 +1,4 @@
+@value largeBP, mediumBP, smallBP from "SharedStyles/globalStyles";
 /* logo */
 .logoContainer {
   display: flex;
@@ -8,16 +9,39 @@
 }
 
 .logo {
-  width: 60px;
-  height: 60px;
+  @media largeBP {
+    width: 60px;
+    height: 60px;
+  }
+
+  @media mediumBP {
+    width: 55px;
+    height: 55px;
+  }
+  @media smallBP {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .logoTitle {
-  margin-left: 14px;
-  margin-top: 10px;
-  font-size: 22px;
-  font-weight: 400;
+  font-weight: 200;
+  color: black;
   font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC,
     Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei,
     sans-serif;
+
+  @media largeBP {
+    font-size: 22px;
+    margin-left: 14px;
+  }
+  @media mediumBP {
+    font-size: 16px;
+    margin-left: 12px;
+  }
+  @media smallBP {
+    margin-bottom: 10px;
+    font-size: 16px;
+    margin-left: 8px;
+  }
 }

@@ -43,3 +43,23 @@
   flex-direction: row;
   justify-content: space-around;
 }
+
+.buttonStyle {
+  border: none;
+  border-radius: 20%;
+  background-color: #169bd5;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+}
+
+.buttonFontStyle {
+  text-align: center;
+  color: white;
+  font-weight: lighter;
+  display: flex;
+  padding-top: 14px;
+
+  align-items: center;
+  justify-content: center;
+}

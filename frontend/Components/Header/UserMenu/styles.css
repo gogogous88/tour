@@ -108,3 +108,19 @@
   font-size: 24px;
   margin-right: 15px;
 }
+
+.loginStyle {
+  margin-top: 3px;
+  margin-left: 20px;
+  @media largeBP {
+    width: 40px;
+  }
+
+  @media mediumBP {
+    width: 35px;
+  }
+
+  @media smallBP {
+    width: 35px;
+  }
+}

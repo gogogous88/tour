@@ -188,9 +188,12 @@ class NavigationBar extends Component {
 
   renderBurgerButton() {
     return (
-      <div className={classnames(appLayout.showOnSmallBP)}>
-        <ul className={styles.naviMobileBar}>
-          {/* <Button
+      <div
+        onClick={this.renderSearchOptions.bind(this)}
+        className={classnames(appLayout.showOnSmallBP, styles.searchBarStyle)}
+      >
+        {/* <ul className={styles.naviMobileBar}> */}
+        {/* <Button
             alwaysActive
             className={classnames(styles.signInBtn, styles.title)}
             onClick={this.toggleSubMenu}
@@ -201,7 +204,7 @@ class NavigationBar extends Component {
             />
           </Button> */}
 
-          {/* <span>
+        {/* <span>
               <textarea
                 onClick={this.renderSearchOptions.bind(this)}
                 id="icon_prefix"
@@ -227,7 +230,7 @@ class NavigationBar extends Component {
               </label>
             </span> */}
 
-          <li className={classnames("white btn-small", styles.signInLink)}>
+        {/* <li className={classnames("white btn-small", styles.signInLink)}>
             <button onClick={this.renderSearchOptions.bind(this)}>
               <i className="fa fa-filter">&nbsp;&nbsp;搜索</i>
             </button>
@@ -246,13 +249,13 @@ class NavigationBar extends Component {
             <i className="fa fa-caret-down" aria-hidden="true">
               <button onClick={this.toggleSubMenu}>&nbsp;&nbsp;更多</button>
             </i>
-          </li>
+          </li> */}
 
-          {/* <div>
+        {/* <div>
             <img src="/src/static/icons/buttons/searchBar.png" width="100%" />
           </div> */}
 
-          {/* <div className="file-field input-field">
+        {/* <div className="file-field input-field">
             <button
               className="btn-floating btn grey lighten-3 pulse "
               onClick={this.toggleSubMenu}
@@ -261,8 +264,35 @@ class NavigationBar extends Component {
             </button>
           </div> */}
 
-          {this.renderSubMenu()}
-        </ul>
+        {/* {this.renderSubMenu()}
+        </ul> */}
+        <span style={{ backgroundColor: "#000" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <i className="material-icons prefix">search</i>
+            <textarea
+              style={{
+                marginTop: 5,
+                marginLeft: 5,
+                marginBottom: 5,
+                height: 30,
+                width: "80%",
+                borderRadius: "5%",
+                backgroundColor: "#fff"
+              }}
+              id="icon_prefix"
+              type="text"
+              placeholder="按日期/文字搜索"
+              disabled
+            />
+          </div>
+        </span>
       </div>
     );
   }
@@ -286,9 +316,10 @@ class NavigationBar extends Component {
   }
 
   render() {
-    const { navigationLinks, currentForum } = this.props;
+    // console.log("what?", this.props);
+    const { navigationLinks, currentForum, path } = this.props;
 
-    console.log("navigation bar", this.props);
+    // console.log("navigation bar", this.props);
 
     const currentForumURL = `/${currentForum.currentForum}`;
 
@@ -347,7 +378,9 @@ class NavigationBar extends Component {
           </div>
 
           {this.renderSearchMenu()}
-          {this.renderBurgerButton()}
+          {path !== "/" && path !== "/car-rental"
+            ? this.renderBurgerButton()
+            : ""}
         </div>
       );
     }

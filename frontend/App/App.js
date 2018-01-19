@@ -53,31 +53,31 @@ class AppContainer extends Component {
             <div className="card-body">
               <div className={styles.blockContainer}>
                 <div className={styles.rowAround}>
-                  <Link to="/shun_feng_che">
-                    <img src="/src/static/icons/buttons/shun_feng_che.png" />
+                  <Link to="/shun_feng_che" className={styles.buttonStyle}>
+                    <span className={styles.buttonFontStyle}>顺风车</span>
                   </Link>
-                  <Link to="/pin_fang">
-                    <img src="/src/static/icons/buttons/pin_fang.png" />
+                  <Link to="/pin_fang" className={styles.buttonStyle}>
+                    <span className={styles.buttonFontStyle}>拼房</span>
                   </Link>
-                  <Link to="/market">
-                    <img src="/src/static/icons/buttons/mai_mai.png" />
+                  <Link to="/market" className={styles.buttonStyle}>
+                    <span className={styles.buttonFontStyle}>市场</span>
                   </Link>
-                  <Link to="/fa_tuan_jie_huo">
-                    <img src="/src/static/icons/buttons/fa_tuan.png" />
+                  <Link to="/fa_tuan_jie_huo" className={styles.buttonStyle}>
+                    <span className={styles.buttonFontStyle}>发团</span>
                   </Link>
                 </div>
                 <div className={styles.rowAround}>
-                  <Link to="/map">
-                    <img src="/src/static/icons/buttons/tuan_can.png" />
+                  <Link to="/map" className={styles.buttonStyle}>
+                    <span className={styles.buttonFontStyle}>团餐</span>
                   </Link>
-                  <Link to="/map/attr">
-                    <img src="/src/static/icons/buttons/jing_dian.png" />
+                  <Link to="/map/attr" className={styles.buttonStyle}>
+                    <span className={styles.buttonFontStyle}>景点</span>
                   </Link>
-                  <Link to="/car-rental">
-                    <img src="/src/static/icons/buttons/zu_che.png" />
+                  <Link to="/car-rental" className={styles.buttonStyle}>
+                    <span className={styles.buttonFontStyle}>租车</span>
                   </Link>
-                  <Link to="/tour_wiki">
-                    <img src="/src/static/icons/buttons/bai_ke.png" />
+                  <Link to="/tour_wiki" className={styles.buttonStyle}>
+                    <span className={styles.buttonFontStyle}>百科</span>
                   </Link>
                 </div>
               </div>
@@ -104,7 +104,10 @@ class AppContainer extends Component {
               下载途盖儿通App
             </a>
           </div> */}
-          <Header currentForum={currentForum} />
+          <Header
+            currentForum={currentForum}
+            path={this.props.location.pathname}
+          />
           <div className={appLayout.showOnMediumBP}>
             {this.props.location.pathname === "/" ? (
               <SlideShow

@@ -1,4 +1,4 @@
-@value smallBP from 'SharedStyles/globalStyles.css';
+@value smallBP from "SharedStyles/globalStyles.css";
 
 /**
  * Header Styles
@@ -9,5 +9,8 @@
   align-items: center;
   justify-content: space-between;
 
-  @media smallBP { padding: 0px 10px; }
+  @media smallBP {
+    background-color: #50ab57;
+    padding: 0px 10px;
+  }
 }

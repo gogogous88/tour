@@ -40,6 +40,17 @@
   }
 }
 
+.showExSmallBP {
+  display: ture;
+
+  @media mediumBP {
+    display: ture;
+  }
+  @media smallBP {
+    display: none;
+  }
+}
+
 .showOnMediumBP {
   display: none;
   @media mediumBP {

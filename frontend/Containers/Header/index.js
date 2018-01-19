@@ -42,11 +42,14 @@ class Header extends Component {
             userName={name || username}
             gitHandler={username}
             avatar={avatarUrl}
+            currentForum={currentForum}
+            navigationLinks={this.renderNavLinks()}
           />
         </div>
         <NavigationBar
           currentForum={currentForum}
           navigationLinks={this.renderNavLinks()}
+          path={this.props.path}
         />
       </div>
     );

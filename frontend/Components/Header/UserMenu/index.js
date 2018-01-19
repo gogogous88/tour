@@ -3,14 +3,15 @@ import { Link } from "react-router";
 import classnames from "classnames";
 import onClickOutside from "react-onclickoutside";
 import styles from "./styles";
-
+import appLayout from "SharedStyles/appLayout.css";
 import Button from "Components/Button";
 
 class UserMenu extends Component {
   constructor(props) {
     super(props);
-    this.state = { activeSubMenu: false };
+    this.state = { activeSubMenu: false, activeNaviMenu: false };
     this.toggleSubMenu = this.toggleSubMenu.bind(this);
+    this.toggleNaviMenu = this.toggleNaviMenu.bind(this);
   }
 
   handleClickOutside() {
@@ -21,6 +22,93 @@ class UserMenu extends Component {
     this.setState(prevState => {
       return { activeSubMenu: !prevState.activeSubMenu };
     });
+  }
+
+  renderNaviMenu() {
+    const { activeNaviMenu } = this.state;
+
+    if (activeNaviMenu) {
+      return this.renderNaviContent();
+    }
+    return null;
+  }
+
+  renderNaviContent() {
+    const { navigationLinks } = this.props;
+    const { signedIn, gitHandler } = this.props;
+    if (navigationLinks) {
+      return (
+        <div className={styles.subMenu}>
+          <Button
+            className={styles.subMenuClose}
+            onClick={this.toggleNaviMenu}
+            alwaysActive
+          >
+            <i className={classnames("fa fa-close")} />
+          </Button>
+          <ul>
+            <li className={styles.signInLink}>
+              <a
+                href="/map"
+                className={styles.links}
+                activeClassName={styles.linkActive}
+              >
+                <i
+                  className={classnames("fa fa-github-alt", styles.subMenuOcto)}
+                />
+                <span style={{ color: "#339ce6" }}>团餐景点导航</span>
+              </a>
+            </li>
+            <li className={styles.signInLink}>
+              <a
+                href="/car-rental"
+                className={styles.links}
+                activeClassName={styles.linkActive}
+              >
+                <i
+                  className={classnames("fa fa-github-alt", styles.subMenuOcto)}
+                />
+                <span style={{ color: "#339ce6" }}>商务租车</span>
+              </a>
+            </li>
+            {navigationLinks.map(link => {
+              if (link.id === 0) {
+                return (
+                  <li key={_.uniqueId("navLink_")}>
+                    <IndexLink
+                      className={styles.links}
+                      activeClassName={styles.linkActive}
+                      to="/"
+                    >
+                      Home
+                    </IndexLink>
+                  </li>
+                );
+              }
+              const RedirectURI = `${link.link}`;
+              return (
+                <li key={_.uniqueId("navLink_")}>
+                  <a
+                    className={styles.links}
+                    activeClassName={styles.linkActive}
+                    href={RedirectURI}
+                  >
+                    <i
+                      className={classnames(
+                        "fa fa-github-alt",
+                        styles.subMenuOcto
+                      )}
+                    />
+                    <span className={styles.btnLabel}>{link.name}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      );
+    }
+    return null;
   }
 
   renderSubMenu() {
@@ -103,6 +191,12 @@ class UserMenu extends Component {
     return null;
   }
 
+  toggleNaviMenu() {
+    this.setState(prevState => {
+      return { activeNaviMenu: !prevState.activeNaviMenu };
+    });
+  }
+
   render() {
     const { signedIn, userName, avatar, signOutAction } = this.props;
 
@@ -124,14 +218,33 @@ class UserMenu extends Component {
 
     return (
       <div className={styles.container}>
-        <Button
-          alwaysActive
-          className={classnames(styles.signInBtn, styles.title)}
-          onClick={this.toggleSubMenu}
-        >
-          注册 / 登录
-        </Button>
-
+        <div className={appLayout.showExSmallBP}>
+          <Button
+            alwaysActive
+            className={classnames(styles.signInBtn, styles.title)}
+            onClick={this.toggleSubMenu}
+          >
+            注册 / 登录
+          </Button>
+        </div>
+        <div className={appLayout.showOnSmallBP}>
+          <div>
+            <img
+              src="/src/static/icons/buttons/login.svg"
+              alwaysActive
+              className={classnames(styles.loginStyle)}
+              onClick={this.toggleSubMenu}
+            />
+          </div>
+          <div style={{ marginRight: 20, marginLeft: 15, marginTop: 3 }}>
+            <img
+              src="/src/static/icons/buttons/burger-menu.svg"
+              onClick={this.toggleNaviMenu}
+              width="35px"
+            />
+          </div>
+        </div>
+        {this.renderNaviMenu()}
         {this.renderSubMenu()}
       </div>
     );
