@@ -27,6 +27,7 @@ import Result from "../Views/CarRental/search/Result";
 import Extras from "../Views/CarRental/search/Extras";
 import Form from "../Views/CarRental/search/Form";
 import TourGuideWiki from "../Views/TourGuideWiki/TourGuideWiki";
+import MapResult from "../Views/CarRental/search/map/MapHome";
 
 //mark - materialize css
 
@@ -51,7 +52,8 @@ ReactDOM.render(
 
         <Route path="/car-rental" component={Search} />
 
-        <Route path="/result" component={Result} />
+        <Route exact path="/result" component={Result} />
+        <Route path="/result/map" component={MapResult} />
 
         <Route path="/extras" component={Extras} />
         <Route path="/success" component={Success} />
