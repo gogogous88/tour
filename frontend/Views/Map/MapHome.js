@@ -17,7 +17,7 @@ class MapHome extends Component {
     super(props);
 
     this.state = {
-      locations: [40.76188, -73.829645]
+      locations: []
     };
   }
   componentDidMount() {
