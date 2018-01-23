@@ -54,8 +54,8 @@ class Vehicle extends Component {
       monthlyQty,
       monthlyRate
     } = this.props.rate;
-    const { vehicleType, sample, seats, doors } = this.props.vehicle;
-
+    const { vehicleType, baggages, sample, seats, doors } = this.props.vehicle;
+    //doors is the coordinates
     const totalDays = getTotalDays(conditions);
 
     // total rate
@@ -203,7 +203,7 @@ class Vehicle extends Component {
               <tr>
                 <td className={styles.tdStyle}>自动挡</td>
                 <td className={styles.tdStyle}>{seats}</td>
-                <td className={styles.tdStyle}>{doors}</td>
+                <td className={styles.tdStyle}>{baggages}</td>
               </tr>
             </tbody>
           </table>

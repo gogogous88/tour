@@ -44,9 +44,6 @@ class MapHere extends Component {
     // const coord = this.props.vehicle;
     // const array = coord.split(",");
 
-    // console.log("checkhere", parseFloat(array[0]));
-    // console.log("checkhere", parseFloat(array[1]));
-
     var map = new google.maps.Map(this.refs.map, {
       zoom: 4,
       center: { lat, lng }
@@ -58,16 +55,12 @@ class MapHere extends Component {
 
     // const icon = "https://png.icons8.com/map-pin/color/43/2980b9";
     // const icon1 = "/src/static/images/icons8-map-pin-orange-48 2.png";
-    console.log("here is here", this.props.ratesResultFlitered);
 
     {
       _.map(this.props.ratesResultFlitered, rate => {
-        const vehicle = _.get(this.props.vehicleTypes, rate.vehicleTypeId);
-        console.log("checkitnow", typeof vehicle.vehicleType);
-        const coord = vehicle.doors;
-        const array = coord.split(",");
+        // const vehicle = _.get(this.props.vehicleTypes, rate.vehicleTypeId);
 
-        const { tax, oneWayFee, conditions } = this.props;
+        const { tax, oneWayFee, conditions, vehicleTypes } = this.props;
         const {
           vehicleTypeId,
           dailyKMorMileageAllowed,
@@ -79,7 +72,13 @@ class MapHere extends Component {
           monthlyQty,
           monthlyRate
         } = rate;
-        const { vehicleType, sample, seats, doors } = rate;
+
+        const vehicle = _.get(vehicleTypes, rate.vehicleTypeId);
+
+        const { vehicleType, sample, seats, doors, baggages } = vehicle;
+
+        const coord = vehicle.doors;
+        const array = coord.split(",");
 
         const totalDays = getTotalDays(conditions);
 
@@ -90,12 +89,20 @@ class MapHere extends Component {
           dailyQty * dailyRate;
         const taxFee = totalWithoutTax * tax / 100;
         const totalWithTax = totalWithoutTax * (1 + tax / 100) + oneWayFee;
+        const actualDayCharge = totalWithoutTax / totalDays;
 
         // i18n tweak
         let vehicleName = _.split(vehicleType, "|");
         let vehicleDesc = _.split(sample, "|");
+        const totalMilesAllowed = dailyKMorMileageAllowed * totalDays;
+
+        const yinglishu =
+          dailyKMorMileageAllowed !== 0
+            ? `限${totalMilesAllowed}英里,超出部分${kMorMileageCharge}/英里`
+            : "不限英里数";
 
         const label = `$${parseInt(totalWithTax).toString()}`;
+        const totalPrice = formatMoney(totalWithTax);
 
         // if (lang === 'en') {
         //   vehicleName = _.first(vehicleName);
@@ -104,8 +111,8 @@ class MapHere extends Component {
         //   vehicleName = _.last(vehicleName);
         //   vehicleDesc = _.last(vehicleDesc);
         // }
-        vehicleName = _.first(vehicleName);
-        vehicleDesc = _.first(vehicleDesc);
+        vehicleName = _.last(vehicleName);
+        vehicleDesc = _.last(vehicleDesc);
 
         marker = new google.maps.Marker({
           key: rate.vehicleTypeId,
@@ -117,6 +124,9 @@ class MapHere extends Component {
           icon: "/src/static/icons/pins/whitetopic.svg"
         });
 
+        const imgURL = `http://www.yalevanrental.com/uploads/rental/${vehicleTypeId}.jpg`;
+        const style = `background-color:#000`;
+
         google.maps.event.addListener(
           marker,
           "click",
@@ -124,32 +134,89 @@ class MapHere extends Component {
             const url = "/map/" + array;
             return function() {
               infowindow.setContent(
-                "<div><h5><a href=" +
-                  url +
-                  " >" +
-                  array[0] +
-                  "</a></h5></div><div>" +
-                  "<a href='http://maps.google.com/maps?q=" +
-                  array[0] +
-                  "'/>" +
-                  "<div><p><a href=" +
-                  url +
-                  " >" +
-                  "查看详情" +
-                  "</a></p></div><div>" +
-                  "<a href='http://maps.google.com/maps?q=" +
-                  array[0] +
-                  "'/>" +
-                  array[0] +
-                  "<h6>" +
-                  "导航前往" +
-                  "</h6></a>" +
-                  "<a href='tel:" +
-                  array[0] +
-                  "'/>" +
-                  "<h6>" +
-                  array[0] +
-                  "</h6></a>" +
+                '<div style="width:200px; ">' +
+                  "<div style='background-color:#fff;' class='text-center'><h5 style='padding-top:6px;padding-bottom:6px;font-size:18px;color:#333'>" +
+                  vehicleName +
+                  "</h5></div><div>" +
+                  "<div style='padding:5px 5px 5px 5px; background-color:#fff'><img src=" +
+                  imgURL +
+                  " width='100%'style='justify-content:center;display:flex; border-radius:10% 10% 10% 10%'/></div>" +
+                  "<div><p>" +
+                  "<div><h5 style='font-size:16px'>" +
+                  vehicleDesc +
+                  "</h5></div>" +
+                  "<div>" +
+                  yinglishu +
+                  "</div>" +
+                  "<div style='margin-top:10px;flex-direct:row;display:flex;justify-content:space-around'>" +
+                  "<div>" +
+                  '<img src="https://png.icons8.com/ios-glyphs/20/3498db/gender-neutral-user.png" />' +
+                  "<span>" +
+                  "*" +
+                  seats +
+                  "</span>" +
+                  "</div>" +
+                  "<div>" +
+                  '<img src="/src/static/icons/buttons/luggage.svg" />' +
+                  "<span>" +
+                  "*" +
+                  baggages +
+                  "</span>" +
+                  "</div>" +
+                  "<div>" +
+                  '<img src="https://png.icons8.com/material/20/3498db/steering-wheel.png" />' +
+                  "<span>" +
+                  "自动挡" +
+                  "</span>" +
+                  "</div>" +
+                  "</div>" +
+                  "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between; background-color:#f0f0f0'>" +
+                  "<div><span style='padding-left:5px;font-size:16px'>" +
+                  "单价" +
+                  "</span></div>" +
+                  "<div><span style='padding-right:5px;font-size:16px'>" +
+                  "$" +
+                  actualDayCharge +
+                  "/天" +
+                  "</span></div>" +
+                  "</div>" +
+                  //天数开始
+                  "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between; '>" +
+                  "<div><span style='padding-left:5px;font-size:16px'>" +
+                  "天数" +
+                  "</span></div>" +
+                  "<div><span style='padding-right:5px;font-size:16px'>" +
+                  totalDays +
+                  "天" +
+                  "</span></div>" +
+                  "</div>" +
+                  //天数结束
+                  //税开始
+                  "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between;background-color:#f0f0f0'>" +
+                  "<div><span style='padding-left:5px;font-size:16px'>" +
+                  "税" +
+                  tax +
+                  "%" +
+                  "</span></div>" +
+                  "<div><span style='padding-right:5px;font-size:16px'>" +
+                  "$" +
+                  taxFee +
+                  "</span></div>" +
+                  "</div>" +
+                  //税结束
+                  //小记开始
+                  "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between'>" +
+                  "<div><span style='padding-left:5px;font-size:16px'>" +
+                  "小计" +
+                  "</span></div>" +
+                  "<div><span style='padding-right:5px;font-size:16px'>" +
+                  totalPrice +
+                  "</span></div>" +
+                  "</div>" +
+                  //小记结束
+
+                  "<div style='margin-top:5px;justify-content:center;display:flex'>" +
+                  '<a class="waves-effect blue lighten-1 btn" ><i class="material-icons right white-text">send</i><span style="color:white">选择</span></a>' +
                   "</div>"
               );
 

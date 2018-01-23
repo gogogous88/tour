@@ -141,8 +141,6 @@ class MapResult extends Component {
     }
     const location = { lat: 38.998459, lng: -97.563037 };
 
-    console.log("checking", this.props.vehicleTypes);
-
     if (_.isEmpty(ratesResultFlitered)) {
       return <Loading />;
     }
@@ -161,6 +159,7 @@ class MapResult extends Component {
               locations={this.state.locations}
               pin="/src/static/images/icons8-map-pin-orange-48 2.png"
               tax={tax}
+              conditions={this.props.conditions}
               oneWayFee={!conditions.syncLocation ? oneWayFee : 0}
               ratesResultFlitered={ratesResultFlitered}
               // vehicle={coords}
