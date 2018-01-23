@@ -135,14 +135,14 @@ class MapHere extends Component {
             return function() {
               infowindow.setContent(
                 '<div style="width:200px; ">' +
-                  "<div style='background-color:#fff;' class='text-center'><h5 style='padding-top:6px;padding-bottom:6px;font-size:18px;color:#333'>" +
+                  "<div style='background-color:#fff;' class='text-center'><span style='padding-top:6px;padding-bottom:6px;font-size:18px;color:#333'>" +
                   vehicleName +
-                  "</h5></div><div>" +
-                  "<div style='padding:5px 5px 5px 5px; background-color:#fff'><img src=" +
+                  "</span></div>" +
+                  "<div style='padding:5px 5px 5px 5px; background-color:#fff;height:90px'><img src=" +
                   imgURL +
-                  " width='100%'style='justify-content:center;display:flex; border-radius:10% 10% 10% 10%'/></div>" +
+                  " style='justify-content:center;display:flex; border-radius:10% 10% 10% 10%; width:90%'/></div>" +
                   "<div><p>" +
-                  "<div><h5 style='font-size:16px'>" +
+                  "<div><h5 style='font-size:16px; padding-top:5px'>" +
                   vehicleDesc +
                   "</h5></div>" +
                   "<div>" +
@@ -171,10 +171,10 @@ class MapHere extends Component {
                   "</div>" +
                   "</div>" +
                   "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between; background-color:#f0f0f0'>" +
-                  "<div><span style='padding-left:5px;font-size:16px'>" +
+                  "<div><span style='padding-left:5px;font-size:14px'>" +
                   "单价" +
                   "</span></div>" +
-                  "<div><span style='padding-right:5px;font-size:16px'>" +
+                  "<div><span style='padding-right:5px;font-size:14px'>" +
                   "$" +
                   actualDayCharge +
                   "/天" +
@@ -182,10 +182,10 @@ class MapHere extends Component {
                   "</div>" +
                   //天数开始
                   "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between; '>" +
-                  "<div><span style='padding-left:5px;font-size:16px'>" +
+                  "<div><span style='padding-left:5px;font-size:14px'>" +
                   "天数" +
                   "</span></div>" +
-                  "<div><span style='padding-right:5px;font-size:16px'>" +
+                  "<div><span style='padding-right:5px;font-size:14px'>" +
                   totalDays +
                   "天" +
                   "</span></div>" +
@@ -193,12 +193,12 @@ class MapHere extends Component {
                   //天数结束
                   //税开始
                   "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between;background-color:#f0f0f0'>" +
-                  "<div><span style='padding-left:5px;font-size:16px'>" +
+                  "<div><span style='padding-left:5px;font-size:14px'>" +
                   "税" +
                   tax +
                   "%" +
                   "</span></div>" +
-                  "<div><span style='padding-right:5px;font-size:16px'>" +
+                  "<div><span style='padding-right:5px;font-size:14px'>" +
                   "$" +
                   taxFee +
                   "</span></div>" +
@@ -206,10 +206,10 @@ class MapHere extends Component {
                   //税结束
                   //小记开始
                   "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between'>" +
-                  "<div><span style='padding-left:5px;font-size:16px'>" +
+                  "<div><span style='padding-left:5px;font-size:16px;color:red'>" +
                   "小计" +
                   "</span></div>" +
-                  "<div><span style='padding-right:5px;font-size:16px'>" +
+                  "<div><span style='padding-right:5px;font-size:16px;color:red'>" +
                   totalPrice +
                   "</span></div>" +
                   "</div>" +
