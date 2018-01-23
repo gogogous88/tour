@@ -124,7 +124,7 @@ class MapHere extends Component {
           icon: "/src/static/icons/pins/whitetopic.svg"
         });
 
-        const imgURL = `http://www.yalevanrental.com/uploads/rental/${vehicleTypeId}.jpg`;
+        const imgURL = `/src/static/images/${vehicleTypeId}.jpg`;
         const style = `background-color:#000`;
 
         google.maps.event.addListener(
