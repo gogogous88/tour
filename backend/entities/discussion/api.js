@@ -14,12 +14,28 @@ const discussionAPI = app => {
     getDiscussion(discussion_slug).then(
       result => {
         res.send(result);
+        // res.json(result);
       },
       error => {
         res.send(error);
       }
     );
   });
+
+  //get all discussions
+  // const discussionAPI = app => {
+  //   // get signle discussion
+  //   app.get("/api/discussion/:discussion_slug", (req, res) => {
+  //     const { discussion_slug } = req.params;
+  //     getDiscussion(discussion_slug).then(
+  //       result => {
+  //         res.send(result);
+  //       },
+  //       error => {
+  //         res.send(error);
+  //       }
+  //     );
+  //   });
 
   // toggle favorite to the discussion
   app.put("/api/discussion/toggleFavorite/:discussion_id", (req, res) => {

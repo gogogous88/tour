@@ -3,8 +3,27 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import { formatMoney, getTotalDays } from "../../utils/yale";
+import styles from "./styles.css";
+import classNames from "classnames/bind";
 
 class MapHere extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      yinglishu: null,
+      vehicleName: null,
+      imgURL: null,
+      vehicleDesc: null,
+      seats: null,
+      baggages: null,
+      actualDayCharge: null,
+      totalDays: null,
+      tax: null,
+      taxFee: null,
+      totalWithTax: null,
+      totalPrice: null
+    };
+  }
   componentDidMount() {
     this.addMarkers();
   }
@@ -37,6 +56,34 @@ class MapHere extends Component {
   //     return "/src/static/icons/pins/redhead.svg";
   //   }
   // }
+
+  renderYinglishu(
+    yinglishu,
+    vehicleName,
+    imgURL,
+    vehicleDesc,
+    seats,
+    baggages,
+    actualDayCharge,
+    totalDays,
+    tax,
+    taxFee,
+    totalWithTax
+  ) {
+    this.setState({
+      yinglishu,
+      vehicleName,
+      imgURL,
+      vehicleDesc,
+      seats,
+      baggages,
+      actualDayCharge,
+      totalDays,
+      tax,
+      taxFee,
+      totalWithTax
+    });
+  }
 
   addMarkers = props => {
     const { locations, pin } = this.props;
@@ -98,8 +145,11 @@ class MapHere extends Component {
 
         const yinglishu =
           dailyKMorMileageAllowed !== 0
-            ? `限${totalMilesAllowed}英里,超出部分${kMorMileageCharge}/英里`
+            ? `总限${totalMilesAllowed}迈,超:$${kMorMileageCharge}/迈`
             : "不限英里数";
+
+        const oneWayFeeDesc = oneWayFee !== 0 ? "异地还车费" : "";
+        const oneWayFeePrice = oneWayFee !== 0 ? `$${oneWayFee}` : "";
 
         const label = `$${parseInt(totalWithTax).toString()}`;
         const totalPrice = formatMoney(totalWithTax);
@@ -127,11 +177,54 @@ class MapHere extends Component {
         const imgURL = `/src/static/images/${vehicleTypeId}.jpg`;
         const style = `background-color:#000`;
 
+        console.log("map", totalWithTax);
+
+        const onButtonClick = (
+          yinglishu,
+          vehicleName,
+          imgURL,
+          vehicleDesc,
+          seats,
+          baggages,
+          actualDayCharge,
+          totalDays,
+          tax,
+          taxFee,
+          totalWithTax
+        ) => {
+          return (
+            <div
+              style={{
+                zIndex: 2,
+                justifyContent: "center",
+                position: "absolute",
+                bottom: 50,
+                display: "flex"
+              }}
+            >
+              {this.renderYinglishu(
+                yinglishu,
+                vehicleName,
+                imgURL,
+                vehicleDesc,
+                seats,
+                baggages,
+                actualDayCharge,
+                totalDays,
+                tax,
+                taxFee,
+                totalWithTax
+              )}
+            </div>
+          );
+        };
+
         google.maps.event.addListener(
           marker,
           "click",
           (function(marker, i) {
             const url = "/map/" + array;
+            // const nextURL = `/extras/${yinglishu}`;
             return function() {
               infowindow.setContent(
                 '<div style="width:200px; ">' +
@@ -204,6 +297,16 @@ class MapHere extends Component {
                   "</span></div>" +
                   "</div>" +
                   //税结束
+                  //异地开始
+                  "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between'>" +
+                  "<div><div style='padding-left:5px;font-size:14px'>" +
+                  oneWayFeeDesc +
+                  "</div></div>" +
+                  "<div><div style='padding-right:5px;font-size:14px'>" +
+                  oneWayFeePrice +
+                  "</div></div>" +
+                  "</div>" +
+                  //异地结束
                   //小记开始
                   "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between'>" +
                   "<div><span style='padding-left:5px;font-size:16px;color:red'>" +
@@ -216,7 +319,24 @@ class MapHere extends Component {
                   //小记结束
 
                   "<div style='margin-top:5px;justify-content:center;display:flex'>" +
-                  '<a class="waves-effect blue lighten-1 btn" ><i class="material-icons right white-text">send</i><span style="color:white">选择</span></a>' +
+                  '<button onclick="' +
+                  onButtonClick(
+                    yinglishu,
+                    vehicleName,
+                    imgURL,
+                    vehicleDesc,
+                    seats,
+                    baggages,
+                    actualDayCharge,
+                    totalDays,
+                    tax,
+                    taxFee,
+
+                    oneWayFee,
+
+                    totalWithTax
+                  ) +
+                  '" class="waves-effect blue lighten-1 btn" ><i class="material-icons right white-text">send</i><span style="color:white">选择</span></a>' +
                   "</div>"
               );
 
@@ -307,19 +427,115 @@ class MapHere extends Component {
     }
   };
 
-  render() {
+  renderCard() {
+    const {
+      yinglishu,
+      vehicleName,
+      imgURL,
+      vehicleDesc,
+      seats,
+      baggages,
+      actualDayCharge,
+      totalDays,
+      tax,
+      taxFee,
+      totalWithTax
+    } = this.state;
+    const { oneWayFee } = this.props;
+    console.log("totalWithTax", totalWithTax);
+
+    const totalPrice = formatMoney(totalWithTax);
+    const oneWayFeeDesc = oneWayFee !== 0 ? "异地还车费" : "";
+    const oneWayFeePrice = oneWayFee !== 0 ? `$${oneWayFee}` : "";
     return (
-      <div
-        ref="map"
-        style={{
-          height: "100%",
-          left: 0,
-          right: 0,
-          bottom: 0,
-          position: "absolute"
-          // zIndex: -1
-        }}
-      />
+      <div className={styles.cardStyle}>
+        <div className={classNames(styles.container, styles.columnStyle)}>
+          <img
+            src={imgURL}
+            className={classNames(styles.imgStyle)}
+            width="100%"
+            height="auto"
+          />
+          <div className={styles.carTitleStyle}>小计:{totalPrice}</div>
+
+          <div className={styles.carTitleStyle}>
+            <button className="btn">下一步</button>
+          </div>
+        </div>
+        <div className={classNames(styles.rowStyle, styles.columnStyle)}>
+          <div className={styles.titleStyle}>{vehicleName}</div>
+          <div>{vehicleDesc}</div>
+          <div>{yinglishu}</div>
+          <div className={styles.descStyle}>
+            <div>
+              <img src="https://png.icons8.com/ios-glyphs/20/3498db/gender-neutral-user.png" />
+              <span>*{seats}</span>
+            </div>
+            <div>
+              <img src="/src/static/icons/buttons/luggage.svg" />
+              <span>*{baggages}</span>
+            </div>
+            <div>
+              <img src="https://png.icons8.com/ios-glyphs/20/3498db/steering-wheel.png" />
+              <span>*自动挡</span>
+            </div>
+          </div>
+          <div className={styles.priceList}>
+            <span className={styles.priceListTitle}>单价</span>
+            <span className={styles.priceListTag}>${actualDayCharge}/天</span>
+          </div>
+          <div className={styles.priceList}>
+            <span className={styles.priceListTitle}>天数</span>
+            <span className={styles.priceListTag}>{totalDays}天</span>
+          </div>
+          <div className={styles.priceList}>
+            <span className={styles.priceListTitle}>税({tax}%)</span>
+            <span className={styles.priceListTag}>${taxFee}</span>
+          </div>
+          <div className={styles.priceList}>
+            <span className={styles.priceListTitle}>{oneWayFeeDesc}</span>
+            <span className={styles.priceListTag}>{oneWayFeePrice}</span>
+          </div>
+        </div>
+        {/* <div>
+          {yinglishu},
+          {vehicleDesc},
+          {seats},
+          {baggages},
+          {actualDayCharge},
+          {totalDays},
+          {tax},
+          {taxFee},
+          {oneWayFeeDesc},
+          {oneWayFeePrice},
+          {totalPrice}
+        </div> */}
+      </div>
+    );
+  }
+
+  render() {
+    const { yinglishu, totalWithTax } = this.state;
+    console.log("total", totalWithTax);
+
+    return (
+      <div>
+        <div
+          ref="map"
+          style={{
+            height: "100%",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            position: "absolute",
+            zIndex: 1
+          }}
+        />
+
+        <div className={styles.cardContainer}>
+          {this.state.yinglishu !== null ? this.renderCard() : ""}
+        </div>
+      </div>
     );
   }
 }

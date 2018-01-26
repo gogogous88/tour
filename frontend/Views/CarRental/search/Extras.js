@@ -313,6 +313,8 @@ class Extras extends Component {
     const pickAddresses = this.extractAddresses(conditions.pickLocation);
     const returnAddresses = this.extractAddresses(conditions.returnLocation);
 
+    console.log("extras", this.props);
+
     return (
       <div className="result-container">
         <Navigator passedStep={3} {...this.props} />
