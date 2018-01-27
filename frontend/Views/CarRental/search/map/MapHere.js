@@ -10,18 +10,21 @@ class MapHere extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      yinglishu: null,
-      vehicleName: null,
+      vehicleTypeId: null,
+      dailyKMorMileageAllowed: null,
+      kMorMileageCharge: null,
+      vehicleType: null,
+      sample: null,
       imgURL: null,
-      vehicleDesc: null,
       seats: null,
       baggages: null,
-      actualDayCharge: null,
-      totalDays: null,
-      tax: null,
-      taxFee: null,
-      totalWithTax: null,
-      totalPrice: null
+      dailyQty: null,
+      dailyRate: null,
+      weeklyQty: null,
+      weeklyRate: null,
+      monthlyQty: null,
+      monthlyRate: null,
+      toggle: false
     };
   }
   componentDidMount() {
@@ -58,30 +61,36 @@ class MapHere extends Component {
   // }
 
   renderYinglishu(
-    yinglishu,
-    vehicleName,
+    vehicleTypeId,
+    dailyKMorMileageAllowed,
+    kMorMileageCharge,
+    vehicleType,
+    sample,
     imgURL,
-    vehicleDesc,
     seats,
     baggages,
-    actualDayCharge,
-    totalDays,
-    tax,
-    taxFee,
-    totalWithTax
+    dailyQty,
+    dailyRate,
+    weeklyQty,
+    weeklyRate,
+    monthlyQty,
+    monthlyRate
   ) {
     this.setState({
-      yinglishu,
-      vehicleName,
+      vehicleTypeId,
+      dailyKMorMileageAllowed,
+      kMorMileageCharge,
+      vehicleType,
+      sample,
       imgURL,
-      vehicleDesc,
       seats,
       baggages,
-      actualDayCharge,
-      totalDays,
-      tax,
-      taxFee,
-      totalWithTax
+      dailyQty,
+      dailyRate,
+      weeklyQty,
+      weeklyRate,
+      monthlyQty,
+      monthlyRate
     });
   }
 
@@ -135,12 +144,15 @@ class MapHere extends Component {
           weeklyQty * weeklyRate +
           dailyQty * dailyRate;
         const taxFee = totalWithoutTax * tax / 100;
+        const roundTaxFee = formatMoney(taxFee);
         const totalWithTax = totalWithoutTax * (1 + tax / 100) + oneWayFee;
         const actualDayCharge = totalWithoutTax / totalDays;
 
         // i18n tweak
         let vehicleName = _.split(vehicleType, "|");
         let vehicleDesc = _.split(sample, "|");
+        vehicleName = _.last(vehicleName);
+        vehicleDesc = _.last(vehicleDesc);
         const totalMilesAllowed = dailyKMorMileageAllowed * totalDays;
 
         const yinglishu =
@@ -161,8 +173,6 @@ class MapHere extends Component {
         //   vehicleName = _.last(vehicleName);
         //   vehicleDesc = _.last(vehicleDesc);
         // }
-        vehicleName = _.last(vehicleName);
-        vehicleDesc = _.last(vehicleDesc);
 
         marker = new google.maps.Marker({
           key: rate.vehicleTypeId,
@@ -177,19 +187,21 @@ class MapHere extends Component {
         const imgURL = `/src/static/images/${vehicleTypeId}.jpg`;
         const style = `background-color:#000`;
 
-        console.log("map", totalWithTax);
-
         const onButtonClick = (
-          yinglishu,
-          vehicleName,
+          vehicleTypeId,
+          dailyKMorMileageAllowed,
+          kMorMileageCharge,
+          vehicleType,
+          sample,
           imgURL,
-          vehicleDesc,
           seats,
           baggages,
-          actualDayCharge,
-          totalDays,
-          tax,
-          taxFee,
+          dailyQty,
+          dailyRate,
+          weeklyQty,
+          weeklyRate,
+          monthlyQty,
+          monthlyRate,
           totalWithTax
         ) => {
           return (
@@ -203,17 +215,20 @@ class MapHere extends Component {
               }}
             >
               {this.renderYinglishu(
-                yinglishu,
-                vehicleName,
+                vehicleTypeId,
+                dailyKMorMileageAllowed,
+                kMorMileageCharge,
+                vehicleType,
+                sample,
                 imgURL,
-                vehicleDesc,
                 seats,
                 baggages,
-                actualDayCharge,
-                totalDays,
-                tax,
-                taxFee,
-                totalWithTax
+                dailyQty,
+                dailyRate,
+                weeklyQty,
+                weeklyRate,
+                monthlyQty,
+                monthlyRate
               )}
             </div>
           );
@@ -227,116 +242,117 @@ class MapHere extends Component {
             // const nextURL = `/extras/${yinglishu}`;
             return function() {
               infowindow.setContent(
-                '<div style="width:200px; ">' +
-                  "<div style='background-color:#fff;' class='text-center'><span style='padding-top:6px;padding-bottom:6px;font-size:18px;color:#333'>" +
+                // '<div style="width:200px; ">' +
+                "<div>" +
                   vehicleName +
-                  "</span></div>" +
-                  "<div style='padding:5px 5px 5px 5px; background-color:#fff;height:90px'><img src=" +
-                  imgURL +
-                  " style='justify-content:center;display:flex; border-radius:10% 10% 10% 10%; width:90%'/></div>" +
-                  "<div><p>" +
-                  "<div><h5 style='font-size:16px; padding-top:5px'>" +
-                  vehicleDesc +
-                  "</h5></div>" +
-                  "<div>" +
-                  yinglishu +
                   "</div>" +
-                  "<div style='margin-top:10px;flex-direct:row;display:flex;justify-content:space-around'>" +
-                  "<div>" +
-                  '<img src="https://png.icons8.com/ios-glyphs/20/3498db/gender-neutral-user.png" />' +
-                  "<span>" +
-                  "*" +
-                  seats +
-                  "</span>" +
-                  "</div>" +
-                  "<div>" +
-                  '<img src="/src/static/icons/buttons/luggage.svg" />' +
-                  "<span>" +
-                  "*" +
-                  baggages +
-                  "</span>" +
-                  "</div>" +
-                  "<div>" +
-                  '<img src="https://png.icons8.com/material/20/3498db/steering-wheel.png" />' +
-                  "<span>" +
-                  "自动挡" +
-                  "</span>" +
-                  "</div>" +
-                  "</div>" +
-                  "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between; background-color:#f0f0f0'>" +
-                  "<div><span style='padding-left:5px;font-size:14px'>" +
-                  "单价" +
-                  "</span></div>" +
-                  "<div><span style='padding-right:5px;font-size:14px'>" +
-                  "$" +
-                  actualDayCharge +
-                  "/天" +
-                  "</span></div>" +
-                  "</div>" +
-                  //天数开始
-                  "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between; '>" +
-                  "<div><span style='padding-left:5px;font-size:14px'>" +
-                  "天数" +
-                  "</span></div>" +
-                  "<div><span style='padding-right:5px;font-size:14px'>" +
-                  totalDays +
-                  "天" +
-                  "</span></div>" +
-                  "</div>" +
-                  //天数结束
-                  //税开始
-                  "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between;background-color:#f0f0f0'>" +
-                  "<div><span style='padding-left:5px;font-size:14px'>" +
-                  "税" +
-                  tax +
-                  "%" +
-                  "</span></div>" +
-                  "<div><span style='padding-right:5px;font-size:14px'>" +
-                  "$" +
-                  taxFee +
-                  "</span></div>" +
-                  "</div>" +
-                  //税结束
-                  //异地开始
-                  "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between'>" +
-                  "<div><div style='padding-left:5px;font-size:14px'>" +
-                  oneWayFeeDesc +
-                  "</div></div>" +
-                  "<div><div style='padding-right:5px;font-size:14px'>" +
-                  oneWayFeePrice +
-                  "</div></div>" +
-                  "</div>" +
-                  //异地结束
-                  //小记开始
-                  "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between'>" +
-                  "<div><span style='padding-left:5px;font-size:16px;color:red'>" +
-                  "小计" +
-                  "</span></div>" +
-                  "<div><span style='padding-right:5px;font-size:16px;color:red'>" +
-                  totalPrice +
-                  "</span></div>" +
-                  "</div>" +
-                  //小记结束
+                  //   "<div style='padding:5px 5px 5px 5px; background-color:#fff;height:90px'><img src=" +
+                  //   imgURL +
+                  //   " style='justify-content:center;display:flex; border-radius:10% 10% 10% 10%; width:90%'/></div>" +
+                  //   "<div><p>" +
+                  //   "<div><h5 style='font-size:16px; padding-top:5px'>" +
+                  //   vehicleDesc +
+                  //   "</h5></div>" +
+                  //   "<div>" +
+                  //   yinglishu +
+                  //   "</div>" +
+                  //   "<div style='margin-top:10px;flex-direct:row;display:flex;justify-content:space-around'>" +
+                  //   "<div>" +
+                  //   '<img src="https://png.icons8.com/ios-glyphs/20/3498db/gender-neutral-user.png" />' +
+                  //   "<span>" +
+                  //   "*" +
+                  //   seats +
+                  //   "</span>" +
+                  //   "</div>" +
+                  //   "<div>" +
+                  //   '<img src="/src/static/icons/buttons/luggage.svg" />' +
+                  //   "<span>" +
+                  //   "*" +
+                  //   baggages +
+                  //   "</span>" +
+                  //   "</div>" +
+                  //   "<div>" +
+                  //   '<img src="https://png.icons8.com/material/20/3498db/steering-wheel.png" />' +
+                  //   "<span>" +
+                  //   "自动挡" +
+                  //   "</span>" +
+                  //   "</div>" +
+                  //   "</div>" +
+                  //   "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between; background-color:#f0f0f0'>" +
+                  //   "<div><span style='padding-left:5px;font-size:14px'>" +
+                  //   "单价" +
+                  //   "</span></div>" +
+                  //   "<div><span style='padding-right:5px;font-size:14px'>" +
+                  //   "$" +
+                  //   actualDayCharge +
+                  //   "/天" +
+                  //   "</span></div>" +
+                  //   "</div>" +
+                  //   //天数开始
+                  //   "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between; '>" +
+                  //   "<div><span style='padding-left:5px;font-size:14px'>" +
+                  //   "天数" +
+                  //   "</span></div>" +
+                  //   "<div><span style='padding-right:5px;font-size:14px'>" +
+                  //   totalDays +
+                  //   "天" +
+                  //   "</span></div>" +
+                  //   "</div>" +
+                  //   //天数结束
+                  //   //税开始
+                  //   "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between;background-color:#f0f0f0'>" +
+                  //   "<div><span style='padding-left:5px;font-size:14px'>" +
+                  //   "税" +
+                  //   tax +
+                  //   "%" +
+                  //   "</span></div>" +
+                  //   "<div><span style='padding-right:5px;font-size:14px'>" +
+                  //   "$" +
+                  //   taxFee +
+                  //   "</span></div>" +
+                  //   "</div>" +
+                  //   //税结束
+                  //   //异地开始
+                  //   "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between'>" +
+                  //   "<div><div style='padding-left:5px;font-size:14px'>" +
+                  //   oneWayFeeDesc +
+                  //   "</div></div>" +
+                  //   "<div><div style='padding-right:5px;font-size:14px'>" +
+                  //   oneWayFeePrice +
+                  //   "</div></div>" +
+                  //   "</div>" +
+                  //   //异地结束
+                  //   //小记开始
+                  //   "<div style='margin-top:5px;flex-direct:row;display:flex;justify-content:space-between'>" +
+                  //   "<div><span style='padding-left:5px;font-size:16px;color:red'>" +
+                  //   "小计" +
+                  //   "</span></div>" +
+                  //   "<div><span style='padding-right:5px;font-size:16px;color:red'>" +
+                  //   totalPrice +
+                  //   "</span></div>" +
+                  //   "</div>" +
+                  //   //小记结束
 
                   "<div style='margin-top:5px;justify-content:center;display:flex'>" +
                   '<button onclick="' +
                   onButtonClick(
-                    yinglishu,
-                    vehicleName,
+                    vehicleTypeId,
+                    dailyKMorMileageAllowed,
+                    kMorMileageCharge,
+                    vehicleType,
+                    sample,
                     imgURL,
-                    vehicleDesc,
                     seats,
                     baggages,
-                    actualDayCharge,
-                    totalDays,
-                    tax,
-                    taxFee,
-
-                    oneWayFee,
-
-                    totalWithTax
+                    dailyQty,
+                    dailyRate,
+                    weeklyQty,
+                    weeklyRate,
+                    monthlyQty,
+                    monthlyRate
                   ) +
-                  '" class="waves-effect blue lighten-1 btn" ><i class="material-icons right white-text">send</i><span style="color:white">选择</span></a>' +
+                  "/>" +
+                  // '" class="waves-effect blue lighten-1 btn" ><i class="material-icons right white-text">send</i><span style="color:white">选择</span></a>' +
                   "</div>"
               );
 
@@ -427,39 +443,169 @@ class MapHere extends Component {
     }
   };
 
+  togglePriceList(
+    actualDayCharge,
+    totalDays,
+    tax,
+    taxFee,
+    oneWayFeeDesc,
+    oneWayFeePrice,
+    totalPrice
+  ) {
+    if (this.state.toggle === true) {
+      const roundTaxFee = formatMoney(taxFee);
+      return (
+        <div>
+          <div className={styles.priceList}>
+            <span className={styles.priceListTitle}>单价</span>
+            <span className={styles.priceListTag}>${actualDayCharge}/天</span>
+          </div>
+          <div className={styles.priceList}>
+            <span className={styles.priceListTitle}>天数</span>
+            <span className={styles.priceListTag}>{totalDays}天</span>
+          </div>
+          <div className={styles.priceList}>
+            <span className={styles.priceListTitle}>税({tax}%)</span>
+            <span className={styles.priceListTag}>{roundTaxFee}</span>
+          </div>
+          <div className={styles.priceList}>
+            <span className={styles.priceListTitle}>{oneWayFeeDesc}</span>
+            <span className={styles.priceListTag}>{oneWayFeePrice}</span>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div style={{ marginTop: 10 }}>
+        <h3 style={{ color: "red" }}>
+          小计:{totalPrice} &nbsp;&nbsp;
+          <button
+            style={{ borderBottom: 1 }}
+            onClick={() => {
+              this.setState({ toggle: true });
+            }}
+          >
+            <span style={{ fontSize: 14, color: "#333" }}>价格明细</span>
+          </button>
+        </h3>
+      </div>
+    );
+  }
+
+  renderNextButton(
+    vehicleTypeId,
+    vehicleName,
+    vehicleDesc,
+    tax,
+    oneWayFee,
+    totalWithoutTax,
+    taxFee,
+    totalWithTax,
+    totalDays
+  ) {
+    return (
+      <button
+        onClick={() =>
+          this.props.onVehicleSelect({
+            vehicleTypeId,
+            vehicleName,
+            vehicleDesc,
+            tax,
+            oneWayFee,
+            totalWithoutTax,
+            taxFee,
+            totalWithTax,
+            totalDays
+          })
+        }
+        className={this.state.toggle ? "btn" : styles.btn}
+      >
+        下一步
+      </button>
+    );
+  }
+
   renderCard() {
-    const {
-      yinglishu,
-      vehicleName,
+    const { tax, oneWayFee, conditions, vehicleTypes } = this.props;
+    var {
+      vehicleTypeId,
+      dailyKMorMileageAllowed,
+      kMorMileageCharge,
+      vehicleType,
+      sample,
       imgURL,
-      vehicleDesc,
       seats,
       baggages,
-      actualDayCharge,
-      totalDays,
-      tax,
-      taxFee,
-      totalWithTax
+      dailyQty,
+      dailyRate,
+      weeklyQty,
+      weeklyRate,
+      monthlyQty,
+      monthlyRate
     } = this.state;
-    const { oneWayFee } = this.props;
-    console.log("totalWithTax", totalWithTax);
 
-    const totalPrice = formatMoney(totalWithTax);
+    const totalDays = getTotalDays(conditions);
+
     const oneWayFeeDesc = oneWayFee !== 0 ? "异地还车费" : "";
     const oneWayFeePrice = oneWayFee !== 0 ? `$${oneWayFee}` : "";
+    let vehicleName = _.split(vehicleType, "|");
+    let vehicleDesc = _.split(sample, "|");
+    vehicleName = _.last(vehicleName);
+    vehicleDesc = _.last(vehicleDesc);
+    const totalMilesAllowed = dailyKMorMileageAllowed * totalDays;
+
+    // total rate
+    const totalWithoutTax =
+      monthlyQty * monthlyRate + weeklyQty * weeklyRate + dailyQty * dailyRate;
+    const taxFee = totalWithoutTax * tax / 100;
+    const totalWithTax = totalWithoutTax * (1 + tax / 100) + oneWayFee;
+    const actualDayCharge = totalWithoutTax / totalDays;
+    const totalPrice = formatMoney(totalWithTax);
+
+    const yinglishu =
+      dailyKMorMileageAllowed !== 0
+        ? `总限${totalMilesAllowed}迈,超:$${kMorMileageCharge}/迈`
+        : "不限英里数";
+
     return (
       <div className={styles.cardStyle}>
         <div className={classNames(styles.container, styles.columnStyle)}>
+          <div style={{ marginLeft: 5, marginTop: 5 }}>
+            <button
+              onClick={() => {
+                this.setState({ vehicleType: null, toggle: false });
+              }}
+              style={{ border: 1 }}
+            >
+              关闭&nbsp;<i
+                className="fa fa-times-circle fa-1x"
+                aria-hidden="true"
+              />
+            </button>
+          </div>
           <img
             src={imgURL}
             className={classNames(styles.imgStyle)}
             width="100%"
             height="auto"
           />
-          <div className={styles.carTitleStyle}>小计:{totalPrice}</div>
 
           <div className={styles.carTitleStyle}>
-            <button className="btn">下一步</button>
+            {this.state.toggle ? `小计:${totalPrice}` : ""}
+          </div>
+
+          <div className={styles.carTitleStyle}>
+            {this.renderNextButton(
+              vehicleTypeId,
+              vehicleName,
+              vehicleDesc,
+              tax,
+              oneWayFee,
+              totalWithoutTax,
+              taxFee,
+              totalWithTax,
+              totalDays
+            )}
           </div>
         </div>
         <div className={classNames(styles.rowStyle, styles.columnStyle)}>
@@ -480,43 +626,22 @@ class MapHere extends Component {
               <span>*自动挡</span>
             </div>
           </div>
-          <div className={styles.priceList}>
-            <span className={styles.priceListTitle}>单价</span>
-            <span className={styles.priceListTag}>${actualDayCharge}/天</span>
-          </div>
-          <div className={styles.priceList}>
-            <span className={styles.priceListTitle}>天数</span>
-            <span className={styles.priceListTag}>{totalDays}天</span>
-          </div>
-          <div className={styles.priceList}>
-            <span className={styles.priceListTitle}>税({tax}%)</span>
-            <span className={styles.priceListTag}>${taxFee}</span>
-          </div>
-          <div className={styles.priceList}>
-            <span className={styles.priceListTitle}>{oneWayFeeDesc}</span>
-            <span className={styles.priceListTag}>{oneWayFeePrice}</span>
-          </div>
+          {this.togglePriceList(
+            actualDayCharge,
+            totalDays,
+            tax,
+            taxFee,
+            oneWayFeeDesc,
+            oneWayFeePrice,
+            totalPrice
+          )}
         </div>
-        {/* <div>
-          {yinglishu},
-          {vehicleDesc},
-          {seats},
-          {baggages},
-          {actualDayCharge},
-          {totalDays},
-          {tax},
-          {taxFee},
-          {oneWayFeeDesc},
-          {oneWayFeePrice},
-          {totalPrice}
-        </div> */}
       </div>
     );
   }
 
   render() {
-    const { yinglishu, totalWithTax } = this.state;
-    console.log("total", totalWithTax);
+    const { vehicleType } = this.state;
 
     return (
       <div>
@@ -533,7 +658,7 @@ class MapHere extends Component {
         />
 
         <div className={styles.cardContainer}>
-          {this.state.yinglishu !== null ? this.renderCard() : ""}
+          {this.state.vehicleType !== null ? this.renderCard() : ""}
         </div>
       </div>
     );

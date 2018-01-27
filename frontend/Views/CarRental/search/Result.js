@@ -150,6 +150,39 @@ class Result extends Component {
             ))}
             {_.size(ratesResultFlitered) === 0 && <div>no result matched</div>}
           </div>
+          <div className="fixed-action-btn toolbar">
+            <a className="btn-floating btn-large red">
+              <i className="large material-icons">place</i>
+            </a>
+            <ul>
+              <li className="waves-effect waves-light">
+                <a
+                  onClick={e => {
+                    e.preventDefault();
+                    this.props.router.push(
+                      `/result/map?${querystring.stringify(
+                        this.props.conditions
+                      )}`
+                    );
+                  }}
+                >
+                  地图显示
+                </a>
+              </li>
+              <li className="waves-effect waves-light">
+                <a
+                  onClick={e => {
+                    e.preventDefault();
+                    this.props.router.push(
+                      `/result?${querystring.stringify(this.props.conditions)}`
+                    );
+                  }}
+                >
+                  列表显示
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     );

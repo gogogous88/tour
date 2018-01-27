@@ -99,7 +99,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
-  background-color: #f1f1f16c;
+  background-color: #f1f1f1d3;
   opacity: 60%;
   color: black;
   font-size: 16px;
@@ -112,5 +112,5 @@
 
 .container .btn:hover {
   background-color: rgb(61, 170, 182);
-  color: white;
+  color: rgb(221, 209, 209);
 }
