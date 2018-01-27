@@ -36,7 +36,7 @@ class MapDetail extends Component {
 
   fetchData() {
     const id = this.props.params.id.toString();
-    console.log(id.length);
+    // console.log(id.length);
     if (id.length === 8) {
       return this.props.fetchAttrs();
     }

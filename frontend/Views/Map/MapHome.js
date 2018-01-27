@@ -41,7 +41,6 @@ class MapHome extends Component {
   }
   renderMap() {
     const location = { lat: 38.998459, lng: -97.563037 };
-    console.log("checking", this.state.locations);
 
     return (
       <MapHere

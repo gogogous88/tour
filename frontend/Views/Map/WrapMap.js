@@ -9,7 +9,7 @@ class WrapMap extends Component {
   addMarker = props => {
     const { lat, lng, location } = this.props;
 
-    console.log(location);
+    // console.log(location);
 
     var map = new google.maps.Map(this.refs.map, {
       zoom: 4,
@@ -81,7 +81,7 @@ class WrapMap extends Component {
   };
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     // const {} = this.props;
     return (
       <div>
