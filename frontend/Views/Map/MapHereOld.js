@@ -2,20 +2,8 @@
 
 import React, { Component } from "react";
 import _ from "lodash";
-import classNames from "classnames/bind";
-import styles from "./styles.css";
 
 class MapHere extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      url: null,
-      name: null,
-      coord: null,
-      location: null,
-      ph_no: null
-    };
-  }
   componentDidMount() {
     this.addMarkers();
   }
@@ -52,16 +40,6 @@ class MapHere extends Component {
   addMarkers = props => {
     const { locations, pin } = this.props;
     const { lat, lng } = this.props.center;
-
-    const onOpen = (url, name, coord, location, ph_no) => {
-      this.setState({
-        url,
-        name,
-        coord,
-        location,
-        ph_no
-      });
-    };
 
     var map = new google.maps.Map(this.refs.map, {
       zoom: 4,
@@ -116,13 +94,6 @@ class MapHere extends Component {
                 "<h6>" +
                 locations[i].ph_no +
                 "</h6></a>" +
-                onOpen(
-                  url,
-                  locations[i].name,
-                  locations[i].coord,
-                  locations[i].location,
-                  locations[i].ph_no
-                ) +
                 "</div>"
             );
 
@@ -211,95 +182,19 @@ class MapHere extends Component {
     }
   };
 
-  renderNavi() {
-    const { coord } = this.state;
-    console.log("不同的东东不同的导航", coord);
-    const coordArray = coord.split(",");
-    if (
-      /* if we're on iOS, open in Apple Maps */
-      navigator.platform.indexOf("iPhone") != -1 ||
-      navigator.platform.indexOf("iPad") != -1 ||
-      navigator.platform.indexOf("iPod") != -1
-    ) {
-      window.open(`maps://maps.google.com/maps?daddr=${coord}&amp;ll=`);
-    } else {
-      /* else use Google */ window.open(
-        `https://maps.google.com/maps?daddr=${coord}&amp;ll=`
-      );
-    }
-  }
-
-  renderCard() {
-    const { url, name, coord, location, ph_no } = this.state;
-
-    return (
-      <div className={styles.cardStyle}>
-        <div className={classNames(styles.container, styles.columnStyle)}>
-          <div style={{ marginLeft: 5, marginTop: 5 }}>
-            <button style={{ border: 1 }}>
-              关闭&nbsp;<i
-                className="fa fa-times-circle fa-1x"
-                aria-hidden="true"
-              />
-            </button>
-          </div>
-          <img
-            src="/src/static/images/baike.png"
-            // className={classNames(styles.imgStyle)}
-            width="10px"
-            height="10px"
-          />
-
-          <div className={styles.carTitleStyle}>
-            <button>查看详情</button>
-          </div>
-        </div>
-        <div className={classNames(styles.rowStyle, styles.columnStyle)}>
-          <div className={styles.titleStyle}>{name}</div>
-
-          <div>
-            <a>
-              <i className="material-icons left blue-text">place</i>
-              {location}
-            </a>
-          </div>
-          <div>
-            <a href={`tel://${ph_no}`}>
-              <i className="material-icons left blue-text">phone</i>
-              {ph_no}
-            </a>
-          </div>
-          <div>
-            <button onClick={this.renderNavi.bind(this)}>
-              <i className="material-icons left blue-text">near_me</i>
-              导航前往
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   render() {
-    const { url, name, coord, location, ph_no } = this.state;
-    console.log("name", name);
     return (
-      <div>
-        <div
-          ref="map"
-          style={{
-            height: "100%",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            position: "absolute"
-            // zIndex: -1
-          }}
-        />
-        <div className={styles.cardContainer}>
-          {url !== null ? this.renderCard() : ""}
-        </div>
-      </div>
+      <div
+        ref="map"
+        style={{
+          height: "100%",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          position: "absolute"
+          // zIndex: -1
+        }}
+      />
     );
   }
 }
