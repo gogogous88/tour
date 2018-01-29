@@ -34,11 +34,13 @@ class MapResult extends Component {
       locations: [
         { lat: 38.998459, lng: -97.563037 },
         { lat: 39.998519, lng: -97.563037 }
-      ]
+      ],
+      location: { lat: null, lng: null }
     };
   }
 
   componentDidMount = async () => {
+    this.centerPloc();
     this.props.flushSelectedVehicle();
 
     // check access_token
@@ -98,6 +100,64 @@ class MapResult extends Component {
     });
   };
 
+  centerPloc() {
+    const { pickLocation } = this.props.location.query;
+
+    if (pickLocation) {
+      const plocString = toString(pickLocation);
+      console.log(plocString);
+
+      if (pickLocation === "5764") {
+        return this.setState({
+          location: { lat: 37.785903, lng: -122.433826 }
+        });
+      }
+      if (pickLocation === "5761") {
+        return this.setState({
+          location: { lat: 34.074779, lng: -118.238744 }
+        });
+      }
+      if (pickLocation === "5763") {
+        return this.setState({
+          location: { lat: 40.756763, lng: -73.982317 }
+        });
+      }
+      if (pickLocation === "6916") {
+        return this.setState({
+          location: { lat: 40.783283, lng: -111.955515 }
+        });
+      }
+      if (pickLocation === "5765") {
+        return this.setState({
+          location: { lat: 33.639293, lng: 117.770864 }
+        });
+      }
+      return this.setState({ location: { lat: 43, lng: -122 } });
+
+      // switch (plocString) {
+      //   case "5761":
+      //     this.setState({ location: { lat: 34.074779, lng: -118.238744 } });
+      //   //5761, losangeles 34.074779, -118.238744
+      //   // 5763: "new york city, NY",40.756763, -73.982317
+      //   // 5765: "Orange County, CA",33.639293, -117.770864
+      //   // 6916: "Salt Lake City, UT",40.783283, -111.955515
+      //   // 5764: "San Francisco, CA",37.785903, -122.433826
+      //   case "5763":
+      //     this.setState({ location: { lat: 40.756763, lng: -73.982317 } });
+
+      //   case "5765":
+      //     this.setState({ location: { lat: 33.639293, lng: 117.770864 } });
+
+      //   case "6916":
+      //     this.setState({ location: { lat: 40.783283, lng: -111.955515 } });
+
+      //   case "5764":
+      //     this.setState({ location: { lat: 37.785903, lng: -122.433826 } });
+      //   default:
+      //     this.setState({ location: { lat: 34.074779, lng: -118.238744 } });
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     // refetch token before expiration
     if (this.props.access_token !== nextProps.access_token) {
@@ -139,12 +199,16 @@ class MapResult extends Component {
         o => o.vehicleTypeId === conditions.vehicleTypeId
       );
     }
-    const location = { lat: 38.998459, lng: -97.563037 };
 
     if (_.isEmpty(ratesResultFlitered)) {
       return <Loading />;
     }
 
+    if (!this.state.location.lat) {
+      return <Loading />;
+    }
+
+    console.log("this.props", this.props);
     return (
       <div>
         {/* <Navigator passedStep={2} {...this.props} /> */}
@@ -155,7 +219,7 @@ class MapResult extends Component {
               const coords = vehicle.doors; */}
 
             <MapHere
-              center={location}
+              center={this.state.location}
               locations={this.state.locations}
               pin="/src/static/images/icons8-map-pin-orange-48 2.png"
               tax={tax}

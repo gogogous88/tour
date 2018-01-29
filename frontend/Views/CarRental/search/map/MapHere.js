@@ -101,7 +101,7 @@ class MapHere extends Component {
     // const array = coord.split(",");
 
     var map = new google.maps.Map(this.refs.map, {
-      zoom: 4,
+      zoom: 8,
       center: { lat, lng }
     });
 
@@ -364,34 +364,34 @@ class MapHere extends Component {
     }
 
     //add geolocation bellow
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function(position) {
-          var pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-          marker = new google.maps.Marker({
-            position: {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            },
-            map: map,
-            icon: "https://png.icons8.com/navigation/p1em/20/2980b9"
-          });
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(
+    //     function(position) {
+    //       var pos = {
+    //         lat: position.coords.latitude,
+    //         lng: position.coords.longitude
+    //       };
+    //       marker = new google.maps.Marker({
+    //         position: {
+    //           lat: position.coords.latitude,
+    //           lng: position.coords.longitude
+    //         },
+    //         map: map,
+    //         icon: "https://png.icons8.com/navigation/p1em/20/2980b9"
+    //       });
 
-          infowindow.setPosition(pos);
-          infowindow.setContent("现在我的位置");
-          map.setCenter(pos);
-        },
-        function() {
-          return true, infowindow, map.getCenter();
-        }
-      );
-    } else {
-      // Browser doesn't support Geolocation
-      return false, infowindow, map.getCenter();
-    }
+    //       infowindow.setPosition(pos);
+    //       infowindow.setContent("现在我的位置");
+    //       map.setCenter(pos);
+    //     },
+    //     function() {
+    //       return true, infowindow, map.getCenter();
+    //     }
+    //   );
+    // } else {
+    //   // Browser doesn't support Geolocation
+    //   return false, infowindow, map.getCenter();
+    // }
     //add geolocation above
 
     //center your map bellow:

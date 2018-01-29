@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import _ from "lodash";
 import classNames from "classnames/bind";
 import styles from "./styles.css";
+import { Link } from "react-router";
 
 class MapHere extends Component {
   constructor(props) {
@@ -13,7 +14,8 @@ class MapHere extends Component {
       name: null,
       coord: null,
       location: null,
-      ph_no: null
+      ph_no: null,
+      locationi: null
     };
   }
   componentDidMount() {
@@ -53,13 +55,14 @@ class MapHere extends Component {
     const { locations, pin } = this.props;
     const { lat, lng } = this.props.center;
 
-    const onOpen = (url, name, coord, location, ph_no) => {
+    const onOpen = (url, name, coord, location, ph_no, locationi) => {
       this.setState({
         url,
         name,
         coord,
         location,
-        ph_no
+        ph_no,
+        locationi
       });
     };
 
@@ -90,39 +93,21 @@ class MapHere extends Component {
           const url = "/map/" + locations[i].id;
           return function() {
             infowindow.setContent(
-              "<div><h5><a href=" +
+              "<div><a href=" +
                 url +
                 " >" +
                 locations[i].name +
-                "</a></h5></div><div>" +
-                "<a href='http://maps.google.com/maps?q=" +
-                locations[i].coord +
-                "'/>" +
-                "<div><p><a href=" +
-                url +
-                " >" +
-                "查看详情" +
-                "</a></p></div><div>" +
-                "<a href='http://maps.google.com/maps?q=" +
-                locations[i].coord +
-                "'/>" +
-                locations[i].location +
-                "<h6>" +
-                "导航前往" +
-                "</h6></a>" +
-                "<a href='tel:" +
-                locations[i].ph_no +
-                "'/>" +
-                "<h6>" +
-                locations[i].ph_no +
-                "</h6></a>" +
+                "</a></div><div>" +
+                "<button onclick='" +
                 onOpen(
                   url,
                   locations[i].name,
                   locations[i].coord,
                   locations[i].location,
-                  locations[i].ph_no
+                  locations[i].ph_no,
+                  locations[i]
                 ) +
+                "/>'" +
                 "</div>"
             );
 
@@ -132,6 +117,7 @@ class MapHere extends Component {
       );
     }
     //add geolocation bellow
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         function(position) {
@@ -211,9 +197,10 @@ class MapHere extends Component {
     }
   };
 
+  //不同的设备打开不同的导航app.
   renderNavi() {
     const { coord } = this.state;
-    console.log("不同的东东不同的导航", coord);
+
     const coordArray = coord.split(",");
     if (
       /* if we're on iOS, open in Apple Maps */
@@ -229,30 +216,74 @@ class MapHere extends Component {
     }
   }
 
+  renderPhone() {
+    const { ph_no } = this.state;
+    if (!_.isEmpty(ph_no)) {
+      return (
+        <div>
+          <a href={`tel://${ph_no}`}>
+            <i className="material-icons left blue-text">phone</i>
+            {ph_no}
+          </a>
+        </div>
+      );
+    }
+  }
+
+  renderCategory(locationi) {
+    switch (locationi.category) {
+      case "自助":
+        return <span>自助</span>;
+      case "自助餐":
+        return <span>自助</span>;
+      case "桌餐":
+        return <span>桌餐</span>;
+
+      default:
+        return <span>景点</span>;
+    }
+  }
+
   renderCard() {
-    const { url, name, coord, location, ph_no } = this.state;
+    const { url, name, coord, location, ph_no, locationi } = this.state;
 
     return (
       <div className={styles.cardStyle}>
         <div className={classNames(styles.container, styles.columnStyle)}>
-          <div style={{ marginLeft: 5, marginTop: 5 }}>
-            <button style={{ border: 1 }}>
-              关闭&nbsp;<i
-                className="fa fa-times-circle fa-1x"
-                aria-hidden="true"
-              />
-            </button>
-          </div>
-          <img
-            src="/src/static/images/baike.png"
-            // className={classNames(styles.imgStyle)}
-            width="10px"
-            height="10px"
-          />
+          <button
+            onClick={() => {
+              this.setState({ url: null });
+            }}
+            style={{
+              border: 1,
+              display: "flex",
+              alignSelf: "start",
+              marginLeft: 5,
+              marginTop: 5,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            关闭&nbsp;<i
+              className="fa fa-times-circle fa-1x"
+              aria-hidden="true"
+            />
+          </button>
+          <div style={{ marginLeft: 5, marginTop: 5 }} />
 
-          <div className={styles.carTitleStyle}>
-            <button>查看详情</button>
-          </div>
+          <button
+            style={{
+              width: 80,
+              height: 80,
+              backgroundColor: "orange",
+              borderRadius: "100%",
+              fontSize: 26,
+              color: "white"
+            }}
+            // className={classNames(styles.imgStyle)}
+          >
+            {this.renderCategory(locationi)}
+          </button>
         </div>
         <div className={classNames(styles.rowStyle, styles.columnStyle)}>
           <div className={styles.titleStyle}>{name}</div>
@@ -263,17 +294,19 @@ class MapHere extends Component {
               {location}
             </a>
           </div>
-          <div>
-            <a href={`tel://${ph_no}`}>
-              <i className="material-icons left blue-text">phone</i>
-              {ph_no}
-            </a>
-          </div>
+          {this.renderPhone()}
+
           <div>
             <button onClick={this.renderNavi.bind(this)}>
               <i className="material-icons left blue-text">near_me</i>
               导航前往
             </button>
+          </div>
+          <div>
+            <Link to={url}>
+              <i className="material-icons left blue-text">filter_list</i>
+              查看详情
+            </Link>
           </div>
         </div>
       </div>
@@ -281,10 +314,16 @@ class MapHere extends Component {
   }
 
   render() {
-    const { url, name, coord, location, ph_no } = this.state;
-    console.log("name", name);
+    const { url, name, coord, location, ph_no, locationi } = this.state;
+
     return (
-      <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
         <div
           ref="map"
           style={{

@@ -48,7 +48,7 @@ class MapDetail extends Component {
     if (!_.isEmpty(eachMapData.ph_no)) {
       return (
         <div>
-          <h6>电话：</h6>
+          <span>电话：</span>
           <a href="tel:eachMapData.ph_no">
             <p className="blog-post-meta">{eachMapData.ph_no}</p>
           </a>
@@ -72,10 +72,10 @@ class MapDetail extends Component {
     }
     return (
       <div>
-        <h6>类型：</h6>
+        <span>类型：</span>
         <blockquote>{eachMapData.category}</blockquote>
         <hr />
-        <h6>位于：</h6>
+        <span>位于：</span>
         <blockquote>{eachMapData.location}</blockquote>
       </div>
     );
@@ -92,6 +92,23 @@ class MapDetail extends Component {
         location={eachMapData}
       />
     );
+  }
+
+  renderNavi() {
+    const { coord } = this.props.eachMapData;
+
+    if (
+      /* if we're on iOS, open in Apple Maps */
+      navigator.platform.indexOf("iPhone") != -1 ||
+      navigator.platform.indexOf("iPad") != -1 ||
+      navigator.platform.indexOf("iPod") != -1
+    ) {
+      window.open(`maps://maps.google.com/maps?daddr=${coord}&amp;ll=`);
+    } else {
+      /* else use Google */ window.open(
+        `https://maps.google.com/maps?daddr=${coord}&amp;ll=`
+      );
+    }
   }
 
   renderList() {
@@ -122,10 +139,10 @@ class MapDetail extends Component {
             <div className="blog-post">
               <h4 className="blog-post-title">{eachMapData.name}</h4>
               <p className="blog-post-meta">
-                <a href={`http://maps.google.com/maps?q=${eachMapData.coord}`}>
+                <button onClick={this.renderNavi.bind(this)}>
                   <i className="fa fa-compass fa-x" aria-hidden="true" />
                   {eachMapData.addr_coord} (点击导航)
-                </a>
+                </button>
               </p>
               <hr />
               {this.renderDesc()}
@@ -145,17 +162,17 @@ class MapDetail extends Component {
             </div>
           </div>
           <div className="col-sm-12 blog-main">
-            <h6>
+            <span>
               <hr />
               <h5>描述：</h5>
               <br />
               <p style={{ lineHeight: "180%" }}>{eachMapData.descr}</p>
-            </h6>
+            </span>
           </div>
           <hr />
 
           <div className={classNames(styles.imageStyle, "col-sm-12 blog-main")}>
-            <h6>
+            <span>
               <hr />
               图片：<hr />
               <div>
@@ -167,7 +184,7 @@ class MapDetail extends Component {
                   <img src={imageURL} width="90%" />
                 </a>
               </div>
-            </h6>
+            </span>
           </div>
         </div>
       </div>

@@ -1,3 +1,7 @@
+@value primaryFontColor,
+  secondaryFontColor,
+  borderColor from "SharedStyles/globalStyles.css";
+@value smallBP, mediumBP, largeBP from "SharedStyles/globalStyles.css";
 .imgStyle {
   padding: 5px 5px 5px 5px;
   background-color: #fff;
@@ -21,20 +25,19 @@
 .cardStyle {
   display: flex;
   flex-direction: row;
-  flex: 1;
 }
 
 .rowStyle {
   display: flex;
-  flex: 5;
+  flex: 2;
   justify-content: center;
 }
 
 .columnStyle {
   display: flex;
   flex-direction: column;
-  flex: 1.5;
-  justify-content: "center";
+  flex: 1;
+  justify-content: center;
 }
 
 .carTitleStyle {
@@ -56,13 +59,29 @@
   z-index: 2;
   justify-content: center;
   position: absolute;
-  bottom: 80px;
-  right: 15px;
-  left: 15px;
+  bottom: 70px;
+
   border-radius: 5%;
 
   display: flex;
   background-color: white;
+
+  background-color: white;
+  @media largeBP {
+    left: 35%;
+
+    width: 380px;
+  }
+
+  @media mediumBP {
+    left: 35%;
+
+    width: 380px;
+  }
+  @media smallBP {
+    right: 2%;
+    left: 2%;
+  }
 }
 
 .priceList {
@@ -85,15 +104,12 @@
 
 .container {
   position: relative;
-  justify-content: center;
-  align-items: center;
-  display: flex;
   width: 100%;
   max-width: 400px;
 }
 
 .container img {
-  width: 30%;
+  width: 100%;
   height: auto;
 }
 

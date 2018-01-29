@@ -1,3 +1,7 @@
+@value primaryFontColor,
+  secondaryFontColor,
+  borderColor from "SharedStyles/globalStyles.css";
+@value smallBP, mediumBP, largeBP from "SharedStyles/globalStyles.css";
 .imgStyle {
   padding: 5px 5px 5px 5px;
   background-color: #fff;
@@ -55,13 +59,29 @@
   z-index: 2;
   justify-content: center;
   position: absolute;
-  bottom: 50px;
-  right: 15px;
-  left: 15px;
+  bottom: 70px;
+
   border-radius: 5%;
 
   display: flex;
   background-color: white;
+
+  background-color: white;
+  @media largeBP {
+    left: 35%;
+
+    width: 380px;
+  }
+
+  @media mediumBP {
+    left: 35%;
+
+    width: 380px;
+  }
+  @media smallBP {
+    right: 2%;
+    left: 2%;
+  }
 }
 
 .priceList {
