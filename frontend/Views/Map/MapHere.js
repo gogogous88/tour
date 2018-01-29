@@ -238,6 +238,10 @@ class MapHere extends Component {
         return <span>自助</span>;
       case "桌餐":
         return <span>桌餐</span>;
+      case "西餐牛扒":
+        return <span>西餐</span>;
+      case "西餐海鲜":
+        return <span>西餐</span>;
 
       default:
         return <span>景点</span>;
@@ -248,65 +252,67 @@ class MapHere extends Component {
     const { url, name, coord, location, ph_no, locationi } = this.state;
 
     return (
-      <div className={styles.cardStyle}>
-        <div className={classNames(styles.container, styles.columnStyle)}>
-          <button
-            onClick={() => {
-              this.setState({ url: null });
-            }}
-            style={{
-              border: 1,
-              display: "flex",
-              alignSelf: "start",
-              marginLeft: 5,
-              marginTop: 5,
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            关闭&nbsp;<i
-              className="fa fa-times-circle fa-1x"
-              aria-hidden="true"
-            />
-          </button>
-          <div style={{ marginLeft: 5, marginTop: 5 }} />
+      <div>
+        <button
+          onClick={() => {
+            this.setState({ url: null });
+          }}
+          style={{
+            border: 1,
+            display: "flex",
+            alignSelf: "start",
+            marginLeft: 5,
+            marginTop: 5,
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          关闭&nbsp;<i
+            className="fa fa-times-circle fa-1x"
+            aria-hidden="true"
+          />
+        </button>
+        <div className={styles.cardStyle}>
+          <div className={classNames(styles.container, styles.columnStyle)}>
+            <div style={{ marginLeft: 5, marginTop: 5 }} />
 
-          <button
-            style={{
-              width: 80,
-              height: 80,
-              backgroundColor: "orange",
-              borderRadius: "100%",
-              fontSize: 26,
-              color: "white"
-            }}
-            // className={classNames(styles.imgStyle)}
-          >
-            {this.renderCategory(locationi)}
-          </button>
-        </div>
-        <div className={classNames(styles.rowStyle, styles.columnStyle)}>
-          <div className={styles.titleStyle}>{name}</div>
-
-          <div>
-            <a>
-              <i className="material-icons left blue-text">place</i>
-              {location}
-            </a>
-          </div>
-          {this.renderPhone()}
-
-          <div>
-            <button onClick={this.renderNavi.bind(this)}>
-              <i className="material-icons left blue-text">near_me</i>
-              导航前往
+            <button
+              style={{
+                width: 60,
+                height: 60,
+                backgroundColor: "orange",
+                borderRadius: "100%",
+                fontSize: 26,
+                color: "white"
+              }}
+              // className={classNames(styles.imgStyle)}
+            >
+              {this.renderCategory(locationi)}
             </button>
           </div>
-          <div>
-            <Link to={url}>
-              <i className="material-icons left blue-text">filter_list</i>
-              查看详情
-            </Link>
+          <div className={classNames(styles.rowStyle, styles.column2Style)}>
+            <div className={styles.titleStyle}>{name}</div>
+
+            <div>
+              <a>
+                <i className="material-icons left blue-text">place</i>
+                {location}
+              </a>
+            </div>
+            {this.renderPhone()}
+
+            <div>
+              <button onClick={this.renderNavi.bind(this)}>
+                <i className="material-icons left blue-text">near_me</i>
+                导航前往
+              </button>
+            </div>
+            <div>
+              <Link to={url}>
+                <i className="material-icons left blue-text">filter_list</i>
+                查看详情
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -317,13 +323,7 @@ class MapHere extends Component {
     const { url, name, coord, location, ph_no, locationi } = this.state;
 
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
+      <div>
         <div
           ref="map"
           style={{

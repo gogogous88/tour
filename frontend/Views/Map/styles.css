@@ -12,7 +12,7 @@
 
 .imgCardStyle {
   display: flex;
-  flex: 1;
+  flex: 0.5;
 }
 
 .titleStyle {
@@ -25,21 +25,26 @@
 .cardStyle {
   display: flex;
   flex-direction: row;
+  width: 100%;
+  justify-content: flex-start;
 }
 
 .rowStyle {
   display: flex;
   flex: 2;
-  justify-content: center;
 }
 
 .columnStyle {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 0.5;
+}
+.column2Style {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
   justify-content: center;
 }
-
 .carTitleStyle {
   padding-bottom: 6px;
   display: flex;
@@ -64,6 +69,7 @@
   border-radius: 5%;
 
   display: flex;
+  flex: 1;
   background-color: white;
 
   background-color: white;
@@ -105,7 +111,7 @@
 .container {
   position: relative;
   width: 100%;
-  max-width: 400px;
+  max-width: 300px;
 }
 
 .container img {
