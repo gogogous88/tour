@@ -97,8 +97,11 @@ class MapHere extends Component {
                 url +
                 " >" +
                 locations[i].name +
-                "</a></div><div>" +
-                "<button onclick='" +
+                "</a></div>" +
+                "<span>" +
+                locations[i].location +
+                "</span>" +
+                "<span onclick='" +
                 onOpen(
                   url,
                   locations[i].name,
@@ -216,19 +219,19 @@ class MapHere extends Component {
     }
   }
 
-  renderPhone() {
-    const { ph_no } = this.state;
-    if (!_.isEmpty(ph_no)) {
-      return (
-        <div>
-          <a href={`tel://${ph_no}`}>
-            <i className="material-icons left blue-text">phone</i>
-            {ph_no}
-          </a>
-        </div>
-      );
-    }
-  }
+  // renderPhone() {
+  //   const { ph_no } = this.state;
+  //   if (!_.isEmpty(ph_no)) {
+  //     return (
+  //       <div className={styles.cardStyle}>
+  //         <a }>
+  //           <i className="material-icons blue-text">phone</i>
+  //         </a>
+  //         <a href={`tel://${ph_no}`}>{ph_no}</a>
+  //       </div>
+  //     );
+  //   }
+  // }
 
   renderCategory(locationi) {
     switch (locationi.category) {
@@ -272,48 +275,71 @@ class MapHere extends Component {
             aria-hidden="true"
           />
         </button>
-        <div className={styles.cardStyle}>
-          <div className={classNames(styles.container, styles.columnStyle)}>
-            <div style={{ marginLeft: 5, marginTop: 5 }} />
-
-            <button
-              style={{
-                width: 60,
-                height: 60,
-                backgroundColor: "orange",
-                borderRadius: "100%",
-                fontSize: 26,
-                color: "white"
-              }}
-              // className={classNames(styles.imgStyle)}
-            >
-              {this.renderCategory(locationi)}
-            </button>
-          </div>
+        {/* <div className={styles.cardStyle}>
           <div className={classNames(styles.rowStyle, styles.column2Style)}>
             <div className={styles.titleStyle}>{name}</div>
-
-            <div>
-              <a>
-                <i className="material-icons left blue-text">place</i>
-                {location}
-              </a>
-            </div>
             {this.renderPhone()}
-
-            <div>
-              <button onClick={this.renderNavi.bind(this)}>
-                <i className="material-icons left blue-text">near_me</i>
-                导航前往
-              </button>
+            <div className={styles.descStyle}>
+              <div className={styles.cardStyle}>
+                <i
+                  onClick={this.renderNavi.bind(this)}
+                  className="material-icons blue-text"
+                >
+                  near_me
+                </i>
+                <button onClick={this.renderNavi.bind(this)}>导航前往</button>
+              </div>
             </div>
-            <div>
-              <Link to={url}>
-                <i className="material-icons left blue-text">filter_list</i>
-                查看详情
-              </Link>
+            <div className={styles.descStyle}>
+              <div>
+                <a>
+                  <i className="material-icons blue-text">place</i>
+                  {location}
+                </a>
+              </div>
+
+              <div>
+                <Link to={url}>
+                  <i className="material-icons blue-text">filter_list</i>
+                  查看详情
+                </Link>
+              </div>
             </div>
           </div>
+        </div> */}
+
+        <div className={styles.buttonContainer}>
+          <Link
+            to={url}
+            className={classNames(styles.buttonMargin, "btn grey lighten-2")}
+          >
+            <div className={styles.buttonRow}>
+              <i className="fa fa-list-ul" aria-hidden="true" />
+              <span>详情</span>
+            </div>
+          </Link>
+          <button
+            onClick={this.renderNavi.bind(this)}
+            className={classNames(styles.buttonMargin, "btn grey lighten-2")}
+          >
+            <div className={styles.buttonRow}>
+              <i className="fa fa-location-arrow" aria-hidden="true" />
+              <span>导航</span>
+            </div>
+          </button>
+          {!_.isEmpty(ph_no) ? (
+            <a
+              className={classNames(styles.buttonMargin, "btn grey lighten-2")}
+              href={`tel://${ph_no}`}
+            >
+              <div className={styles.buttonRow}>
+                <i className="fa fa-phone" aria-hidden="true" />
+                <span>致电</span>
+              </div>
+            </a>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );
@@ -335,9 +361,8 @@ class MapHere extends Component {
             // zIndex: -1
           }}
         />
-        <div className={styles.cardContainer}>
-          {url !== null ? this.renderCard() : ""}
-        </div>
+        {/* <div>{url !== null ? this.renderCard() : ""}</div> */}
+        <div>{this.renderCard()}</div>
       </div>
     );
   }

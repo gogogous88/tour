@@ -26,11 +26,12 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  justify-content: flex-start;
+  align-content: center;
 }
 
 .rowStyle {
   display: flex;
+
   flex: 2;
 }
 
@@ -54,9 +55,10 @@
 }
 
 .descStyle {
-  margin-top: 10px;
+  margin-top: 5px;
   flex-direction: row;
   display: flex;
+
   justify-content: space-around;
 }
 
@@ -139,4 +141,26 @@
 .container .btn:hover {
   background-color: rgb(61, 170, 182);
   color: rgb(221, 209, 209);
+}
+
+.buttonContainer {
+  left: 30px;
+  z-index: 2;
+  align-items: space-around;
+  position: absolute;
+  bottom: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonMargin {
+  margin-top: 15px;
+}
+
+.buttonRow {
+  color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }

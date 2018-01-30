@@ -125,6 +125,9 @@ class MapDetail extends Component {
         },${eachMapData.lng}
     &fov=90&heading=90&pitch=10 &key=AIzaSyBoHhk8Y-oh2rfaRt9IbBFgCOv175YFOyQ`;
 
+    const addrArray = eachMapData.addr.split(",");
+    console.log(addrArray);
+
     if (!eachMapData.id) {
       return <Loading />;
     }
@@ -138,12 +141,16 @@ class MapDetail extends Component {
           <div className="col-sm-6 blog-main">
             <div className="blog-post">
               <h4 className="blog-post-title">{eachMapData.name}</h4>
-              <p className="blog-post-meta">
-                <button onClick={this.renderNavi.bind(this)}>
-                  <i className="fa fa-compass fa-x" aria-hidden="true" />
-                  {eachMapData.addr_coord} (点击导航)
-                </button>
-              </p>
+              <span className="blog-post-meta">
+                <span onClick={this.renderNavi.bind(this)}>
+                  <i className="fa fa-location-arrow fa-x" aria-hidden="true" />{" "}
+                  &nbsp;
+                  {!_.isEmpty(eachMapData.addr)
+                    ? `${addrArray[0] + "," + addrArray[1]}`
+                    : eachMapData.coord}
+                  (点击导航)
+                </span>
+              </span>
               <hr />
               {this.renderDesc()}
             </div>
