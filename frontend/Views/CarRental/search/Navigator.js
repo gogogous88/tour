@@ -14,7 +14,11 @@ class Navigator extends Component {
   constructor(props) {
     super(props);
     moment.locale(document.documentElement.lang || "en");
-    this.state = { naviCondition: false, toggleSubMenu: false };
+    this.state = {
+      naviCondition: false,
+      toggleSubMenu: false,
+      vehicleSelected: null
+    };
   }
 
   returnToSearch = stepId => {
@@ -39,7 +43,7 @@ class Navigator extends Component {
 
   selectVehicleType = (e, vehicleTypeId) => {
     e.preventDefault();
-
+    this.setState({ naviCondition: false });
     this.props.updateSearchConditions({ vehicleTypeId });
   };
 
@@ -62,6 +66,7 @@ class Navigator extends Component {
             _.get(vehicleTypes, [conditions.vehicleTypeId, "vehicleType"])
           )
         : "";
+
     return (
       _.get(selectedVehicle, "vehicleName") ||
       justSelectedVehicleName ||
@@ -97,15 +102,74 @@ class Navigator extends Component {
             appLayout.showOnSmallBP
           )}
         >
-          <div className={classNames(styles.searchConditions, { container })}>
-            <button
-              onClick={() => {
-                this.setState({ naviCondition: true });
-              }}
-              className="grey lighten-3 btn"
-            >
-              <span style={{ color: "black" }}>筛选车型</span>
-            </button>
+          <div style={{ display: "flex", flexDirection: "row", flex: 1 }}>
+            <div style={{ display: "flex", flex: 1 }}>
+              <div
+                className={classNames(styles.conditionItem, {
+                  active: passedStep >= 1
+                })}
+              >
+                <div
+                  className={styles.detail}
+                  onClick={
+                    passedStep >= 1
+                      ? () => this.returnToSearch("step1")
+                      : () => {}
+                  }
+                >
+                  <h3>1. 租车日期</h3>
+                  <p>{`${moment(renderDateTime(conditions, "pick")).format(
+                    "MM/DD"
+                  )} -${moment(renderDateTime(conditions, "return")).format(
+                    "MM/DD"
+                  )}`}</p>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: "flex", flex: 1 }}>
+              <div
+                className={classNames(styles.conditionItem, {
+                  active: passedStep >= 2
+                })}
+              >
+                <div
+                  className={styles.detail}
+                  onClick={
+                    passedStep >= 2
+                      ? () => this.returnToSearch("step2")
+                      : () => {}
+                  }
+                >
+                  <h3>2. 取还地点</h3>
+                  <p>
+                    {pickLocationName === returnLocationName
+                      ? pickLocationName
+                      : ` ${pickLocationName} - ${returnLocationName}`}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: "flex", flex: 1 }}>
+              <div
+                className={classNames(styles.searchConditions, { container })}
+              >
+                <button
+                  onClick={() => {
+                    this.setState({ naviCondition: true });
+                  }}
+                  className="grey lighten-3 btn"
+                >
+                  <span style={{ color: "black" }}>
+                    {/* {this.state.vehicleSelected
+                      ? this.state.vehicleSelected
+                      : "筛选车型"} */}
+                    {this.showVehicleSelectTitle()}
+                  </span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       );
@@ -137,7 +201,7 @@ class Navigator extends Component {
               onClick={this.handleMenuShow.bind(this)}
               onMouseLeave={this.handleMenuHide.bind(this)}
             >
-              <h3>3. 筛选车型</h3>
+              <h3>3. 选择车型</h3>
               <div className={styles.typesDropdownWrap}>
                 <a href="#" className={styles.currentName}>
                   {this.showVehicleSelectTitle()}
@@ -151,13 +215,6 @@ class Navigator extends Component {
                     )}
                     id="subMenu"
                   >
-                    <li
-                      onClick={() => {
-                        this.setState({ toggleSubMenu: false });
-                      }}
-                    >
-                      关闭
-                    </li>
                     {conditions.vehicleTypeId > 0 && (
                       <li>
                         <a
