@@ -309,24 +309,32 @@ class MapHere extends Component {
         </div> */}
 
         <div className={styles.buttonContainer}>
-          <Link
-            to={url}
-            className={classNames(styles.buttonMargin, "btn grey lighten-2")}
-          >
-            <div className={styles.buttonRow}>
-              <i className="fa fa-list-ul" aria-hidden="true" />
-              <span>详情</span>
-            </div>
-          </Link>
-          <button
-            onClick={this.renderNavi.bind(this)}
-            className={classNames(styles.buttonMargin, "btn grey lighten-2")}
-          >
-            <div className={styles.buttonRow}>
-              <i className="fa fa-location-arrow" aria-hidden="true" />
-              <span>导航</span>
-            </div>
-          </button>
+          {!_.isEmpty(coord) ? (
+            <Link
+              to={url}
+              className={classNames(styles.buttonMargin, "btn grey lighten-2")}
+            >
+              <div className={styles.buttonRow}>
+                <i className="fa fa-list-ul" aria-hidden="true" />
+                <span>详情</span>
+              </div>
+            </Link>
+          ) : (
+            ""
+          )}
+          {!_.isEmpty(coord) ? (
+            <button
+              onClick={this.renderNavi.bind(this)}
+              className={classNames(styles.buttonMargin, "btn grey lighten-2")}
+            >
+              <div className={styles.buttonRow}>
+                <i className="fa fa-location-arrow" aria-hidden="true" />
+                <span>导航</span>
+              </div>
+            </button>
+          ) : (
+            ""
+          )}
           {!_.isEmpty(ph_no) ? (
             <a
               className={classNames(styles.buttonMargin, "btn grey lighten-2")}

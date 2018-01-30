@@ -14,6 +14,12 @@ class UserMenu extends Component {
     this.toggleNaviMenu = this.toggleNaviMenu.bind(this);
   }
 
+  componentWillReceiveProps = async () => {
+    await this.setState({
+      activeSubMenu: this.props.hello
+    });
+  };
+
   handleClickOutside() {
     this.setState({ activeSubMenu: false });
   }
@@ -49,7 +55,24 @@ class UserMenu extends Component {
           <ul>
             <li className={styles.signInLink}>
               <a
-                href="/map"
+                href="/"
+                className={styles.links}
+                activeClassName={styles.linkActive}
+              >
+                <i
+                  className={classnames("fa fa-github-alt", styles.subMenuOcto)}
+                />
+                <span style={{ color: "#339ce6" }}>途盖首页</span>
+              </a>
+            </li>
+            <li className={styles.signInLink}>
+              <Link
+                to="/map"
+                onClick={() => {
+                  this.setState(prevState => {
+                    return { activeNaviMenu: !prevState.activeNaviMenu };
+                  });
+                }}
                 className={styles.links}
                 activeClassName={styles.linkActive}
               >
@@ -57,11 +80,16 @@ class UserMenu extends Component {
                   className={classnames("fa fa-github-alt", styles.subMenuOcto)}
                 />
                 <span style={{ color: "#339ce6" }}>团餐景点导航</span>
-              </a>
+              </Link>
             </li>
             <li className={styles.signInLink}>
-              <a
-                href="/car-rental"
+              <Link
+                onClick={() => {
+                  this.setState(prevState => {
+                    return { activeNaviMenu: !prevState.activeNaviMenu };
+                  });
+                }}
+                to="/car-rental"
                 className={styles.links}
                 activeClassName={styles.linkActive}
               >
@@ -69,7 +97,7 @@ class UserMenu extends Component {
                   className={classnames("fa fa-github-alt", styles.subMenuOcto)}
                 />
                 <span style={{ color: "#339ce6" }}>商务租车</span>
-              </a>
+              </Link>
             </li>
             {navigationLinks.map(link => {
               if (link.id === 0) {
@@ -200,6 +228,8 @@ class UserMenu extends Component {
   render() {
     const { signedIn, userName, avatar, signOutAction } = this.props;
 
+    console.log("this.props.hello", this.props.hello);
+
     if (signedIn) {
       return (
         <div style={{ position: "relative" }}>
@@ -229,7 +259,7 @@ class UserMenu extends Component {
         </div>
       );
     }
-
+    console.log("check", this.state.activeSubMenu);
     return (
       <div className={styles.container}>
         <div className={appLayout.showExSmallBP}>

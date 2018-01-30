@@ -22,10 +22,7 @@ class Discussion extends Component {
       return (
         <div key={eachImg.secure_url} style={{ marginTop: 15 }}>
           <li>
-            <img
-              src={eachImg.secure_url}
-              style={{ alignSelf: "center", width: "80%" }}
-            />
+            <img src={eachImg.secure_url} className={styles.imgSize} />
           </li>
         </div>
       );
@@ -38,7 +35,7 @@ class Discussion extends Component {
       case "tour_wiki":
         return (
           <div>
-            {renderHTML(discContent)}
+            <RichEditor readOnly={true} value={discContent} />
             <ul>{this.renderUploadImages(uploadImg)}</ul>
           </div>
         );

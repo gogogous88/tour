@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styles from "./styles";
 import keys from "../../../../config/credentials";
+import { Link } from "react-router";
 
 const Logo = () => {
   return (

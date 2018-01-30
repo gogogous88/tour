@@ -15,6 +15,7 @@ import ImgUL from "../../Components/FormCommon/ImgUL";
 import QuillEditor from "../../Components/QullEditor";
 
 import Loading from "../../Components/Loading";
+import UserMenu from "../../Components/Header/UserMenu";
 
 // import DraftEditor from "../../Components/Rich_Editor/DraftEditor/DraftEditor";
 
@@ -53,7 +54,8 @@ class NewDiscussion extends Component {
       forumId: null,
       userId: null,
       fatalError: null,
-      sup_or_req: this.props.route.sup_or_req
+      sup_or_req: this.props.route.sup_or_req,
+      userMenu: false
     };
   }
 
@@ -875,11 +877,11 @@ class NewDiscussion extends Component {
               </div>
 
               <div>
-                <QuillEditor
+                <RichEditor
                   key={"content"}
                   type="newDiscussion"
                   value={content}
-                  contentInput={"具体信息..."}
+                  contentInput={"详细攻略"}
                   onChange={value => {
                     updateDiscussionContent(value);
                   }}
@@ -1046,7 +1048,20 @@ class NewDiscussion extends Component {
 
     return (
       <div className={classnames(appLayout.constraintWidth, styles.signInMsg)}>
-        发布信息前请先登录...
+        <span>
+          发布信息前请先<button
+            style={{ borderBottomWidth: 1 }}
+            onMouseEnter={() => {
+              this.setState({ userMenu: true });
+            }}
+            onClick={() => {
+              this.setState({ userMenu: true });
+            }}
+          >
+            <span style={{ color: "blue", borderBottomWidth: 1 }}>登录</span>
+          </button>...
+        </span>
+        {this.state.userMenu ? <UserMenu hello={true} /> : ""}
       </div>
     );
   }

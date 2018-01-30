@@ -1,7 +1,7 @@
 @value borderColor,
   secondaryFontColor,
   primaryFontColor from "SharedStyles/globalStyles.css";
-@value smallBP from "SharedStyles/globalStyles.css";
+@value largeBP, mediumBP, smallBP from "SharedStyles/globalStyles.css";
 
 /**
  * Discussion styles
@@ -139,4 +139,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.imgSize {
+  display: flex;
+  @media largeBP {
+    width: 50%;
+  }
+  @media mediumBP {
+    width: 70%;
+  }
+  @media smallBP {
+    width: 100%;
+  }
 }

@@ -19,7 +19,7 @@ import { fetchToken, fetchLocations, updateSearchConditions } from "../actions";
 import LocationDropdown from "./LocationDropdown";
 import DateTimeDropdown from "./DateTimeDropdown";
 import AgeDropdown from "./AgeDropdown";
-import Loading from "./Loading";
+import Loading from "../../../Components/Loading";
 
 import styles from "./styles/search.css";
 
@@ -299,17 +299,7 @@ class Search extends Component {
   render() {
     // const md = new MobileDetect(window.navigator.userAgent);
     if (_.isEmpty(this.props.locations)) {
-      return (
-        <div className={styles.searchContainer}>
-          <div className="container">
-            <div className="row">
-              <div className={classNames(styles.divInRow, "col")}>
-                <Loading />
-              </div>
-            </div>
-          </div>
-        </div>
-      );
+      return <Loading />;
     }
 
     return (
