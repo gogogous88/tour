@@ -39,9 +39,8 @@ class Navigator extends Component {
 
   selectVehicleType = (e, vehicleTypeId) => {
     e.preventDefault();
-    this.setState({ toggleSubMenu: false });
+
     this.props.updateSearchConditions({ vehicleTypeId });
-    $("#subMenu").css("display", "none");
   };
 
   handleMenuShow = () => {
@@ -135,10 +134,7 @@ class Navigator extends Component {
             />
             <div
               className={styles.detail}
-              onClick={
-                passedStep >= 3 ? () => this.returnToSearch("step3") : () => {}
-              }
-              onMouseEnter={this.handleMenuShow.bind(this)}
+              onClick={this.handleMenuShow.bind(this)}
               onMouseLeave={this.handleMenuHide.bind(this)}
             >
               <h3>3. 筛选车型</h3>
@@ -155,6 +151,13 @@ class Navigator extends Component {
                     )}
                     id="subMenu"
                   >
+                    <li
+                      onClick={() => {
+                        this.setState({ toggleSubMenu: false });
+                      }}
+                    >
+                      关闭
+                    </li>
                     {conditions.vehicleTypeId > 0 && (
                       <li>
                         <a
@@ -162,7 +165,6 @@ class Navigator extends Component {
                           href="#"
                           title="All Vehicle Class"
                           onClick={e => this.selectVehicleType(e, 0)}
-                          onMouseEnter={this.handleMenuShow.bind(this)}
                         >
                           所有车型
                         </a>
@@ -184,9 +186,10 @@ class Navigator extends Component {
                         <a
                           href="#"
                           title={this.vehicleNameByLocale(vehicleType)}
-                          onClick={e =>
-                            this.selectVehicleType(e, vehicleTypeId)
-                          }
+                          onClick={e => {
+                            this.selectVehicleType(e, vehicleTypeId);
+                            this.setState({ toggleSubMenu: true });
+                          }}
                         >
                           {this.vehicleNameByLocale(vehicleType)}
                         </a>
