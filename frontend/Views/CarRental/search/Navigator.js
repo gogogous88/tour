@@ -14,7 +14,7 @@ class Navigator extends Component {
   constructor(props) {
     super(props);
     moment.locale(document.documentElement.lang || "en");
-    this.state = { naviCondition: false };
+    this.state = { naviCondition: false, toggleSubMenu: false };
   }
 
   returnToSearch = stepId => {
@@ -39,18 +39,22 @@ class Navigator extends Component {
 
   selectVehicleType = (e, vehicleTypeId) => {
     e.preventDefault();
+    this.setState({ toggleSubMenu: false });
     this.props.updateSearchConditions({ vehicleTypeId });
     $("#subMenu").css("display", "none");
   };
 
   handleMenuShow = () => {
     $("#subMenu").css("display", "block");
+    this.setState({ toggleSubMenu: true });
   };
 
   handleMenuHide = () => {
     $("#subMenu").css("display", "none");
+    this.setState({ toggleSubMenu: false });
   };
 
+  // 显示选择了哪种车型
   showVehicleSelectTitle = () => {
     const { conditions, selectedVehicle, vehicleTypes } = this.props;
     const justSelectedVehicleName =
@@ -75,14 +79,16 @@ class Navigator extends Component {
       vehicleTypes
     } = this.props;
 
-    const pickLocationName = _.get(locations, [
+    const pickLocationNameArray = _.get(locations, [
       conditions.pickLocation,
       "locationName"
-    ]);
-    const returnLocationName = _.get(locations, [
+    ]).split("|");
+    const pickLocationName = pickLocationNameArray[1];
+    const returnLocationNameArray = _.get(locations, [
       conditions.returnLocation,
       "locationName"
-    ]);
+    ]).split("|");
+    const returnLocationName = returnLocationNameArray[1];
 
     if (!this.state.naviCondition) {
       return (
@@ -105,6 +111,9 @@ class Navigator extends Component {
         </div>
       );
     }
+    const className = this.state.toggleSubMenu
+      ? styles.displayFlex
+      : styles.displayNone;
     return (
       <div
         className={classNames(
@@ -129,8 +138,8 @@ class Navigator extends Component {
               onClick={
                 passedStep >= 3 ? () => this.returnToSearch("step3") : () => {}
               }
-              onMouseEnter={this.handleMenuShow}
-              onMouseLeave={this.handleMenuHide}
+              onMouseEnter={this.handleMenuShow.bind(this)}
+              onMouseLeave={this.handleMenuHide.bind(this)}
             >
               <h3>3. 筛选车型</h3>
               <div className={styles.typesDropdownWrap}>
@@ -139,15 +148,21 @@ class Navigator extends Component {
                 </a>
                 {passedStep === 2 && (
                   <ul
-                    className={classNames(styles.subMenu, "list-unstyled")}
+                    className={classNames(
+                      styles.subMenu,
+                      className,
+                      "list-unstyled"
+                    )}
                     id="subMenu"
                   >
                     {conditions.vehicleTypeId > 0 && (
                       <li>
                         <a
+                          className={styles.aStyle}
                           href="#"
                           title="All Vehicle Class"
                           onClick={e => this.selectVehicleType(e, 0)}
+                          onMouseEnter={this.handleMenuShow.bind(this)}
                         >
                           所有车型
                         </a>
@@ -156,12 +171,15 @@ class Navigator extends Component {
                     {_.map(vehicleTypes, ({ vehicleTypeId, vehicleType }) => (
                       <li
                         key={vehicleTypeId}
-                        className={classNames({
-                          active:
-                            vehicleTypeId === conditions.vehicleTypeId ||
-                            vehicleTypeId ===
-                              _.get(selectedVehicle, "vehicleTypeId")
-                        })}
+                        className={classNames(
+                          {
+                            active:
+                              vehicleTypeId === conditions.vehicleTypeId ||
+                              vehicleTypeId ===
+                                _.get(selectedVehicle, "vehicleTypeId")
+                          },
+                          styles.aStyle
+                        )}
                       >
                         <a
                           href="#"
@@ -193,14 +211,16 @@ class Navigator extends Component {
       vehicleTypes
     } = this.props;
 
-    const pickLocationName = _.get(locations, [
+    const pickLocationNameArray = _.get(locations, [
       conditions.pickLocation,
       "locationName"
-    ]);
-    const returnLocationName = _.get(locations, [
+    ]).split("|");
+    const pickLocationName = pickLocationNameArray[1];
+    const returnLocationNameArray = _.get(locations, [
       conditions.returnLocation,
       "locationName"
-    ]);
+    ]).split("|");
+    const returnLocationName = returnLocationNameArray[1];
 
     return (
       <div>
@@ -257,11 +277,11 @@ class Navigator extends Component {
                     : () => {}
                 }
               >
-                <h3>2. 取环地点</h3>
+                <h3>2. 取还地点</h3>
                 <p>
                   {pickLocationName === returnLocationName
                     ? pickLocationName
-                    : pickLocationName - returnLocationName}
+                    : ` ${pickLocationName} - ${returnLocationName}`}
                 </p>
               </div>
             </div>
@@ -299,6 +319,7 @@ class Navigator extends Component {
                       {conditions.vehicleTypeId > 0 && (
                         <li>
                           <a
+                            className={styles.aStyle}
                             href="#"
                             title="All Vehicle Class"
                             onClick={e => this.selectVehicleType(e, 0)}
@@ -310,12 +331,15 @@ class Navigator extends Component {
                       {_.map(vehicleTypes, ({ vehicleTypeId, vehicleType }) => (
                         <li
                           key={vehicleTypeId}
-                          className={classNames({
-                            active:
-                              vehicleTypeId === conditions.vehicleTypeId ||
-                              vehicleTypeId ===
-                                _.get(selectedVehicle, "vehicleTypeId")
-                          })}
+                          className={classNames(
+                            {
+                              active:
+                                vehicleTypeId === conditions.vehicleTypeId ||
+                                vehicleTypeId ===
+                                  _.get(selectedVehicle, "vehicleTypeId")
+                            },
+                            styles.aStyle
+                          )}
                         >
                           <a
                             href="#"

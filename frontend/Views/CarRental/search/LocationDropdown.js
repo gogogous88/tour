@@ -22,8 +22,11 @@ class LocationDropdown extends React.Component {
   }
   render() {
     function renderLocationName(locationId) {
-      return _.get(props.locations, [locationId, "locationName"]);
+      const showName = _.get(props.locations, [locationId, "locationName"]);
+      const showNameZh = showName.split("|");
+      return showNameZh[1];
     }
+
     const { props } = this;
     const disabled = styles.disabled;
     return (
@@ -47,11 +50,15 @@ class LocationDropdown extends React.Component {
                 onChange={props.onInputChange}
                 disabled={props.isDisabled}
               >
-                {_.map(props.locations, ({ locationId, locationName }) => (
-                  <option key={locationId} value={locationId}>
-                    {locationName}
-                  </option>
-                ))}
+                {_.map(props.locations, ({ locationId, locationName }) => {
+                  const locationNameZh = locationName.split("|");
+
+                  return (
+                    <option key={locationId} value={locationId}>
+                      {locationNameZh[1]}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <i className="fa fa-map-marker fa-1" />

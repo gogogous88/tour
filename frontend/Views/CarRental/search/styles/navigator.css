@@ -41,7 +41,8 @@ h3 {
 
 .typesDropdownWrap {
   position: relative;
-  z-index: 99;
+
+  z-index: 1;
 }
 
 .subMenu {
@@ -49,14 +50,34 @@ h3 {
   background-color: white;
   box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(0, 0, 0, 0.15);
-  display: none;
+  width: 300px;
+
+  flex-direction: column;
   overflow: auto;
   min-width: 100px;
   max-width: 200px;
-  max-height: 400px;
+  max-height: 500px;
+}
+.aStyle {
+  font-size: 14px;
+  padding: 2px 15px;
+  white-space: nowrap;
+  display: block;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #f4f4f1;
+  }
+}
+
+.displayFlex {
+  display: flex;
+}
+.displayNone {
+  display: none;
 }
 
 .makeNaviFront {
   display: flex;
-  z-index: 99;
+  z-index: 1;
 }

@@ -148,7 +148,9 @@ class Result extends Component {
                 onVehicleSelect={this.onVehicleSelect}
               />
             ))}
-            {_.size(ratesResultFlitered) === 0 && <div>no result matched</div>}
+            {_.size(ratesResultFlitered) === 0 && (
+              <div>再您指定的日期该车型已售尽</div>
+            )}
           </div>
           <div className="fixed-action-btn toolbar">
             <a className="btn-floating btn-large red">
