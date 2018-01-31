@@ -8,6 +8,11 @@ import moment from "moment";
 
 import Loading from "../../Components/Loading";
 
+import UserMenu from "../../Components/Header/UserMenu";
+import appLayout from "SharedStyles/appLayout.css";
+
+import Sidebar from "../../Components/SideBar";
+
 import {
   getDiscussion,
   toggleFavorite,
@@ -23,14 +28,13 @@ import ReplyBox from "Components/SingleDiscussion/ReplyBox";
 import Opinion from "Components/SingleDiscussion/Opinion";
 
 import styles from "./styles.css";
-import appLayout from "SharedStyles/appLayout.css";
 
 import keys from "../../../config/credentials";
 
 class SingleDiscussion extends Component {
   constructor(props) {
     super(props);
-    this.state = { opinionContent: "" };
+    this.state = { opinionContent: "", userMenu: false };
   }
 
   componentDidMount() {
@@ -217,6 +221,44 @@ class SingleDiscussion extends Component {
     }
   }
 
+  renderSup = currentForum => {
+    console.log("current", currentForum);
+    switch (currentForum) {
+      case "shun_feng_che":
+        return <div>发布提供顺风车</div>;
+      case "pin_fang":
+        return <div>发布提供拼房</div>;
+      case "market":
+        return <div>发布出售信息</div>;
+      case "fa_tuan_jie_huo":
+        return <div>发团信息发布</div>;
+      case "tour_wiki":
+        return <div>发布科普信息</div>;
+
+      default:
+        return <div>发布提供信息</div>;
+    }
+  };
+
+  renderReq = currentForum => {
+    console.log("current", currentForum);
+    switch (currentForum) {
+      case "shun_feng_che":
+        return <div>发布寻求顺风车</div>;
+      case "pin_fang":
+        return <div>发布寻求拼房</div>;
+      case "market":
+        return <div>发布求购信息</div>;
+      case "fa_tuan_jie_huo":
+        return <div>求团信息发布</div>;
+      case "tour_wiki":
+        return <div>发布攻略信息</div>;
+
+      default:
+        return <div>发布寻求信息</div>;
+    }
+  };
+
   render() {
     const {
       userAuthenticated,
@@ -275,7 +317,9 @@ class SingleDiscussion extends Component {
       favorites
     );
 
-    console.log(forum.forum_slug);
+    const currentForum = this.props.params.forum;
+
+    const category = { shun_feng_che: "顺风车", pin_fang: "拼房" };
 
     return (
       <div className={appLayout.constraintWidth}>
@@ -310,7 +354,24 @@ class SingleDiscussion extends Component {
         {opinionError && <div className={styles.errorMsg}>{opinionError}</div>}
 
         {!userAuthenticated && (
-          <div className={styles.signInMsg}>请再登录后回复...</div>
+          <div className={classnames(styles.signInMsg)}>
+            <span>
+              回复信息前请先<button
+                style={{ borderBottomWidth: 1 }}
+                onMouseEnter={() => {
+                  this.setState({ userMenu: true });
+                }}
+                onClick={() => {
+                  this.setState({ userMenu: true });
+                }}
+              >
+                <span style={{ color: "blue", borderBottomWidth: 1 }}>
+                  登录
+                </span>
+              </button>...
+            </span>
+            {this.state.userMenu ? <UserMenu hello={true} /> : ""}
+          </div>
         )}
         {userAuthenticated && (
           <ReplyBox
@@ -341,6 +402,14 @@ class SingleDiscussion extends Component {
               />
             );
           })}
+
+        <Sidebar
+          currentForum={currentForum}
+          title={{
+            supTitle: this.renderSup(currentForum),
+            reqTitle: this.renderReq(currentForum)
+          }}
+        />
       </div>
     );
   }

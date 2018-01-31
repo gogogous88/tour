@@ -173,28 +173,38 @@ class Discussion extends Component {
 
         <div className={styles.discContent}>{this.renderContent()}</div>
 
-        <div className={styles.discFooter}>
-          <div className={styles.tags}>
-            {tags.map(tag => <Tag name={tag} key={_.uniqueId("tag_")} />)}
-          </div>
-
-          <Button
-            noUppercase
-            className={styles.favoriteButton}
-            onClick={() => {
-              !toggleingFavorite && favoriteAction(id);
-            }}
-          >
-            {this.renderNameOrPhoneNo()}
-            {/* <i
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center"
+          }}
+        >
+          <div>{this.renderShare()}</div>
+          <div>
+            <Button
+              noUppercase
+              className={styles.favoriteButton}
+              onClick={() => {
+                !toggleingFavorite && favoriteAction(id);
+              }}
+            >
+              {this.renderNameOrPhoneNo()}
+              {/* <i
               className={classnames(
                 `fa fa-${userFavorited ? "heart" : "heart-o"}`
               )}
             /> */}
-            {/* <span>{favCount}</span> */}
-          </Button>
+              {/* <span>{favCount}</span> */}
+            </Button>
+          </div>
+        </div>
 
-          {this.renderShare()}
+        <div className={styles.discFooter}>
+          <div className={styles.tags}>
+            {tags.map(tag => <Tag name={tag} key={_.uniqueId("tag_")} />)}
+          </div>
 
           {allowDelete && (
             <Button

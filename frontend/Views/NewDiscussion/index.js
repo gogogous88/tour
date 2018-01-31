@@ -16,6 +16,7 @@ import QuillEditor from "../../Components/QullEditor";
 
 import Loading from "../../Components/Loading";
 import UserMenu from "../../Components/Header/UserMenu";
+import appLayout from "SharedStyles/appLayout.css";
 
 // import DraftEditor from "../../Components/Rich_Editor/DraftEditor/DraftEditor";
 
@@ -41,7 +42,7 @@ import {
 } from "./actions";
 
 import styles from "./styles.css";
-import appLayout from "SharedStyles/appLayout.css";
+
 import Sup_or_req from "../../Components/FormCommon/Sup_or_req";
 
 import "react-dates/lib/css/_datepicker.css";

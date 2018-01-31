@@ -1,12 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import styles from "./styles.css";
+import Button from "Components/Button";
+import classnames from "classnames";
 
 class Share extends React.Component {
-  state = {
-    value: `${this.props.content}${this.props.link}`,
-    copied: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeSubMenu: false,
+      value: `${this.props.content}${this.props.link}`,
+      copied: false
+    };
+    // this.toggleSubMenu = this.toggleSubMenu.bind(this);
+  }
 
   render() {
     return (
@@ -34,11 +42,21 @@ class Share extends React.Component {
           <button>复制并分享</button>
         </CopyToClipboard>
 
-        {this.state.copied ? (
-          <span style={{ color: "red" }}>
-            信息及链接已复制，请前往微信进行分享！
-          </span>
-        ) : null}
+        <div>
+          {this.state.copied ? (
+            <div className={styles.subMenu}>
+              <Button
+                onClick={() => this.setState({ copied: false })}
+                className={styles.subMenuClose}
+              >
+                <i className={classnames("fa fa-close")} />
+              </Button>
+              <span style={{ color: "red" }}>
+                信息及链接已复制，请前往微信进行分享！
+              </span>
+            </div>
+          ) : null}
+        </div>
       </div>
     );
   }

@@ -51,12 +51,6 @@ class UserProfile extends Component {
       );
     }
 
-    console.log("name:", name);
-    console.log("username:", username);
-    console.log("avatarUrl:", avatarUrl);
-    console.log("github:", github);
-    console.log("discussions:", discussions);
-
     return (
       <div className={classnames(appLayout.constraintWidth, styles.container)}>
         <Helmet>

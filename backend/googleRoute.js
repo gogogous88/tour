@@ -12,7 +12,7 @@ module.exports = app => {
     "/auth/google/callback",
     passport.authenticate("google"),
     (req, res) => {
-      res.redirect("/");
+      res.redirect("back");
     }
   );
 
@@ -22,7 +22,7 @@ module.exports = app => {
     "/auth/uber/callback",
     passport.authenticate("uber", { failureRedirect: "/login" }),
     function(req, res) {
-      res.redirect("/");
+      res.redirect("back");
     }
   );
 };
