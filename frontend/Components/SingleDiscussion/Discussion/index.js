@@ -11,6 +11,7 @@ import Tag from "Components/Tag";
 import RichEditor from "Components/RichEditor";
 
 import renderHTML from "react-render-html";
+import Share from "../../Share";
 
 class Discussion extends Component {
   constructor(props) {
@@ -90,6 +91,15 @@ class Discussion extends Component {
         </div>
       );
     }
+  }
+
+  renderShare() {
+    return (
+      <Share
+        link={`www.tourgai.com${this.props.path}`}
+        content={this.props.discTitle}
+      />
+    );
   }
   render() {
     const {
@@ -184,6 +194,8 @@ class Discussion extends Component {
             {/* <span>{favCount}</span> */}
           </Button>
 
+          {this.renderShare()}
+
           {allowDelete && (
             <Button
               noUppercase
@@ -199,9 +211,7 @@ class Discussion extends Component {
         </div>
 
         {deletingDiscussion && (
-          <div className={styles.deletingDiscussion}>
-            Deleting Discussion...
-          </div>
+          <div className={styles.deletingDiscussion}>正在删除...</div>
         )}
       </div>
     );

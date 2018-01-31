@@ -28,6 +28,7 @@ import Extras from "../Views/CarRental/search/Extras";
 import Form from "../Views/CarRental/search/Form";
 import TourGuideWiki from "../Views/TourGuideWiki/TourGuideWiki";
 import MapResult from "../Views/CarRental/search/map/MapHome";
+import Test from "../Views/Test";
 
 //mark - materialize css
 
@@ -43,6 +44,7 @@ ReactDOM.render(
 
       <Route path="/" component={AppContainer}>
         <IndexRoute component={ForumFeed} />
+        <Route exact path="/test" component={Test} />
         <Route exact path="/map/attr" component={MapAttr} />
 
         <Route path="/map/:id" component={MapDetail} />

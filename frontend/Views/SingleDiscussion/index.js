@@ -284,6 +284,7 @@ class SingleDiscussion extends Component {
         </Helmet>
 
         <Discussion
+          path={this.props.location.pathname}
           forum_slug={forum.forum_slug}
           id={_id}
           userAvatar={avatarUrl}

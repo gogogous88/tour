@@ -23,7 +23,7 @@ import Loading from "../../../Components/Loading";
 
 import styles from "./styles/search.css";
 
-const DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET = 5 + 7; // default pickup/return date is next Friday/Sunday
+const DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET = 15 + 7; // default pickup/return date is next Friday/Sunday
 const DEFAULT_RETURN_DAY_OFFSET = 2;
 const DEFAULT_CALENDAR_RANGE_MONTHS = 6; // only enable days during next 6 months
 
