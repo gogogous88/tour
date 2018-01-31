@@ -536,7 +536,7 @@ class Form extends Component {
                         <div className="row">
                           <div className="input-field col s6">
                             <Field
-                              label="CVV码(信用卡背后3位数字,运通卡为4位数字)"
+                              label="CVV码(3位或4位数字)"
                               name="cardCVV"
                               type="text"
                               required
@@ -618,7 +618,7 @@ class Form extends Component {
                           </div>
                           <div className="input-field col s6">
                             <Field
-                              label="地址栏2(如门牌号，选填)"
+                              label="地址栏2(选填)"
                               name="billingAddress2"
                               component={this.renderField}
                             />

@@ -16,7 +16,7 @@ class Navigator extends Component {
     moment.locale(document.documentElement.lang || "en");
     this.state = {
       naviCondition: false,
-      toggleSubMenu: false,
+      toggleSubMenu: true,
       vehicleSelected: null
     };
   }
@@ -45,6 +45,7 @@ class Navigator extends Component {
     e.preventDefault();
     this.setState({ naviCondition: false });
     this.props.updateSearchConditions({ vehicleTypeId });
+    $("#subMenu").css("display", "none");
   };
 
   handleMenuShow = () => {
@@ -102,72 +103,114 @@ class Navigator extends Component {
             appLayout.showOnSmallBP
           )}
         >
-          <div style={{ display: "flex", flexDirection: "row", flex: 1 }}>
-            <div style={{ display: "flex", flex: 1 }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around"
+            }}
+          >
+            <div
+              className={classNames(styles.detail, {
+                active: passedStep >= 1
+              })}
+            >
               <div
-                className={classNames(styles.conditionItem, {
-                  active: passedStep >= 1
-                })}
+                className={styles.detail}
+                onClick={
+                  passedStep >= 1
+                    ? () => this.returnToSearch("step1")
+                    : () => {}
+                }
               >
-                <div
-                  className={styles.detail}
-                  onClick={
-                    passedStep >= 1
-                      ? () => this.returnToSearch("step1")
-                      : () => {}
-                  }
-                >
-                  <h3>1. 租车日期</h3>
-                  <p>{`${moment(renderDateTime(conditions, "pick")).format(
-                    "MM/DD"
-                  )} -${moment(renderDateTime(conditions, "return")).format(
-                    "MM/DD"
-                  )}`}</p>
-                </div>
+                <h3>1. 租车日期</h3>
+                <p style={{ paddingTop: 5 }}>{`${moment(
+                  renderDateTime(conditions, "pick")
+                ).format("MM/DD")} -${moment(
+                  renderDateTime(conditions, "return")
+                ).format("MM/DD")}`}</p>
               </div>
             </div>
 
-            <div style={{ display: "flex", flex: 1 }}>
+            <div
+              className={classNames(styles.detail, {
+                active: passedStep >= 2
+              })}
+            >
               <div
-                className={classNames(styles.conditionItem, {
-                  active: passedStep >= 2
-                })}
+                className={styles.detail}
+                onClick={
+                  passedStep >= 2
+                    ? () => this.returnToSearch("step2")
+                    : () => {}
+                }
               >
-                <div
-                  className={styles.detail}
-                  onClick={
-                    passedStep >= 2
-                      ? () => this.returnToSearch("step2")
-                      : () => {}
-                  }
-                >
-                  <h3>2. 取还地点</h3>
-                  <p>
-                    {pickLocationName === returnLocationName
-                      ? pickLocationName
-                      : ` ${pickLocationName} - ${returnLocationName}`}
-                  </p>
-                </div>
+                <h3>2. 取还地点</h3>
+                <p style={{ paddingTop: 5 }}>
+                  {pickLocationName === returnLocationName
+                    ? pickLocationName
+                    : ` ${pickLocationName} - ${returnLocationName}`}
+                </p>
               </div>
             </div>
+          </div>
 
-            <div style={{ display: "flex", flex: 1 }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around"
+            }}
+          >
+            <div
+              className={classNames(styles.detail, {
+                active: passedStep >= 3
+              })}
+            >
               <div
-                className={classNames(styles.searchConditions, { container })}
+                className={styles.detail}
+                onClick={
+                  passedStep >= 3
+                    ? () => this.returnToSearch("step3")
+                    : () => {}
+                }
               >
-                <button
-                  onClick={() => {
-                    this.setState({ naviCondition: true });
-                  }}
-                  className="grey lighten-3 btn"
-                >
-                  <span style={{ color: "black" }}>
-                    {/* {this.state.vehicleSelected
+                <h3>3. 筛选车型</h3>
+                <div style={{ paddingTop: 5 }}>
+                  <button
+                    onClick={() => {
+                      this.setState({ naviCondition: true });
+                    }}
+                    className="grey lighten-3 flat-btn"
+                  >
+                    <span style={{ color: "black" }}>
+                      {/* {this.state.vehicleSelected
                       ? this.state.vehicleSelected
                       : "筛选车型"} */}
-                    {this.showVehicleSelectTitle()}
-                  </span>
-                </button>
+                      {this.showVehicleSelectTitle()}
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div
+                className={classNames(styles.detail, {
+                  active: passedStep >= 4
+                })}
+              >
+                <div
+                  className={styles.detail}
+                  onClick={
+                    passedStep >= 4
+                      ? () => this.returnToSearch("step4")
+                      : () => {}
+                  }
+                >
+                  <h3>4.下一步</h3>
+                  <p style={{ paddingTop: 5 }}>额外选项</p>
+                </div>
               </div>
             </div>
           </div>
@@ -203,7 +246,15 @@ class Navigator extends Component {
             >
               <h3>3. 选择车型</h3>
               <div className={styles.typesDropdownWrap}>
-                <a href="#" className={styles.currentName}>
+                <a
+                  href="#"
+                  className={styles.currentName}
+                  onClick={
+                    passedStep >= 3
+                      ? () => this.returnToSearch("step3")
+                      : () => {}
+                  }
+                >
                   {this.showVehicleSelectTitle()}
                 </a>
                 {passedStep === 2 && (
