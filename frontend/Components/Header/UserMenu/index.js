@@ -143,7 +143,20 @@ class UserMenu extends Component {
     const { activeSubMenu } = this.state;
     const { signedIn, gitHandler } = this.props;
 
+    const { forums, currentForum } = this.props;
+
+    // render only if we get the forum lists
+
     if (activeSubMenu) {
+      function isWeiXin() {
+        var ua = window.navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+          return true;
+        } else {
+          return false;
+        }
+      }
+
       return (
         <div className={styles.subMenu}>
           <Button
@@ -154,14 +167,19 @@ class UserMenu extends Component {
             <i className={classnames("fa fa-close")} />
           </Button>
 
-          {!signedIn && (
-            <a className={styles.signInLink} href={"/auth/uber"}>
-              <Button className={styles.gitLoginBtn} alwaysActive>
-                <i className={classnames("fa fa-mobile", styles.subMenuOcto)} />
-                <span className={styles.btnLabel}>手机及Uber登录</span>
-              </Button>
-            </a>
-          )}
+          {!signedIn &&
+            (isWeiXin() ? (
+              <img src="/src/static/images/openInSafari.png" width="100%" />
+            ) : (
+              <a className={styles.signInLink} href={"/auth/uber"}>
+                <Button className={styles.gitLoginBtn} alwaysActive>
+                  <i
+                    className={classnames("fa fa-mobile", styles.subMenuOcto)}
+                  />
+                  <span className={styles.btnLabel}>手机及Uber登录</span>
+                </Button>
+              </a>
+            ))}
 
           {/* {!signedIn && (
             <a className={styles.signInLink} href={"/api/user/authViaGitHub"}>
@@ -174,19 +192,22 @@ class UserMenu extends Component {
             </a>
           )} */}
 
-          {!signedIn && (
-            <a className={styles.signInLink} href={"/auth/google"}>
-              <Button className={styles.gitLoginBtn} alwaysActive>
-                <i
-                  className={classnames(
-                    "fa fa-google-plus-official",
-                    styles.subMenuOcto
-                  )}
-                />
-                <span className={styles.btnLabel}>Google登录</span>
-              </Button>
-            </a>
-          )}
+          {!signedIn &&
+            (isWeiXin() ? (
+              ""
+            ) : (
+              <a className={styles.signInLink} href={"/auth/google"}>
+                <Button className={styles.gitLoginBtn} alwaysActive>
+                  <i
+                    className={classnames(
+                      "fa fa-google-plus-official",
+                      styles.subMenuOcto
+                    )}
+                  />
+                  <span className={styles.btnLabel}>Google登录</span>
+                </Button>
+              </a>
+            ))}
 
           {/* {!signedIn && (
             <a className={styles.signInLink} href={"/auth/google"}>
@@ -227,8 +248,6 @@ class UserMenu extends Component {
 
   render() {
     const { signedIn, userName, avatar, signOutAction } = this.props;
-
-    console.log("this.props.hello", this.props.hello);
 
     if (signedIn) {
       return (
