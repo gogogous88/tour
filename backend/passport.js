@@ -77,10 +77,12 @@ const passportConfig = app => {
         if (existingUser) {
           return done(null, existingUser);
         }
+        const nameArray = profile.emails[0].value.split("@");
+        const name = nameArray[0];
         const user = await new User({
           googleId: profile.id,
-          name: profile.displayName,
-          username: profile.emails[0].value,
+          name,
+          username: name,
           avatarUrl: profile._json.image.url
         }).save();
         done(null, user);
@@ -101,6 +103,7 @@ const passportConfig = app => {
         if (existingUser) {
           return done(null, existingUser);
         }
+        console.log("profile-uber", profile);
         const name = `${profile.firstname} ${profile.lastname} `;
         const user = await new User({
           uberId: profile.id,
