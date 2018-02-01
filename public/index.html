@@ -46,10 +46,7 @@
 
 <body>
 
-  <!-- 判断微信开始 -->
-  <!-- <h1>如果用微信浏览器打开可以看到下面的文字</h1> -->
-  <p></p>
-  <!-- 判断微信结束 -->
+
 
   <div id="root"></div>
 
@@ -109,24 +106,8 @@
   <script>function myFunction(x) { console.log('helloKitty', x) }</script>
 
 
-  <!--判断微信js部分-->
 
-  <script type="text/javascript">
-    window.onload = function () {
-      if (isWeiXin()) {
-        var p = document.getElementsByTagName('p');
-        p[0].innerHTML = window.navigator.userAgent;
-      }
-    }
-    function isWeiXin() {
-      var ua = window.navigator.userAgent.toLowerCase();
-      if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  </script>
+
 
 
 

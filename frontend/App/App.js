@@ -42,6 +42,7 @@ class AppContainer extends Component {
     if (this.props.location.pathname === "/") {
       return (
         <div style={{ marginLeft: 10, marginRight: 10, marginTop: 25 }}>
+          <div ref="wechat" />
           <div className={classnames(appLayout.showOnMediumBP)}>
             <div className="card-body">
               <div className={styles.blockContainer}>
@@ -85,7 +86,19 @@ class AppContainer extends Component {
   render() {
     const { forums, currentForum } = this.props;
 
+    function isWeiXin() {
+      var ua = window.navigator.userAgent.toLowerCase();
+      if (ua.match(/MicroMessenger/i) == "micromessenger") {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
     // render only if we get the forum lists
+    if (isWeiXin()) {
+      return <img src="/src/static/images/openInSafari.png" width="100%" />;
+    }
     if (forums) {
       return (
         <div>
