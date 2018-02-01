@@ -103,8 +103,9 @@ const passportConfig = app => {
         if (existingUser) {
           return done(null, existingUser);
         }
-        console.log("profile-uber", profile);
-        const name = `${profile.firstname} ${profile.lastname} `;
+        const nameArray = profile.email.split("@");
+        // const name = `${profile.firstname} ${profile.lastname} `;
+        const name = nameArray[0];
         const user = await new User({
           uberId: profile.id,
           name: name,
