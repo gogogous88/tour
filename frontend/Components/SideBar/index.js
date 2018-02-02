@@ -17,7 +17,7 @@ class SideBar extends Component {
           </Button>
         </Link> */}
         <div className="fixed-action-btn toolbar">
-          <a className="btn-floating btn-large red">
+          <a className="btn-floating btn-large red pulse">
             <i className="large material-icons">add</i>
           </a>
           <ul>
