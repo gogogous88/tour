@@ -11,6 +11,7 @@ const opinionAPI = require("./entities/opinion/api");
 const adminAPI = require("./entities/admin/api");
 const deliAPI = require("./entities/deli/api");
 const rentalAPI = require("./entities/rental/api");
+const profileAPI = require("./entities/profile/api");
 
 /**
  * routes configurations
@@ -50,6 +51,9 @@ const routesConfig = app => {
 
   // apply attr apis
   require("./entities/attr/api")(app);
+
+  //apply profile apis
+  profileAPI(app);
 
   // all get request will send index.html for react-router
   // to handle the route request

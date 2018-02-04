@@ -29,6 +29,7 @@ import Form from "../Views/CarRental/search/Form";
 import TourGuideWiki from "../Views/TourGuideWiki/TourGuideWiki";
 import MapResult from "../Views/CarRental/search/map/MapHome";
 import Test from "../Views/Test";
+import Profile from "../Views/Profile";
 
 //mark - materialize css
 
@@ -53,6 +54,9 @@ ReactDOM.render(
         <Route path="/googlesheet" component={GoogleSheet} />
 
         <Route path="/car-rental" component={Search} />
+
+        {/* profile部分 */}
+        <Route path="/profile" component={Profile} />
 
         <Route exact path="/result" component={Result} />
         <Route path="/result/map" component={MapResult} />

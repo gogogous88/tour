@@ -173,8 +173,34 @@ const getFullProfile = username => {
   });
 };
 
+const updateFullProfile = (username, name, level, location) => {
+  return new Promise((resolve, reject) => {
+    User.findOne({ username })
+      .lean()
+      .exec((error, result) => {
+        if (error) {
+          console.log(error);
+          reject(error);
+        } else if (!result) reject("not_found");
+        else {
+          // we got the user, now we need all discussions by the user
+          User.findOneAndUpdate({ username }, { name, level, location }).exec(
+            error => {
+              if (error) {
+                console.log(error);
+                reject(error);
+              } else {
+              }
+            }
+          );
+        }
+      });
+  });
+};
+
 module.exports = {
   signInViaGithub,
   getUser,
-  getFullProfile
+  getFullProfile,
+  updateFullProfile
 };

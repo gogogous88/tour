@@ -20,7 +20,9 @@ const userSchema = mongoose.Schema({
     following: Number
   },
   googleId: String,
-  uberId: String
+  uberId: String,
+  level: String,
+  location: String
 });
 
 module.exports = mongoose.model("user", userSchema);

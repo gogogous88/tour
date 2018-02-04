@@ -39,14 +39,22 @@ class UserProfile extends Component {
       return <div className={styles.errorMsg}>{error}</div>;
     }
 
-    const { name, username, avatarUrl, github, discussions } = profile;
+    const {
+      name,
+      username,
+      avatarUrl,
+      github,
+      discussions,
+      level,
+      location
+    } = profile;
 
     if (fetchingProfile) {
       return (
         <div
           className={classnames(appLayout.constraintWidth, styles.loadingMsg)}
         >
-          Loading users profile ...
+          正在导出导游资料...
         </div>
       );
     }
@@ -60,8 +68,9 @@ class UserProfile extends Component {
         <div className={appLayout.primaryContent}>
           <Profile
             name={name}
-            // gitHandler={username}
-            // location={github.location}
+            gitHandler={username}
+            city={location}
+            level={level}
             avatarUrl={avatarUrl}
           />
 

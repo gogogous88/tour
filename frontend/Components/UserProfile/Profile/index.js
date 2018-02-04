@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import classnames from "classnames";
 import styles from "./styles.css";
 
 class Profile extends Component {
   render() {
-    const { name, gitHandler, location, avatarUrl } = this.props;
+    const { name, gitHandler, location, avatarUrl, level, city } = this.props;
 
     return (
       <div className={styles.container}>
@@ -18,10 +19,12 @@ class Profile extends Component {
         <div className={styles.infoContainer}>
           <div className={styles.name}>{name}</div>
           <div className={styles.gitHandler}>
-            <i className={classnames("fa fa-github-alt", styles.gitIcon)} />{" "}
-            {gitHandler}
+            <i className={classnames("fa fa-github-alt", styles.gitIcon)} />
+            导游经验:{_.isEmpty(level) ? gitHandler : level}
           </div>
-          <div className={styles.location}>{location}</div>
+          <div className={styles.location}>
+            导游城市:{_.isEmpty(city) ? location : city}
+          </div>
         </div>
       </div>
     );

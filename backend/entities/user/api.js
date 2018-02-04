@@ -1,6 +1,7 @@
 const passport = require("passport");
 const signIn = require("./controller").signIn;
 const getFullProfile = require("./controller").getFullProfile;
+const updateFullProfile = require("./controller").updateFullProfile;
 
 /**
  * user apis
@@ -61,6 +62,20 @@ const userAPI = app => {
   // get user full profile
   app.get("/api/user/profile/:username", (req, res) => {
     getFullProfile(req.params.username).then(
+      result => {
+        res.send(result);
+      },
+      error => {
+        res.send({ error });
+      }
+    );
+  });
+
+  //update users username info:
+  app.post("/api/user/profile/:username", (req, res) => {
+    const { name,level,location } = req.body;
+    
+    updateFullProfile(req.params.username, name, level,location).then(
       result => {
         res.send(result);
       },
