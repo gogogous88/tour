@@ -73,9 +73,9 @@ const userAPI = app => {
 
   //update users username info:
   app.post("/api/user/profile/:username", (req, res) => {
-    const { name,level,location } = req.body;
-    
-    updateFullProfile(req.params.username, name, level,location).then(
+    const { name, level, location, pos } = req.body;
+
+    updateFullProfile(req.params.username, name, level, location, pos).then(
       result => {
         res.send(result);
       },

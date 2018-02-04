@@ -22,7 +22,8 @@ const userSchema = mongoose.Schema({
   googleId: String,
   uberId: String,
   level: String,
-  location: String
+  location: String,
+  pos: { lat: Number, lng: Number }
 });
 
 module.exports = mongoose.model("user", userSchema);

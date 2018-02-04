@@ -173,7 +173,7 @@ const getFullProfile = username => {
   });
 };
 
-const updateFullProfile = (username, name, level, location) => {
+const updateFullProfile = (username, name, level, location, pos) => {
   return new Promise((resolve, reject) => {
     User.findOne({ username })
       .lean()
@@ -184,15 +184,16 @@ const updateFullProfile = (username, name, level, location) => {
         } else if (!result) reject("not_found");
         else {
           // we got the user, now we need all discussions by the user
-          User.findOneAndUpdate({ username }, { name, level, location }).exec(
-            error => {
-              if (error) {
-                console.log(error);
-                reject(error);
-              } else {
-              }
+          User.findOneAndUpdate(
+            { username },
+            { name, level, location, pos }
+          ).exec(error => {
+            if (error) {
+              console.log(error);
+              reject(error);
+            } else {
             }
-          );
+          });
         }
       });
   });

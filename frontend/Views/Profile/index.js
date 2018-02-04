@@ -5,7 +5,22 @@ import * as actions from "./actions";
 class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = { name: "", level: "", location: "" };
+    this.state = { name: "", level: "", location: "", pos: {} };
+  }
+  componentDidMount() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        this.renderLocation(pos);
+      });
+    }
+  }
+
+  renderLocation(pos) {
+    this.setState({ pos });
   }
 
   onInputChange(e) {
@@ -20,7 +35,8 @@ class Profile extends Component {
       username: "markblueplan@gmail.com",
       name: this.state.name,
       level: this.state.level,
-      location: this.state.location
+      location: this.state.location,
+      pos: this.state.pos
     };
     this.props.postProfile(
       value

@@ -8,24 +8,27 @@ class Profile extends Component {
     const { name, gitHandler, location, avatarUrl, level, city } = this.props;
 
     return (
-      <div className={styles.container}>
-        <div className={styles.avatarContainer}>
-          <img
-            className={styles.avatar}
-            src={avatarUrl}
-            alt={`${name} avatar`}
-          />
-        </div>
-        <div className={styles.infoContainer}>
-          <div className={styles.name}>{name}</div>
-          <div className={styles.gitHandler}>
-            <i className={classnames("fa fa-github-alt", styles.gitIcon)} />
-            导游经验:{_.isEmpty(level) ? gitHandler : level}
+      <div>
+        <div className={styles.container}>
+          <div className={styles.avatarContainer}>
+            <img
+              className={styles.avatar}
+              src={avatarUrl}
+              alt={`${name} avatar`}
+            />
           </div>
-          <div className={styles.location}>
-            导游城市:{_.isEmpty(city) ? location : city}
+          <div className={styles.infoContainer}>
+            <div className={styles.name}>{name}</div>
+            <div className={styles.gitHandler}>
+              <i className={classnames("fa fa-github-alt", styles.gitIcon)} />
+              导游经验:{_.isEmpty(level) ? gitHandler : level}
+            </div>
+            <div className={styles.location}>
+              导游城市:{_.isEmpty(city) ? location : city}
+            </div>
           </div>
         </div>
+        <div className={styles.location}>带团风采:</div>
       </div>
     );
   }
