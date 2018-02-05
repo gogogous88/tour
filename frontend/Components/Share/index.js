@@ -39,7 +39,7 @@ class Share extends React.Component {
           text={this.state.value}
           onCopy={() => this.setState({ copied: true })}
         >
-          <button>复制并分享</button>
+          <button>分享</button>
         </CopyToClipboard>
 
         <div>
