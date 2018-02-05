@@ -32,7 +32,7 @@ class Profile extends Component {
   onFormSubmit(e) {
     e.preventDefault();
     const value = {
-      username: "markblueplan@gmail.com",
+      username: this.props.user.username,
       name: this.state.name,
       level: this.state.level,
       location: this.state.location,
@@ -45,35 +45,40 @@ class Profile extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <form onSubmit={this.onFormSubmit.bind(this)}>
-          <input
-            type="text"
-            name="name"
-            value={this.state.name}
-            onChange={this.onInputChange.bind(this)}
-          />
-          <input
-            type="text"
-            name="level"
-            value={this.state.level}
-            onChange={this.onInputChange.bind(this)}
-          />
-          <input
-            type="text"
-            name="location"
-            value={this.state.location}
-            onChange={this.onInputChange.bind(this)}
-          />
+    if (this.props.user.username) {
+      return (
+        <div>
+          <form onSubmit={this.onFormSubmit.bind(this)}>
+            <input
+              type="text"
+              name="name"
+              value={this.state.name}
+              onChange={this.onInputChange.bind(this)}
+            />
+            <input
+              type="text"
+              name="level"
+              value={this.state.level}
+              onChange={this.onInputChange.bind(this)}
+            />
+            <input
+              type="text"
+              name="location"
+              value={this.state.location}
+              onChange={this.onInputChange.bind(this)}
+            />
 
-          <button type="submit" className="btn">
-            提交
-          </button>
-        </form>
-      </div>
-    );
+            <button type="submit" className="btn">
+              提交
+            </button>
+          </form>
+        </div>
+      );
+    }
+    return <div>请先进行登录</div>;
   }
 }
-
-export default connect(null, actions)(Profile);
+function mapStateToProps(state) {
+  return { user: state.user };
+}
+export default connect(mapStateToProps, actions)(Profile);

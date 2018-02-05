@@ -49,7 +49,7 @@ class MapDetail extends Component {
       return (
         <div>
           <span>电话：</span>
-          <a href="tel:eachMapData.ph_no">
+          <a href={`tel:${eachMapData.ph_no}`}>
             <p className="blog-post-meta">{eachMapData.ph_no}</p>
           </a>
           <hr />

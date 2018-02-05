@@ -14,7 +14,6 @@ import { fetchUserProfile } from "./actions";
 
 class UserProfile extends Component {
   componentDidMount() {
-    console.log(this.props);
     const { fetchUserProfile } = this.props;
     const { username } = this.props.params;
     fetchUserProfile(username);

@@ -199,9 +199,15 @@ const updateFullProfile = (username, name, level, location, pos) => {
   });
 };
 
+const getAllUsers = async () => {
+  const result = await User.find({});
+  return result;
+};
+
 module.exports = {
   signInViaGithub,
   getUser,
   getFullProfile,
-  updateFullProfile
+  updateFullProfile,
+  getAllUsers
 };

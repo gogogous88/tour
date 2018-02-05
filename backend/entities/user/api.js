@@ -2,6 +2,7 @@ const passport = require("passport");
 const signIn = require("./controller").signIn;
 const getFullProfile = require("./controller").getFullProfile;
 const updateFullProfile = require("./controller").updateFullProfile;
+const getAllUsers = require("./controller").getAllUsers;
 
 /**
  * user apis
@@ -71,7 +72,7 @@ const userAPI = app => {
     );
   });
 
-  //update users username info:
+  //update users username info by mark
   app.post("/api/user/profile/:username", (req, res) => {
     const { name, level, location, pos } = req.body;
 
@@ -83,6 +84,13 @@ const userAPI = app => {
         res.send({ error });
       }
     );
+  });
+
+  //get all users by mark
+  app.get("/api/user/getAllUser", async (req, res) => {
+    const result = await getAllUsers();
+    if (result) res.send(result);
+    else res.send(null);
   });
 };
 
