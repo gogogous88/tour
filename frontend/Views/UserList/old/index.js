@@ -2,24 +2,25 @@ import React, { Component } from "react";
 import * as actions from "./actions";
 import { connect } from "react-redux";
 import _ from "lodash";
-import MapHere from "./MapHere";
 
 class UserList extends Component {
   componentDidMount() {
     this.props.getAllUsersArray();
+    this.props.getAllUsers();
   }
 
   renderUsers() {
     const { userList } = this.props;
 
-    return (
-      <MapHere locations={userList} pin="/src/static/icons/pins/redhead.svg" />
-    );
+    return _.map(userList, eachUser => {
+      const { name, pos } = eachUser;
+      return <li key={eachUser._id}>{pos ? pos.lat : ""}</li>;
+    });
   }
 
   render() {
     const { userList } = this.props;
-
+    console.log(userList);
     if (!_.isEmpty(userList)) {
       return <ul>{this.renderUsers()}</ul>;
     }

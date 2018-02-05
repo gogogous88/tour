@@ -89,7 +89,7 @@ const userAPI = app => {
   //get all users by mark
   app.get("/api/user/getAllUser", async (req, res) => {
     const result = await getAllUsers();
-    if (result) res.send(result);
+    if (result) res.json(result);
     else res.send(null);
   });
 };

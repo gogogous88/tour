@@ -26,8 +26,8 @@ const rootReducer = combineReducers({
   adminInfo: adminInfoReducer,
   userProfile: userProfileReducer,
   rentalReducer: rentalReducer,
-  form,
-  userList
+  userList: userList,
+  form
 });
 
 // dev tool extension
