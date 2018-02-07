@@ -14,7 +14,8 @@ class Logo extends Component {
   }
 
   componentDidMount() {
-    if (navigator.geolocation) {
+    if (this.props.user && navigator.geolocation) {
+      console.log("user");
       navigator.geolocation.getCurrentPosition(position => {
         var pos = {
           lat: position.coords.latitude,
@@ -28,7 +29,7 @@ class Logo extends Component {
   renderLocation(pos) {
     this.setState({ pos });
     const value = { username: this.props.user.username, pos: this.state.pos };
-    console.log("logo page", value);
+
     this.props.user && !_.isEmpty(value.pos)
       ? this.props.updateCoord(value)
       : "";
