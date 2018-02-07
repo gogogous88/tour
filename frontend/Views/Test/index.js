@@ -1,50 +1,32 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import React, { Component } from "react";
+import Next from "./Next";
 
-class Test extends React.Component {
-  state = {
-    value: "",
-    copied: false
-  };
+class Test extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: "你好" };
+  }
+  onInputChange(e) {
+    this.setState({ value: e.target.value });
+  }
+
+  renderSubmit(e) {
+    e.preventDefault();
+    return <Next value={this.state.value} />;
+  }
 
   render() {
+    console.log(this.state.value);
     return (
-      <div>
-        <textarea
+      <form onSubmit={this.renderSubmit.bind(this)}>
+        <input
           value={this.state.value}
-          onChange={({ target: { value } }) =>
-            this.setState({ value, copied: false })
-          }
+          onChange={this.onInputChange.bind(this)}
         />
-
-        {/* <CopyToClipboard
-          text={this.state.value}
-
-          onCopy={() => this.setState({ copied: true })}
-        >
-          <span>Copy to clipboard with span</span>
-        </CopyToClipboard> */}
-
-        <CopyToClipboard
-          className="btn"
-          text={this.state.value}
-          onCopy={() => this.setState({ copied: true })}
-        >
-          <button>复制并分享</button>
-        </CopyToClipboard>
-
-        {this.state.copied ? (
-          <span style={{ color: "red" }}>
-            信息及链接已复制，请前往微信进行分享！
-          </span>
-        ) : null}
-      </div>
+        <button type="submit">提交</button>
+      </form>
     );
   }
 }
-
-const appRoot = document.createElement("div");
-document.body.appendChild(appRoot);
 
 export default Test;

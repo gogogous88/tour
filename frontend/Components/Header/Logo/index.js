@@ -1,13 +1,44 @@
 import React, { Component } from "react";
+import { Link } from "react-router";
+import { connect } from "react-redux";
+import _ from "lodash";
+
 import styles from "./styles";
 import keys from "../../../../config/credentials";
-import { Link } from "react-router";
+import * as actions from "./actions";
 
-const Logo = () => {
-  return (
-    <a className={styles.logoContainer} href="/">
-      <div className={styles.logo}>
-        {/* <g
+class Logo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { pos: {} };
+  }
+
+  componentDidMount() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        this.renderLocation(pos);
+      });
+    }
+  }
+
+  renderLocation(pos) {
+    this.setState({ pos });
+    const value = { username: this.props.user.username, pos: this.state.pos };
+    console.log("logo page", value);
+    this.props.user && !_.isEmpty(value.pos)
+      ? this.props.updateCoord(value)
+      : "";
+  }
+
+  render() {
+    return (
+      <a className={styles.logoContainer} href="/">
+        <div className={styles.logo}>
+          {/* <g
             id="Group"
             stroke="none"
             strokeWidth="1"
@@ -27,11 +58,18 @@ const Logo = () => {
               r="23.5294118"
             />
           </g> */}
-        <img src="/src/static/images/shangche.png" style={{ width: "100%" }} />
-      </div>
-      <div className={styles.logoTitle}>途盖大导通</div>
-    </a>
-  );
-};
+          <img
+            src="/src/static/images/shangche.png"
+            style={{ width: "100%" }}
+          />
+        </div>
+        <div className={styles.logoTitle}>途盖大导通</div>
+      </a>
+    );
+  }
+}
 
-export default Logo;
+function mapStateToProps(state) {
+  return { user: state.user };
+}
+export default connect(mapStateToProps, actions)(Logo);

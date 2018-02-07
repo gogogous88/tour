@@ -3,6 +3,7 @@ const signIn = require("./controller").signIn;
 const getFullProfile = require("./controller").getFullProfile;
 const updateFullProfile = require("./controller").updateFullProfile;
 const getAllUsers = require("./controller").getAllUsers;
+const updateCoords = require("./controller").updateCoords;
 
 /**
  * user apis
@@ -77,6 +78,20 @@ const userAPI = app => {
     const { name, level, location, pos } = req.body;
 
     updateFullProfile(req.params.username, name, level, location, pos).then(
+      result => {
+        res.send(result);
+      },
+      error => {
+        res.send({ error });
+      }
+    );
+  });
+
+  //update users coords info by mark
+  app.post("/api/user/coords/:username", (req, res) => {
+    const { pos } = req.body;
+
+    updateCoords(req.params.username, pos).then(
       result => {
         res.send(result);
       },

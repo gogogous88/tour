@@ -172,7 +172,7 @@ const getFullProfile = username => {
       });
   });
 };
-
+//update user's all profile
 const updateFullProfile = (username, name, level, location, pos) => {
   return new Promise((resolve, reject) => {
     User.findOne({ username })
@@ -199,6 +199,30 @@ const updateFullProfile = (username, name, level, location, pos) => {
   });
 };
 
+//update user's coordination
+const updateCoords = (username, pos) => {
+  return new Promise((resolve, reject) => {
+    User.findOne({ username })
+      .lean()
+      .exec((error, result) => {
+        if (error) {
+          console.log(error);
+          reject(error);
+        } else if (!result) reject("not_found");
+        else {
+          // we got the user, now we need all discussions by the user
+          User.findOneAndUpdate({ username }, { pos }).exec(error => {
+            if (error) {
+              console.log(error);
+              reject(error);
+            } else {
+            }
+          });
+        }
+      });
+  });
+};
+
 const getAllUsers = async () => {
   const result = await User.find({});
   return result;
@@ -209,5 +233,6 @@ module.exports = {
   getUser,
   getFullProfile,
   updateFullProfile,
-  getAllUsers
+  getAllUsers,
+  updateCoords
 };
