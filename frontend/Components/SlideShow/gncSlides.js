@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router";
 
-class SlideShow extends Component {
+class GncSlides extends Component {
   render() {
     const settings = {
       dots: true,
@@ -18,18 +18,18 @@ class SlideShow extends Component {
     return (
       <Slider {...settings}>
         <div>
-          <Link to={link2}>
+          <a href={`${link2}`}>
             <img src={img2} width="100%" />
-          </Link>
+          </a>
         </div>
         <div>
-          <Link to={link1}>
+          <a href={`${link1}`}>
             <img src={img1} width="100%" />
-          </Link>
+          </a>
         </div>
       </Slider>
     );
   }
 }
 
-export default SlideShow;
+export default GncSlides;

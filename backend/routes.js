@@ -12,6 +12,7 @@ const adminAPI = require("./entities/admin/api");
 const deliAPI = require("./entities/deli/api");
 const rentalAPI = require("./entities/rental/api");
 const profileAPI = require("./entities/profile/api");
+const GNCAPI = require("./entities/gnc/api");
 
 /**
  * routes configurations
@@ -54,6 +55,9 @@ const routesConfig = app => {
 
   //apply profile apis
   profileAPI(app);
+
+  //apply gnc apis
+  GNCAPI(app);
 
   // all get request will send index.html for react-router
   // to handle the route request

@@ -33,8 +33,6 @@ class MapHere extends Component {
       this.setState({ name, avatarUrl, city, pos });
     };
 
-    console.log(locations.length);
-
     for (i = 0; i < locations.length; i++) {
       // const icon = "https://png.icons8.com/map-pin/color/43/2980b9";
       // const icon1 = "/src/static/images/icons8-map-pin-orange-48 2.png";

@@ -49,18 +49,22 @@ class Profile extends Component {
       return (
         <div>
           <form onSubmit={this.onFormSubmit.bind(this)}>
+            <label>昵称:</label>
             <input
               type="text"
               name="name"
               value={this.state.name}
               onChange={this.onInputChange.bind(this)}
             />
+            <label>旅游职能(可多选):</label>
+            <label>经验:</label>
             <input
               type="text"
               name="level"
               value={this.state.level}
               onChange={this.onInputChange.bind(this)}
             />
+            <label>长期驻扎地:</label>
             <input
               type="text"
               name="location"

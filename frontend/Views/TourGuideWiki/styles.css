@@ -1,0 +1,54 @@
+@value primaryFontColor,
+  secondaryFontColor,
+  borderColor from "SharedStyles/globalStyles.css";
+@value largeBP, mediumBP, smallBP from "SharedStyles/globalStyles";
+
+.rowStyle {
+  @media mediumBP {
+    justify-content: center;
+  }
+  @media smallBP {
+    justify-content: center;
+  }
+  @media largeBP {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+.rowBetweenStyle {
+  @media mediumBP {
+    justify-content: center;
+  }
+  @media smallBP {
+    justify-content: center;
+  }
+  @media largeBP {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.marginStyle {
+  @media smallBP {
+    margin-left: 0px;
+  }
+  @media mediumBP {
+    margin-left: 0px;
+  }
+  @media largeBP {
+    margin-left: 10px;
+  }
+}
+
+.imageStyle {
+  display: block;
+  margin: auto;
+}
+
+.fontStyle {
+  font-size: 30px;
+  margin-top: 10px;
+}

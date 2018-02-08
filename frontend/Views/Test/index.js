@@ -1,31 +1,10 @@
-import React, { Component } from "react";
-import Next from "./Next";
+import React from "react";
+import axios from "axios";
+import styles from "../CarRental/search/styles/search.css";
 
-class Test extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { value: "你好" };
-  }
-  onInputChange(e) {
-    this.setState({ value: e.target.value });
-  }
-
-  renderSubmit(e) {
-    e.preventDefault();
-    return <Next value={this.state.value} />;
-  }
-
+class Test extends React.Component {
   render() {
-    console.log(this.state.value);
-    return (
-      <form onSubmit={this.renderSubmit.bind(this)}>
-        <input
-          value={this.state.value}
-          onChange={this.onInputChange.bind(this)}
-        />
-        <button type="submit">提交</button>
-      </form>
-    );
+    return <div />;
   }
 }
 
