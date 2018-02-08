@@ -122,6 +122,8 @@ class AppContainer extends Component {
                 link1="/car-rental"
                 img2="/src/static/banners/tuan_can_banner.jpg"
                 link2="/map"
+                img3="/src/static/images/HomeGNC.jpeg"
+                link3="/wiki"
               />
             ) : (
               ""

@@ -27,6 +27,11 @@ class SlideShow extends Component {
             <img src={img1} width="100%" />
           </Link>
         </div>
+        <div>
+          <Link to={link3}>
+            <img src={img3} width="100%" />
+          </Link>
+        </div>
       </Slider>
     );
   }
