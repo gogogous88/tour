@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import * as actions from "./actions";
 import { connect } from "react-redux";
 import _ from "lodash";
-import MapHere from "./MapHere";
+import UserDis from "./UserDis";
 
 class UserList extends Component {
   componentDidMount() {
@@ -13,7 +13,7 @@ class UserList extends Component {
     const { userList } = this.props;
 
     return (
-      <MapHere locations={userList} pin="/src/static/icons/pins/redhead.svg" />
+      <UserDis locations={userList} pin="/src/static/icons/pins/redhead.svg" />
     );
   }
 

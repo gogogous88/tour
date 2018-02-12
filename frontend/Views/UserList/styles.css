@@ -149,3 +149,10 @@
   background-color: rgb(61, 170, 182);
   color: rgb(221, 209, 209);
 }
+
+.rowListStyle {
+  display: flex;
+  flex: 2;
+  align-items: flex-start;
+  width: 600px;
+}
