@@ -24,8 +24,6 @@ class UserDis extends Component {
   renderList() {
     const { locations } = this.props;
 
-    console.log(locations);
-
     const users = _.mapKeys(locations, "_id");
     if (_.isEmpty(this.state.pos)) {
       return <div>loading</div>;

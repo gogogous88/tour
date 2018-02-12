@@ -1,7 +1,7 @@
 import React from "react";
 
 const MaterialButton = props => {
-  const { link1, link2, link3, name1, name2, name3 } = props;
+  const { link1, link2, link3, name1, name2, name3, link4, name4 } = props;
   return (
     <div className="fixed-action-btn toolbar">
       <a className="btn-floating btn-large red pulse">
@@ -16,6 +16,9 @@ const MaterialButton = props => {
         </li>
         <li className="waves-effect waves-light">
           <a href={link3}>{name3}</a>
+        </li>
+        <li className="waves-effect waves-light">
+          <a href={link4}>{name4}</a>
         </li>
       </ul>
     </div>

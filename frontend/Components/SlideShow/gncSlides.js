@@ -18,13 +18,18 @@ class GncSlides extends Component {
     return (
       <Slider {...settings}>
         <div>
+          <a href={`${link1}`}>
+            <img src={img1} width="100%" />
+          </a>
+        </div>
+        <div>
           <a href={`${link2}`}>
             <img src={img2} width="100%" />
           </a>
         </div>
         <div>
-          <a href={`${link1}`}>
-            <img src={img1} width="100%" />
+          <a href={`${link3}`}>
+            <img src={img3} width="100%" />
           </a>
         </div>
       </Slider>

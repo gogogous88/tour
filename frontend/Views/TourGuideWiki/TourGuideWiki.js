@@ -54,14 +54,21 @@ class TourGuideWiki extends Component {
                     img1="/src/static/images/gnc1.jpg"
                     link1="https://www.google.com/maps/place/1748 Decoto Rd, Union City CA 94587"
                     img2="/src/static/images/gnc2.jpg"
-                    link2="https://www.google.com/maps/place/9875 s Eastern ave Las Vegas, NV 89123"
+                    link2="https://www.google.com/maps/place/2381 E Windmill Ln, Las Vegas, NV 89123"
+                    img3="/src/static/images/gnc3.jpg"
+                    link3="https://www.google.com/maps/place/9875 s Eastern ave Las Vegas, NV 89123"
                   />
                 </div>
                 <div>
                   <div className={styles.rowBetweenStyle}>
                     <div style={{ marginTop: 20 }}>
                       <a href="https://www.google.com/maps/place/9875 s Eastern ave Las Vegas, NV 89123">
-                        拉斯店:9875 s Eastern ave Las Vegas, NV 89123
+                        拉斯2店:9875 s Eastern ave Las Vegas, NV 89123
+                      </a>
+                    </div>
+                    <div>
+                      <a href="https://www.google.com/maps/place/2381 E Windmill Ln, Las Vegas, NV 89123">
+                        拉斯windmill店:2381 E Windmill Ln, Las Vegas, NV 89123
                       </a>
                     </div>
                     <div>
@@ -138,16 +145,6 @@ class TourGuideWiki extends Component {
 
                 <ul>{this.renderCard()}</ul>
               </div>
-
-              <nav className="blog-pagination">
-                <a className="btn btn-outline-primary" href="#">
-                  Older
-                </a>
-
-                <a className="btn btn-outline-secondary disabled" href="#">
-                  Newer
-                </a>
-              </nav>
             </div>
 
             <div className="col-sm-3 offset-sm-1 blog-sidebar">
@@ -161,11 +158,16 @@ class TourGuideWiki extends Component {
 
               <div className="sidebar-module">
                 <h5>拉斯:</h5>
-                <span>
+                <div>
                   <a href="https://www.google.com/maps/place/9875 s Eastern ave Las Vegas, NV 89123">
                     9875 s Eastern ave Las Vegas, NV 89123
                   </a>
-                </span>
+                </div>
+                <div>
+                  <a href="https://www.google.com/maps/place/2381 E Windmill Ln, Las Vegas, NV 89123">
+                    2381 E Windmill Ln, Las Vegas, NV 89123
+                  </a>
+                </div>
                 <h5>旧金山:</h5>
                 <span>
                   <a href="https://www.google.com/maps/place/1748 Decoto Rd, Union City CA 94587">
@@ -178,12 +180,14 @@ class TourGuideWiki extends Component {
                 </span>
               </div>
               <MaterialButton
-                name1="导航旧金山店"
-                name2="导航拉斯店"
+                name1="旧金山店"
+                name2="拉斯windmill店"
+                name3="拉斯2店"
                 link1="https://www.google.com/maps/place/1748 Decoto Rd, Union City CA 94587"
-                link2="https://www.google.com/maps/place/9875 s Eastern ave Las Vegas, NV 89123"
-                name3="致电"
-                link3="tel:7026825716"
+                link2="https://www.google.com/maps/place/2381 E Windmill Ln, Las Vegas, NV 89123"
+                link3="https://www.google.com/maps/place/9875 s Eastern ave Las Vegas, NV 89123"
+                name4="致电"
+                link4="tel:7026825716"
               />
 
               {/* <div className="sidebar-module">
