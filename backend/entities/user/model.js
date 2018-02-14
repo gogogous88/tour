@@ -23,7 +23,12 @@ const userSchema = mongoose.Schema({
   uberId: String,
   level: String,
   location: String,
-  pos: { lat: Number, lng: Number }
+  pos: { lat: Number, lng: Number },
+  tags: [String],
+  photos: { type: Array, default: [] },
+  desc: String,
+
+  contact: String
 });
 
 module.exports = mongoose.model("user", userSchema);

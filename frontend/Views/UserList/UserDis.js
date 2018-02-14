@@ -62,7 +62,7 @@ class UserDis extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="container">
         <ul>{this.renderList()}</ul>
       </div>
     );

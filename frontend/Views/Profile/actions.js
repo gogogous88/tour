@@ -2,8 +2,12 @@ import axios from "axios";
 const POST_PROFILE = "Post_Profile";
 const GET_POSITION = "GET_POSITION";
 
-export const postProfile = value => async dispatch => {
-  const result = await axios.post(`/api/user/profile/${value.username}`, value);
+export const postProfile = (value, callback) => async dispatch => {
+  const result = await axios
+    .post(`/api/user/profile/${value.username}`, value)
+    .then(() => {
+      callback();
+    });
   dispatch({ type: POST_PROFILE, payload: result });
 };
 

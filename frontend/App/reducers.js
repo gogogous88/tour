@@ -90,7 +90,15 @@ export const userReducer = (state = initialUserState, action) => {
         githubBio,
         githubUrl,
         githubLocation,
-        role
+        role,
+        //以下为后加入
+        desc,
+        level,
+        location,
+        photos,
+        pos,
+        tags,
+        contact
       } = action.payload;
 
       return (
@@ -107,7 +115,14 @@ export const userReducer = (state = initialUserState, action) => {
           githubBio,
           githubUrl,
           githubLocation,
-          role
+          role,
+          desc,
+          level,
+          location,
+          photos,
+          pos,
+          tags,
+          contact
         }
       );
 

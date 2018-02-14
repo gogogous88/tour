@@ -75,9 +75,30 @@ const userAPI = app => {
 
   //update users username info by mark
   app.post("/api/user/profile/:username", (req, res) => {
-    const { name, level, location, pos } = req.body;
+    const {
+      name,
+      level,
+      location,
+      pos,
+      tags,
+      photos,
+      desc,
+      contact
+    } = req.body;
 
-    updateFullProfile(req.params.username, name, level, location, pos).then(
+    res.redirect("/");
+
+    updateFullProfile(
+      req.params.username,
+      name,
+      level,
+      location,
+      pos,
+      tags,
+      photos,
+      desc,
+      contact
+    ).then(
       result => {
         res.send(result);
       },

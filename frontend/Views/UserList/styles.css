@@ -154,5 +154,5 @@
   display: flex;
   flex: 2;
   align-items: flex-start;
-  width: 600px;
+  width: 100%;
 }

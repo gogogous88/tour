@@ -43,9 +43,15 @@ class UserProfile extends Component {
       username,
       avatarUrl,
       github,
+      googleId,
       discussions,
       level,
-      location
+      location,
+      city,
+      photos,
+      desc,
+      tags,
+      contact
     } = profile;
 
     if (fetchingProfile) {
@@ -71,6 +77,12 @@ class UserProfile extends Component {
             city={location}
             level={level}
             avatarUrl={avatarUrl}
+            photos={photos}
+            desc={desc}
+            tags={tags}
+            contact={contact}
+            googleId={googleId}
+            username={username}
           />
 
           <FeedBox userProfile type="general" discussions={discussions} />

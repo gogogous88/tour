@@ -173,7 +173,17 @@ const getFullProfile = username => {
   });
 };
 //update user's all profile
-const updateFullProfile = (username, name, level, location, pos) => {
+const updateFullProfile = (
+  username,
+  name,
+  level,
+  location,
+  pos,
+  tags,
+  photos,
+  desc,
+  contact
+) => {
   return new Promise((resolve, reject) => {
     User.findOne({ username })
       .lean()
@@ -186,7 +196,7 @@ const updateFullProfile = (username, name, level, location, pos) => {
           // we got the user, now we need all discussions by the user
           User.findOneAndUpdate(
             { username },
-            { name, level, location, pos }
+            { name, level, location, pos, tags, photos, desc, contact }
           ).exec(error => {
             if (error) {
               console.log(error);
