@@ -291,14 +291,18 @@ class UserMenu extends Component {
           </Button>
         </div>
         <div className={appLayout.showOnSmallBP}>
-          <div>
-            <img
+          <button
+            onClick={this.toggleSubMenu}
+            className={classnames(styles.signInBtn, styles.title)}
+          >
+            注册/登录
+            {/* <img
               src="/src/static/icons/buttons/login.svg"
               alwaysActive
               className={classnames(styles.loginStyle)}
               onClick={this.toggleSubMenu}
-            />
-          </div>
+            /> */}
+          </button>
           <div style={{ marginRight: 20, marginLeft: 15, marginTop: 3 }}>
             <img
               src="/src/static/icons/buttons/burger-menu.svg"
