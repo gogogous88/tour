@@ -91,7 +91,7 @@ class Vehicle extends Component {
           <div className={styles.image}>
             <img
               className={styles.imageStyle}
-              src={`http://www.yalevanrental.com/uploads/rental/${vehicleTypeId}.jpg`}
+              src={`src/static/images/${vehicleTypeId}.jpg`}
             />
           </div>
           <div className={styles.desc}>

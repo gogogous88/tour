@@ -97,17 +97,31 @@ class MapDetail extends Component {
   renderNavi() {
     const { coord } = this.props.eachMapData;
 
-    if (
-      /* if we're on iOS, open in Apple Maps */
-      navigator.platform.indexOf("iPhone") != -1 ||
-      navigator.platform.indexOf("iPad") != -1 ||
-      navigator.platform.indexOf("iPod") != -1
-    ) {
-      window.open(`maps://maps.google.com/maps?daddr=${coord}&amp;ll=`);
+    const isWeiXin = () => {
+      var ua = window.navigator.userAgent.toLowerCase();
+      if (ua.match(/MicroMessenger/i) == "micromessenger") {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    const coordArray = coord.split(",");
+    if (!isWeiXin()) {
+      if (
+        /* if we're on iOS, open in Apple Maps */
+        navigator.platform.indexOf("iPhone") != -1 ||
+        navigator.platform.indexOf("iPad") != -1 ||
+        navigator.platform.indexOf("iPod") != -1
+      ) {
+        window.open(`maps://maps.google.com/maps?daddr=${coord}&amp;ll=`);
+      } else {
+        /* else use Google */ window.open(
+          `https://maps.google.com/maps?daddr=${coord}&amp;ll=`
+        );
+      }
     } else {
-      /* else use Google */ window.open(
-        `https://maps.google.com/maps?daddr=${coord}&amp;ll=`
-      );
+      return <img src="/src/static/images/openInSafari.png" width="100%" />;
     }
   }
 

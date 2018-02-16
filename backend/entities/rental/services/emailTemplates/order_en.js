@@ -46,7 +46,7 @@ module.exports = ({ requestCode, vehicle, price, address, paymentForm }) => {
         <tbody>
           <tr>
             <td>
-              <img src="http://www.yalevanrental.com/uploads/rental/${vehicle.vehicleTypeId}.jpg" width="250" />
+              <img src="src/static/images/${vehicle.vehicleTypeId}.jpg" width="250" />
             </td>
           </tr>
           <tr>

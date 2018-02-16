@@ -54,37 +54,37 @@ class FeedBox extends Component {
     switch (discussion.forum.forum_slug) {
       case "shun_feng_che":
         if (discussion.sup_or_req === "提供") {
-          const shunFengURL = keys.SUP_SHUN_FENG_CHE;
+          const shunFengURL = "/src/static/images/sup_shun_feng_che.png";
           return shunFengURL;
         } else {
-          const shunFengURL = keys.REQ_SHUN_FENG_CHE;
+          const shunFengURL = "/src/static/images/req_shun_feng_che.png";
           return shunFengURL;
         }
 
       case "pin_fang":
         if (discussion.sup_or_req === "提供") {
-          const pinFangURL = keys.SUP_PIN_FANG;
+          const pinFangURL = "/src/static/images/sup_pin_fang.png";
           return pinFangURL;
         } else {
-          const pinFangURL = keys.REQ_PIN_FANG;
+          const pinFangURL = "/src/static/images/req_pin_fang.png";
           return pinFangURL;
         }
 
       case "fa_tuan_jie_huo":
         if (discussion.sup_or_req === "提供") {
-          const faTuanURL = keys.SUP_JIE_TUAN;
+          const faTuanURL = "/src/static/images/sup_jie_tuan.png";
           return faTuanURL;
         } else {
-          const faTuanURL = keys.REQ_JIE_TUAN;
+          const faTuanURL = "/src/static/images/req_jie_tuan.png";
           return faTuanURL;
         }
 
       case "market":
         if (discussion.sup_or_req === "提供") {
-          const marketURL = keys.SUP_MARKET;
+          const marketURL = "/src/static/images/sup_market.png";
           return marketURL;
         } else {
-          const marketURL = keys.REQ_MARKET;
+          const marketURL = "/src/static/images/sup_market.png";
           return marketURL;
         }
 
