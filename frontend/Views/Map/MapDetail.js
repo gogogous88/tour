@@ -165,7 +165,7 @@ class MapDetail extends Component {
               <span className="blog-post-meta">
                 {isWeiXin() ? (
                   <a
-                    href={`maps://maps.google.com/maps?q=${eachMapData.coord}`}
+                    href={`https://maps.google.com/maps?q=${eachMapData.coord}`}
                   >
                     {!_.isEmpty(eachMapData.addr)
                       ? `${addrArray[0] + "," + addrArray[1]}`
