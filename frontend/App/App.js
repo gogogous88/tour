@@ -135,7 +135,7 @@ class AppContainer extends Component {
           <div className={classnames(appLayout.showOnMediumBP)}>
             <div style={{ marginLeft: 10, marginRight: 10 }}>
               {this.props.children}
-              <FeedBox currentForum="tour_wiki" />
+              {/* <FeedBox currentForum="tour_wiki" /> */}
             </div>
           </div>
           <div style={{ marginLeft: 10, marginRight: 10 }}>
