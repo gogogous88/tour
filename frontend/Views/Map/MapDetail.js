@@ -137,6 +137,26 @@ class MapDetail extends Component {
     }
   }
 
+  renderInWechat() {
+    const { eachMapData } = this.props;
+    // return (
+    //   <Link to={`https://maps.google.com/maps?q=${eachMapData.coord}`}>
+    //     {!_.isEmpty(eachMapData.addr)
+    //       ? `${addrArray[0] + "," + addrArray[1]}`
+    //       : eachMapData.coord}
+    //     (点击)
+    //   </Link>
+    // );
+    wx.openLocation({
+      latitude: 41, // 纬度，浮点数，范围为90 ~ -90
+      longitude: 121, // 经度，浮点数，范围为180 ~ -180。
+      name: "haha", // 位置名
+      address: "bejing,China", // 地址详情说明
+      scale: 1, // 地图缩放级别,整形值,范围从1~28。默认为最大
+      infoUrl: "" // 在查看位置界面底部显示的超链接,可点击跳转
+    });
+  }
+
   renderList() {
     const { eachMapData } = this.props;
     const imageURL = eachMapData.img;
@@ -176,14 +196,7 @@ class MapDetail extends Component {
               <h4 className="blog-post-title">{eachMapData.name}</h4>
               <span className="blog-post-meta">
                 {isWeiXin() ? (
-                  <a
-                    href={`https://maps.google.com/maps?q=${eachMapData.coord}`}
-                  >
-                    {!_.isEmpty(eachMapData.addr)
-                      ? `${addrArray[0] + "," + addrArray[1]}`
-                      : eachMapData.coord}
-                    (点击)
-                  </a>
+                  this.renderInWechat()
                 ) : (
                   <span onClick={this.renderNavi.bind(this)}>
                     <i
