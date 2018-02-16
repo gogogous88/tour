@@ -168,14 +168,14 @@ class MapDetail extends Component {
       <div role="main" className="container">
         <br />
         {this.renderButton()}
-
+        {/* changed */}
         <hr />
         <div className="row">
           <div className="col-sm-6 blog-main">
             <div className="blog-post">
               <h4 className="blog-post-title">{eachMapData.name}</h4>
               <span className="blog-post-meta">
-                {!isWeiXin() ? (
+                {isWeiXin() ? (
                   <a
                     href={`https://maps.google.com/maps?q=${eachMapData.coord}`}
                   >
