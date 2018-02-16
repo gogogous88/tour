@@ -96,9 +96,9 @@ class AppContainer extends Component {
     }
 
     // render only if we get the forum lists
-    if (isWeiXin()) {
-      return <img src="/src/static/images/openInSafari.png" width="100%" />;
-    }
+    // if (isWeiXin()) {
+    //   return <img src="/src/static/images/openInSafari.png" width="100%" />;
+    // }
     if (forums) {
       return (
         <div>
@@ -135,6 +135,7 @@ class AppContainer extends Component {
           <div className={classnames(appLayout.showOnMediumBP)}>
             <div style={{ marginLeft: 10, marginRight: 10 }}>
               {this.props.children}
+              <FeedBox currentForum="tour_wiki" />
             </div>
           </div>
           <div style={{ marginLeft: 10, marginRight: 10 }}>
