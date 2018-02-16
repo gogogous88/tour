@@ -139,15 +139,14 @@ class MapDetail extends Component {
 
   renderInWechat() {
     const { eachMapData } = this.props;
-    // return (
-    //   <Link to={`https://maps.google.com/maps?q=${eachMapData.coord}`}>
-    //     {!_.isEmpty(eachMapData.addr)
-    //       ? `${addrArray[0] + "," + addrArray[1]}`
-    //       : eachMapData.coord}
-    //     (点击)
-    //   </Link>
-    // );
-    return <img src="/src/static/images/openInSafari.png" width="100%" />;
+    return (
+      <a href={`https://maps.google.com/maps?q=${eachMapData.coord}`}>
+        {!_.isEmpty(eachMapData.addr)
+          ? `${addrArray[0] + "," + addrArray[1]}`
+          : eachMapData.coord}
+        (点击)
+      </a>
+    );
   }
 
   renderList() {
