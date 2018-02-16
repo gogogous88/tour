@@ -121,7 +121,7 @@ class MapDetail extends Component {
         );
       }
     } else {
-      return <img src="/src/static/images/openInSafari.png" width="100%" />;
+      wx.PopupWindow(`https://maps.google.com/maps?daddr=${coord}&amp;ll=`);
     }
   }
 
