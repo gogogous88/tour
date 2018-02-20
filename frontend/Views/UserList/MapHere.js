@@ -18,7 +18,6 @@ class MapHere extends Component {
   }
   addMarkers() {
     const { locations } = this.props;
-    console.log(locations);
 
     var map = new google.maps.Map(this.refs.map, {
       zoom: 4,

@@ -101,8 +101,6 @@ class Search extends Component {
 
   onInputChange = ({ target }) => {
     const value = target.type === "checkbox" ? target.checked : target.value;
-    console.log(this.state.age);
-    console.log(this.state.promotion);
 
     this.setState({
       [target.name]: value
@@ -307,7 +305,7 @@ class Search extends Component {
     //     </div>
     //   );
     // }
-    console.log("helloworld");
+
     return (
       <div className="search-container">
         <div className="container">

@@ -218,7 +218,7 @@ export const removeUploadedDocuments = data => dispatch => {
 };
 
 export const savePaymentForm = params => async dispatch => {
-  console.log("params are in actions", params);
+  // console.log("params are in actions", params);
   const { data } = await axios.post("/api/rental/makeReservation", params);
   dispatch({
     type: SAVE_PAYMENT_FORM,
@@ -227,7 +227,7 @@ export const savePaymentForm = params => async dispatch => {
 };
 
 export const createReservation = params => async dispatch => {
-  console.log("parmas for createReservation", params);
+  // console.log("parmas for createReservation", params);
   const { data } = await axios.post("/api/rental/reservation", params);
   dispatch({
     type: CREATE_RESERVATION,

@@ -13,7 +13,7 @@ import PlaceholderImage from "SharedStyles/placeholder.jpg";
 
 class Header extends Component {
   renderNavLinks() {
-    const { forums } = this.props;
+    const { forums, router } = this.props;
 
     if (forums) {
       return forums.map(forum => {
@@ -33,10 +33,12 @@ class Header extends Component {
 
     const currentForum = this.props;
 
+    const { router } = this.props;
+
     return (
       <div className={classnames(appLayout.constraintWidth)}>
         <div className={styles.headerTop}>
-          <Logo />
+          <Logo router={router} />
           <UserMenu
             signedIn={authenticated}
             userName={name || username}

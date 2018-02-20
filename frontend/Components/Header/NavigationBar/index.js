@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, IndexLink } from "react-router";
+import { Router, Route, Link, IndexLink } from "react-router";
 import classnames from "classnames";
 import _ from "lodash";
 

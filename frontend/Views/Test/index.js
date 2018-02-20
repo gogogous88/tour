@@ -12,6 +12,7 @@ class Test extends Component {
       { label: "项目提供人", value: "项目提供人" },
       { label: "其他", value: "其他" }
     ];
+
     return <MultiSelect choices={choices} />;
   }
 }

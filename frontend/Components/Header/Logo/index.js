@@ -13,9 +13,10 @@ class Logo extends Component {
     this.state = { pos: {} };
   }
 
-  componentDidMount() {
-    if (this.props.user && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
+  componentDidMount = async () => {
+    await this.renderLogin();
+    if (this.props.user.authenticated && navigator.geolocation) {
+      return navigator.geolocation.getCurrentPosition(position => {
         var pos = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
@@ -23,7 +24,13 @@ class Logo extends Component {
         this.renderLocation(pos);
       });
     }
-  }
+  };
+
+  renderLogin = async () => {
+    if (!this.props.user.authenticated) {
+      return await this.props.router.push("/user/login");
+    }
+  };
 
   renderLocation(pos) {
     this.setState({ pos });
@@ -69,7 +76,7 @@ class Logo extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { user: state.user };
+function mapStateToProps({ user }) {
+  return { user };
 }
 export default connect(mapStateToProps, actions)(Logo);

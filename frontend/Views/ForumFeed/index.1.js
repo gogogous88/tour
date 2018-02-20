@@ -397,9 +397,6 @@ class ForumFeed extends Component {
       return <div className={classnames(styles.errorMsg)}>{error}</div>;
     }
 
-    console.log("searchDateStatus", this.state.searchDateStatus);
-    console.log("searchTermStatus", this.state.searchTermStatus);
-
     return (
       <div
         className={classnames(appLayout.constraintWidth, styles.contentArea)}

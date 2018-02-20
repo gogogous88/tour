@@ -503,7 +503,7 @@ class ForumFeed extends Component {
     } = this.props;
 
     const { searchDate } = this.state;
-    console.log("!this.state.searchDate", !this.state.searchDate);
+    // console.log("!this.state.searchDate", !this.state.searchDate);
     const searchDateMMDD = moment(searchDate).format("MM/DD");
 
     if (error) {

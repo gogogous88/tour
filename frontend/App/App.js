@@ -38,7 +38,8 @@ class AppContainer extends Component {
   }
 
   renderHomePage() {
-    const { forums, currentForum } = this.props;
+    const { forums, currentForum, router } = this.props;
+
     if (this.props.location.pathname === "/") {
       return (
         <div style={{ marginLeft: 10, marginRight: 10, marginTop: 25 }}>
@@ -111,6 +112,7 @@ class AppContainer extends Component {
             </a>
           </div> */}
           <Header
+            router={this.props.router}
             currentForum={currentForum}
             path={this.props.location.pathname}
           />

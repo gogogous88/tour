@@ -105,7 +105,6 @@ class MapResult extends Component {
 
     if (pickLocation) {
       const plocString = toString(pickLocation);
-      console.log(plocString);
 
       if (pickLocation === "5764") {
         return this.setState({
@@ -208,7 +207,6 @@ class MapResult extends Component {
       return <Loading />;
     }
 
-    console.log("this.props", this.props);
     return (
       <div>
         {/* <Navigator passedStep={2} {...this.props} /> */}

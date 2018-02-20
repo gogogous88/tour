@@ -248,7 +248,7 @@ class UserMenu extends Component {
 
   render() {
     const { signedIn, userName, avatar, signOutAction } = this.props;
-
+    // console.log("router", this.props);
     if (signedIn) {
       return (
         <div style={{ position: "relative" }}>
@@ -278,7 +278,7 @@ class UserMenu extends Component {
         </div>
       );
     }
-    console.log("check", this.state.activeSubMenu);
+
     return (
       <div className={styles.container}>
         <div className={appLayout.showExSmallBP}>

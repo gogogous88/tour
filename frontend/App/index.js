@@ -31,6 +31,7 @@ import MapResult from "../Views/CarRental/search/map/MapHome";
 import Test from "../Views/Test";
 import Profile from "../Views/Profile";
 import UserList from "../Views/UserList";
+import Login from "../Components/Header/UserMenu/Login";
 
 //mark - materialize css
 
@@ -46,6 +47,7 @@ ReactDOM.render(
 
       <Route path="/" component={AppContainer}>
         <IndexRoute component={ForumFeed} />
+        <Route exact path="/user/login" component={Login} />
         <Route exact path="/test" component={Test} />
         <Route exact path="/map/attr" component={MapAttr} />
 
