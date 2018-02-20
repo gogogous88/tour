@@ -27,7 +27,7 @@ class Logo extends Component {
   };
 
   renderLogin = async () => {
-    if (!this.props.user.authenticated) {
+    if (!this.props.user.authenticated && !this.props.user.fetchingUser) {
       return await this.props.router.push("/user/login");
     }
   };
