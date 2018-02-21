@@ -8,6 +8,7 @@ import Footer from "Components/Footer";
 import SlideShow from "Components/SlideShow";
 import appLayout from "SharedStyles/appLayout.css";
 import styles from "./styles.css";
+import FooterNav from "Components/SideBar/FooterNav";
 
 import { getForums, updateCurrentForum, getUser } from "./actions";
 
@@ -142,6 +143,9 @@ class AppContainer extends Component {
           </div>
           <div style={{ marginLeft: 10, marginRight: 10 }}>
             <Footer />
+          </div>
+          <div className={appLayout.showOnMediumBP}>
+            <FooterNav />
           </div>
         </div>
       );

@@ -10,6 +10,7 @@
   margin-right: 20px;
   justify-content: center;
   align-items: center;
+ 
 }
 
 .button {
@@ -29,4 +30,80 @@
   display: flex;
   align-self: center;
   justify-content: center;
+}
+
+.toolbarFixed {
+  right:0;
+  left:0;
+  padding: 0;
+  height: 56px;
+  position: fixed;
+  bottom: 0px;
+  color:red;
+  background-color: rgb(37, 173, 226);
+}
+
+.toolbarFixed.active > a i {
+opacity: 0;
+}
+
+.ulStyle {
+display: -webkit-flex;
+display: -ms-flexbox;
+display: flex;
+top: 0;
+bottom: 0;
+align-content: center;
+
+}
+
+
+.liStyle {
+-webkit-flex: 1;
+-ms-flex: 1;
+flex: 1;
+display: inline-block;
+margin: -;
+height: 100%;
+transition: none;
+position: relative;
+top: -15px;
+align-content: center;
+
+}
+
+
+.aStyle{
+display: block;
+overflow: hidden;
+position: relative;
+
+width: 100%;
+height: 100%;
+background-color: transparent;
+box-shadow: none;
+ color: #fff;
+line-height: 56px;
+z-index: 1;
+align-content: center;
+ }
+
+.iStyle {
+line-height: inherit;
+padding-top: 13px;
+display: flex;
+align-self: center;
+justify-content: center;
+}
+
+.toolbarFixed ul {
+left: 0;
+right: 0;
+display: flex;
+align-content: center;
+justify-content: center;
+}
+
+.toolbarFixed ul li {
+margin-bottom: 1px;
 }
