@@ -21,34 +21,43 @@ class SideBar extends Component {
             <li
               className={classnames("waves-effect waves-light", styles.liStyle)}
             >
-              <a className={styles.aStyle} href="/">
+              <Link to="/" className={styles.aStyle}>
                 <i className={classnames(styles.iStyle, "material-icons")}>
                   home
                 </i>
-              </a>
+              </Link>
             </li>
             <li
               className={classnames("waves-effect waves-light", styles.liStyle)}
             >
-              <a className={styles.aStyle} href="/map">
+              <Link to="/map" className={styles.aStyle}>
                 <i className={classnames(styles.iStyle, "material-icons")}>
-                  map
+                  directions
                 </i>
-              </a>
+              </Link>
             </li>
             <li
               className={classnames("waves-effect waves-light", styles.liStyle)}
             >
-              <a className={styles.aStyle} href="/pin_fang">
+              <Link to="/pin_fang" className={styles.aStyle}>
                 <i className={classnames(styles.iStyle, "material-icons")}>
                   list
                 </i>
-              </a>
+              </Link>
             </li>
             <li
               className={classnames("waves-effect waves-light", styles.liStyle)}
             >
-              <a className={styles.aStyle} href="/user/login">
+              <Link to="/car-rental" className={styles.aStyle}>
+                <i className={classnames(styles.iStyle, "material-icons")}>
+                  directions_car
+                </i>
+              </Link>
+            </li>
+            <li
+              className={classnames("waves-effect waves-light", styles.liStyle)}
+            >
+              <a href="/user/login" className={styles.aStyle}>
                 <i className={classnames(styles.iStyle, "material-icons")}>
                   person
                 </i>

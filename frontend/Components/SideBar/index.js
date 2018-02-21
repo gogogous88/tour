@@ -16,7 +16,7 @@ class SideBar extends Component {
             <div className={styles.buttonContent}>+</div>
           </Button>
         </Link> */}
-        <div className="fixed-action-btn toolbar" style={{ bottom: "10%" }}>
+        <div className="fixed-action-btn toolbar" style={{ bottom: "13%" }}>
           <a className="btn-floating btn-large red pulse">
             <i className="large material-icons">add</i>
           </a>
