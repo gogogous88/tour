@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import _ from "lodash";
 import MapHere from "./MapHere";
 
-class UserList extends Component {
+class MapUser extends Component {
   componentDidMount() {
     this.props.getAllUsersArray();
   }
@@ -31,4 +31,4 @@ function mapStateToProps({ userList }) {
   return { userList };
 }
 
-export default connect(mapStateToProps, actions)(UserList);
+export default connect(mapStateToProps, actions)(MapUser);

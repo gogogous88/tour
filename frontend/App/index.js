@@ -30,8 +30,10 @@ import TourGuideWiki from "../Views/TourGuideWiki/TourGuideWiki";
 import MapResult from "../Views/CarRental/search/map/MapHome";
 import Test from "../Views/Test";
 import Profile from "../Views/Profile";
-import UserList from "../Views/UserList";
+import ListUser from "../Views/UserList/ListUser";
 import Login from "../Components/Header/UserMenu/Login";
+import MapUser from "../Views/UserList/MapUser";
+import Plan from "../Views/Plan";
 
 //mark - materialize css
 
@@ -63,7 +65,8 @@ ReactDOM.render(
 
         {/*用户列表*/}
 
-        <Route path="/userlist" component={UserList} />
+        <Route path="/list/user" component={ListUser} />
+        <Route path="/user/map" component={MapUser} />
 
         <Route exact path="/result" component={Result} />
         <Route path="/result/map" component={MapResult} />

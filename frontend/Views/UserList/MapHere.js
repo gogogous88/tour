@@ -122,9 +122,10 @@ class MapHere extends Component {
           <div className={classNames(styles.rowStyle, styles.columnStyle)}>
             <div className={styles.titleStyle}>{name}</div>
             <div>{city || "美国"}</div>
-            <div>微信:未留下</div>
+            <div>微信:570536338</div>
             <div>实时位置:</div>
             <div>波士顿</div>
+            <div>有车导游,IT,租车</div>
           </div>
         </div>
       </div>

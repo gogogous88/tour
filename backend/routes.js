@@ -47,6 +47,9 @@ const routesConfig = app => {
   // apply deli apis
   deliAPI(app);
 
+  // apply hotel apis
+  require("./entities/hotel/api")(app);
+
   //apply rental apis
   rentalAPI(app);
 
