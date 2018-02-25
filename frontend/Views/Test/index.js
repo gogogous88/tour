@@ -3,6 +3,8 @@ import Rdate from "../../Components/FormCommon/Rdate";
 import moment from "moment";
 import { connect } from "react-redux";
 import * as actions from "./actions";
+import ValuesAsNumbersField from "../../Components/Select/Single";
+import MaterialUiForm from "../../Components/Form/RsvpForm";
 
 class Test extends React.Component {
   constructor(props) {
@@ -19,13 +21,15 @@ class Test extends React.Component {
 
   render() {
     const value = [this.state.pdate, this.state.endDate];
+
     return (
       <div className="row">
         <div className="col s12">
-          <form
+          {/* <form
             onSubmit={e => {
               e.preventDefault();
               this.props.postHotelRsvp({
+                // console.log({
                 hotel: {
                   id: 1,
                   name: "Mark Hotel",
@@ -34,7 +38,6 @@ class Test extends React.Component {
                   rate: "$155"
                 },
                 user: this.props.user,
-
                 ph_no: this.state.ph_no,
                 email: this.state.email,
                 detail: { rdate: value, amount: this.state.amount }
@@ -65,14 +68,11 @@ class Test extends React.Component {
             />
             <label>房间数：</label>
 
-            <input
-              name="amount"
+            <ValuesAsNumbersField
               value={this.state.amount}
-              onChange={e =>
-                this.setState({
-                  amount: e.target.value
-                })
-              }
+              onValueChange={value => {
+                this.setState({ amount: value });
+              }}
             />
             <label>请选择入住日期-出住日期：</label>
 
@@ -89,7 +89,8 @@ class Test extends React.Component {
             <button type="submit" className="btn">
               提交
             </button>
-          </form>
+          </form> */}
+          <MaterialUiForm />
         </div>
       </div>
     );

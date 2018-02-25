@@ -11,9 +11,10 @@ module.exports = app => {
   });
   app.post("/api/hotel/rsvp", async (req, res) => {
     const { user, email, ph_no, hotel, detail } = await req.body;
+    console.log("user", user);
     const newHotelRsvp = await new HotelRsvp({
-      user: user.userId,
-      userName: user.userName,
+      user,
+
       email,
       ph_no,
       hotel: {
