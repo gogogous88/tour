@@ -4,7 +4,6 @@ import moment from "moment";
 import { connect } from "react-redux";
 import * as actions from "./actions";
 import ValuesAsNumbersField from "../../Components/Select/Single";
-import MaterialUiForm from "../../Components/Form/RsvpForm";
 
 class Test extends React.Component {
   constructor(props) {
@@ -25,7 +24,7 @@ class Test extends React.Component {
     return (
       <div className="row">
         <div className="col s12">
-          {/* <form
+          <form
             onSubmit={e => {
               e.preventDefault();
               this.props.postHotelRsvp({
@@ -89,8 +88,7 @@ class Test extends React.Component {
             <button type="submit" className="btn">
               提交
             </button>
-          </form> */}
-          <MaterialUiForm />
+          </form>
         </div>
       </div>
     );
