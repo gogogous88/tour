@@ -24,4 +24,26 @@ const HotelSchema = new Schema({
   f: String
 });
 
+const HotelRsvpSchema = new Schema({
+  user: { type: mongoose.Schema.ObjectId, ref: "user" },
+  userName: String,
+  email: String,
+  ph_no: Number,
+  hotel: {
+    id: Number,
+    name: String,
+    lat: Number,
+    lng: Number,
+    rate: String
+  },
+  detail: {
+    rdate: Array,
+    amount: Number,
+
+    desc: String
+  },
+  createDate: Date
+});
+
 module.exports = mongoose.model("hotels", HotelSchema);
+module.exports = mongoose.model("hotelRsvp", HotelRsvpSchema);

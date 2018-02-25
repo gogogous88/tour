@@ -29,14 +29,18 @@ class Rdate extends Component {
       overlayVisible: false,
       currentDateKey: ""
     };
+    const pdate = moment(this.state.startDate).format("YYYY-MM-DD");
+    const rdate = moment(this.state.endDate).format("YYYY-MM-DD");
 
-    this.props.onChange([this.state.startDate, this.state.endDate]);
+    this.props.onChange([pdate, rdate]);
   }
 
   render() {
     return (
       <div>
         <DateRangePicker
+          startDateId="start_date_input"
+          endDateId="end_date_input"
           noBorder
           numberOfMonths={1}
           startDate={this.state.startDate} // momentPropTypes.momentObj or null,
