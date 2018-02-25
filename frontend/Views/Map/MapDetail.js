@@ -9,8 +9,13 @@ import Loading from "../../Components/Loading";
 import classNames from "classnames/bind";
 import styles from "./styles.css";
 import WrapMap from "./WrapMap";
+import HotelRsvp from "../HotelRsvp";
 
 class MapDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { rsvp: false };
+  }
   componentWillMount() {
     this.fetchData();
 
@@ -29,15 +34,41 @@ class MapDetail extends Component {
     }
     if (id.length === 4) {
       return (
-        <Link className="btn btn-danger" to="/map/hotel">
-          《 返回合约酒店地图
-        </Link>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between"
+          }}
+        >
+          <div>
+            <Link className="btn btn-danger" to="/map/hotel">
+              回到地图
+            </Link>
+          </div>
+          <div>
+            {!this.state.rsvp ? (
+              <button
+                className="btn pulse"
+                onClick={() => {
+                  this.setState({ rsvp: true });
+                }}
+              >
+                预定此酒店
+              </button>
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
       );
     }
     return (
-      <Link className="btn btn-danger" to="/map/attr">
-        《 返回景点地图
-      </Link>
+      <div>
+        <Link className="btn btn-danger" to="/map/attr">
+          《 返回景点地图
+        </Link>
+      </div>
     );
   }
 
@@ -58,10 +89,12 @@ class MapDetail extends Component {
     if (!_.isEmpty(eachMapData.ph_no)) {
       return (
         <div>
-          <span>电话：</span>
-          <a href={`tel:${eachMapData.ph_no}`}>
-            <p className="blog-post-meta">{eachMapData.ph_no}</p>
-          </a>
+          <span>
+            <a href={`tel:${eachMapData.ph_no}`}>
+              <p className="blog-post-meta">{eachMapData.ph_no}</p>
+            </a>
+          </span>
+
           <hr />
           <div className={styles.rowStyle}>
             <div style={{ display: "flex", flex: 1 }}>
@@ -159,6 +192,19 @@ class MapDetail extends Component {
     );
   }
 
+  renderBook = () => {
+    const { eachMapData } = this.props;
+    const { id, lat, lng, name, price_rate } = eachMapData;
+
+    return (
+      <div>
+        <h5 style={{ fontSize: 16 }}>您正在预定{name}:</h5>
+        <HotelRsvp id={id} lat={lat} lng={lng} name={name} rate={price_rate} />
+        <hr />
+      </div>
+    );
+  };
+
   renderList() {
     const { eachMapData } = this.props;
     const imageURL = eachMapData.img;
@@ -192,6 +238,7 @@ class MapDetail extends Component {
         {this.renderButton()}
         {/* changed */}
         <hr />
+        {this.state.rsvp ? this.renderBook() : ""}
         <div className="row">
           <div className="col-sm-6 blog-main">
             <div className="blog-post">
@@ -213,7 +260,7 @@ class MapDetail extends Component {
                   </span>
                 )}
               </span>
-              <hr />
+
               {this.renderDesc()}
             </div>
           </div>
