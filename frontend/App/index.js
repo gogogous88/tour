@@ -19,6 +19,7 @@ import UserProfile from "../Views/UserProfile";
 import NotFound from "../Views/NotFound";
 import MapHome from "../Views/Map/MapHome";
 import MapAttr from "../Views/Map/MapAttr";
+import MapHotel from "../Views/Map/MapHotel";
 import MapDetail from "../Views/Map/MapDetail";
 import GoogleSheet from "../Views/googleSheet";
 import Search from "../Views/CarRental/search/Search";
@@ -52,6 +53,7 @@ ReactDOM.render(
         <Route exact path="/user/login" component={Login} />
         <Route exact path="/test" component={Test} />
         <Route exact path="/map/attr" component={MapAttr} />
+        <Route exact path="/map/hotel" component={MapHotel} />
 
         <Route path="/map/:id" component={MapDetail} />
         <Route exact path="/map" component={MapHome} />

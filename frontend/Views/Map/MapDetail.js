@@ -27,6 +27,13 @@ class MapDetail extends Component {
         </Link>
       );
     }
+    if (id.length === 4) {
+      return (
+        <Link className="btn btn-danger" to="/map/hotel">
+          《 返回合约酒店地图
+        </Link>
+      );
+    }
     return (
       <Link className="btn btn-danger" to="/map/attr">
         《 返回景点地图
@@ -40,7 +47,10 @@ class MapDetail extends Component {
     if (id.length === 8) {
       return this.props.fetchAttrs();
     }
-    this.props.fetchMapData();
+    if (id.length === 4) {
+      return this.props.fetchHotels();
+    }
+    return this.props.fetchMapData();
   }
 
   renderDesc() {
@@ -267,9 +277,13 @@ class MapDetail extends Component {
 function mapStateToProps({ MapDataMore }, ownProps) {
   const MapData = _.mapKeys(MapDataMore.delis, "id");
   const AttrData = _.mapKeys(MapDataMore.attrs, "id");
+  const HotelData = _.mapKeys(MapDataMore.hotels, "id");
   const idToString = ownProps.params.id.toString();
   if (idToString.length === 8) {
     return { eachMapData: AttrData[ownProps.params.id] };
+  }
+  if (idToString.length === 4) {
+    return { eachMapData: HotelData[ownProps.params.id] };
   }
 
   return { eachMapData: MapData[ownProps.params.id] };
