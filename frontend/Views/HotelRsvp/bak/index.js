@@ -13,18 +13,17 @@ class HotelRsvp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pdate: this.props.pdate || "",
-      enDdate: this.props.enDdate || "",
+      pdate: "",
+      enDdate: "",
       rdate: [],
-      ph_no: this.props.ph_no || "",
-      email: this.props.email || "",
-      amount: this.props.amount || 1,
+      ph_no: "",
+      email: "",
+      amount: 1,
       ph_no_validate: false,
       email_validate: false,
       comfirm: false
     };
   }
-
   onInputChange = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -50,7 +49,24 @@ class HotelRsvp extends Component {
                 !_.isEmpty(this.state.ph_no) &&
                 !_.isEmpty(this.state.email)
               ) {
-                this.setState({ comfirm: true });
+                this.props.postHotelRsvp(
+                  {
+                    hotel: {
+                      id,
+                      name,
+                      lat,
+                      lng,
+                      rate
+                    },
+                    user: this.props.user,
+                    ph_no: this.state.ph_no,
+                    email: this.state.email,
+                    detail: { rdate: value, amount: this.state.amount }
+                  },
+                  () => {
+                    this.setState({ comfirm: true });
+                  }
+                );
               } else if (_.isEmpty(this.state.ph_no)) {
                 this.setState({ ph_no_validate: true });
               } else if (_.isEmpty(this.state.email)) {

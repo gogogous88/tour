@@ -14,6 +14,7 @@ import rentalReducer from "../Views/CarRental/reducers";
 import { reducer as form } from "redux-form";
 import userList from "../Views/UserList/reducers";
 import gnc from "../Views/TourGuideWiki/reducers";
+import hotelRsvp from "../Views/HotelRsvp/reducers";
 
 // root reducer for app
 const rootReducer = combineReducers({
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
   rentalReducer: rentalReducer,
   userList: userList,
   form,
-  gnc
+  gnc,
+  hotelRsvp
 });
 
 // dev tool extension

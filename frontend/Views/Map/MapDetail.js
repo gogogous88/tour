@@ -10,11 +10,12 @@ import classNames from "classnames/bind";
 import styles from "./styles.css";
 import WrapMap from "./WrapMap";
 import HotelRsvp from "../HotelRsvp";
+import ArrayHotelShow from "../../Components/SlideShow/ArrayHotelShow";
 
 class MapDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = { rsvp: false };
+    this.state = { rsvp: false, showComfirm: false };
   }
   componentWillMount() {
     this.fetchData();
@@ -86,27 +87,41 @@ class MapDetail extends Component {
 
   renderDesc() {
     const { eachMapData } = this.props;
+
+    const id = eachMapData.id.toString();
+    const flexStyle = id.length === 4 ? 3 : 1;
     if (!_.isEmpty(eachMapData.ph_no)) {
       return (
         <div>
-          <span>
-            <a href={`tel:${eachMapData.ph_no}`}>
-              <p className="blog-post-meta">{eachMapData.ph_no}</p>
-            </a>
-          </span>
+          <blockquote>
+            <span>
+              <a href={`tel:${eachMapData.ph_no}`}>
+                <p className="blog-post-meta">{eachMapData.ph_no}</p>
+              </a>
+            </span>
+          </blockquote>
 
           <hr />
           <div className={styles.rowStyle}>
-            <div style={{ display: "flex", flex: 1 }}>
+            <div style={{ display: "flex", flex: flexStyle }}>
               <blockquote>
-                类型：
-                {eachMapData.category}
+                {!id.length === 4 ? "类型：" : "早餐:"}
+                <div>{eachMapData.category}</div>
               </blockquote>
             </div>
             <div style={{ display: "flex", flex: 2 }}>
               <blockquote>
                 位于：
-                {eachMapData.location}
+                <div> {eachMapData.location}</div>
+              </blockquote>
+            </div>
+          </div>
+
+          <div className={styles.rowStyle}>
+            <div style={{ display: "flex", flex: 1 }}>
+              <blockquote>
+                {!id.length === 4 ? "" : "单价："}
+                <div>${eachMapData.price_rate}/晚</div>
               </blockquote>
             </div>
           </div>
@@ -115,11 +130,15 @@ class MapDetail extends Component {
     }
     return (
       <div>
-        <span>类型：</span>
-        <blockquote>{eachMapData.category}</blockquote>
+        <span>{!id.length === 4 ? "类型：" : "早餐:"}</span>
+        <div>
+          <blockquote>{eachMapData.category}</blockquote>
+        </div>
         <hr />
         <span>位于：</span>
-        <blockquote>{eachMapData.location}</blockquote>
+        <div>
+          <blockquote>{eachMapData.location}</blockquote>
+        </div>
       </div>
     );
   }
@@ -192,14 +211,39 @@ class MapDetail extends Component {
     );
   }
 
+  renderEditButton = () => {
+    return (
+      <button
+        className="btn"
+        onClick={() => {
+          this.setState({ showComfirm: false });
+        }}
+      >
+        修改
+      </button>
+    );
+  };
+
   renderBook = () => {
     const { eachMapData } = this.props;
-    const { id, lat, lng, name, price_rate } = eachMapData;
+    const { id, lat, lng, name, price_rate, addr } = eachMapData;
 
     return (
       <div>
-        <h5 style={{ fontSize: 16 }}>您正在预定{name}:</h5>
-        <HotelRsvp id={id} lat={lat} lng={lng} name={name} rate={price_rate} />
+        {!this.state.showComfirm ? (
+          <h5 style={{ fontSize: 16 }}>您正在预定{name}:</h5>
+        ) : (
+          this.renderEditButton()
+        )}
+
+        <HotelRsvp
+          id={id}
+          lat={lat}
+          lng={lng}
+          name={name}
+          rate={price_rate}
+          addr={addr}
+        />
         <hr />
       </div>
     );
@@ -265,7 +309,7 @@ class MapDetail extends Component {
             </div>
           </div>
           <div className="col-sm-6 blog-main">
-            <div className="blog-post">
+            <div style={{ height: "auto" }}>
               {/* <h5>电话：</h5>
               <p className="blog-post-meta">{eachMapData.ph_no}</p>
               <hr />
@@ -291,15 +335,19 @@ class MapDetail extends Component {
             <span>
               <hr />
               图片：<hr />
-              <div>
+              {!eachMapData.id.toString().length === 4 ? (
                 <div>
-                  <img src={streetURL} width="90%" />
-                </div>
+                  <div>
+                    <img src={streetURL} width="90%" />
+                  </div>
 
-                <a href={imageURL}>
-                  <img src={imageURL} width="90%" />
-                </a>
-              </div>
+                  <a href={imageURL}>
+                    <img src={imageURL} width="90%" />
+                  </a>
+                </div>
+              ) : (
+                this.renderHotelImg()
+              )}
             </span>
           </div>
         </div>
@@ -307,8 +355,21 @@ class MapDetail extends Component {
     );
   }
 
+  renderHotelImg = () => {
+    const { eachMapData } = this.props;
+    const { a, b, c } = eachMapData;
+    const photoArray = _.isEmpty(c) ? [a, b] : [a, b, c];
+    return (
+      <div>
+        <ArrayHotelShow photoArray={photoArray} />
+      </div>
+    );
+  };
+
   render() {
     const { eachMapData } = this.props;
+    console.log("rsvp", this.state.rsvp);
+    console.log("showComfirm", this.state.showComfirm);
     if (_.isEmpty(eachMapData)) {
       return <Loading />;
     }

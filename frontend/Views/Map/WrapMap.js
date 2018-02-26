@@ -12,7 +12,7 @@ class WrapMap extends Component {
     // console.log(location);
 
     var map = new google.maps.Map(this.refs.map, {
-      zoom: 4,
+      zoom: 10,
       center: { lat, lng }
     });
 
