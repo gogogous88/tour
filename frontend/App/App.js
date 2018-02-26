@@ -66,8 +66,8 @@ class AppContainer extends Component {
                   <Link to="/map" className={styles.buttonStyle}>
                     <span className={styles.buttonFontStyle}>团餐</span>
                   </Link>
-                  <Link to="/map/attr" className={styles.buttonStyle}>
-                    <span className={styles.buttonFontStyle}>景点</span>
+                  <Link to="/map/hotel" className={styles.buttonStyle}>
+                    <span className={styles.buttonFontStyle}>酒店</span>
                   </Link>
                   <Link to="/car-rental" className={styles.buttonStyle}>
                     <span className={styles.buttonFontStyle}>租车</span>
