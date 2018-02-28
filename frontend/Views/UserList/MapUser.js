@@ -12,6 +12,9 @@ class MapUser extends Component {
   renderUsers() {
     const { userList } = this.props;
 
+    if (_.isEmpty(userList)) {
+      return <h1>loading...</h1>;
+    }
     return (
       <MapHere locations={userList} pin="/src/static/icons/pins/redhead.svg" />
     );

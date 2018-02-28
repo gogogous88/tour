@@ -15,6 +15,7 @@ import { reducer as form } from "redux-form";
 import userList from "../Views/UserList/reducers";
 import gnc from "../Views/TourGuideWiki/reducers";
 import hotelRsvp from "../Views/HotelRsvp/reducers";
+import city from "../Views/Test/reducers";
 
 // root reducer for app
 const rootReducer = combineReducers({
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
   userList: userList,
   form,
   gnc,
-  hotelRsvp
+  hotelRsvp,
+  city
 });
 
 // dev tool extension

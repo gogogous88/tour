@@ -4,6 +4,7 @@ const getFullProfile = require("./controller").getFullProfile;
 const updateFullProfile = require("./controller").updateFullProfile;
 const getAllUsers = require("./controller").getAllUsers;
 const updateCoords = require("./controller").updateCoords;
+const cities = require("cities");
 
 /**
  * user apis
@@ -127,6 +128,13 @@ const userAPI = app => {
     const result = await getAllUsers();
     if (result) res.json(result);
     else res.send(null);
+  });
+
+  app.post("/api/user/location", async (req, res) => {
+    const { lat, lng } = await req.body;
+
+    const city = await cities.gps_lookup(lat, lng);
+    res.json(city);
   });
 };
 

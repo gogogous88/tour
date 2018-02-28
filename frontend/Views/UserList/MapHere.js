@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import styles from "./styles.css";
 import classNames from "classnames/bind";
+import Test from "../Test";
+import { Link } from "react-router";
 
 class MapHere extends Component {
   constructor(props) {
@@ -9,7 +11,8 @@ class MapHere extends Component {
       name: "",
       pos: { lat: 41, lng: -121 },
       avatarUrl: "",
-      city: "美国"
+      city: "美国",
+      username: ""
     };
   }
 
@@ -28,8 +31,8 @@ class MapHere extends Component {
 
     var marker, i;
 
-    const onOpen = (name, avatarUrl, city, pos) => {
-      this.setState({ name, avatarUrl, city, pos });
+    const onOpen = (name, avatarUrl, city, pos, username) => {
+      this.setState({ name, avatarUrl, city, pos, username });
     };
 
     for (i = 0; i < locations.length; i++) {
@@ -45,13 +48,15 @@ class MapHere extends Component {
       };
 
       const renderLng = () => {
-        var lng = -121;
+        var lng = 121;
 
         if (locations[i].pos) {
           return (lng = locations[i].pos.lng);
         }
-        return (lng = -121);
+        return (lng = 121);
       };
+
+      console.log("checkuser", locations[i]);
 
       marker = new google.maps.Marker({
         position: {
@@ -75,7 +80,8 @@ class MapHere extends Component {
                   locations[i].name,
                   locations[i].avatarUrl,
                   locations[i].location,
-                  locations[i].pos
+                  locations[i].pos,
+                  locations[i].username
                 ) +
                 " >" +
                 locations[i].name +
@@ -94,8 +100,14 @@ class MapHere extends Component {
     return <button />;
   }
 
+  renderLocation() {
+    const { pos } = this.state;
+    const { lat, lng } = pos;
+    return <Test pos={pos} />;
+  }
+
   renderCard() {
-    const { name, avatarUrl, city, pos } = this.state;
+    const { name, avatarUrl, city, pos, username } = this.state;
     return (
       <div className={styles.cardContainer}>
         <div className={styles.cardStyle}>
@@ -114,6 +126,9 @@ class MapHere extends Component {
               </button>
             </div>
             <img src={avatarUrl} className={classNames(styles.imgStyle)} />
+            <Link to={`/user/${username}`} className={styles.btn}>
+              查看
+            </Link>
 
             <div className={styles.carTitleStyle}>
               {this.renderNextButton(name, avatarUrl, city, pos)}
@@ -121,11 +136,13 @@ class MapHere extends Component {
           </div>
           <div className={classNames(styles.rowStyle, styles.columnStyle)}>
             <div className={styles.titleStyle}>{name}</div>
-            <div>{city || "美国"}</div>
-            <div>微信:570536338</div>
+            <div>长驻:{city || "美国"}</div>
+            <div>联系方式-email:</div>
+
+            <div>{username}@gmail.com</div>
             <div>实时位置:</div>
-            <div>波士顿</div>
-            <div>有车导游,IT,租车</div>
+            {this.renderLocation()}
+            <div>有车导游</div>
           </div>
         </div>
       </div>
