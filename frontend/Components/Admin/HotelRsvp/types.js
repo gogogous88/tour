@@ -1,0 +1,1 @@
+export const GET_ALL_HOTEL_RSVP = "GET_ALL_HOTEL_RSVP";

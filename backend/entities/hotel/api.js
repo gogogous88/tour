@@ -34,4 +34,9 @@ module.exports = app => {
     await newHotelRsvp.save();
     res.json(newHotelRsvp);
   });
+
+  app.get("/api/hotel/rsvp", async (req, res) => {
+    const allHotelRsvp = await HotelRsvp.find({});
+    res.send(allHotelRsvp);
+  });
 };

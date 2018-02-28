@@ -16,6 +16,7 @@ import userList from "../Views/UserList/reducers";
 import gnc from "../Views/TourGuideWiki/reducers";
 import hotelRsvp from "../Views/HotelRsvp/reducers";
 import city from "../Views/Test/reducers";
+import allHotelRsvp from "../Components/Admin/HotelRsvp/reducers";
 
 // root reducer for app
 const rootReducer = combineReducers({
@@ -33,7 +34,8 @@ const rootReducer = combineReducers({
   form,
   gnc,
   hotelRsvp,
-  city
+  city,
+  allHotelRsvp
 });
 
 // dev tool extension

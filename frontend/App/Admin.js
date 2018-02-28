@@ -8,6 +8,7 @@ import { getUser } from "./actions";
 import AdminHeader from "Containers/AdminHeader";
 import appLayout from "SharedStyles/appLayout.css";
 import styles from "./styles.css";
+import HotelRsvp from "Components/Admin/HotelRsvp";
 
 class AdminContainer extends Component {
   componentDidMount() {
@@ -33,7 +34,11 @@ class AdminContainer extends Component {
             <title>途盖大导通 | Admin</title>
           </Helmet>
           <AdminHeader />
+
           {this.props.children}
+          <div style={{ marginLeft: 10, marginRight: 10 }}>
+            <HotelRsvp />
+          </div>
         </div>
       );
     } else {
