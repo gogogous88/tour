@@ -55,7 +55,7 @@ class MultiSelect extends Component {
     const options = crazy ? WHY_WOULD_YOU : FLAVOURS;
 
     const Array = this.props.value;
-    const valueString = Array.toString();
+    const valueString = Array.join();
     const arrayValue = valueString.split(",");
 
     console.log("arrayValue", arrayValue);
