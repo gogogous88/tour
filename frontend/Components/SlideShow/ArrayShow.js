@@ -15,7 +15,7 @@ class ArrayShow extends Component {
 
     const { photoArray } = this.props;
 
-    return (
+    return photoArray ? (
       <Slider
         style={{
           marginLeft: 10,
@@ -26,13 +26,15 @@ class ArrayShow extends Component {
         {photoArray.map(eachPhoto => {
           return (
             <div className="container">
-              <Link key={eachPhoto.secure_url} to={eachPhoto.secure_url}>
-                <img src={eachPhoto.secure_url} width="50%" />
-              </Link>
+              <a href={eachPhoto}>
+                <img key={eachPhoto} src={eachPhoto} width="50%" />
+              </a>
             </div>
           );
         })}
       </Slider>
+    ) : (
+      "loading..."
     );
   }
 }

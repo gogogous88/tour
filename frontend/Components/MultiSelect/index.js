@@ -5,34 +5,41 @@ import Select from "react-select";
 
 //props of choices can be 传下来 as options
 
-var MultiSelect = createClass({
-  displayName: "MultiSelectField",
-  propTypes: {
-    label: PropTypes.string
-  },
-  getInitialState() {
-    return {
+class MultiSelect extends Component {
+  // displayName: "MultiSelectField",
+  // propTypes: {
+  //   label: PropTypes.string
+  // },
+  constructor(props) {
+    super(props);
+    this.state = {
       removeSelected: true,
       disabled: false,
       crazy: false,
       stayOpen: false,
-      value: this.props.value,
+      value: [],
       rtl: false
     };
-  },
-  handleSelectChange(value) {
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.value !== nextProps.value) {
+      this.setState({ value: nextProps.value });
+    }
+  }
+  handleSelectChange = value => {
     this.setState({ value });
     this.props.onChange(value);
-  },
-  toggleCheckbox(e) {
+  };
+  toggleCheckbox = e => {
     this.setState({
       [e.target.name]: e.target.checked
     });
-  },
+  };
   toggleRtl(e) {
     let rtl = e.target.checked;
     this.setState({ rtl });
-  },
+  }
 
   render() {
     const FLAVOURS = this.props.choices;
@@ -47,6 +54,12 @@ var MultiSelect = createClass({
     const { crazy, disabled, stayOpen, value } = this.state;
     const options = crazy ? WHY_WOULD_YOU : FLAVOURS;
 
+    const Array = this.props.value;
+    const valueString = Array.toString();
+    const arrayValue = valueString.split(",");
+
+    console.log("arrayValue", arrayValue);
+
     return (
       <div className="section">
         <Select
@@ -59,7 +72,7 @@ var MultiSelect = createClass({
           removeSelected={this.state.removeSelected}
           rtl={this.state.rtl}
           simpleValue
-          value={value}
+          value={arrayValue}
         />
 
         <div className="checkbox-list">
@@ -121,6 +134,6 @@ var MultiSelect = createClass({
       </div>
     );
   }
-});
+}
 
 export default MultiSelect;

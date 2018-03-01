@@ -83,8 +83,12 @@ const userAPI = app => {
       pos,
       tags,
       photos,
+      photos1,
+      photos2,
+      photos3,
       desc,
-      contact
+      contact,
+      vehicleTypes
     } = req.body;
 
     res.redirect("/");
@@ -97,8 +101,12 @@ const userAPI = app => {
       pos,
       tags,
       photos,
+      photos1,
+      photos2,
+      photos3,
       desc,
-      contact
+      contact,
+      vehicleTypes
     ).then(
       result => {
         res.send(result);

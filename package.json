@@ -87,6 +87,7 @@
     "react-dates": "^16.0.1",
     "react-draft-wysiwyg": "^1.12.2",
     "react-dropzone": "^4.2.3",
+    "react-image-show": "^0.2.4",
     "react-quill": "^1.2.2",
     "react-render-html": "^0.6.0",
     "react-select": "^1.2.1",

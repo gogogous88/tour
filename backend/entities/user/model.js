@@ -26,7 +26,11 @@ const userSchema = mongoose.Schema({
   pos: { lat: Number, lng: Number },
   tags: [String],
   photos: { type: Array, default: [] },
+  photos1: { type: Array, default: [] },
+  photos2: { type: Array, default: [] },
+  photos3: { type: Array, default: [] },
   desc: String,
+  vehicleTypes: [String],
 
   contact: String
 });

@@ -96,9 +96,13 @@ export const userReducer = (state = initialUserState, action) => {
         level,
         location,
         photos,
+        photos1,
+        photos2,
+        photos3,
         pos,
         tags,
-        contact
+        contact,
+        vehicleTypes
       } = action.payload;
 
       return (
@@ -120,9 +124,13 @@ export const userReducer = (state = initialUserState, action) => {
           level,
           location,
           photos,
+          photos1,
+          photos2,
+          photos3,
           pos,
           tags,
-          contact
+          contact,
+          vehicleTypes
         }
       );
 

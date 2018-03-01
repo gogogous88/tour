@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "./actions";
 import MultiSelect from "../../Components/MultiSelect/index";
-import ImgUL from "../../Components/FormCommon/ImgUL";
+import ImgUL from "../../Components/FormCommon/ImgUL4Profile";
+import { Link } from "react-router";
+import _ from "lodash";
 
 class Profile extends Component {
   constructor(props) {
@@ -11,23 +13,37 @@ class Profile extends Component {
       name,
       level,
       location,
-      // photos,
+      photos,
+      photos1,
+      photos2,
+      photos3,
       desc,
       tags,
-      contact
+      contact,
+      vehicleTypes
     } = this.props.user;
+
     this.state = {
       name,
       level,
       location,
       pos: {},
       desc,
-      title: tags,
-      // image: photos,
+      vehicleTypes: [],
+      title: [],
+      image: photos,
+      image1: photos1,
+      image2: photos2,
+      image3: photos3,
       contact: contact
     };
   }
   componentDidMount() {
+    this.setState({
+      title: this.props.user.tags,
+      vehicleTypes: this.props.user.vehicleTypes
+    });
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
         var pos = {
@@ -38,7 +54,14 @@ class Profile extends Component {
       });
     }
   }
-
+  componentWillReceiveProps(nextProps) {
+    if (this.props.user.tags !== nextProps.user.tages) {
+      this.setState({ title: nextProps.user.tags });
+    }
+    if (this.props.user.vehicleTypes !== nextProps.user.vehicleTypes) {
+      this.setState({ vehicleTypes: nextProps.user.vehicleTypes });
+    }
+  }
   renderLocation(pos) {
     this.setState({ pos });
   }
@@ -54,12 +77,29 @@ class Profile extends Component {
       title: value
     });
   }
-
-  // onUploadChange(value) {
-  //   this.setState({
-  //     image: value
-  //   });
-  // }
+  onVehicleSelectChange = value => {
+    this.setState({ vehicleTypes: value });
+  };
+  onUploadChange(value) {
+    this.setState({
+      image: value
+    });
+  }
+  onUploadChange1(value) {
+    this.setState({
+      image1: value
+    });
+  }
+  onUploadChange2(value) {
+    this.setState({
+      image2: value
+    });
+  }
+  onUploadChange3(value) {
+    this.setState({
+      image3: value
+    });
+  }
 
   onFormSubmit(e) {
     e.preventDefault();
@@ -72,9 +112,14 @@ class Profile extends Component {
       pos: this.state.pos,
       desc: this.state.desc,
       tags: this.state.title,
-      // photos: this.state.image,
-      contact: this.state.contact
+      photos: this.state.image,
+      photos1: this.state.image1,
+      photos2: this.state.image2,
+      photos3: this.state.image3,
+      contact: this.state.contact,
+      vehicleTypes: this.state.vehicleTypes
     };
+
     this.props.postProfile(
       value,
       () => {
@@ -96,21 +141,47 @@ class Profile extends Component {
               value={this.state.name}
               onChange={this.onInputChange.bind(this)}
             />
-            <label>旅游职能(可多选):</label>
+
+            <div>
+              <label>旅游职能(可多选):</label>
+              <MultiSelect
+                choices={[
+                  { label: "导游", value: "导游" },
+                  { label: "车公司", value: "车公司" },
+                  { label: "机场接送", value: "机场接送" },
+                  { label: "发团社", value: "发团社" },
+                  { label: "地接社", value: "地接社" },
+                  { label: "翻译", value: "翻译" },
+                  { label: "地产经济", value: "地产经纪" },
+                  { label: "提供导游之家", value: "提供导游之家" },
+                  { label: "门票代理", value: "门票代理" },
+                  { label: "项目提供人", value: "项目提供人" },
+                  { label: "其他", value: "其他" }
+                ]}
+                label="请选择..."
+                onChange={this.onSelectChange.bind(this)}
+                value={this.state.title}
+              />
+            </div>
+
+            <label>车型:</label>
             <MultiSelect
               choices={[
-                { label: "导游", value: "导游" },
-                { label: "地接社", value: "地接社" },
-                { label: "翻译", value: "翻译" },
-                { label: "地产经济", value: "地产经纪" },
-                { label: "提供导游之家", value: "提供导游之家" },
-                { label: "门票代理", value: "门票代理" },
-                { label: "项目提供人", value: "项目提供人" },
+                { label: "5座SUV", value: "5座SUV" },
+                { label: "奔驰GL450", value: "奔驰GL450" },
+                { label: "凯迪拉克凯雷德", value: "凯迪拉克凯雷德" },
+                { label: "7座商务车", value: "7座商务车" },
+                { label: "12座福特", value: "12座福特" },
+                { label: "12-15座高顶奔驰", value: "12-15座高顶奔驰" },
+                { label: "25座小巴", value: "25座小巴" },
+                { label: "35座中巴", value: "35座中巴" },
+                { label: "40-45座巴士", value: "40-45座巴士" },
+                { label: "45-55座大巴", value: "45-55座大巴" },
                 { label: "其他", value: "其他" }
               ]}
               label="请选择..."
-              onChange={this.onSelectChange.bind(this)}
-              value={this.props.user.tags}
+              onChange={this.onVehicleSelectChange.bind(this)}
+              value={this.state.vehicleTypes}
             />
             <label>经验:</label>
             <input
@@ -144,16 +215,48 @@ class Profile extends Component {
               onChange={this.onInputChange.bind(this)}
             />
 
-            {/* <div>
-              <label>图片:</label>
-              <div>
-                <ImgUL onChange={this.onUploadChange.bind(this)} />
-              </div>
-            </div> */}
+            <div>
+              <label>图片(上限为4MB/图)：</label>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-around"
+                }}
+              >
+                <ImgUL index={0} onChange={this.onUploadChange.bind(this)} />
 
-            <button type="submit" className="btn">
-              提交
-            </button>
+                <ImgUL index={1} onChange={this.onUploadChange1.bind(this)} />
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  marginTop: 15,
+                  justifyContent: "space-around"
+                }}
+              >
+                <ImgUL index={2} onChange={this.onUploadChange2.bind(this)} />
+
+                <ImgUL index={3} onChange={this.onUploadChange3.bind(this)} />
+              </div>
+            </div>
+            <div
+              style={{
+                marginTop: 15,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between"
+              }}
+            >
+              <button type="submit" className="btn">
+                提交
+              </button>
+              <Link className="btn" to={`user/${this.props.user.username}`}>
+                取消修改
+              </Link>
+            </div>
           </form>
         </div>
       );

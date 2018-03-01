@@ -43,11 +43,12 @@ class ImgUL extends Component {
     });
   };
 
-  onDeleteImage(event) {
-    event.preventDefault();
+  onDeleteImage(e) {
+    e.preventDefault();
 
     const uploadedImages = Object.assign([], this.state.images);
-    uploadedImages.splice(event.target.id, 1);
+
+    uploadedImages.splice(e.currentTarget.id, 1);
     this.setState({ images: uploadedImages });
     this.props.onChange(this.state.images);
     // console.log(event.target.id);
