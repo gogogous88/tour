@@ -10,7 +10,7 @@ class SideBar extends Component {
     const { currentForum } = this.props;
 
     return (
-      <div className={styles.sidebarContainer}>
+      <div className={classnames(styles.sidebarContainer, styles.zStyle)}>
         {/* <Link to={`/${currentForum}/new_discussion/req`}>
           <Button className={styles.button} type="outline">
             <div className={styles.buttonContent}>+</div>

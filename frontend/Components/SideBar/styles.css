@@ -11,6 +11,7 @@
   justify-content: center;
   align-items: center;
  
+ 
 }
 
 .button {
@@ -54,6 +55,7 @@ display: flex;
 top: 0;
 bottom: 0;
 align-content: center;
+
 
 }
 
@@ -102,8 +104,13 @@ right: 0;
 display: flex;
 align-content: center;
 justify-content: center;
+
 }
 
 .toolbarFixed ul li {
 margin-bottom: 1px;
+}
+
+.zStyle{
+  z-index: 99;
 }
