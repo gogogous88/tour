@@ -34,8 +34,8 @@ import Profile from "../Views/Profile";
 import ListUser from "../Views/UserList/ListUser";
 import Login from "../Components/Header/UserMenu/Login";
 import MapUser from "../Views/UserList/MapUser";
-import Plan from "../Views/Plan";
-import FacebookPolicy from "../Views/Facebook/FacebookPolicy";
+// import Plan from "../Views/Plan";
+import PrivacyPolicy from "../Views/Agreements/PrivacyPolicy";
 
 //mark - materialize css
 
@@ -51,11 +51,6 @@ ReactDOM.render(
 
       <Route path="/" component={AppContainer}>
         <IndexRoute component={ForumFeed} />
-        <Route
-          exact
-          path="/facebook/private_policy"
-          component={FacebookPolicy}
-        />
         <Route exact path="/user/login" component={Login} />
         <Route exact path="/test" component={Test} />
         <Route exact path="/map/attr" component={MapAttr} />
@@ -87,6 +82,7 @@ ReactDOM.render(
         <Route path="/wiki" component={TourGuideWiki} />
 
         <Route path="/:forum" component={ForumFeed} />
+
         <Route
           path=":forum/discussion/:discussion"
           component={SingleDiscussion}
@@ -106,6 +102,7 @@ ReactDOM.render(
         {/*地图部分*/}
 
         <Route path="user/:username" component={UserProfile} />
+        <Route path="/agreements/privacy-policy" component={PrivacyPolicy} />
         <Route path="*" component={NotFound} />
       </Route>
     </Router>
