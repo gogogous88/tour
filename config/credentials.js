@@ -52,8 +52,8 @@ module.exports = {
   sendGridBccEmail: 'markblueplan@gmail.com',
 
   awsS3: {
-    accessKeyId: 'AKIAJWS7PL5UUDM7IJ6Q',
-    secretAccessKey: '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',
+    accessKeyId: 'AKIAJPLPCEL7M3QTDB5A',
+    secretAccessKey: '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',
     region: 'us-east-2',
   },
 };
