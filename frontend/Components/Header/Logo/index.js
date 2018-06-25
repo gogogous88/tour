@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { Link } from "react-router";
-import { connect } from "react-redux";
-import _ from "lodash";
+import React, { Component } from 'react';
+import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 
-import styles from "./styles";
-import keys from "../../../../config/credentials";
-import * as actions from "./actions";
+import styles from './styles';
+import keys from '../../../../config/credentials';
+import * as actions from './actions';
 
 class Logo extends Component {
   constructor(props) {
@@ -14,21 +14,22 @@ class Logo extends Component {
   }
 
   componentDidMount = async () => {
-    await this.renderLogin();
+    // await this.renderLogin();
     if (this.props.user.authenticated && navigator.geolocation) {
       return navigator.geolocation.getCurrentPosition(position => {
         var pos = {
           lat: position.coords.latitude,
-          lng: position.coords.longitude
+          lng: position.coords.longitude,
         };
         this.renderLocation(pos);
       });
     }
   };
 
+  //如果没有登陆login的话，会被先问登陆
   renderLogin = async () => {
     if (!this.props.user.authenticated && !this.props.user.fetchingUser) {
-      return await this.props.router.push("/user/login");
+      return await this.props.router.push('/user/login');
     }
   };
 
@@ -38,7 +39,7 @@ class Logo extends Component {
 
     this.props.user && !_.isEmpty(value.pos)
       ? this.props.updateCoord(value)
-      : "";
+      : '';
   }
 
   render() {
@@ -67,7 +68,7 @@ class Logo extends Component {
           </g> */}
           <img
             src="/src/static/images/shangche.png"
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
           />
         </div>
         <div className={styles.logoTitle}>途盖大导通</div>
@@ -79,4 +80,7 @@ class Logo extends Component {
 function mapStateToProps({ user }) {
   return { user };
 }
-export default connect(mapStateToProps, actions)(Logo);
+export default connect(
+  mapStateToProps,
+  actions
+)(Logo);
