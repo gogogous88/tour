@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 const styles = {
   title: { fontSize: 20, fontWeight: 100 },
-  head: { fontSize: 14, fontWeight: "bold" },
-  paragraph: { fontSize: 12, color: "#333" },
-  list: { fontSize: 12, color: "#333" }
+  head: { fontSize: 14, fontWeight: 'bold' },
+  paragraph: { fontSize: 12, color: '#333' },
+  list: { fontSize: 12, color: '#333' },
 };
 
 export default class PrivacyPolicy extends Component {
@@ -28,14 +28,14 @@ export default class PrivacyPolicy extends Component {
             <div className="col-xs-12">
               <p style={styles.paragraph}>
                 This TourGai App End User License Addendum("Mobile Addendum") is
-                between you and Mcchem International INC(Owner of TourGa App,
-                'TourGai' as . and governs your use of TourGai mobile
-                applications of iOS.
+                between you and Mcchem International INC(Owner of TourGai App,
+                'TourGai' . and governs your use of TourGai mobile applications
+                of iOS.
               </p>
               <hr />
             </div>
             <div>
-              <h5 style={{ fontSize: 14, fontWeight: "bold" }}>PARTIES. </h5>
+              <h5 style={{ fontSize: 14, fontWeight: 'bold' }}>PARTIES. </h5>
               <p style={styles.paragraph}>
                 This Mobile Addendum is between you and Mcchem International
                 INC. only, and not Apple, Inc.("Apple"). TourGai, not Apple is
@@ -59,6 +59,25 @@ export default class PrivacyPolicy extends Component {
             </div>
             <div>
               <h5 style={styles.head}>
+                Report an Abuse, Our Zero Tolerance on Abusive Users and Our 24
+                hours Account Delete Policy.
+              </h5>
+              <p style={styles.paragraph}>
+                You can Report An Abuse by make long press of a message from
+                other users, on a Point of Interest Screen in Map Comment, or on
+                forum posts. You can also report abuse user by pressing report
+                button on a user's profile screen. To Block a user, you can add
+                him/her to blocklist in his/her profile screen. After you have
+                block another user, you and he/she will not find each other in
+                radar map, he/she and you won't be able to reach each other by
+                this app anymore. After a Abusive Report, we will start to
+                investigate and delete the abuse users account within 24 hours.
+                For Abusive Users, there is no tolerance and his/her account
+                will definitely get deleted!
+              </p>
+            </div>
+            <div>
+              <h5 style={styles.head}>
                 WHAT DATA WE COLLECT ABOUT YOU AND WHY THEY ARE COLLECTED?
               </h5>
               <p style={styles.paragraph}>
@@ -73,14 +92,14 @@ export default class PrivacyPolicy extends Component {
             </div>
             <div>
               <h5 style={styles.head}>
-                WHAT YOUR PROVIDED INFO ARE USER FOR?{" "}
+                WHAT YOUR PROVIDED INFO ARE USER FOR?{' '}
               </h5>
               <li style={styles.list}>
-                To allow you to communicate with other users{" "}
+                To allow you to communicate with other users{' '}
               </li>
               <li style={styles.list}>
-                {" "}
-                To use the features of the Tourgai Open Platform.{" "}
+                {' '}
+                To use the features of the Tourgai Open Platform.{' '}
               </li>
               <li style={styles.list}>
                 We use your information for account set-up, to facilitate
@@ -146,7 +165,7 @@ export default class PrivacyPolicy extends Component {
             </div>
             <div>
               <h5 style={styles.head}>
-                YOUR POSTING MAY BE SENSITIVE PERSONAL INFORMATION.{" "}
+                YOUR POSTING MAY BE SENSITIVE PERSONAL INFORMATION.{' '}
               </h5>
               <p style={styles.paragraph}>
                 In some jurisdictions, certain types of Personal Information,
@@ -178,7 +197,7 @@ export default class PrivacyPolicy extends Component {
               </p>
 
               <h5 style={styles.head}>
-                SHARE YOUR DATA WITH OTHER SOCIAL MEDIA.{" "}
+                SHARE YOUR DATA WITH OTHER SOCIAL MEDIA.{' '}
               </h5>
 
               <p style={styles.paragraph}>
@@ -194,7 +213,7 @@ export default class PrivacyPolicy extends Component {
               </p>
 
               <h5 style={styles.head}>
-                HOW LONG DO WE KEEP HOLD OF YOUR DATA?{" "}
+                HOW LONG DO WE KEEP HOLD OF YOUR DATA?{' '}
               </h5>
 
               <p style={styles.paragraph}>
@@ -255,7 +274,7 @@ export default class PrivacyPolicy extends Component {
                 limited to, all of the following:
               </p>
               <li style={styles.list}>
-                {" "}
+                {' '}
                 Sexuality or Porno content or photos or videos
               </li>
               <li style={styles.list}>
@@ -402,7 +421,7 @@ export default class PrivacyPolicy extends Component {
                 maintenance or support
               </p>
               <h5 style={styles.head}>
-                THIRD PARTY INTELLECTUAL PROPERTY CLAIMS.{" "}
+                THIRD PARTY INTELLECTUAL PROPERTY CLAIMS.{' '}
               </h5>
               <p style={styles.paragraph}>
                 Tourgai shall not be obligated to indemnify or defend you with
