@@ -1,23 +1,23 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import { combineReducers } from "redux";
-import thunk from "redux-thunk";
+import { createStore, applyMiddleware, compose } from 'redux';
+import { combineReducers } from 'redux';
+import thunk from 'redux-thunk';
 
-import { appReducer, userReducer } from "./reducers";
-import { feedReducer } from "../Views/ForumFeed/reducers";
-import { singleDiscussionReducer } from "../Views/SingleDiscussion/reducers";
-import { newDiscussionReducer } from "../Views/NewDiscussion/reducers";
-import { adminInfoReducer } from "../Views/AdminDashboard/reducers";
-import { userProfileReducer } from "../Views/UserProfile/reducers";
-import { mapReducer } from "../Views/Map/reducers";
-import { nightReducer } from "../Views/googleSheet/reducers";
-import rentalReducer from "../Views/CarRental/reducers";
-import { reducer as form } from "redux-form";
-import userList from "../Views/UserList/reducers";
-import gnc from "../Views/TourGuideWiki/reducers";
-import hotelRsvp from "../Views/HotelRsvp/reducers";
-import city from "../Views/Test/reducers";
-import allHotelRsvp from "../Components/Admin/HotelRsvp/reducers";
-
+import { appReducer, userReducer } from './reducers';
+import { feedReducer } from '../Views/ForumFeed/reducers';
+import { singleDiscussionReducer } from '../Views/SingleDiscussion/reducers';
+import { newDiscussionReducer } from '../Views/NewDiscussion/reducers';
+import { adminInfoReducer } from '../Views/AdminDashboard/reducers';
+import { userProfileReducer } from '../Views/UserProfile/reducers';
+import { mapReducer } from '../Views/Map/reducers';
+import { nightReducer } from '../Views/googleSheet/reducers';
+import rentalReducer from '../Views/CarRental/reducers';
+import { reducer as form } from 'redux-form';
+import userList from '../Views/UserList/reducers';
+import gnc from '../Views/TourGuideWiki/reducers';
+import hotelRsvp from '../Views/HotelRsvp/reducers';
+import city from '../Views/Test/reducers';
+import allHotelRsvp from '../Components/Admin/HotelRsvp/reducers';
+import allFirebaseData from '../Components/Admin/MobileData/reducers';
 // root reducer for app
 const rootReducer = combineReducers({
   MapDataMore: mapReducer,
@@ -35,7 +35,8 @@ const rootReducer = combineReducers({
   gnc,
   hotelRsvp,
   city,
-  allHotelRsvp
+  allHotelRsvp,
+  allFirebaseData,
 });
 
 // dev tool extension

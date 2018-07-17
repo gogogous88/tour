@@ -1,14 +1,15 @@
-import React, { Component } from "react";
-import { Link, browserHistory } from "react-router";
-import { connect } from "react-redux";
-import { Helmet } from "react-helmet";
+import React, { Component } from 'react';
+import { Link, browserHistory } from 'react-router';
+import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
-import { getUser } from "./actions";
+import { getUser } from './actions';
 
-import AdminHeader from "Containers/AdminHeader";
-import appLayout from "SharedStyles/appLayout.css";
-import styles from "./styles.css";
-import HotelRsvp from "Components/Admin/HotelRsvp";
+import AdminHeader from 'Containers/AdminHeader';
+import appLayout from 'SharedStyles/appLayout.css';
+import styles from './styles.css';
+import HotelRsvp from 'Components/Admin/HotelRsvp';
+import MobileData from 'Components/Admin/MobileData';
 
 class AdminContainer extends Component {
   componentDidMount() {
@@ -21,13 +22,13 @@ class AdminContainer extends Component {
 
     if (user.fetchingUser) {
       return (
-        <div style={{ textAlign: "center", marginTop: 20 }}>
+        <div style={{ textAlign: 'center', marginTop: 20 }}>
           Loading users profile...
         </div>
       );
     }
 
-    if (user.role === "admin") {
+    if (user.role === 'admin') {
       return (
         <div>
           <Helmet>
@@ -37,13 +38,14 @@ class AdminContainer extends Component {
 
           {this.props.children}
           <div style={{ marginLeft: 10, marginRight: 10 }}>
+            <MobileData />
             <HotelRsvp />
           </div>
         </div>
       );
     } else {
       return (
-        <div style={{ textAlign: "center", marginTop: 20 }}>
+        <div style={{ textAlign: 'center', marginTop: 20 }}>
           We are cordially sorry that you are not allowed to view admin panel!<br />
           Please go back to <Link to="/">root</Link> page.
         </div>
@@ -51,7 +53,7 @@ class AdminContainer extends Component {
     }
 
     return (
-      <div style={{ textAlign: "center", marginTop: 20 }}>
+      <div style={{ textAlign: 'center', marginTop: 20 }}>
         Something went wrong.<br />
         Please go back to <Link to="/">root</Link> page.
       </div>
@@ -62,14 +64,14 @@ class AdminContainer extends Component {
 export default connect(
   state => {
     return {
-      user: state.user
+      user: state.user,
     };
   },
   dispatch => {
     return {
       getUser: () => {
         dispatch(getUser());
-      }
+      },
     };
   }
 )(AdminContainer);

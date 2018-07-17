@@ -67,6 +67,7 @@
     "draftjs-to-html": "^0.8.1",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
+    "firebase": "^5.2.0",
     "geodist": "^0.2.1",
     "help": "^3.0.2",
     "jquery": "^3.2.1",
