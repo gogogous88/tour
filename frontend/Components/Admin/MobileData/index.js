@@ -41,7 +41,7 @@ class MobileData extends Component {
                 <th>驻扎地</th>
                 <th>电话</th>
                 <th>注册时间</th>
-                <th>上次登陆</th>
+                <th>uid</th>
                 <th>个人照片</th>
               </tr>
             </thead>
@@ -67,11 +67,7 @@ class MobileData extends Component {
                             'YY-MM-DD'
                           )}
                         </td>
-                        <td>
-                          {moment(
-                            Number(each.userDetails.lastLoginAt)
-                          ).calendar()}
-                        </td>
+                        <td>{each.userDetails.uid}</td>
                       </tr>
                     );
                   }
