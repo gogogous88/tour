@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import firebase from 'firebase/app';
-import { fetchAllFirebaseData } from './actions';
+import { fetchAllFirebaseData, saveNewsToFirebase } from './actions';
 import _ from 'lodash';
 import moment from 'moment';
+import axios from 'axios';
 
 var config = {
   apiKey: 'AIzaSyCXMhVRR_-l9NXmRFSqhcoIbMkG_yjvVPQ',
@@ -16,16 +17,31 @@ var config = {
 firebase.initializeApp(config);
 
 class MobileData extends Component {
-  state = { allFirebaseData: {} };
+  state = { allFirebaseData: {}, news: [] };
 
   componentDidMount = async () => {
     await this.props.fetchAllFirebaseData();
     // await this.setState({ allFirebaseData: this.props.allFirebaseData });
+    this.getNews();
   };
 
   componentWillReceiveProps = newProps => {
-    this.props.allFirebaseData !== newProps.allFirebaseData &&
+    if (this.props.allFirebaseData !== newProps.allFirebaseData) {
       this.setState({ allFirebaseData: newProps.allFirebaseData });
+      this.getNews();
+    }
+  };
+
+  getNews = () => {
+    axios
+      .get(
+        'http://v.juhe.cn/toutiao/index?type=&key=13eff8ff2292cd8e1235063f91917b38'
+      )
+      .then(async news => {
+        await this.setState({ news: news.data.result.data });
+        this.props.saveNewsToFirebase(news.data.result.data);
+      })
+      .catch(e => alert(e));
   };
 
   render() {
@@ -90,5 +106,5 @@ const mapStateToProps = ({ allFirebaseData }) => {
 
 export default connect(
   mapStateToProps,
-  { fetchAllFirebaseData }
+  { fetchAllFirebaseData, saveNewsToFirebase }
 )(MobileData);

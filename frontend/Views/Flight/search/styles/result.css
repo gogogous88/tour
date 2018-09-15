@@ -1,0 +1,214 @@
+@value primaryFontColor,
+  secondaryFontColor,
+  borderColor from "SharedStyles/globalStyles.css";
+@value smallBP, mediumBP, largeBP from "SharedStyles/globalStyles.css";
+
+.resultWrap {
+  background-color: #eee;
+  padding-top: 30px;
+}
+
+.resultList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.resultEmpty {
+  min-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #999;
+  font-size: 18px;
+}
+
+.imageStyle {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 200px;
+}
+
+.desc {
+  margin-bottom: 15px;
+}
+
+.descRow {
+  display: flex;
+  margin-top: 15px;
+}
+
+.descTitle {
+  margin-right: 20px;
+  min-width: 55px;
+}
+
+.descContent {
+  color: #999;
+  font-size: 14px;
+  flex-grow: 1;
+}
+
+.priceContent {
+  display: flex;
+}
+
+strong {
+  font-size: 16px;
+  font-weight: 400;
+  color: black;
+}
+
+.highlight {
+  color: #d80909;
+}
+
+.divContainer {
+  flex: 1;
+  text-align: center;
+}
+
+.aStyle {
+  color: rgba(1, 5, 10, 0.747);
+  text-decoration: underline;
+  font-size: 13px;
+}
+
+.detailView {
+  transition: all 0.3s ease-out;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+  color: white;
+  background-color: #242424;
+  opacity: 0;
+  z-index: 9;
+}
+
+.priceView {
+  transition: all 0.3s ease-out;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+  color: white;
+  background-color: #242424;
+  opacity: 0;
+  z-index: 9;
+}
+
+.open {
+  top: 0;
+  opacity: 1;
+}
+
+.closeIcon {
+  transition: all 0.3s ease-out;
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  font-size: 35px;
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+h4 {
+  margin: 10px 0 20px 0;
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.detailTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  color: white;
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.thStyle {
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+}
+
+.tdStyle {
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  text-align: center;
+  font-size: 14px;
+  padding: 15px 10px;
+}
+
+.priceChart {
+  margin-top: 20px;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.liStyle {
+  padding: 15px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.selectButton {
+  margin-top: auto;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  z-index: 9;
+}
+
+.defaultView {
+  position: relative;
+}
+
+.detailLink {
+  position: absolute;
+  right: 0;
+  top: -5px;
+  color: #666;
+  font-size: 14px;
+  text-decoration: underline;
+  line-height: 1;
+  z-index: 5;
+}
+
+.resultItem {
+  transition: all 0.3s ease-out;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  margin-right: 1%;
+  margin-bottom: 2%;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 2px 2px 2px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  user-select: none;
+  cursor: default;
+
+  @media smallBP {
+    width: 100%;
+  }
+  @media largeBP {
+    width: 32%;
+  }
+
+  @media mediumBP {
+    width: 40%;
+  }
+}

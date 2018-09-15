@@ -1,29 +1,29 @@
-import _ from "lodash";
-import $ from "jquery";
+// import _ from "lodash";
+// import $ from "jquery";
 import React, { Component } from "react";
 import moment from "moment";
 import "moment/locale/zh-cn";
-import { connect } from "react-redux";
-import querystring from "querystring";
+// import { connect } from "react-redux";
+// import querystring from "querystring";
 import "react-dates/initialize";
 import { SingleDatePicker } from "react-dates";
 import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_ORIENTATION
 } from "react-dates/constants";
-// import MobileDetect from "mobile-detect";
-import withUserAgent from "react-useragent";
-import classNames from "classnames/bind";
+// import withUserAgent from "react-useragent";
 
-import { fetchToken, fetchLocations, updateSearchConditions } from "../actions";
+// import {
+//   fetchToken,
+//   fetchLocations,
+//   updateSearchConditions
+// } from '../../actions';
 import LocationDropdown from "./LocationDropdown";
 import DateTimeDropdown from "./DateTimeDropdown";
 import AgeDropdown from "./AgeDropdown";
-import Loading from "../../../Components/Loading";
+import Loading from "./Loading";
 
-import styles from "./styles/search.css";
-
-const DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET = 15 + 7; // default pickup/return date is next Friday/Sunday
+const DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET = 5 + 7; // default pickup/return date is next Friday/Sunday
 const DEFAULT_RETURN_DAY_OFFSET = 2;
 const DEFAULT_CALENDAR_RANGE_MONTHS = 6; // only enable days during next 6 months
 
@@ -51,53 +51,53 @@ class Search extends Component {
     };
   }
 
-  componentDidMount = async () => {
-    // check access_token
-    if (!this.props.access_token) {
-      await this.props.fetchToken();
-    }
+  // componentDidMount = async () => {
+  // // check access_token
+  // if (!this.props.access_token) {
+  //   await this.props.fetchToken();
+  // }
 
-    // check locations
-    if (_.isEmpty(this.props.locations)) {
-      await this.props.fetchLocations();
-    }
+  // // check locations
+  // if (_.isEmpty(this.props.locations)) {
+  //   await this.props.fetchLocations();
+  // }
 
-    // update state if conditions already existed (usually from result page)
-    if (!_.isEmpty(this.props.conditions)) {
-      const {
-        pickLocation,
-        returnLocation,
-        pickDate,
-        returnDate,
-        pickTime,
-        returnTime,
-        age,
-        syncLocation,
-        promotion
-      } = this.props.conditions;
+  // update state if conditions already existed (usually from result page)
+  //   if (!_.isEmpty(this.props.conditions)) {
+  //     const {
+  //       pickLocation,
+  //       returnLocation,
+  //       pickDate,
+  //       returnDate,
+  //       pickTime,
+  //       returnTime,
+  //       age,
+  //       syncLocation,
+  //       promotion
+  //     } = this.props.conditions;
 
-      this.setState({
-        pickLocation,
-        returnLocation,
-        pickDate: moment(pickDate),
-        returnDate: moment(returnDate),
-        pickTime,
-        returnTime,
-        age,
-        promotion,
-        syncLocation
-      });
-    }
-  };
+  //     this.setState({
+  //       pickLocation,
+  //       returnLocation,
+  //       pickDate: moment(pickDate),
+  //       returnDate: moment(returnDate),
+  //       pickTime,
+  //       returnTime,
+  //       age,
+  //       promotion,
+  //       syncLocation
+  //     });
+  //   }
+  // };
 
-  componentWillReceiveProps(nextProps) {
-    // refetch token before expiration
-    if (this.props.access_token !== nextProps.access_token) {
-      setTimeout(() => {
-        this.props.fetchToken();
-      }, nextProps.expires_in * 1000);
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   // refetch token before expiration
+  //   if (this.props.access_token !== nextProps.access_token) {
+  //     setTimeout(() => {
+  //       this.props.fetchToken();
+  //     }, nextProps.expires_in * 1000);
+  //   }
+  // }
 
   onInputChange = ({ target }) => {
     const value = target.type === "checkbox" ? target.checked : target.value;
@@ -128,34 +128,34 @@ class Search extends Component {
     }
   };
 
-  onHandleSubmit = () => {
-    const {
-      pickLocation,
-      returnLocation,
-      pickDate,
-      returnDate,
-      pickTime,
-      returnTime,
-      age,
-      syncLocation,
-      promotion
-    } = this.state;
+  // onHandleSubmit = () => {
+  //   const {
+  //     pickLocation,
+  //     returnLocation,
+  //     pickDate,
+  //     returnDate,
+  //     pickTime,
+  //     returnTime,
+  //     age,
+  //     syncLocation,
+  //     promotion
+  //   } = this.state;
 
-    const conditions = {
-      pickLocation,
-      returnLocation,
-      pickDate: pickDate.format("YYYY-MM-DD"),
-      returnDate: returnDate.format("YYYY-MM-DD"),
-      pickTime,
-      returnTime,
-      age,
-      syncLocation: syncLocation.toString(),
-      promotion
-    };
+  //   const conditions = {
+  //     pickLocation,
+  //     returnLocation,
+  //     pickDate: pickDate.format("YYYY-MM-DD"),
+  //     returnDate: returnDate.format("YYYY-MM-DD"),
+  //     pickTime,
+  //     returnTime,
+  //     age,
+  //     syncLocation: syncLocation.toString(),
+  //     promotion
+  //   };
 
-    this.props.updateSearchConditions(conditions);
-    this.props.router.push(`/result?${querystring.stringify(conditions)}`);
-  };
+  // this.props.updateSearchConditions(conditions);
+  //   this.props.history.push(`/result?${querystring.stringify(conditions)}`);
+  // };
 
   onDateOverlayToggle = ({ focused }) => {
     if (focused) {
@@ -223,7 +223,7 @@ class Search extends Component {
       <div className="row">
         <LocationDropdown
           name="pickLocation"
-          labelText="取车城市"
+          labelText="Pickup Location"
           value={this.state.pickLocation}
           onInputChange={this.onInputChange}
           locations={this.props.locations}
@@ -231,7 +231,7 @@ class Search extends Component {
         />
         <LocationDropdown
           name="returnLocation"
-          labelText="还车城市"
+          labelText="Return Location"
           value={this.state.returnLocation}
           onInputChange={this.onInputChange}
           locations={this.props.locations}
@@ -240,7 +240,7 @@ class Search extends Component {
         <DateTimeDropdown
           dateSelectName="pickDate"
           timeSelectName="pickTime"
-          labelText="取车日期及时间"
+          labelText="Pickup Date &amps; Time"
           dateValue={this.state.pickDate}
           timeValue={this.state.pickTime}
           onDateChange={this.onDateChange}
@@ -250,7 +250,7 @@ class Search extends Component {
         <DateTimeDropdown
           dateSelectName="returnDate"
           timeSelectName="returnTime"
-          labelText="还车日期及时间"
+          labelText="Return Date &amps; Time"
           dateValue={this.state.returnDate}
           timeValue={this.state.returnTime}
           onDateChange={this.onDateChange}
@@ -265,15 +265,10 @@ class Search extends Component {
 
         <div className="col-12 col-lg-6">
           <div className="input-box-wrap">
-            <label
-              className={classNames(styles.labelStyle, styles.labelPadding)}
-            >
-              打折码(选填)
-            </label>
-            <div className={styles.inputBox}>
-              <div className={classNames(styles.divInInput, styles.selectWrap)}>
+            <label>Promotion Code (Optional)</label>
+            <div className="input-box">
+              <div className="select-wrap">
                 <input
-                  className={styles.inputInWrap}
                   name="promotion"
                   onChange={this.onInputChange}
                   type="text"
@@ -284,12 +279,12 @@ class Search extends Component {
           </div>
         </div>
 
-        <div className={classNames(styles.searchButton, "col-12")}>
+        <div className="col-12">
           <button
-            className="btn btn-block red lighten-1 rounded-0"
+            className="btn btn-block btn-lg btn-danger rounded-0"
             onClick={this.onHandleSubmit}
           >
-            搜索
+            Search
           </button>
         </div>
       </div>
@@ -297,18 +292,27 @@ class Search extends Component {
   }
 
   render() {
-    // const md = new MobileDetect(window.navigator.userAgent);
-    if (_.isEmpty(this.props.locations)) {
-      return <Loading />;
-    }
+    // if (_.isEmpty(this.props.locations)) {
+    //   return (
+    //     <div className="search-container">
+    //       <div className="container">
+    //         <div className="row">
+    //           <div className="col">
+    //             <Loading />
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   );
+    // }
 
     return (
-      <div className={styles.searchContainer}>
-        <div className={classNames(styles.divInRow, "col")}>
+      <div className="search-container">
+        <div className="container">
           <div className="row">
             <div className="col">
-              <div className={styles.searchWrap}>{this.renderForm()}</div>
-              <div className={styles.dateOverlayWrap}>
+              <div className="search-wrap">{this.renderForm()}</div>
+              <div className="date-overlay-wrap">
                 <SingleDatePicker
                   id={"dateInput"}
                   date={this.state.overlayDate}
@@ -319,7 +323,9 @@ class Search extends Component {
                   onFocusChange={this.onDateOverlayToggle}
                   withPortal={true}
                   // orientation={
-                  //   md.mobile() ? VERTICAL_ORIENTATION : HORIZONTAL_ORIENTATION
+                  //   this.props.ua.mobile
+                  //     ? VERTICAL_ORIENTATION
+                  //     : HORIZONTAL_ORIENTATION
                   // }
                   numberOfMonths={1}
                   isOutsideRange={this.isOutsideRange}
@@ -333,14 +339,16 @@ class Search extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    ...state.rentalReducer
-  };
-}
+// function mapStateToProps(state) {
+//   return {
+//     ...state.rentalReducer
+//   };
+// }
 
-export default connect(mapStateToProps, {
-  fetchToken,
-  fetchLocations,
-  updateSearchConditions
-})(withUserAgent(Search));
+// export default connect(mapStateToProps, {
+//   fetchToken,
+//   fetchLocations,
+//   updateSearchConditions
+// })(withUserAgent(Search));
+
+export default Search;

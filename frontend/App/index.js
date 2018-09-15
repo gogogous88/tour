@@ -34,6 +34,8 @@ import Profile from "../Views/Profile";
 import ListUser from "../Views/UserList/ListUser";
 import Login from "../Components/Header/UserMenu/Login";
 import MapUser from "../Views/UserList/MapUser";
+//private flight
+import FlightSearch from "../Views/Flight/search/FlightSearch";
 // import Plan from "../Views/Plan";
 import PrivacyPolicy from "../Views/Agreements/PrivacyPolicy";
 
@@ -62,6 +64,8 @@ ReactDOM.render(
         <Route path="/googlesheet" component={GoogleSheet} />
 
         <Route path="/car-rental" component={Search} />
+
+        <Route path="/flight" component={FlightSearch} />
 
         {/* profile部分 */}
         <Route path="/profile" component={Profile} />

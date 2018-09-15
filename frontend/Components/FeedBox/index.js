@@ -1,38 +1,38 @@
 //「 」【】
-import React, { Component } from "react";
-import classnames from "classnames";
-import Moment from "moment";
-import moment from "moment";
-import styles from "./styles";
-import _ from "lodash";
+import React, { Component } from 'react';
+import classnames from 'classnames';
+import Moment from 'moment';
+import moment from 'moment';
+import styles from './styles';
+import _ from 'lodash';
 
-import Loading from "../../Components/Loading";
-import DiscussionBox from "./DiscussionBox";
+import Loading from '../../Components/Loading';
+import DiscussionBox from './DiscussionBox';
 
-import keys from "../../../config/credentials";
+import keys from '../../../config/credentials';
 
 class FeedBox extends Component {
   renderSort() {
     const { activeSortingMethod, onChangeSortingMethod } = this.props;
 
-    if (this.props.type === "general") {
+    if (this.props.type === 'general') {
       return (
         <div className={styles.sortList}>
           <span
             className={classnames(
               styles.sort,
-              activeSortingMethod === "date" && styles.sortActive
+              activeSortingMethod === 'date' && styles.sortActive
             )}
-            onClick={() => onChangeSortingMethod("date")}
+            onClick={() => onChangeSortingMethod('date')}
           >
             Latest
           </span>
           <span
             className={classnames(
               styles.sort,
-              activeSortingMethod === "popularity" && styles.sortActive
+              activeSortingMethod === 'popularity' && styles.sortActive
             )}
-            onClick={() => onChangeSortingMethod("popularity")}
+            onClick={() => onChangeSortingMethod('popularity')}
           >
             Popular
           </span>
@@ -52,48 +52,48 @@ class FeedBox extends Component {
 
   renderImageURL(discussion) {
     switch (discussion.forum.forum_slug) {
-      case "shun_feng_che":
-        if (discussion.sup_or_req === "提供") {
-          const shunFengURL = "/src/static/images/sup_shun_feng_che.png";
+      case 'shun_feng_che':
+        if (discussion.sup_or_req === '提供') {
+          const shunFengURL = '/src/static/images/sup_shun_feng_che.png';
           return shunFengURL;
         } else {
-          const shunFengURL = "/src/static/images/req_shun_feng_che.png";
+          const shunFengURL = '/src/static/images/req_shun_feng_che.png';
           return shunFengURL;
         }
 
-      case "pin_fang":
-        if (discussion.sup_or_req === "提供") {
-          const pinFangURL = "/src/static/images/sup_pin_fang.png";
+      case 'pin_fang':
+        if (discussion.sup_or_req === '提供') {
+          const pinFangURL = '/src/static/images/sup_pin_fang.png';
           return pinFangURL;
         } else {
-          const pinFangURL = "/src/static/images/req_pin_fang.png";
+          const pinFangURL = '/src/static/images/req_pin_fang.png';
           return pinFangURL;
         }
 
-      case "fa_tuan_jie_huo":
-        if (discussion.sup_or_req === "提供") {
-          const faTuanURL = "/src/static/images/sup_jie_tuan.png";
+      case 'fa_tuan_jie_huo':
+        if (discussion.sup_or_req === '提供') {
+          const faTuanURL = '/src/static/images/sup_jie_tuan.png';
           return faTuanURL;
         } else {
-          const faTuanURL = "/src/static/images/req_jie_tuan.png";
+          const faTuanURL = '/src/static/images/req_jie_tuan.png';
           return faTuanURL;
         }
 
-      case "market":
-        if (discussion.sup_or_req === "提供") {
-          const marketURL = "/src/static/images/sup_market.png";
+      case 'market':
+        if (discussion.sup_or_req === '提供') {
+          const marketURL = '/src/static/images/sup_market.png';
           return marketURL;
         } else {
-          const marketURL = "/src/static/images/sup_market.png";
+          const marketURL = '/src/static/images/sup_market.png';
           return marketURL;
         }
 
-      case "tour_wiki":
-        if (discussion.sup_or_req === "提供") {
-          const faTuanURL = "/src/static/images/baike.png";
+      case 'tour_wiki':
+        if (discussion.sup_or_req === '提供') {
+          const faTuanURL = '/src/static/images/baike.png';
           return faTuanURL;
         } else {
-          const faTuanURL = "/src/static/images/gong_lve.png";
+          const faTuanURL = '/src/static/images/gong_lve.png';
           return faTuanURL;
         }
 
@@ -104,29 +104,29 @@ class FeedBox extends Component {
 
   renderTitle(discussion) {
     switch (discussion.forum.forum_slug) {
-      case "shun_feng_che":
+      case 'shun_feng_che':
         const shunFengTitle = `${discussion.sup_or_req}拼车-:「${moment(
           discussion.pdate
-        ).format("MM/DD")}--${discussion.ploc}--->${discussion.rloc}」(${moment(
+        ).format('MM/DD')}--${discussion.ploc}--->${discussion.rloc}」(${moment(
           discussion.pdate
-        ).format("YYYY")}),我的联系方式...
+        ).format('YYYY')}),我的联系方式...
         `;
         // 联系方式：「${discussion.ph_no}」
         return shunFengTitle;
 
-      case "pin_fang":
+      case 'pin_fang':
         const pinFangTitle = `${discussion.sup_or_req}拼房:「${
           discussion.ploc
-        }--${moment(discussion.rdate[0]).format("MM/DD")}--->${moment(
+        }--${moment(discussion.rdate[0]).format('MM/DD')}--->${moment(
           discussion.rdate[1]
-        ).format("MM/DD")}」(${moment(discussion.rdate[0]).format(
-          "YYYY"
+        ).format('MM/DD')}」(${moment(discussion.rdate[0]).format(
+          'YYYY'
         )}年),我的联系方式...
         `;
         return pinFangTitle;
 
-      case "market":
-        if (discussion.sup_or_req === "提供") {
+      case 'market':
+        if (discussion.sup_or_req === '提供') {
           const marketTitle = `「${discussion.ploc}」
             出售：「${discussion.title}」,价格「${
             discussion.rate
@@ -141,27 +141,27 @@ class FeedBox extends Component {
           return marketTitle;
         }
 
-      case "fa_tuan_jie_huo":
+      case 'fa_tuan_jie_huo':
         const {
           sup_or_req,
           rdate,
           ploc,
           rloc,
           ph_no,
-          vehicleType
+          vehicleType,
         } = discussion;
-        if (sup_or_req === "提供") {
+        if (sup_or_req === '提供') {
           const faTuanTitle = `「${moment(rdate[0]).format(
-            "MM/DD"
+            'MM/DD'
           )}-${ploc}」开始「${moment(rdate[1]).format(
-            "MM/DD"
+            'MM/DD'
           )}-${rloc}」结束，需要「${vehicleType}」,有空的导游请与我取得联系.....`;
           return faTuanTitle;
         } else {
           const faTuanTitle = `我从「${moment(rdate[0]).format(
-            "MM/DD"
+            'MM/DD'
           )}」到「${moment(rdate[1]).format(
-            "MM/DD"
+            'MM/DD'
           )}」期间可接「${ploc}」开始的团......`;
           return faTuanTitle;
         }
@@ -178,19 +178,19 @@ class FeedBox extends Component {
       discussions,
       currentForum,
       userProfile,
-      searchDate
+      searchDate,
     } = this.props;
 
-    let discussionBoxTitle = "";
-    if (type === "general") discussionBoxTitle = "Discussions";
-    if (type === "pinned") discussionBoxTitle = "Pinned";
+    let discussionBoxTitle = '';
+    if (type === 'general') discussionBoxTitle = 'Discussions';
+    if (type === 'pinned') discussionBoxTitle = 'Pinned';
     const filterDiscussions =
       discussions &&
       discussions.filter(discussion => {
         if (this.props.searchStatus && discussion.pdate) {
-          const theDate = moment(discussion.pdate).format("MM/DD");
+          const theDate = moment(discussion.pdate).format('MM/DD');
           const searchDateToString = moment(this.props.searchDate).format(
-            "MM/DD"
+            'MM/DD'
           );
 
           const { pdate } = discussion;
@@ -309,7 +309,7 @@ class FeedBox extends Component {
                 {discussions &&
                   filterDiscussions.map(discussion => {
                     const discussionYear = `${moment(discussion.date).format(
-                      "YYYY"
+                      'YYYY'
                     )}年`;
                     return (
                       <DiscussionBox
@@ -346,12 +346,12 @@ class FeedBox extends Component {
       discussions,
       currentForum,
       userProfile,
-      searchDate
+      searchDate,
     } = this.props;
 
-    let discussionBoxTitle = "";
-    if (type === "general") discussionBoxTitle = "Discussions";
-    if (type === "pinned") discussionBoxTitle = "Pinned";
+    let discussionBoxTitle = '';
+    if (type === 'general') discussionBoxTitle = 'Discussions';
+    if (type === 'pinned') discussionBoxTitle = 'Pinned';
 
     //shun_feng_che, pin_fang, fa_tuan_jie_huo, market
 
@@ -368,23 +368,23 @@ class FeedBox extends Component {
 }
 
 FeedBox.defaultProps = {
-  type: "general",
+  type: 'general',
   loading: false,
   discussions: [],
-  currentForum: "general",
-  activeSortingMethod: "date",
+  currentForum: 'general',
+  activeSortingMethod: 'date',
   onChangeSortingMethod: val => {},
-  userProfile: false
+  userProfile: false,
 };
 
 FeedBox.propTypes = {
-  type: React.PropTypes.oneOf(["general", "pinned"]),
+  type: React.PropTypes.oneOf(['general', 'pinned']),
   loading: React.PropTypes.bool,
   discussions: React.PropTypes.array,
   currentForum: React.PropTypes.string,
   activeSortingMethod: React.PropTypes.string,
   onChangeSortingMethod: React.PropTypes.func,
-  userProfile: React.PropTypes.bool
+  userProfile: React.PropTypes.bool,
 };
 
 export default FeedBox;

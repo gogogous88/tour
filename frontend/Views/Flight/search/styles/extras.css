@@ -1,0 +1,125 @@
+.extrasWrap {
+  background-color: #eee;
+  padding-top: 30px;
+}
+
+.tableStyle {
+  margin-bottom: 0;
+}
+
+.trStyle {
+  &.active {
+    i,
+    span {
+      color: black;
+    }
+  }
+}
+
+.tdStyle {
+  color: #666;
+  width: 20%;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.addWrap,
+.removeWrap,
+.adjustWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.iStyle {
+  @include transition();
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.spanStyle {
+  margin: 0 5px;
+  font-size: 18px;
+}
+
+.extrasItems {
+  padding-bottom: 1px;
+}
+.extraItem {
+  position: relative;
+  background: white;
+  box-shadow: 4px 4px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.headerStyle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background: lightslategrey;
+  color: white;
+}
+
+.h3Style {
+  font-size: 24px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.bodyStyle {
+  padding: 15px;
+}
+
+.locationGroup {
+  display: flex;
+  justify-content: space-between;
+}
+
+.locationItem {
+  width: 47%;
+}
+
+.inputBoxWrapLabel {
+  font-size: 18px;
+}
+
+.customAddress {
+  margin: 10px 0;
+}
+
+.customAddresslabel {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+.customAddressinput {
+  margin-right: 5px;
+}
+
+.extraSubmit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.totalStyle {
+  font-size: 24px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+}
+
+.strongStyle {
+  font-weight: 400;
+  color: $primary;
+  margin-left: 10px;
+  font-size: 28px;
+}

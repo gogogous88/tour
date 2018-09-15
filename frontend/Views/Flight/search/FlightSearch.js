@@ -27,7 +27,7 @@ const DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET = 15 + 7; // default pickup/return date
 const DEFAULT_RETURN_DAY_OFFSET = 2;
 const DEFAULT_CALENDAR_RANGE_MONTHS = 6; // only enable days during next 6 months
 
-class Search extends Component {
+class FlightSearch extends Component {
   constructor(props) {
     super(props);
 
@@ -44,7 +44,7 @@ class Search extends Component {
       returnTime: '1000',
       age: '25+',
       promotion: '',
-      syncLocation: true,
+      syncLocation: false,
       overlayDate: moment().day(DEFAULT_PICKUP_DAY_FROM_NOW_OFFSET),
       overlayVisible: false,
       currentDateKey: '',
@@ -241,23 +241,28 @@ class Search extends Component {
           dateSelectName="pickDate"
           timeSelectName="pickTime"
           labelText="取车日期及时间"
+          onInputChange={this.onInputChange}
           dateValue={this.state.pickDate}
           timeValue={this.state.pickTime}
           onDateChange={this.onDateChange}
           onTimeChange={this.onInputChange}
+          syncLocation={this.state.syncLocation}
           onDateOverlayVisible={this.onDateOverlayVisible}
         />
         <DateTimeDropdown
           dateSelectName="returnDate"
           timeSelectName="returnTime"
           labelText="还车日期及时间"
+          onInputChange={this.onInputChange}
           dateValue={this.state.returnDate}
           timeValue={this.state.returnTime}
           onDateChange={this.onDateChange}
           onTimeChange={this.onInputChange}
+          syncLocation={this.state.syncLocation}
           onDateOverlayVisible={this.onDateOverlayVisible}
+          isDisabled={this.state.syncLocation}
         />
-        <AgeDropdown
+        {/* <AgeDropdown
           name="age"
           value={this.state.age}
           onInputChange={this.onInputChange}
@@ -282,7 +287,7 @@ class Search extends Component {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className={classNames(styles.searchButton, 'col-12')}>
           <button
@@ -346,4 +351,4 @@ export default connect(
     fetchLocations,
     updateSearchConditions,
   }
-)(withUserAgent(Search));
+)(withUserAgent(FlightSearch));

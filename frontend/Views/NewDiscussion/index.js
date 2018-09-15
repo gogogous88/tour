@@ -1,22 +1,22 @@
 //「 」【】
-import _ from "lodash";
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Helmet } from "react-helmet";
-import classnames from "classnames";
-import moment from "moment";
+import _ from 'lodash';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
+import classnames from 'classnames';
+import moment from 'moment';
 
-import Pdate from "../../Components/FormCommon/Pdate";
-import Rdate from "../../Components/FormCommon/Rdate";
-import RichEditor from "Components/RichEditor";
-import PinButton from "Components/NewDiscussion/PinButton";
-import TagsInput from "Components/NewDiscussion/TagsInput";
-import ImgUL from "../../Components/FormCommon/ImgUL";
-import QuillEditor from "../../Components/QullEditor";
+import Pdate from '../../Components/FormCommon/Pdate';
+import Rdate from '../../Components/FormCommon/Rdate';
+import RichEditor from 'Components/RichEditor';
+import PinButton from 'Components/NewDiscussion/PinButton';
+import TagsInput from 'Components/NewDiscussion/TagsInput';
+import ImgUL from '../../Components/FormCommon/ImgUL';
+import QuillEditor from '../../Components/QullEditor';
 
-import Loading from "../../Components/Loading";
-import UserMenu from "../../Components/Header/UserMenu";
-import appLayout from "SharedStyles/appLayout.css";
+import Loading from '../../Components/Loading';
+import UserMenu from '../../Components/Header/UserMenu';
+import appLayout from 'SharedStyles/appLayout.css';
 
 // import DraftEditor from "../../Components/Rich_Editor/DraftEditor/DraftEditor";
 
@@ -38,14 +38,14 @@ import {
   updateDiscussionPh_no,
   updateDiscussionPdate,
   updateDiscussionRdate,
-  updateDiscussionRate
-} from "./actions";
+  updateDiscussionRate,
+} from './actions';
 
-import styles from "./styles.css";
+import styles from './styles.css';
 
-import Sup_or_req from "../../Components/FormCommon/Sup_or_req";
+import Sup_or_req from '../../Components/FormCommon/Sup_or_req';
 
-import "react-dates/lib/css/_datepicker.css";
+import 'react-dates/lib/css/_datepicker.css';
 
 class NewDiscussion extends Component {
   constructor(props) {
@@ -56,11 +56,12 @@ class NewDiscussion extends Component {
       userId: null,
       fatalError: null,
       sup_or_req: this.props.route.sup_or_req,
-      userMenu: false
+      userMenu: false,
     };
   }
 
   componentDidMount() {
+   
     const { user, currentForum, forums } = this.props;
 
     this.setUserAndForumID(user, forums, currentForum);
@@ -78,11 +79,11 @@ class NewDiscussion extends Component {
       const currentForumId = forumId._id;
       this.setState({
         forumId: currentForumId,
-        userId: user._id
+        userId: user._id,
       });
     } else {
       this.setState({
-        fatalError: "Invalid forum buddy, go for the right one!"
+        fatalError: 'Invalid forum buddy, go for the right one!',
       });
     }
   }
@@ -106,7 +107,7 @@ class NewDiscussion extends Component {
       updateDiscussionRdate,
       updateDiscussionPdate,
       postDiscussion,
-      currentForum
+      currentForum,
     } = this.props;
 
     const {
@@ -124,7 +125,7 @@ class NewDiscussion extends Component {
       pdate,
       tags,
       pinned,
-      errorMsg
+      errorMsg,
     } = this.props.newDiscussion;
 
     const { forumId, userId } = this.state;
@@ -133,12 +134,12 @@ class NewDiscussion extends Component {
     if (authenticated) {
       switch (forumId) {
         //以下顺风车
-        case "5a319a5c10cea7360a06287d":
+        case '5a319a5c10cea7360a06287d':
           return (
             <div>
-              {role === "admin" && (
+              {role === 'admin' && (
                 <PinButton
-                  key={"pinned"}
+                  key={'pinned'}
                   value={pinned}
                   onChange={value => {
                     updateDiscussionPinStatus(value);
@@ -149,7 +150,7 @@ class NewDiscussion extends Component {
                 <div className="col s12">
                   <div className="row">
                     <Sup_or_req
-                      key={"sup_or_req"}
+                      key={'sup_or_req'}
                       value={this.state.sup_or_req}
                       title="顺风车"
                       onHave={value => {
@@ -163,10 +164,10 @@ class NewDiscussion extends Component {
                       <input
                         className="validate"
                         id="ploc"
-                        key={"ploc"}
+                        key={'ploc'}
                         type="text"
                         className={styles.titleInput}
-                        placeholder={"例如:华盛顿/纽约......"}
+                        placeholder={'例如:华盛顿/纽约......'}
                         value={ploc}
                         onChange={event =>
                           updateDiscussionPloc(event.target.value)
@@ -179,10 +180,10 @@ class NewDiscussion extends Component {
                       <input
                         className="validate"
                         id="rloc"
-                        key={"rloc"}
+                        key={'rloc'}
                         type="text"
                         className={styles.titleInput}
-                        placeholder={"例如:旧金山/拉斯......"}
+                        placeholder={'例如:旧金山/拉斯......'}
                         value={rloc}
                         onChange={event =>
                           updateDiscussionRloc(event.target.value)
@@ -194,7 +195,7 @@ class NewDiscussion extends Component {
                     <div className="col s6">
                       <label>请选择出发日期：</label>
                       <Pdate
-                        key={"pdate"}
+                        key={'pdate'}
                         value={pdate}
                         onChange={value => updateDiscussionPdate(value)}
                       />
@@ -204,10 +205,10 @@ class NewDiscussion extends Component {
                       <input
                         className="validate"
                         id="ph_no"
-                        key={"ph_no"}
+                        key={'ph_no'}
                         type="text"
                         className={styles.titleInput}
-                        placeholder={"如：718-314-7879"}
+                        placeholder={'如：718-314-7879'}
                         value={ph_no}
                         onChange={event =>
                           updateDiscussionPh_no(event.target.value)
@@ -218,7 +219,7 @@ class NewDiscussion extends Component {
                   <div style={{ paddingLeft: 10, marginTop: 20 }}>
                     <p style={{ fontSize: 18, paddingLeft: 10 }}>标题预览：</p>
                     <p style={{ fontSize: 16, paddingLeft: 20 }}>
-                      {sup_or_req}「{moment(pdate).format("MM/DD")}」从「{ploc}」到「{
+                      {sup_or_req}「{moment(pdate).format('MM/DD')}」从「{ploc}」到「{
                         rloc
                       }」的顺风车，我的联系电话是:「{ph_no}」<span
                         className={styles.errorMsg}
@@ -249,12 +250,12 @@ class NewDiscussion extends Component {
         //以下拼房 */
           }
 
-        case "5a319a6e10cea7360a06287e":
+        case '5a319a6e10cea7360a06287e':
           return (
             <div>
-              {role === "admin" && (
+              {role === 'admin' && (
                 <PinButton
-                  key={"pinned"}
+                  key={'pinned'}
                   value={pinned}
                   onChange={value => {
                     updateDiscussionPinStatus(value);
@@ -265,7 +266,7 @@ class NewDiscussion extends Component {
                 <div className="col s12">
                   <div className="row">
                     <Sup_or_req
-                      key={"sup_or_req"}
+                      key={'sup_or_req'}
                       value={this.state.sup_or_req}
                       title="拼房"
                       onHave={value => {
@@ -278,7 +279,7 @@ class NewDiscussion extends Component {
                       <label>请选择入住日期-出住日期：</label>
 
                       <Rdate
-                        key={"rdate"}
+                        key={'rdate'}
                         value={rdate}
                         onChange={value => updateDiscussionRdate(value)}
                       />
@@ -289,10 +290,10 @@ class NewDiscussion extends Component {
                     <div className="col s6">
                       <label>请填写夜宿地：</label>
                       <input
-                        key={"ploc"}
+                        key={'ploc'}
                         type="text"
                         className={styles.titleInput}
-                        placeholder={"请填写夜宿城市......"}
+                        placeholder={'请填写夜宿城市......'}
                         value={ploc}
                         onChange={event =>
                           updateDiscussionPloc(event.target.value)
@@ -304,10 +305,10 @@ class NewDiscussion extends Component {
                       <input
                         className="validate"
                         id="ph_no"
-                        key={"ph_no"}
+                        key={'ph_no'}
                         type="text"
                         className={styles.titleInput}
-                        placeholder={"如：718-314-7879"}
+                        placeholder={'如：718-314-7879'}
                         value={ph_no}
                         onChange={event =>
                           updateDiscussionPh_no(event.target.value)
@@ -320,8 +321,8 @@ class NewDiscussion extends Component {
                     <p style={{ fontSize: 18, paddingLeft: 10 }}>标题预览：</p>
                     <p style={{ fontSize: 16, paddingLeft: 20 }}>
                       {sup_or_req}「{ploc}」从「{moment(rdate[0]).format(
-                        "MM/DD"
-                      )}」入住，到「{moment(rdate[1]).format("MM/DD")}」出住的拼房，我的联系电话是:「{
+                        'MM/DD'
+                      )}」入住，到「{moment(rdate[1]).format('MM/DD')}」出住的拼房，我的联系电话是:「{
                         ph_no
                       }」
                       <span className={styles.errorMsg}>{errorMsg}</span>
@@ -349,13 +350,13 @@ class NewDiscussion extends Component {
             /* //以上拼房
         //以下接活 */
           }
-        case "5a319a9310cea7360a06287f":
-          if (this.props.route.sup_or_req === "寻求") {
+        case '5a319a9310cea7360a06287f':
+          if (this.props.route.sup_or_req === '寻求') {
             return (
               <div>
-                {role === "admin" && (
+                {role === 'admin' && (
                   <PinButton
-                    key={"pinned"}
+                    key={'pinned'}
                     value={pinned}
                     onChange={value => {
                       updateDiscussionPinStatus(value);
@@ -367,7 +368,7 @@ class NewDiscussion extends Component {
                   <div className="col s12">
                     <div className="row">
                       <Sup_or_req
-                        key={"sup_or_req"}
+                        key={'sup_or_req'}
                         value={this.state.sup_or_req}
                         title="接活"
                         onHave={value => {
@@ -379,7 +380,7 @@ class NewDiscussion extends Component {
                       <div className="col s12">
                         <label>我可以带团的期间：</label>
                         <Rdate
-                          key={"rdate"}
+                          key={'rdate'}
                           className={styles.dateInput}
                           value={rdate}
                           onChange={value => updateDiscussionRdate(value)}
@@ -391,10 +392,10 @@ class NewDiscussion extends Component {
                       <div className="col s6">
                         <label>我的位置：</label>
                         <input
-                          key={"ploc"}
+                          key={'ploc'}
                           type="text"
                           className={styles.titleInput}
-                          placeholder={"期间可以接团的城市"}
+                          placeholder={'期间可以接团的城市'}
                           value={ploc}
                           onChange={event =>
                             updateDiscussionPloc(event.target.value)
@@ -406,10 +407,10 @@ class NewDiscussion extends Component {
                         <input
                           className="validate"
                           id="ph_no"
-                          key={"ph_no"}
+                          key={'ph_no'}
                           type="text"
                           className={styles.titleInput}
-                          placeholder={"如：718-314-7879"}
+                          placeholder={'如：718-314-7879'}
                           value={ph_no}
                           onChange={event =>
                             updateDiscussionPh_no(event.target.value)
@@ -425,8 +426,8 @@ class NewDiscussion extends Component {
                       <p style={{ fontSize: 16, paddingLeft: 20 }}>
                         「{sup_or_req}接团」-各位大导，我从「{moment(
                           rdate[0]
-                        ).format("MM/DD")}」到「{moment(rdate[1]).format(
-                          "MM/DD"
+                        ).format('MM/DD')}」到「{moment(rdate[1]).format(
+                          'MM/DD'
                         )}」期间可以接「{ploc}」开始的团，我的联系电话是:「{
                           ph_no
                         }」<span className={styles.errorMsg}>{errorMsg}</span>
@@ -436,10 +437,10 @@ class NewDiscussion extends Component {
                       style={{ marginTop: 10, marginLeft: 15, marginRight: 15 }}
                     >
                       <RichEditor
-                        key={"content"}
+                        key={'content'}
                         type="newDiscussion"
                         value={content}
-                        contentInput={"您可以填写有关您的更多信息..."}
+                        contentInput={'您可以填写有关您的更多信息...'}
                         onChange={value => {
                           updateDiscussionContent(value);
                         }}
@@ -470,9 +471,9 @@ class NewDiscussion extends Component {
           } else {
             return (
               <div>
-                {role === "admin" && (
+                {role === 'admin' && (
                   <PinButton
-                    key={"pinned"}
+                    key={'pinned'}
                     value={pinned}
                     onChange={value => {
                       updateDiscussionPinStatus(value);
@@ -484,7 +485,7 @@ class NewDiscussion extends Component {
                   <div className="col s12">
                     <div className="row">
                       <Sup_or_req
-                        key={"sup_or_req"}
+                        key={'sup_or_req'}
                         value={this.state.sup_or_req}
                         title="团目"
                         onHave={value => {
@@ -496,7 +497,7 @@ class NewDiscussion extends Component {
                       <div className="col s12">
                         <label>请选择团目开始及团目结束的时间：</label>
                         <Rdate
-                          key={"rdate"}
+                          key={'rdate'}
                           className={styles.dateInput}
                           value={rdate}
                           onChange={value => updateDiscussionRdate(value)}
@@ -508,10 +509,10 @@ class NewDiscussion extends Component {
                       <div className="col s6">
                         <label>填写团目的接机(开始)地：</label>
                         <input
-                          key={"ploc"}
+                          key={'ploc'}
                           type="text"
                           className={styles.titleInput}
-                          placeholder={"接机(开始)城市"}
+                          placeholder={'接机(开始)城市'}
                           value={ploc}
                           onChange={event =>
                             updateDiscussionPloc(event.target.value)
@@ -521,10 +522,10 @@ class NewDiscussion extends Component {
                       <div className="col s6">
                         <label>填写团目的结束(送机)地：</label>
                         <input
-                          key={"rloc"}
+                          key={'rloc'}
                           type="text"
                           className={styles.titleInput}
-                          placeholder={"送机(结束)城市"}
+                          placeholder={'送机(结束)城市'}
                           value={rloc}
                           onChange={event =>
                             updateDiscussionRloc(event.target.value)
@@ -537,10 +538,10 @@ class NewDiscussion extends Component {
                       <div className="col s6">
                         <label>填写团目的用车类型：</label>
                         <input
-                          key={"vehicleType"}
+                          key={'vehicleType'}
                           type="text"
                           className={styles.titleInput}
-                          placeholder={"请填写车型"}
+                          placeholder={'请填写车型'}
                           value={vehicleType}
                           onChange={event =>
                             updateDiscussionVehicleType(event.target.value)
@@ -552,10 +553,10 @@ class NewDiscussion extends Component {
                         <input
                           className="validate"
                           id="ph_no"
-                          key={"ph_no"}
+                          key={'ph_no'}
                           type="text"
                           className={styles.titleInput}
-                          placeholder={"如：718-314-7879"}
+                          placeholder={'如：718-314-7879'}
                           value={ph_no}
                           onChange={event =>
                             updateDiscussionPh_no(event.target.value)
@@ -571,8 +572,8 @@ class NewDiscussion extends Component {
                       <p style={{ fontSize: 16, paddingLeft: 20 }}>
                         「{sup_or_req}发团」-各位大导，「{moment(
                           rdate[0]
-                        ).format("MM/DD")}」到「{moment(rdate[1]).format(
-                          "MM/DD"
+                        ).format('MM/DD')}」到「{moment(rdate[1]).format(
+                          'MM/DD'
                         )}」期间有一个「{ploc}」开始「{rloc}」结束，需要「{
                           vehicleType
                         }」的团，我的联系电话是:「{ph_no}」,有空的导游请与我取得联系，谢谢。<span
@@ -586,10 +587,10 @@ class NewDiscussion extends Component {
                       style={{ marginTop: 10, marginLeft: 15, marginRight: 15 }}
                     >
                       <RichEditor
-                        key={"content"}
+                        key={'content'}
                         type="newDiscussion"
                         value={content}
-                        contentInput={"您可以填写有关您的更多信息..."}
+                        contentInput={'您可以填写有关您的更多信息...'}
                         onChange={value => {
                           updateDiscussionContent(value);
                         }}
@@ -616,13 +617,13 @@ class NewDiscussion extends Component {
             /* //以上发团
         //以下二手市场 */
           }
-        case "5a319aaa10cea7360a062880":
-          if (this.props.route.sup_or_req === "提供") {
+        case '5a319aaa10cea7360a062880':
+          if (this.props.route.sup_or_req === '提供') {
             return (
               <div>
-                {role === "admin" && (
+                {role === 'admin' && (
                   <PinButton
-                    key={"pinned"}
+                    key={'pinned'}
                     value={pinned}
                     onChange={value => {
                       updateDiscussionPinStatus(value);
@@ -633,7 +634,7 @@ class NewDiscussion extends Component {
                   <div className="col s12">
                     <div className="row">
                       <Sup_or_req
-                        key={"sup_or_req"}
+                        key={'sup_or_req'}
                         value={this.state.sup_or_req}
                         title="/出售商品"
                         onHave={value => {
@@ -645,10 +646,10 @@ class NewDiscussion extends Component {
                       <div className="col s6">
                         <label>请填写商品所在地：</label>
                         <input
-                          key={"ploc"}
+                          key={'ploc'}
                           type="text"
                           className={styles.titleInput}
-                          placeholder={"商品所在地......"}
+                          placeholder={'商品所在地......'}
                           value={ploc}
                           onChange={event =>
                             updateDiscussionPloc(event.target.value)
@@ -658,10 +659,10 @@ class NewDiscussion extends Component {
                       <div className="col s6">
                         <label>请填写商品名称：</label>
                         <input
-                          key={"title"}
+                          key={'title'}
                           type="text"
                           className={styles.titleInput}
-                          placeholder={"商品名"}
+                          placeholder={'商品名'}
                           value={title}
                           onChange={event => {
                             updateDiscussionTitle(event.target.value);
@@ -673,10 +674,10 @@ class NewDiscussion extends Component {
                       <div className="col s6">
                         <label>请填写商品价格：</label>
                         <input
-                          key={"rate"}
+                          key={'rate'}
                           type="text"
                           className={styles.titleInput}
-                          placeholder={"价格"}
+                          placeholder={'价格'}
                           value={rate}
                           onChange={event =>
                             updateDiscussionRate(event.target.value)
@@ -688,10 +689,10 @@ class NewDiscussion extends Component {
                         <input
                           className="validate"
                           id="ph_no"
-                          key={"ph_no"}
+                          key={'ph_no'}
                           type="text"
                           className={styles.titleInput}
-                          placeholder={"如：718-314-7879"}
+                          placeholder={'如：718-314-7879'}
                           value={ph_no}
                           onChange={event =>
                             updateDiscussionPh_no(event.target.value)
@@ -703,7 +704,7 @@ class NewDiscussion extends Component {
                 </div>
                 <div className="col s12">
                   <ImgUL
-                    key={"image"}
+                    key={'image'}
                     value={image}
                     onChange={value => {
                       updateDiscussionImage(value);
@@ -724,11 +725,11 @@ class NewDiscussion extends Component {
                 </div>
                 <div className="col s12">
                   <RichEditor
-                    key={"content"}
+                    key={'content'}
                     type="newDiscussion"
                     value={content}
                     contentInput={
-                      "商品具体信息(如新旧程度，如果是车辆请记得填写英里信息)"
+                      '商品具体信息(如新旧程度，如果是车辆请记得填写英里信息)'
                     }
                     onChange={value => {
                       updateDiscussionContent(value);
@@ -743,9 +744,9 @@ class NewDiscussion extends Component {
           }
           return (
             <div>
-              {role === "admin" && (
+              {role === 'admin' && (
                 <PinButton
-                  key={"pinned"}
+                  key={'pinned'}
                   value={pinned}
                   onChange={value => {
                     updateDiscussionPinStatus(value);
@@ -756,7 +757,7 @@ class NewDiscussion extends Component {
                 <div className="col s12">
                   <div className="row">
                     <Sup_or_req
-                      key={"sup_or_req"}
+                      key={'sup_or_req'}
                       value={this.state.sup_or_req}
                       title="/求购商品"
                       onHave={value => {
@@ -768,10 +769,10 @@ class NewDiscussion extends Component {
                     <div className="col s6">
                       <label>您的城市：</label>
                       <input
-                        key={"ploc"}
+                        key={'ploc'}
                         type="text"
                         className={styles.titleInput}
-                        placeholder={"例如旧金山..."}
+                        placeholder={'例如旧金山...'}
                         value={ploc}
                         onChange={event =>
                           updateDiscussionPloc(event.target.value)
@@ -781,10 +782,10 @@ class NewDiscussion extends Component {
                     <div className="col s6">
                       <label>求购商品：</label>
                       <input
-                        key={"title"}
+                        key={'title'}
                         type="text"
                         className={styles.titleInput}
-                        placeholder={"商品名"}
+                        placeholder={'商品名'}
                         value={title}
                         onChange={event => {
                           updateDiscussionTitle(event.target.value);
@@ -796,10 +797,10 @@ class NewDiscussion extends Component {
                       <input
                         className="validate"
                         id="ph_no"
-                        key={"ph_no"}
+                        key={'ph_no'}
                         type="text"
                         className={styles.titleInput}
-                        placeholder={"如：718-314-7879"}
+                        placeholder={'如：718-314-7879'}
                         value={ph_no}
                         onChange={event =>
                           updateDiscussionPh_no(event.target.value)
@@ -819,10 +820,10 @@ class NewDiscussion extends Component {
               </div>
               <div className="col s12">
                 <RichEditor
-                  key={"content"}
+                  key={'content'}
                   type="newDiscussion"
                   value={content}
-                  contentInput={"具体需求"}
+                  contentInput={'具体需求'}
                   onChange={value => {
                     updateDiscussionContent(value);
                   }}
@@ -838,16 +839,16 @@ class NewDiscussion extends Component {
             /* //以上二手市场
         //以下百科 */
           }
-        case "5a43f499ca420fd7dfe6e5ad":
+        case '5a43f499ca420fd7dfe6e5ad':
           return (
             <div>
               <div className="col s12">
                 <label>请输入标题</label>
                 <input
-                  key={"title"}
+                  key={'title'}
                   type="text"
                   className={styles.titleInput}
-                  placeholder={"标题"}
+                  placeholder={'标题'}
                   value={title}
                   onChange={event => {
                     updateDiscussionTitle(event.target.value);
@@ -855,7 +856,7 @@ class NewDiscussion extends Component {
                 />
               </div>
               <TagsInput
-                key={"tags"}
+                key={'tags'}
                 value={tags}
                 onChange={tags => {
                   updateDiscussionTags(tags);
@@ -863,7 +864,7 @@ class NewDiscussion extends Component {
               />
               <div style={{ marginTop: 15 }}>
                 <ImgUL
-                  key={"image"}
+                  key={'image'}
                   value={image}
                   onChange={value => {
                     updateDiscussionImage(value);
@@ -879,10 +880,10 @@ class NewDiscussion extends Component {
 
               <div>
                 <RichEditor
-                  key={"content"}
+                  key={'content'}
                   type="newDiscussion"
                   value={content}
-                  contentInput={"详细攻略"}
+                  contentInput={'详细攻略'}
                   onChange={value => {
                     updateDiscussionContent(value);
                   }}
@@ -928,77 +929,77 @@ class NewDiscussion extends Component {
         default:
           return [
             <input
-              key={"sup_or_req"}
+              key={'sup_or_req'}
               type="text"
               className={styles.titleInput}
-              placeholder={"提供还是需求"}
+              placeholder={'提供还是需求'}
               value={sup_or_req}
               onChange={event => updateDiscussionSup_or_req(event.target.value)}
             />,
 
             <input
-              key={"ploc"}
+              key={'ploc'}
               type="text"
               className={styles.titleInput}
-              placeholder={"出发城市"}
+              placeholder={'出发城市'}
               value={ploc}
               onChange={event => updateDiscussionPloc(event.target.value)}
             />,
 
             <input
-              key={"rloc"}
+              key={'rloc'}
               type="text"
               className={styles.titleInput}
-              placeholder={"抵达城市"}
+              placeholder={'抵达城市'}
               value={rloc}
               onChange={event => updateDiscussionRloc(event.target.value)}
             />,
             <input
-              key={"pdate"}
+              key={'pdate'}
               type="text"
               className={styles.titleInput}
-              placeholder={"出发日期"}
+              placeholder={'出发日期'}
               value={pdate}
               onChange={event => updateDiscussionPdate(event.target.value)}
             />,
 
             <input
-              key={"pname"}
+              key={'pname'}
               type="text"
               className={styles.titleInput}
-              placeholder={"联系人"}
+              placeholder={'联系人'}
               value={pname}
               onChange={event => updateDiscussionPname(event.target.value)}
             />,
 
             <ImgUL
-              key={"image"}
+              key={'image'}
               value={image}
               onChange={value => {
                 updateDiscussionImage(value);
               }}
             />,
             <input
-              key={"ph_no"}
+              key={'ph_no'}
               type="text"
               className={styles.titleInput}
-              placeholder={"联系电话"}
+              placeholder={'联系电话'}
               value={ph_no}
               onChange={event => updateDiscussionPh_no(event.target.value)}
             />,
             <input
-              key={"rdate"}
+              key={'rdate'}
               type="text"
               className={styles.titleInput}
-              placeholder={"出住日期"}
+              placeholder={'出住日期'}
               value={rdate}
               onChange={event => updateDiscussionRdate(event.target.value)}
             />,
             <input
-              key={"title"}
+              key={'title'}
               type="text"
               className={styles.titleInput}
-              placeholder={"Discussion title......"}
+              placeholder={'Discussion title......'}
               value={title}
               onChange={event => {
                 updateDiscussionTitle(event.target.value);
@@ -1006,18 +1007,18 @@ class NewDiscussion extends Component {
             />,
 
             <input
-              key={"vehicleType"}
+              key={'vehicleType'}
               type="text"
               className={styles.titleInput}
-              placeholder={"请填写车型"}
+              placeholder={'请填写车型'}
               value={vehicleType}
               onChange={event =>
                 updateDiscussionVehicleType(event.target.value)
               }
             />,
-            role === "admin" && (
+            role === 'admin' && (
               <PinButton
-                key={"pinned"}
+                key={'pinned'}
                 value={pinned}
                 onChange={value => {
                   updateDiscussionPinStatus(value);
@@ -1026,14 +1027,14 @@ class NewDiscussion extends Component {
             ),
 
             <TagsInput
-              key={"tags"}
+              key={'tags'}
               value={tags}
               onChange={tags => {
                 updateDiscussionTags(tags);
               }}
             />,
             <RichEditor
-              key={"content"}
+              key={'content'}
               type="newDiscussion"
               value={content}
               onChange={value => {
@@ -1042,7 +1043,7 @@ class NewDiscussion extends Component {
               onSave={() => {
                 postDiscussion(userId, forumId, currentForum);
               }}
-            />
+            />,
           ];
       }
     }
@@ -1059,10 +1060,10 @@ class NewDiscussion extends Component {
               this.setState({ userMenu: true });
             }}
           >
-            <span style={{ color: "blue", borderBottomWidth: 1 }}>登录</span>
+            <span style={{ color: 'blue', borderBottomWidth: 1 }}>登录</span>
           </button>...
         </span>
-        {this.state.userMenu ? <UserMenu hello={true} /> : ""}
+        {this.state.userMenu ? <UserMenu hello={true} /> : ''}
       </div>
     );
   }
@@ -1098,7 +1099,7 @@ class NewDiscussion extends Component {
     const {
       errorMsg,
       postingSuccess,
-      postingDiscussion
+      postingDiscussion,
     } = this.props.newDiscussion;
 
     return (
@@ -1131,7 +1132,7 @@ export default connect(
       user: state.user,
       forums: state.app.forums,
       currentForum: state.app.currentForum,
-      newDiscussion: state.newDiscussion
+      newDiscussion: state.newDiscussion,
     };
   },
   dispatch => {
@@ -1181,7 +1182,7 @@ export default connect(
       },
       updateDiscussionSup_or_req: value => {
         dispatch(updateDiscussionSup_or_req(value));
-      }
+      },
     };
   }
 )(NewDiscussion);

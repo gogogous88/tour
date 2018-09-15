@@ -1,0 +1,167 @@
+.form-wrap {
+  background-color: #eee;
+  padding-top: 30px;
+
+  .container {
+    display: flex;
+  }
+
+  .main-block {
+    flex-grow: 1;
+    margin-right: 20px;
+  }
+
+  .side-block {
+    width: 380px;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+
+  form {
+    margin: 0;
+  }
+}
+
+.form-items {
+  padding-bottom: 1px;
+
+  .form-item {
+    position: relative;
+    background: white;
+    box-shadow: 4px 4px 4px -2px rgba(0, 0, 0, 0.1);
+
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      background: lightslategrey;
+      color: white;
+
+      h3 {
+        font-size: 24px;
+        font-weight: 400;
+        margin: 0;
+      }
+
+      em {
+        color: $gray;
+        font-size: 14px;
+      }
+    }
+
+    .body {
+      padding: 15px;
+    }
+
+    label {
+      span {
+        color: $primary;
+        margin-left: 3px;
+      }
+    }
+  }
+}
+
+.price-total {
+  position: relative;
+  background: white;
+  box-shadow: 4px 4px 4px -2px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px 20px 20px;
+
+  ul {
+    margin: 0;
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+
+    span {
+      margin-left: 20px;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 15px;
+    }
+
+    &.total-line {
+      margin-bottom: 15px;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+
+      strong {
+        color: #333;
+        font-weight: 400;
+      }
+
+      span {
+        font-size: 36px;
+        color: $primary;
+      }
+    }
+  }
+
+  .desc {
+    color: $gray;
+    font-size: 12px;
+    margin-top: 20px;
+    font-style: italic;
+  }
+}
+
+.tos-wrap {
+  .tos-content {
+    max-height: 200px;
+    overflow: scroll;
+    overflow-x: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: $gray;
+    font-size: 12px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+}
+
+.tos-checkbox {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+
+  label {
+    margin: 0;
+  }
+
+  input {
+    margin-right: 5px;
+  }
+}
+
+.tos-agree {
+  margin-top: 30px;
+  font-size: 14px;
+  color: $gray;
+
+  .highlight {
+    color: $primary;
+  }
+}
+
+.submit-wrap {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+
+  button {
+    width: 50%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 24px;
+  }
+}

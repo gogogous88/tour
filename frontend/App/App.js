@@ -1,18 +1,21 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Helmet } from "react-helmet";
-import classnames from "classnames";
-import { Link } from "react-router";
-import Header from "Containers/Header";
-import Footer from "Components/Footer";
-import SlideShow from "Components/SlideShow";
-import appLayout from "SharedStyles/appLayout.css";
-import styles from "./styles.css";
-import FooterNav from "Components/SideBar/FooterNav";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
+import classnames from 'classnames';
+import { Link } from 'react-router';
+import Header from 'Containers/Header';
+import Footer from 'Components/Footer';
+import SlideShow from 'Components/SlideShow';
+import appLayout from 'SharedStyles/appLayout.css';
+import styles from './styles.css';
+import FooterNav from 'Components/SideBar/FooterNav';
+import axios from 'axios';
+import _ from 'lodash';
 
-import { getForums, updateCurrentForum, getUser } from "./actions";
+import { getForums, updateCurrentForum, getUser } from './actions';
 
 class AppContainer extends Component {
+  state = { news: [] };
   componentDidMount() {
     const { params, updateCurrentForum, getForums, getUser } = this.props;
 
@@ -23,14 +26,14 @@ class AppContainer extends Component {
     getUser();
 
     // set current forum based on route
-    const currentForum = params.forum || "";
+    const currentForum = params.forum || '';
     updateCurrentForum(currentForum);
   }
 
   componentDidUpdate() {
     const { forums, params, currentForum, updateCurrentForum } = this.props;
 
-    let newCurrentForum = "";
+    let newCurrentForum = '';
     if (params.forum) newCurrentForum = params.forum;
     else if (forums) newCurrentForum = forums[0].forum_slug;
 
@@ -41,7 +44,7 @@ class AppContainer extends Component {
   renderHomePage() {
     const { forums, currentForum, router } = this.props;
 
-    if (this.props.location.pathname === "/") {
+    if (this.props.location.pathname === '/') {
       return (
         <div style={{ marginLeft: 10, marginRight: 10, marginTop: 25 }}>
           <div ref="wechat" />
@@ -102,6 +105,7 @@ class AppContainer extends Component {
     //   return <img src="/src/static/images/openInSafari.png" width="100%" />;
     // }
     if (forums) {
+      // console.log('======>', news);
       return (
         <div>
           <Helmet>
@@ -119,7 +123,7 @@ class AppContainer extends Component {
           />
 
           <div className={appLayout.showOnMediumBP}>
-            {this.props.location.pathname === "/" ? (
+            {this.props.location.pathname === '/' ? (
               <SlideShow
                 img1="/src/static/banners/zu_che_banner.jpg"
                 link1="/car-rental"
@@ -129,7 +133,7 @@ class AppContainer extends Component {
                 link3="/wiki"
               />
             ) : (
-              ""
+              ''
             )}
           </div>
           <div>{this.renderHomePage()}</div>
@@ -159,7 +163,7 @@ export default connect(
   state => {
     return {
       forums: state.app.forums,
-      currentForum: state.app.currentForum
+      currentForum: state.app.currentForum,
     };
   },
   dispatch => {
@@ -172,7 +176,7 @@ export default connect(
       },
       getUser: () => {
         dispatch(getUser());
-      }
+      },
     };
   }
 )(AppContainer);
